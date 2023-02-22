@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokes https://github.com/StevenJokes
- * @LastEditTime: 2023-02-22 18:14:22
+ * @LastEditTime: 2023-02-22 18:22:19
  * @Description:
  * @TODO::
  * @Reference:
@@ -87,7 +87,7 @@ $$
 **完全贪婪算法**即在每一时刻采取期望回报估值最大的动作（拉动拉杆），这就是**纯粹的利用**，而没有探索，所以我们通常需要对完全贪婪算法进行一些修改，其中比较经典的一种方法为 $\epsilon$-贪婪（ $\epsilon$-Greedy）算法。 $\epsilon$-贪婪算法在完全贪婪算法的基础上添加了噪声，每次以概率 $1 - \epsilon$  选择以往经验中期望奖励估值最大的那根拉杆（利用），以概率 $\epsilon$ 随机选择一根拉杆（探索），公式如下：
 
 $$
-a_{t}= \begin{cases}\arg \max * a \in \mathcal{A}^{\hat{Q}}(a), & \text { 采样概率: } 1-\epsilon \\ \text { 从 } \mathcal{A} \text { 中随机选择, } & \text { 采样概率: } \epsilon\end{cases}
+a_{t}= \begin{cases}\underset{a \in \mathcal{A}}{\operatorname{argmax}} \hat{Q}_t(a), & \text { 采样概率: } 1-\epsilon \\ \text { 从 } \mathcal{A} \text { 中随机选择, } & \text { 采样概率: } \epsilon\end{cases} [2]
 $$
 
 通过上面的实验可以发现，在经历了开始的一小段时间后，$\epsilon$-贪婪算法的累积懊悔几乎是线性增长的。这是  $\epsilon = 0.01$ 时的结果，因为一旦做出了随机拉杆的探索，那么产生的懊悔值是固定的。其他不同的 $\epsilon$ 取值又会带来怎样的变化呢？我们继续使用该 10 臂老虎机，我们尝试不同的$\left\{10^{-4}, 0.01, 0.1, 0.25, 0.5\right\}$参数，查看相应的实验结果（另见彩插图 1）。
@@ -138,4 +138,4 @@ MAB 中还有一种经典算法——**汤普森采样**（Thompson sampling）�
 
 
 [1]: https://hrl.boyuai.com/chapter/1/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA
-
+[2]: https://www.jianshu.com/p/590d98967a93
