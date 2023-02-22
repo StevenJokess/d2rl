@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokes https://github.com/StevenJokes
- * @LastEditTime: 2023-02-22 15:55:12
+ * @LastEditTime: 2023-02-22 18:14:22
  * @Description:
  * @TODO::
  * @Reference:
@@ -18,7 +18,7 @@
 
 将其问题表示成一个元组 $\langle\mathcal{A}, \mathcal{R}\rangle$ ，其中:
 
-- $\mathcal{A}$ 为动作集合，其中一个动作表示拉动一个拉杆。若多臂 老虎机一共有 $K$ 根拉杆，那动作空间就是集合 $\left\{a_1, \ldots, a_K\right\}$ ，我们用 $a_t \in \mathcal{A}$ 表示任意一个动作；
+- $\mathcal{A}$ 为动作集合，其中一个动作表示拉动一个拉杆。若多臂 老虎机一共有 $K$ 根拉杆，那动作空间就是集合 $\{a_1, \ldots, a_K\}$ ，我们用 $a_t \in \mathcal{A}$ 表示任意一个动作；
 - $\mathcal{R}$ 为奖励概率分布，拉动每一根拉杆的动作 $a$ 都对应一个 奖励概率分布 $\mathcal{R}(r \mid a)$ ，不同拉杆的奖励分布通常是不同的。
 
 ## 优化目标
@@ -31,7 +31,7 @@
 
 由于，至少存在一根拉杆，它的期望回报不小于拉动其他任意一根拉杆，我们将该最优期望回报表示为 $Q^*=\max _{a \in \mathcal{A}} Q(a)$ 。
 
-为了更加直观、方便地观察拉动一根拉杆的期望回报离最优拉杆期望回报的差距，我们引入懊悔 (regret) 概念。懊悔定义为拉动当前拉杆的动作 $a$ 与最优拉杆 的期望回报差距，即 $R(a)=Q^*-Q(a)$ （其中，$R(a) \geq  0$。
+为了更加直观、方便地观察拉动一根拉杆的期望回报离最优拉杆期望回报的差距，我们引入懊悔 (regret) 概念。懊悔定义为拉动当前拉杆的动作 $a$ 与最优拉杆 的期望回报差距，即 $R(a)=Q^*-Q(a)$ （其中，$R(a) \geq 0$）。
 
 累积懊悔(cumulative regret) 即操作 $T$ 次拉杆后累积的懊悔总量，对于一次完整的 $T$ 步决策 $\left\{a_1, a_2, \ldots, a_T\right\}$ ，累积懊悔为 $\sigma_R=\sum_{t=1}^T R\left(a_t\right)$ 。
 
@@ -47,9 +47,7 @@
   - 得到奖励 $r_t$
   - 更新计数器: $N\left(a_t\right)=N\left(a_t\right)+1$
   - 更新期望回报估值:
-    $$
-    \hat{Q}\left(a_t\right)=\hat{Q}\left(a_t\right)+\frac{1}{N\left(a_t\right)}\left[r_t-\hat{Q}\left(a_t\right)\right]
-    $$
+    $$\hat{Q}\left(a_t\right)=\hat{Q}\left(a_t\right)+\frac{1}{N\left(a_t\right)}\left[r_t-\hat{Q}\left(a_t\right)\right]$$
 - end for
 
 以上 for 循环中的第四步如此更新估值，是因为这样可以进行增量式的期望更新，公式如下：
@@ -92,8 +90,6 @@ $$
 a_{t}= \begin{cases}\arg \max * a \in \mathcal{A}^{\hat{Q}}(a), & \text { 采样概率: } 1-\epsilon \\ \text { 从 } \mathcal{A} \text { 中随机选择, } & \text { 采样概率: } \epsilon\end{cases}
 $$
 
-
-
 通过上面的实验可以发现，在经历了开始的一小段时间后，$\epsilon$-贪婪算法的累积懊悔几乎是线性增长的。这是  $\epsilon = 0.01$ 时的结果，因为一旦做出了随机拉杆的探索，那么产生的懊悔值是固定的。其他不同的 $\epsilon$ 取值又会带来怎样的变化呢？我们继续使用该 10 臂老虎机，我们尝试不同的$\left\{10^{-4}, 0.01, 0.1, 0.25, 0.5\right\}$参数，查看相应的实验结果（另见彩插图 1）。
 
 通过实验结果可以发现，基本上无论 $\epsilon$ 取值多少，累积懊悔都是线性增长的。在这个例子中，随着 $\epsilon$ 的增大，累积懊悔增长的速率也会增大。 接下来我们尝试 $\epsilon$ 值随时间衰减的 $\epsilon$ -贪婪算法，采取的具体衰减形式为反比例衰减，公式为$\epsilon = \frac{1}{t}$ 。
@@ -111,7 +107,7 @@ $$
 在霍夫丁不等式中，令 $X_1, \ldots, X_n$ 为 $n$ 个独立同分布的随机变量，取值范围为 $[0,1]$ ，其经验期望为 $\bar{x}_n=\frac{1}{n} \sum_{j=1}^n X_j$ ，则有
 
 $$
-\mathbb{P}\left\{\mathbb{E}[X] \geq \bar{x}_n+u\right\} \leq e^{-2 n u^2}
+\mathbb{P}\{\mathbb{E}[X] \geq \bar{x}_n+u\} \leq e^{-2 n u^2}
 $$
 
 现在我们将霍夫丁不等式运用于多臂老虎机问题中。将 $\hat{Q}_t(a)$ 代入 $\bar{x}_t$ ，不等式中的参数 $u=\hat{U}_t(a)$ 代表不确定性度量，给定一个概率 $p=e^{-2 N_t(a) U_t(a)^2}$ ，根据上述不等式， $Q_t(a)<\hat{Q}_t(a)+\hat{U}_t(a)$ 至少以概率 $1-p$ 成立。
@@ -122,16 +118,13 @@ $$
 
 我们编写代码来实现 UCB 算法，并且仍然使用 2.2.4 节定义的 10 臂老虎机来观察实验结果。在具体的实现过程中，设置 $p=\frac{1}{t}$ ，并且在分母中为拉动每根拉杆的次数加上常数 1 , 以免出现分母为 0 的情形，即此时 $\hat{U}_t(a)=\sqrt{\frac{\log t}{2\left(N_t(a)+1\right)}}$ 。同时，我们设定一个系数 $c$ 来控制不确定性的比重，此时 $a=\arg \max _{a \in \mathcal{A}} \hat{Q}(a)+c \cdot \hat{U}(a) 。$
 
-
-
-
 #### 汤普森采样算法
 
 MAB 中还有一种经典算法——**汤普森采样**（Thompson sampling），先假设拉动每根拉杆的奖励服从一个特定的概率分布，然后根据拉动每根拉杆的期望奖励来进行选择。但是由于计算所有拉杆的期望奖励的代价比较高，汤普森采样算法使用采样的方式，即根据当前每个动作 $a$ 的奖励概率分布进行一轮采样，得到一组各根拉杆的奖励样本，再选择样本中奖励最大的动作。可以看出，汤普森采样是一种计算所有拉杆的最高奖励概率的蒙特卡洛采样方法。
 
 了解了汤普森采样算法的基本思路后，我们需要解决另一个问题：怎样得到当前每个动作 $a$ 的奖励概率分布并且在过程中进行更新？在实际情况中，我们通常用 Beta 分布对当前每个动作的奖励概率分布进行建模。具体来说，若某拉杆被选择了 $k$ 次，其中  次奖励为 1， 次奖励为 0，则该拉杆的奖励服从参数为$(m_1+1,m_2+1)$ 的 Beta 分布。图 2-2 是汤普森采样的一个示例（另见彩插图 2）。
 
-![汤普森采样示例](img/Thompson_sampling.png)
+![汤普森采样示例](img\Thompson_sampling.png)
 
 我们编写代码来实现汤普森采样算法，并且仍然使用 2.2.4 节定义的 10 臂老虎机来观察实验结果。
 
