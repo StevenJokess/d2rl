@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokes https://github.com/StevenJokes
- * @LastEditTime: 2023-02-22 17:17:22
+ * @LastEditTime: 2023-02-22 23:13:38
  * @Description:
  * @TODO::
  * @Reference:
@@ -127,7 +127,7 @@
 
 ##### 实际回报公式
 
-实际回报公式(formulations of return): 奖励函数 $R$ 非常重要。它由当前状态、已经执行的动作和下一步的状态共同决定。
+实际回报公式(formulations of return): 实际回报用 $r$，而后面的期望回报用 $R$。
 
 - 即时回报，即当前回报$r_0$。
 - 远期回报，又叫延迟回报，是指在一次行动后在一定时间后（或者是一系列动作后）才获得回报。这种回报可能是一次, 也可能是多次。单个时间步的奖励$r_t = R(s_t, a_t, s_{t+1})$。
@@ -139,9 +139,9 @@
 - 累积回报是指在一次行动轨迹中所有回报值的总和。公式是$G(\tau) = \sum_{t=0}^T r_t$
 - 折扣累积回报是指在一次行动轨迹中所有回报值按时间折扣的总和。
    - 折扣因子（discount factor）是一个用来平衡未来回报的价值衰减因子，表示在未来的每个时刻，奖励会以一定的比例进行衰减。使用时间折扣是为了使强化学习智能体更好地处理长期决策问题，同时能够适应不同的环境和任务。
-   - 折扣因子通常表示为 $\gamma$，其中 $0 \leq \gamma \leq 1$。由于 $\gamma \leq 1$，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计回报公式，越远视;越接近0,越短视.
-   - 从当前时间步$t$开始到未来有限视野T的所有时间步的累积奖励可以表示为：$$G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots = \sum_{k=0}^{T} \gamma^k R_{t+k+1}$$
-   - 而无限视野(infinite-horizon) 是$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 R_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$$
+   - 折扣因子通常表示为 $\gamma$，其中 $0 \leq \gamma \leq 1$。由于 $\gamma \leq 1$，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计回报公式，越远视；越接近0，越短视。
+   - 从当前时间步$t$开始到未来有限视野T的所有时间步的累积奖励可以表示为：$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots = \sum_{k=0}^{T} \gamma^k r_{t+k+1}$$
+   - 而无限视野(infinite-horizon) 是$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k r_{t+k+1}$$
    - 其中，$r_t$ 表示在时间步 $t$ 时获得的奖励，$\gamma$ 是时间折扣因子，$G_t$ 表示从时间步 $t$ 开始的累积奖励。[11]
 
 #### 优化问题(Optimization  problem)
@@ -206,20 +206,17 @@
 
 ##### 价值(Value)
 
-价值(Value): 价值(Value)是对未来折扣累积回报的预测值
-
-$$V_{\pi}(s)=E_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$
-
-预测下一个即时的奖励: $\mathbf{R}_{}=E\left[R_{t+1} \mid S_{t}=s, A_{t}=a\right]_{\circ}$
+价值(Value): 价值V 是对未来折扣累积回报的预测值，是估计该动作的期望回报。
 
 ##### 价值函数(Value function)
 
-价值函数是一个将状态或状态-行动对映射到预期未来的**累计折扣回报**的函数。价值函数的值是对未来累计折扣回报的预测，我们用它来评估状态的好坏。
+价值函数是一个将状态或状态-行动对映射到预期的未来的**累计折扣回报**的函数。价值函数的值是对未来累计折扣回报的预测，我们用它来评估状态的好坏。
 
 价值函数通常有两种形式：
 
-- 状态价值函数（state value function）表示在某个状态下的价值函数。$$V_{\pi}(s) = \mathbb{E}\pi \left[ G_t | S_t = s \right]$$ 其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ 执行后的预期累积回报，$G_t$ 是从时刻 $t$ 开始的累积回报，$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
-- 动作价值函数（action value function）表示在某个状态-行动对下的价值函数，又叫Q函数。$$Q_{\pi}(s, a) = \mathbb{E}\pi \left[ G_t | S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积回报。$G_t$ 是从时刻 $t$ 开始的累积回报，$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。注意，动作值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
+- 状态价值函数（state value function）表示在某个状态下的价值函数。$$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$ 其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ 执行后的预期累积回报，$G_t$ 是从时刻 $t$ 开始的累积回报（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
+> 预测下一个即时的奖励: $\mathbf{R}_{}= \mathbb{E}_{\pi}\left[R_{t+1} \mid S_{t}=s, A_{t}=a\right]_{\circ}$
+- 动作价值函数（action value function）表示在某个状态 - 行动对下的价值函数，又叫Q函数。$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积回报。$G_t$ 是从时刻 $t$ 开始的累积回报（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$） 是在策略 $\pi$ 下的期望。注意，动作值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
 
 #### 基于策略(Policy)
 
