@@ -5,29 +5,25 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokes https://github.com/StevenJokes
- * @LastEditTime: 2023-02-22 16:21:19
+ * @LastEditTime: 2023-02-22 17:17:22
  * @Description:
  * @TODO::
  * @Reference:
 -->
+
 # 强化学习
 
 2018年的围棋AlphaGO战胜李世石使RL（强化学习）大为闻名，证明了这种强化模型能有超人类的表现，故我们才关注它。对于下围棋这一任务，即使是专家也很难给出“正确”的动作，二是获取大量数据的成本往往比较高。对于下棋强化学习我们很难知道每一步的“正确”动作，但是其最后的结果（即赢输）却很容易判断。因此，如果可以通过大量的模拟数据，通过最后的结果（奖励）来倒推每一步棋的好坏，从而学习出“最佳”的下棋策略，这就是强化学习。
 
 这种在复杂、不确定的环境中交互时不断做出选择（sequential decision making）边学习的行为，我们其实早就在进行了。当一个婴儿玩耍，挥动手臂或环顾四周时，他没有明确的老师，但他确实通过直接的感觉与环境联系。他可以通过这种联系获得大量关于因果关系、动作的结果以及如何实现目标的信息。 在我们的生活中，这种交互无疑是环境和自身知识的主要来源。无论我们是学习驾驶汽车还是进行交谈，我们都敏锐地意识到我们的环境如何响应我们的行为，并且我们试图通过我们的行为来影响所发生的事情。
 
-决策 与 预测 的区别：
-
-- 决策往往会带来“后果”，因此决策者需要为未来负责，在未来的时间点做出进一步的决策。
-- 预测仅仅产生一个针对输入数据的信号，并期望它和未来可观测到的信号一致，这不会使未来情况发生任何改变。
-
 ## RL概念
 
-强化学习（Reinforcement Learning，简称RL），也叫增强学习，是指一类智能体从与环境交互中不断学习的问题以及解决这类问题的方法。强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的交互中不断学习以取得最大回报（Reward）。强化是增加行为的意思，即当某个行为在从环境中获得正回报后就会倾向去增加这种行为。[26] 历史更多见[25]
+强化学习（Reinforcement Learning，简称RL），也叫增强学习，是指一类智能体从与环境交互中不断学习的问题以及解决这类问题的方法。强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的交互中不断学习以取得最大回报（Reward）。强化是增加行为的意思，即当某个行为在从环境中获得正回报后就会倾向去增加这种行为。[1] 更多历史，可见[2]
 
 ![强化学习示意](/img/rl.png)
 
-## 监督学习、非监督学习、强化学习之间的区别[5]
+## 监督学习、非监督学习、强化学习之间的区别[3]
 
 |      | 监督学习         | 非监督学习     | 强化学习|
 | ---- | ---------------- | ------------- | ------ |
@@ -35,25 +31,25 @@
 | 输入 | 独立同分布(i.i.d.), 为了消除数据之间的相关性。    | 独立同分布(i.i.d.)     | 归一化的占用度量（occupancy measure）用于衡量在一个智能体决策与一个动态环境的交互过程中，采样到一个具体的状态动作对（state-action pair）的概率分布。|
 | 动作 | exploration     | exploration | Trial-and-error，即存在exploration和exploitation的平衡 (不一定按照已知的最优做法去做)|
 | 反馈 | 有反馈      | 无反馈     | 无即时反馈，即reward常有延迟, 用结果的总reward用来判断这个行为是好是坏，不会告诉什么是正确的action|
-| 驱动 | 任务驱动      | 数据驱动     | 有目标,从错误中学习[24]|
+| 驱动 | 任务驱动      | 数据驱动     | 有目标,从错误中学习[4]|
 | 模型 | 建立新输入对应原标签的预测模型     | 自学习映射关系，以此为模型     | 学习到从环境状态到行为的映射即决策（决策往往会带来“后果”，因此决策者需要为未来负责，在未来的时间点做出进一步的决策。），使得智能体选择的该行为能够获得环境最大的回报reward|
 | 公式 | $\text {最优预测模型} =\arg \min _{\text {模型}} \mathbb{E}_{(\text {特征, 标签}) \sim \text {数据分布}}[\text {损失函数 (标签, 模型（特征）)]}$     | TODO:| $\text {最优策略} =\arg \max _{\text {策略}} \mathbb{E}_{(\text {状态, 动作}) \sim \text {策略的占用度量}}[\text {奖励函数 (状态, 动作)]}$|
-| 任务 | 预测仅仅产生一个针对输入数据的信号，并期望它和未来可观测到的信号一致，这不会使未来情况发生任何改变。预测任务总是单轮的独立任务。| TODO: |决策往往会带来“后果”，因此决策者需要为未来负责，在未来的时间点做出进一步的决策。决策任务往往涉及多轮交互，即序贯决策[31] |
+| 任务 | 预测仅仅产生一个针对输入数据的信号，并期望它和未来可观测到的信号一致，这不会使未来情况发生任何改变。预测任务总是单轮的独立任务。| TODO: |决策往往会带来“后果”，因此决策者需要为未来负责，在未来的时间点做出进一步的决策。决策任务往往涉及多轮交互，即序贯决策[5] |
 | 上限（upper bound） | 传统的机器学习算法依赖人工标注好的数据，从中训练好的模型的性能上限是产生数据的模型（人类）的上限      | 可超人类     | 不受人类先验知识所限，表现可超人类 |
-| 适用情况 | 任务(分类/回归);若强化信号r与Agent产生的动作A有明确的函数形式描述，可得到梯度信息r/A则可直接可以使用监督学习算法。 | 数据驱动聚类[23]   | 因为强化信号r与Agent产生的动作A没有明确的函数形式描述，所以Agent在可能动作空间中进行搜索并发现正确的动作。[22] |
+| 适用情况 | 任务(分类/回归);若强化信号r与Agent产生的动作A有明确的函数形式描述，可得到梯度信息r/A则可直接可以使用监督学习算法。 | 数据驱动(聚类)[6]   | 因为强化信号r与Agent产生的动作A没有明确的函数形式描述，所以Agent在可能动作空间中进行搜索并发现正确的动作。[7] |
 
 ## 基本概念
 
 ### 环境 (Environment)
 
-- 环境 (Environment):强化学习系统中除智能体以外的所有事物，它是智能体交互的对象。环境可以是已知的，也可以是未知的，因此可以对环境建模，也可以不对环境建模。[^3]
+- 环境 (Environment):强化学习系统中除智能体以外的所有事物，它是智能体交互的对象。环境可以是已知的，也可以是未知的，因此可以对环境建模，也可以不对环境建模。[]
 
 #### 环境分类
 
 ##### 按智能体和环境的交互方式
 
 - 离散时间环境（discrete time environment）：如果智能体和环境的交互是分步进行的，那么就是离散时间环境。
-- 连续时间环境（continuous time environment）：如果智能体和环境的交互是在连续的时间中进行的，那么就是连续时间环境。[19]
+- 连续时间环境（continuous time environment）：如果智能体和环境的交互是在连续的时间中进行的，那么就是连续时间环境。[9]
 
 ##### 按照环境是否具有随机性
 
@@ -72,7 +68,7 @@
       - 当能观测当前所有环境，即观察即是状态，叫做全观测环境 (Full observability) :$ O_{t}=S_{t}^{a}=S_{t}^{e}$.
       - 部分观测环境 (Partial observability): $S_{t}^{e}$。
 
-> 有时候用符号 s 代表状态，有些地方也会写作观测符号 o。 尤其是，当智能体在决定采取什么动作的时候，符号上的表示按理动作是基于状态的， 但实际上，动作是基于观测的，因为智能体并不能知道状态（只能通过观测了解状态）。[18]
+> 有时候用符号 s 代表状态，有些地方也会写作观测符号 o。 尤其是，当智能体在决定采取什么动作的时候，符号上的表示按理动作是基于状态的， 但实际上，动作是基于观测的，因为智能体并不能知道状态（只能通过观测了解状态）。[10]
 
 ### 智能体 (Agent)
 
@@ -92,9 +88,11 @@
 #### 第二步:决策——行动(Action):
 
 行动(Action):$A_{t}, t$ 时刻采取的行动。
-  - 动作空间(Action Spaces)：动作空间是所有给定环境中智能体可以执行的所有可能的有效动作的集合。
-    - 离散动作空间（discrete action space）: 有些环境，比如说 Atari 游戏和围棋，属于 离散动作空间，这种情况下智能体只能采取有限的动作。
-    - 连续动作空间（continuous action space）: 其他的一些环境，比如智能体在物理世界中控制机器人，属于 连续动作空间。在连续动作空间中，动作是实数向量。
+
+动作空间(Action Spaces)：动作空间是所有给定环境中智能体可以执行的所有可能的有效动作的**集合**。
+
+- 离散动作空间（discrete action space）: 有些环境，比如说 Atari 游戏和围棋，属于 离散动作空间，这种情况下智能体只能采取有限的动作。
+- 连续动作空间（continuous action space）: 其他的一些环境，比如智能体在物理世界中控制机器人，属于 连续动作空间。在连续动作空间中，动作是实数向量。
 
 这种区别对于深度强化学习来说，影响深远。有些种类的算法只能一种情况下直接使用，而在另一种情况下则必须进行大量修改。
 
@@ -144,7 +142,7 @@
    - 折扣因子通常表示为 $\gamma$，其中 $0 \leq \gamma \leq 1$。由于 $\gamma \leq 1$，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计回报公式，越远视;越接近0,越短视.
    - 从当前时间步$t$开始到未来有限视野T的所有时间步的累积奖励可以表示为：$$G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots = \sum_{k=0}^{T} \gamma^k R_{t+k+1}$$
    - 而无限视野(infinite-horizon) 是$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 R_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$$
-   - 其中，$r_t$ 表示在时间步 $t$ 时获得的奖励，$\gamma$ 是时间折扣因子，$G_t$ 表示从时间步 $t$ 开始的累积奖励。[20]
+   - 其中，$r_t$ 表示在时间步 $t$ 时获得的奖励，$\gamma$ 是时间折扣因子，$G_t$ 表示从时间步 $t$ 开始的累积奖励。[11]
 
 #### 优化问题(Optimization  problem)
 
@@ -198,10 +196,10 @@
 - 不基于模型的智能体，即免模型学习(Model-Free)放弃了模型学习，在效率上不如前者，但是这种方式更加容易实现，也容易在真实场景下调整到很好的状态。所以免模型学习方法更受欢迎，得到更加广泛的开发和测试。
   1. 基于价值函数的智能体(value-based agent)：该类智能体通过学习值函数(value function)（如状态值函数或动作值函数）来做出决策，即选择具有最大值的动作。值函数可以描述在某个状态或状态-动作对下，智能体能够获得多少期望奖励。如:使用表格学习的 Q-learning和Sarsa算法。此时我们训练的是一个主要完成任务的Actor。
   2. 基于策略的智能体(policy-based agent)：该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的模型来规划决策。我们训练的是不完成任务的一个Critic。Policy Gradient。
-     1. 在线控制 或 同策学习（on-policy）是指直接对策略进行建模和优化的方法，其目标是找到一个能够最大化期望累积奖励的最优策略。边决策边学习，学习者同时也是决策者。包括Sarsa，Sarsa（λ）[14]。on-policy方法更加稳定但收敛速度较慢。一般只有一个策略(最常见的是ϵ−贪婪法)[^15]
-     2. 离线控制 或 异策学习（off-policy）则是指在训练过程中使用一个不同于当前策略的策略进行采样和更新，也就是说，智能体在执行动作时可以采用任意策略生成的动作进行训练。常见的off-policy方法包括Q-learning，Deep-Q-Network，Deep Deterministic Policy Gradient (DDPG)等方法。通过之前的历史（可是自己的也可以是别人的）进行学习，学习者和决策者不需要相同。[^3]而off-policy方法则更容易出现不稳定性但收敛速度较快。包括Q Learning ， Deep Q Network。一般有两个策略，其中一个策略(最常见的是ϵ−贪婪法)用于选择新的动作，另一个策略(最常见的是贪婪法)用于更新价值函数。[^15]
-  3. 基于执行者/评论者的智能体（actor-critic agent）：该类智能体结合了值函数和策略的思想。它包含一个执行者（actor）网络和一个评论者（critic）网络，执行者网络用于生成动作，而评论者网络用于估计值函数。[^8]!在Actor-Critic 基础上扩展的 DDPN (Deep Deterministic Policy Gradient)、A3C (Asynchronous Advantage Actor-Critic)、DPPO (Distributed Proximal Policy Optimization)。[17][](img\A+C.png)
-- 基于模型的智能体 （model-based agent）：该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的环境模型来提前规划决策。（model + policy and/or + value function）但缺点是如果模型跟真实世界不一致，那么在实际使用场景下会表现的不好。预测从给定状态和动作转移到下一个状态的概率: $$\mathbf{P}_{s}^{a}=P\left[S_{t+1}=s^{\prime} \mid S_{t}=s, A_{t}=a\right], \mathbf{R}$$ 环境模型一般可以从数学上抽象为状态转移函数 (transition function) 和奖励函数 (reward function)。 在学习得到环境模型后，理想情况下，智能体可以不与真实环境进行交互，而只在模拟的环境中，通过RL算法最大化累积折扣奖励，得到最优策略。[28]
+     1. 在线控制 或 同策学习（on-policy）是指直接对策略进行建模和优化的方法，其目标是找到一个能够最大化期望累积奖励的最优策略。边决策边学习，学习者同时也是决策者。包括Sarsa，Sarsa（λ）[12]。on-policy方法更加稳定但收敛速度较慢。
+     2. 离线控制 或 异策学习（off-policy）则是指在训练过程中使用一个不同于当前策略的策略进行采样和更新，也就是说，智能体在执行动作时可以采用任意策略生成的动作进行训练。常见的off-policy方法包括Q-learning，Deep-Q-Network，Deep Deterministic Policy Gradient (DDPG)等方法。通过之前的历史（可是自己的也可以是别人的）进行学习，学习者和决策者不需要相同。[13]而off-policy方法则更容易出现不稳定性但收敛速度较快。包括Q Learning ， Deep Q Network。
+  3. 基于执行者/评论者的智能体（actor-critic agent）：该类智能体结合了值函数和策略的思想。它包含一个执行者（actor）网络和一个评论者（critic）网络，执行者网络用于生成动作，而评论者网络用于估计值函数。[14]!在Actor-Critic 基础上扩展的 DDPN (Deep Deterministic Policy Gradient)、A3C (Asynchronous Advantage Actor-Critic)、DPPO (Distributed Proximal Policy Optimization)。[15][执行者/评论者的智能体](img\A+C.png)
+- 基于模型的智能体 （model-based agent）：该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的环境模型来提前规划决策。（model + policy and/or + value function）但缺点是如果模型跟真实世界不一致，那么在实际使用场景下会表现的不好。预测从给定状态和动作转移到下一个状态的概率: $$\mathbf{P}_{s}^{a}=P\left[S_{t+1}=s^{\prime} \mid S_{t}=s, A_{t}=a\right], \mathbf{R}$$ 环境模型一般可以从数学上抽象为状态转移函数 (transition function) 和奖励函数 (reward function)。 在学习得到环境模型后，理想情况下，智能体可以不与真实环境进行交互，而只在模拟的环境中，通过RL算法最大化累积折扣奖励，得到最优策略。[16]
 - 模仿学习智能体（imitation learning agent）：该类智能体不是直接学习环境奖励，而是尝试模仿人类或其他专家的决策。模仿学习可以提供一种简单而有效的方式，使智能体学习到正确的行为。
 
 #### 基于价值函数
@@ -234,44 +232,50 @@ $$V_{\pi}(s)=E_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid 
 
 以雅达利游戏为例子，策略函数的输入就是游戏的一帧，它的输出决定智能体向左移动或者向右移动。
 
-通常情况下，强化学习一般使用随机性策略，随机性策略有很多优点。比如，在学习时可以通过引入一定的随机性来更好地探索环境； 随机性策略的动作具有多样性，这一点在多个智能体博弈时非常重要。采用确定性策略的智能体总是对同样的状态采取相同的动作，这会导致它的策略很容易被对手预测。[30]
+通常情况下，强化学习一般使用随机性策略，随机性策略有很多优点。比如，在学习时可以通过引入一定的随机性来更好地探索环境； 随机性策略的动作具有多样性，这一点在多个智能体博弈时非常重要。采用确定性策略的智能体总是对同样的状态采取相同的动作，这会导致它的策略很容易被对手预测。[17]
 
 - 强化学习的策略在训练中会不断更新，其对应的数据分布（即占用度量）也会相应地改变。因此，强化学习的一大难点就在于，智能体看到的数据分布是随着智能体的学习而不断发生改变的。
-- 由于奖励建立在状态动作对之上，一个策略对应的价值其实就是一个占用度量下对应的奖励的期望，因此寻找最优策略对应着寻找最优占用度量。[31]
+- 由于奖励建立在状态动作对之上，一个策略对应的价值其实就是一个占用度量下对应的奖励的期望，因此寻找最优策略对应着寻找最优占用度量。[5]
 
-之后会以N-Armed Bandit (N = 10)问题为例介绍几种策略，见[下一章](MAB.md)
+#### 具体策略
 
+之后会以多臂老虎机N-Armed Bandit (N = 10)问题为例介绍几种策略，见[下一章：多臂老虎机](MAB.md)
 
+## 参考文献
 
-
-[1]: https://spinningup.readthedocs.io/zh_CN/latest/spinningup/rl_intro.html#bellman-equations
-[2]: https://weread.qq.com/web/reader/62332d007190b92f62371aek92c3210025c92cc22753209
-[3]: https://easyai.tech/ai-definition/reinforcement-learning/
-[4]: http://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-1.pdf
-[5]: https://github.com/NLP-LOVE/ML-NLP/tree/master/Deep%20Learning/14.%20Reinforcement%20Learning
-[6]: https://zhuanlan.zhihu.com/p/316339517
-[7]: https://rl.qiwihui.com/zh_CN/latest/chapter1/introduction.html#id4
-[8]: https://github.com/applenob/rl_learn/blob/master/class_note.ipynb
-[9]: https://www.cnblogs.com/pinard/p/9385570.html
-[10]: https://blog.csdn.net/weixin_40056577/article/details/104109073
-[11]: https://tianshou.readthedocs.io/zh/latest/docs/2-impl.html#id31
-[12]: https://nndl.github.io/ 的ch14
+[1]: https://zh.wikipedia.org/wiki/%E6%93%8D%E4%BD%9C%E5%88%B6%E7%B4%84
+[2]: https://blog.sciencenet.cn/blog-2374-1351757.html
+[3]: https://github.com/NLP-LOVE/ML-NLP/tree/master/Deep%20Learning/14.%20Reinforcement%20Learning
+[4]: https://leovan.me/cn/2020/05/introduction-of-reinforcement-learning/
+[5]: https://hrl.boyuai.com/chapter/1/%E5%88%9D%E6%8E%A2%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0
+[6]: https://baike.baidu.com/item/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/810193?fromModule=lemma_search-box
+[7]: https://baike.baidu.com/item/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/2971075
+[8]: https://easyai.tech/ai-definition/reinforcement-learning/
+[9]: https://www.huoban.com/news/post/2237.html
+[10]: https://spinningup.qiwihui.com/zh_CN/latest/spinningup/rl_intro.html
+[11]: https://baike.baidu.com/item/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/6171383?fromModule=search-result_lemma-recommend
+[12]: https://echenshe.com/class/ml-intro/4-02-RL-methods.html
 [13]: https://anesck.github.io/M-D-R_learning_notes/RLTPI/notes_html/1.chapter_one.html
-[14]: https://echenshe.com/class/ml-intro/4-02-RL-methods.html
-[15]: https://blog.csdn.net/weixin_42022175/article/details/99676753
-[16]: https://blog.csdn.net/weixin_42022175/article/details/99676753
-[17]: https://blog.csdn.net/Hansry/article/details/80808097
-[18]: https://spinningup.qiwihui.com/zh_CN/latest/spinningup/rl_intro.html
-[19]: https://www.huoban.com/news/post/2237.html
-[20]: https://baike.baidu.com/item/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/6171383?fromModule=search-result_lemma-recommend
-[21]: http://www.deeprlhub.com/d/722/42
-[22]: https://baike.baidu.com/item/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/2971075
-[23]: https://baike.baidu.com/item/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/810193?fromModule=lemma_search-box
-[24]: https://leovan.me/cn/2020/05/introduction-of-reinforcement-learning/
-[25]: https://blog.sciencenet.cn/blog-2374-1351757.html
-[26]: https://zh.wikipedia.org/wiki/%E6%93%8D%E4%BD%9C%E5%88%B6%E7%B4%84
-[27]: https://blog.sciencenet.cn/blog-3189881-1122463.html
-[28]: https://opendilab.github.io/DI-engine/02_algo/model_based_rl_zh.html
-[29]: https://blog.csdn.net/qq_38962621/article/details/103951014
-[30]: https://datawhalechina.github.io/easy-rl/#/chapter1/chapter1?id=_123-%e5%ba%8f%e5%88%97%e5%86%b3%e7%ad%96
-[31]: https://hrl.boyuai.com/chapter/1/%E5%88%9D%E6%8E%A2%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0
+[15]: https://blog.csdn.net/Hansry/article/details/80808097
+[16]: https://opendilab.github.io/DI-engine/02_algo/model_based_rl_zh.html
+[17]: https://datawhalechina.github.io/easy-rl/#/chapter1/chapter1?id=_123-%e5%ba%8f%e5%88%97%e5%86%b3%e7%ad%96
+
+
+涉及到的网站已Markdown渲染，更多参考网站：
+
+> https://spinningup.readthedocs.io/zh_CN/latest/spinningup/rl_intro.html#bellman-equations
+> https://weread.qq.com/web/reader/62332d007190b92f62371aek92c3210025c92cc22753209
+> http://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-1.pdf
+> https://zhuanlan.zhihu.com/p/316339517
+> https://rl.qiwihui.com/zh_CN/latest/chapter1/introduction.html#id4
+> https://github.com/applenob/rl_learn/blob/master/class_note.ipynb
+> https://blog.csdn.net/weixin_40056577/article/details/104109073
+> https://tianshou.readthedocs.io/zh/latest/docs/2-impl.html#id31
+> https://nndl.github.io/ 的ch14
+> https://echenshe.com/class/ml-intro/4-02-RL-methods.html
+> https://blog.csdn.net/weixin_42022175/article/details/99676753
+> http://www.deeprlhub.com/d/722/42
+> https://baike.baidu.com/item/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/2971075
+> https://baike.baidu.com/item/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/810193?fromModule=lemma_search-box
+> https://blog.sciencenet.cn/blog-3189881-1122463.html
+> https://blog.csdn.net/qq_38962621/article/details/103951014

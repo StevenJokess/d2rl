@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-22 16:07:02
  * @LastEditors:  StevenJokes https://github.com/StevenJokes
- * @LastEditTime: 2023-02-22 16:24:41
+ * @LastEditTime: 2023-02-22 16:46:54
  * @Description:
  * @TODO::
  * @Reference:
@@ -14,7 +14,9 @@
 
 https://github.com/StevenJokess/
 
-《动手学深度学习》作者之一（主要成就贡献GAN的MXNet->PyTorch\TF2，DCGAN的MXNet->PyTorch\TF2和被封号拉黑)去动手学 《动手学强化学习》
+《动手学深度学习》作者之一（主要成就贡献GAN的MXNet->PyTorch\TF2，DCGAN的MXNet->PyTorch\TF2和被封号拉黑)去动手学 《动手学强化学习》、EasyRL等项目
+
+
 
 ## 项目收款码和Q群号
 
@@ -33,3 +35,4 @@ https://github.com/StevenJokess/
 更多项目：
 
 - [成为AI产品经理](https://stevenjokess.github.io/2bPM/)
+- [《动手学深度学习》读书笔记](https://github.com/StevenJokess/d2l-en-read)
