@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-23 17:28:52
+ * @LastEditTime: 2023-02-23 19:15:15
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -61,7 +61,7 @@
   - 环境状态 $S_{t}^{e}$ (Environment State)：指智能体外部的状态，包括智能体所处的环境的所有特征，如周围的物体、声音、光线、温度、风向等等。环境的状态是智能体的感知输入，即智能体通过感知获取到的外部信息。环境状态的更新$S_{t}^{e}=f^{e}\left(H_{t}\right)$
   - 智能体的状态 $S_{t}^{a}$ (Agent State)： 指智能体当前的内部状态，包括其知识、信念、意图、规划等等，以及可能的外部状态，比如其位置、速度、姿态等等。智能体状态是智能体自身的一个描述，它反映了智能体的**内部和外部**环境的特征。智能体状态的更新$S_{t}^{a}=f^{a}\left(H_{t}\right)$
 
-> 特例——马尔科夫状态(Markov State）： 当且仅当：$P\left[S_{t+1} \mid S_{t}\right]=P\left[S_{t+1} \mid S_{1}, \ldots, S_{t}\right]，$$S_{t}$ 是马尔科夫状态。到这一步可以把历史丟掉了, 只要每一步的状态即可。历史 (History):是在截止某刻之前的所有时刻的一序列的观察、行动、奖励。  $H_{t}=A_{1}, O_{1}, R_{1}, \ldots A_{t}, O_{t}, R_{t_{0}}$。其长度取决于任务环境和任务要求。
+> 特例——马尔科夫状态(Markov State）： 当且仅当：$P\left[S_{t+1} \mid S_{t}\right]=P\left[S_{t+1} \mid S_{1}, \ldots, S_{t}\right]$， $S_{t}$ 是马尔科夫状态。到这一步可以把历史丟掉了, 只要每一步的状态即可。历史 (History):是在截止某刻之前的所有时刻的一序列的观察、行动、奖励。  $H_{t}=A_{1}, O_{1}, R_{1}, \ldots A_{t}, O_{t}, R_{t_{0}}$。其长度取决于任务环境和任务要求。
 
 观察 (Observation):$O_{t}, t$ 时刻对环境的观察。是对于一个状态的部分描述，只包括智能体可以观测到的环境信息，可能漏掉一些信息。以汽车举例，观察则是看到汽车在行驶，听到汽车的发动机声音等。
       - 当能观测当前所有环境，即观察即是状态，叫做全观测环境 (Full observability) :$ O_{t}=S_{t}^{a}=S_{t}^{e}$.
