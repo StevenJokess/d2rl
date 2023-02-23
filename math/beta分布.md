@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-23 18:13:56
+ * @LastEditTime: 2023-02-23 18:26:55
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -55,7 +55,7 @@ $$
 
 ## Beta分布
 
-### 二项分布与Beta分布的区别
+### 二项分布与Beta分布概率密度函数的区别
 
 ![二项分布与Beta分布的概率密度函数对比](../img/Bin_vs_Beta_PDF.jpg)
 
@@ -68,7 +68,7 @@ $$
 
 Beta分布可以看做是分布之上的分布,更具体来说是在二项分布之上的分布(distribution over bionominals)。[8]
 
-### Beta分布的来源
+### Beta分布的概率密度函数的来源
 
 如果随机变量 $X$ 服从参数为 $n$ 和 $q$ 的二项分布，那么它的概率由概率质量函数（对于连续随机 变量，则为概率密度函数) 为:
 
@@ -110,11 +110,11 @@ $$
 f(q ; a+1, b+1)=\frac{1}{B(a+1, b+1)} q^a(1-q)^b
 $$
 
-这就是Beta分布的最原始的来源。
+这就是Beta分布的概率密度函数的最原始的来源。
 
 令 $\alpha = a + 1, \beta = b +1$，即可得下面的较为常见的Beta分布形式
 
-### Beta分布的常见形式
+### Beta分布的概率密度函数的常见形式
 
 $$
 \begin{aligned}
@@ -132,7 +132,7 @@ $$
 - Beta函数 $B(\alpha, \beta)$ 定义为$ B(\alpha, \beta) = \frac{\Gamma(\alpha) \Gamma(\beta)}{\Gamma(\alpha + \beta)}$
 - 二者关系略。
 
-#### Beta函数的均值和方差
+#### Beta分布的均值和方差
 
 均值是:
 
@@ -224,17 +224,23 @@ $$
 > 1. 由于$0 \leq \theta \leq 1$，所以积分的上限缩小为 1，而下限为0。再代入二项式的概率分布。再代入$P(\theta) = \frac{1}{B(\alpha,b)}\theta^{\alpha-1}(1-\theta)^{\beta-1}$
 > 1. 提取常数项，合并同类项
 > 1. 积分外乘以 $B(\alpha+x,\beta+n-x)$ ，积分内除以$B(\alpha+x,\beta+n-x)$
-> 1. 积分里恰好是Beta(a+x,b+n-x)分布
+> 1. 积分里恰好是Beta分布的概率密度函数$Beta(\alpha+x,\beta+n-x)$
 > 1. 积分值为1，只剩下常数项。
 
 所以后验分布:
 
-\begin{aligned}P(\theta \mid x) &= \frac{C_{n}^x \theta^x (1-\theta)^{n-x} \frac{1}{B(a,b)}\theta^{a-1}(1-\theta)^{b-1}}{C_{n}^x \frac{B(a+x,b+n-x)}{B(a,b)}}\\&=\frac{1}{B(a+x,b+n-x)} \theta^{a+x-1}(1-\theta)^{n+b-x-1} \\&= Beta(\theta \mid a+x,b+n-x)\end{aligned}
+$$
+\begin{aligned}
+P(\theta \mid x) & = \frac{C_{n}^x \theta^x (1-\theta)^{n-x} \frac{1}{B(a,b)}\theta^{a-1}(1-\theta)^{b-1}}{C_{n}^x \frac{B(a+x,b+n-x)}{B(a,b)}}\\
+& = \frac{1}{B(a+x,b+n-x)} \theta^{a+x-1}(1-\theta)^{n+b-x-1} \\
+& = Beta(\theta \mid a+x,b+n-x)
+\end{aligned}
+$$
 
 
 ##### 共轭性的应用
 
-共轭性的应用：假设参数$\theta$的先验分布为 Beta 分布 $Beta(\alpha, \beta)$，或者说 $P(\theta) = \frac{1}{B(\alpha,\beta)}\theta^{\alpha-1}(1-\theta)^{\beta-1}$ ，经过二项式 $B(n, \theta)$ 试验（已知该实验总次数为 $N$ 和 观察到的成功次数为$k$，而成功概率 $\theta$  未知）。给定常数 $a, b, 0 \leq a<b \leq 1$. 求解条件概率 $P(a \leq \theta \leq b \mid X = k)$
+共轭性的应用：假设参数$\theta$的先验分布为 Beta 分布 $Beta(\alpha, \beta)$，或者说 $P(\theta) = \frac{1}{B(\alpha,\beta)}\theta^{\alpha-1}(1-\theta)^{\beta-1}$ ，经过二项式 $B(n, \theta)$ 试验（已知该实验总次数为 $N$ 和 观察到的成功次数为$k$，而成功概率 $\theta$  未知）。给定常数 $a, b, 0 \leq a \lt b \leq 1$. 求解条件概率 $P(a \leq \theta \leq b \mid X = k)$
 
 由共轭性可得：$P(\theta  \mid X = k) = \operatorname{Beta}(\theta \mid \alpha + k, \beta + N -k)$
 
