@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-23 18:11:39
+ * @LastEditTime: 2023-02-23 18:13:56
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -112,9 +112,9 @@ $$
 
 这就是Beta分布的最原始的来源。
 
-令 $\alpha = a + 1, \beta = b +1$，即可得下面的较为常见的Beta分布
+令 $\alpha = a + 1, \beta = b +1$，即可得下面的较为常见的Beta分布形式
 
-#### 常见的Beta分布
+### Beta分布的常见形式
 
 $$
 \begin{aligned}
