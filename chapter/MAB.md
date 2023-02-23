@@ -4,8 +4,8 @@
  * @version:
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
- * @LastEditors:  StevenJokes https://github.com/StevenJokes
- * @LastEditTime: 2023-02-22 23:24:50
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-02-23 21:50:16
  * @Description:
  * @TODO::
  * @Reference:
@@ -25,7 +25,7 @@
 
 假设每个时间步只能拉动一个拉杆，多臂老虎机的目标为最大化一段时间步 $T$ 内（累积的，因为无延迟回报，所以即时回报就是所有回报）回报: $\max \sum_{t=1}^T r_t, r_t \sim \mathcal{R}\left(\cdot \mid a_t\right)$ 。 其中 $a_t$ 表示在第 $t$ 时间步拉动某一拉杆的动作， $r_t$ 表示动作 $a_t$ 获得的奖励。
 
-### 累积懊悔
+### 累积懊悔（累计误差）
 
 对于每一个动作 $a$ ，我们定义其期望回报为 $Q(a)=\mathbb{E}_{r \sim \mathcal{R}(\cdot \mid a)}[r]$ 。
 

@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-23 19:15:15
+ * @LastEditTime: 2023-02-23 22:55:15
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -211,11 +211,14 @@
 
 价值函数是一个将状态或状态-行动对映射到预期的未来的**累计折扣回报**的函数。价值函数的值是对未来累计折扣回报的预测，我们用它来评估状态的好坏。
 
+
 价值函数通常有两种形式：
 
 - 状态价值函数（state value function）表示在某个状态下的价值函数。$$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$ 其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ 执行后的预期累积回报，$G_t$ 是从时刻 $t$ 开始的累积回报（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
 > 预测下一个即时的奖励: $\mathbf{R}_{}= \mathbb{E}_{\pi}\left[R_{t+1} \mid S_{t}=s, A_{t}=a\right]_{\circ}$
 - 动作价值函数（action value function）表示在某个状态 - 行动对下的价值函数，又叫Q函数。$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积回报。$G_t$ 是从时刻 $t$ 开始的累积回报（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$） 是在策略 $\pi$ 下的期望。注意，动作值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
+
+> 注：不管策略如何，某个状态的价值是不变的，因为在算期望的时候已经就考虑了所有情况的回报。策略变了，R是变了，但期望是所有的可能轨迹去平均或者怎样，所以跟策略无关，策略只是去选择一条轨迹。
 
 #### 基于策略(Policy)
 
