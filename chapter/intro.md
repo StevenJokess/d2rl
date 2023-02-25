@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 02:32:05
+ * @LastEditTime: 2023-02-26 03:16:34
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -195,8 +195,8 @@
 - 不基于模型的智能体，即免模型学习(Model-Free)放弃了对环境的建模，直接与真实环境进行交互，，所以其通常需要较多的数据或者采样工作来优化策略，这也使其对于真实环境具有更好的泛化性能[5]；由于这种方式更加容易实现，也容易在真实场景下调整到很好的状态。所以免模型学习方法更受欢迎，得到更加广泛的开发和测试。
   1. 基于价值函数的智能体(value-based agent)：该类智能体通过学习值函数(value function)（如状态值函数或动作值函数）来做出决策，即选择具有最大值的动作。值函数可以描述在某个状态或状态-动作对下，智能体能够获得多少期望奖励。如:使用表格学习的 Q-learning和Sarsa算法。此时我们训练的是一个主要完成任务的Actor。
   2. 基于策略的智能体(policy-based agent)：该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的模型来规划决策。我们训练的是不完成任务的一个Critic。Policy Gradient。
-     1. 在线控制 或 同策学习（on-policy）是指直接对策略进行建模和优化的方法，其目标是找到一个能够最大化期望累积奖励的最优策略。边决策边学习，学习者同时也是决策者。包括Sarsa，Sarsa（λ）[13]。on-policy方法更加稳定但收敛速度较慢。
-     2. 离线控制 或 异策学习（off-policy）则是指在训练过程中使用一个不同于当前策略的策略进行采样和更新，也就是说，智能体在执行动作时可以采用任意策略生成的动作进行训练。常见的off-policy方法包括Q-learning，Deep-Q-Network，Deep Deterministic Policy Gradient (DDPG)等方法。通过之前的历史（可是自己的也可以是别人的）进行学习，学习者和决策者不需要相同。[14]而off-policy方法则更容易出现不稳定性但收敛速度较快。包括Q Learning ， Deep Q Network。
+     1. 在线控制 或 同策学习（on-policy）是指直接对策略进行建模和优化的方法，其目标是找到一个能够最大化期望累积奖励的最优策略。要优化的策略网络（更新参数时使用的策略）恰也是行动策略（生成样本的策略），即学习者与决策者统一。包括Sarsa，Sarsa（λ）[13]。on-policy方法更加稳定但收敛速度较慢。例如，SARAS是基于当前的策略直接执行一次动作选择，然后用动作和对应的状态更新当前的策略，因此生成样本的策略和学习时的策略相同，所以SARAS算法为on-policy算法。该算法会遭遇探索-利用窘境，仅利用目前已知的最优选择，可能学不到最优解，不能收敛到局部最优，而加入探索又降低了学习效率。ϵ - 贪心算法是这种矛盾下的折衷，其优点是直接了当、速度快，缺点是不一定能够找到最优策略。[20]
+     2. 离线控制 或 异策学习（off-policy）则是指在训练过程中使用一个不同于当前策略的策略进行采样和更新，也就是说，智能体在执行动作时可以采用任意策略生成的动作进行训练。常见的off-policy方法包括Q-learning，Deep-Q-Network，Deep Deterministic Policy Gradient (DDPG)等方法。通过之前的历史（可是自己的也可以是别人的）进行学习，要优化的策略网络（更新参数时使用的策略）与行动策略（生成样本的策略）不同，即学习者和决策者不需要相同。[14]而off-policy方法则更容易出现不稳定性但收敛速度较快。包括Q-Learning ， Deep Q Network。
   3. 基于执行者/评论者的智能体（actor-critic agent）：该类智能体结合了值函数和策略的思想。它包含一个执行者（actor）网络和一个评论者（critic）网络，执行者网络用于生成动作，而评论者网络用于估计值函数。![在Actor-Critic 基础上扩展的 DDPN (Deep Deterministic Policy Gradient)、A3C (Asynchronous Advantage Actor-Critic)、DPPO (Distributed Proximal Policy Optimization)。[15] ![执行者/评论者的智能体](img\A+C.png)
 - 基于模型的智能体 （model-based agent）：该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的环境模型来提前规划决策。（model + policy and/or + value function）但缺点是如果模型跟真实世界不一致，那么限制其泛化性能，即在实际使用场景下会表现的不好。预测从给定状态和动作转移到下一个状态的概率: $$\mathbf{P}_{s}^{a}=P\left[S_{t+1}=s^{\prime} \mid S_{t}=s, A_{t}=a\right], \mathbf{R}$$ 环境模型一般可以从数学上抽象为状态转移函数 (transition function) 和奖励函数 (reward function)。 在学习得到环境模型后，理想情况下，智能体可以不与真实环境进行交互，而只在模拟的环境中，通过RL算法最大化累积折扣奖励，得到最优策略。[16]
 - 模仿学习智能体（imitation learning agent）：该类智能体不是直接学习环境奖励，而是尝试模仿人类或其他专家的决策。模仿学习可以提供一种简单而有效的方式，使智能体学习到正确的行为。
@@ -263,7 +263,7 @@
 [17]: https://cloud.tencent.com/developer/article/1692318
 [18]: https://hrl.boyuai.com/chapter/1/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B
 [19]: https://datawhalechina.github.io/easy-rl/#/chapter1/chapter1?id=_123-%e5%ba%8f%e5%88%97%e5%86%b3%e7%ad%96
-
+[20]: https://www.cnblogs.com/kailugaji/p/16140474.html
 
 涉及到的网站已Markdown渲染，更多参考网站：
 
