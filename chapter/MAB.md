@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-23 21:50:16
+ * @LastEditTime: 2023-02-26 20:56:07
  * @Description:
  * @TODO::
  * @Reference:
@@ -108,22 +108,32 @@ $$
 
 ##### 上置信界（UCB）
 
-**上置信界** (upper confidence bound，UCB) 算法是一种经典 的基于不确定性的策略算法，它的思想用到了一个非常著名的数学原理: **霍夫丁不等式** (Hoeffding's inequality)。
+**上置信界** (upper confidence bound，UCB) 算法是一种经典的基于不确定性的策略算法，它的思想用到了一个非常著名的数学原理: **霍夫丁不等式** (Hoeffding's inequality)。
 
-在霍夫丁不等式中，令 $X_1, \ldots, X_n$ 为 $n$ 个独立同分布的随机变量，取值范围为 $[0,1]$ ，其经验期望为 $\bar{x}_n=\frac{1}{n} \sum_{j=1}^n X_j$ ，则有
+> 在霍夫丁不等式中，令 $X_1, \ldots, X_n$ 为 $n$ 个独立同分布的随机变量，取值范围为 $[0,1]$ ，其经验期望为 $\bar{x}_n=\frac{1}{n} \sum_{j=1}^n X_j$ ，则有
+>
+> $$
+> \mathbb{P}\{\mathbb{E}[X] \geq \bar{x}_n+u\} \leq e^{-2 n u^2}
+> $$
 
-$$
-\mathbb{P}\{\mathbb{E}[X] \geq \bar{x}_n+u\} \leq e^{-2 n u^2}
-$$
+现在我们将霍夫丁不等式运用于多臂老虎机问题中。将 $\hat{Q}_t(a)$ 代入 $\bar{x}_t$ ，不等式中的参数 $u=\hat{U}_t(a)$ 代表**不确定性度量**，给定一个概率 $p=e^{-2 N_t(a) U_t(a)^2}$ ，根据上述不等式， $Q_t(a)<\hat{Q}_t(a)+\hat{U}_t(a)$ 至少以概率 $1-p$ 成立。（对）
 
-现在我们将霍夫丁不等式运用于多臂老虎机问题中。将 $\hat{Q}_t(a)$ 代入 $\bar{x}_t$ ，不等式中的参数 $u=\hat{U}_t(a)$ 代表不确定性度量，给定一个概率 $p=e^{-2 N_t(a) U_t(a)^2}$ ，根据上述不等式， $Q_t(a)<\hat{Q}_t(a)+\hat{U}_t(a)$ 至少以概率 $1-p$ 成立。
+当 $p$ 很小时， $Q_t(a)<\hat{Q}_t(a)+\hat{U}_t(a)$ 就以很大概率成立， $\hat{Q}_t(a)+\hat{U}_t(a)$ 便是**期望回报上界**。此时，上置信界算法便选取期望回报上界最大的动作，即 $a=\underset{a \in \mathcal{A}}{\operatorname{argmax}}[\hat{Q}(a)+\hat{U}(a)]$ 。
 
-当 $p$ 很小时， $Q_t(a)<\hat{Q}_t(a)+\hat{U}_t(a)$ 就以很大概率成立， $\hat{Q}_t(a)+\hat{U}_t(a)$ 便是期望回报上界。此时，上置信界算法便选 取期望回报上界最大的动作，即 $a=\underset{a \in \mathcal{A}}{\operatorname{argmax}}[\hat{Q}(a)+\hat{U}(a)]$ -
+那其中的 $\hat{U}_t(a)$ 具体是什么呢?
 
-那其中 $\hat{U}_t(a)$ 具体是什么呢? 根据等式 $e^{-2 N_t(a) U_t(a)^2}$ ，解之 即得 $\hat{U}_t(a)=\sqrt{\frac{-\log p}{2 N_t(a)}}$ 。因此，设定一个概率 $p$ 后，就可以计算相应的不确定性度量 $\hat{U}_t(a)$ 了。更直观地说，UCB 算法在每次选择拉杆前，先估计每根拉杆的期望回报的上界，使得拉动每根拉杆的期望回报只有一个较小的概率 $p$ 超过这个上界，接着选出期望回报上界最大的拉杆，从而选择最有可能获得最大期望回报的拉杆。
+根据等式 $e^{-2 N_t(a) U_t(a)^2}$ ，解之 即得 $\hat{U}_t(a)=\sqrt{\frac{-\log p}{2 N_t(a)}}$ 。
+
+因此，设定一个概率 $p$ 后，就可以计算相应的**不确定性度量** $\hat{U}_t(a)$ 了。
+
+更直观地说，UCB 算法在每次选择拉杆前，先估计每根拉杆的期望回报的上界，使得拉动每根拉杆的期望回报只有一个较小的概率 $p$ 超过这个上界，接着选出期望回报上界最大的拉杆，从而选择最有可能获得最大期望回报的拉杆。
+
+TODO:之后呢？？
 
 我们编写代码来实现 UCB 算法，并且仍然使用 2.2.4 节定义的 10 臂老虎机来观察实验结果。在具体的实现过程中，设置 $p=\frac{1}{t}$ ，并且在分母中为拉动每根拉杆的次数加上常数 1 , 以免出现分母为 0 的情形，即此时 $\hat{U}_t(a)=\sqrt{\frac{\log t}{2\left(N_t(a)+1\right)}}$ 。同时，我们设定一个系数 $c$ 来控制不确定性的比重，此时 $a=\arg \max _{a \in \mathcal{A}} \hat{Q}(a)+c \cdot \hat{U}(a) 。$
 
+TODO:WHY？考虑了价值函数本身的大小和搜索次数, 能够自动实现探索和利用的自动平衡, 并能够有效减少探索次数.
+[3]
 #### 汤普森采样算法
 
 MAB 中还有一种经典算法——**汤普森采样**（Thompson sampling），先假设拉动每根拉杆的奖励服从一个特定的概率分布，然后根据拉动每根拉杆的期望奖励来进行选择。但是由于计算所有拉杆的期望奖励的代价比较高，汤普森采样算法使用采样的方式，即根据当前每个动作 $a$ 的奖励概率分布进行一轮采样，得到一组各根拉杆的奖励样本，再选择样本中奖励最大的动作。可以看出，汤普森采样是一种计算所有拉杆的最高奖励概率的蒙特卡洛采样方法。
@@ -145,3 +155,4 @@ MAB 中还有一种经典算法——**汤普森采样**（Thompson sampling）�
 
 [1]: https://hrl.boyuai.com/chapter/1/%E5%A4%9A%E8%87%82%E8%80%81%E8%99%8E%E6%9C%BA
 [2]: https://www.jianshu.com/p/590d98967a93
+[3]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19

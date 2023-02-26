@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 20:05:02
+ * @LastEditTime: 2023-02-26 21:47:40
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -197,43 +197,13 @@
 >
 > 预演（rollout）是一种模拟智能体在**当前策略**下进行一系列动作的过程。预演的目的是为了评估当前策略的效果，以便对其进行改进。在预演中，智能体会在当前策略下选择一个动作并执行，然后根据环境的反馈信息（例如奖励信号）更新自己的状态和价值估计。然后，智能体会基于更新后的状态选择下一个动作并执行，重复这个过程直到达到预定的终止条件。预演通常被用于评估当前策略的表现，例如计算状态值或动作值函数。它也可以被用于生成训练数据，例如在蒙特卡罗树搜索中，预演可以用于生成候选动作序列，以便选择最优的动作。预演还可以被用于生成演示数据，例如在逆强化学习中，预演可以用于生成人类专家的行为轨迹，以便训练一个智能体来模仿人类行为。
 
-### 优化方法分类：
+### 智能体的常见结构[17]
 
-- 不基于模型，即免模型学习(Model-Free)方法：该方法放弃了对环境的建模，直接与真实环境进行交互，，所以其通常需要较多的数据或者采样工作来优化策略，这也使其对于真实环境具有更好的泛化性能[5]；由于这种方式更加容易实现，也容易在真实场景下调整到很好的状态。所以免模型学习方法更受欢迎，得到更加广泛的开发和测试。
-  1. **基于价值函数**(value-based)：该方法是智能体通过学习值函数(value function)（如状态值函数或动作值函数）来做出**决策**，即选择具有最大值的动作。值函数可以描述在某个状态或状态-动作对下，智能体能够获得多少期望奖励。包括，蒙特卡洛方法（MC：模型无关）、使用表格学习的 Q-learning、Sarsa算法以及一系列基于Q-learning的算法（具体见off-policy）。此时我们训练的是一个主要完成任务的Actor。
-     1. 在线控制 或 **同策学习**（on-policy）是指直接对策略进行建模和优化的方法，其目标是找到一个能够最大化期望累积奖励的最优策略。要优化的策略网络（更新参数时使用的策略）恰也是行动策略（生成样本的策略），即学习者与决策者统一。包括Sarsa，Sarsa（λ）[13]。on-policy方法更加稳定但收敛速度较慢。例如，SARAS是基于当前的策略直接执行一次动作选择，然后用动作和对应的状态更新当前的策略，因此生成样本的策略和学习时的策略相同，所以SARAS算法为on-policy算法。该算法会遭遇探索-利用窘境，仅利用目前已知的最优选择，可能学不到最优解，不能收敛到局部最优，而加入探索又降低了学习效率。ϵ - 贪心算法是这种矛盾下的折衷，其优点是直接了当、速度快，缺点是不一定能够找到最优策略。[20]
-     2. 离线控制 或 **异策学习**（off-policy）则是指在训练过程中使用一个不同于当前策略的策略进行采样和更新，也就是说，智能体在执行动作时可以采用任意策略生成的动作进行训练。常见的off-policy方法包括Q-learning，Deep-Q-Network，Deep Deterministic Policy Gradient (DDPG)等方法。通过之前的历史（可是自己的也可以是别人的）进行学习，要优化的策略网络（更新参数时使用的策略）与行动策略（生成样本的策略）不同，即学习者和决策者不需要相同。[14]而off-policy方法则更容易出现不稳定性但收敛速度较快。包括Q-Learning ， Deep Q Network。例如，Q-learning在计算下一状态的预期奖励时使用了最大化操作，直接选择最优动作，而当前策略并不一定能选择到最优的动作，因此这里生成样本的策略和学习时的策略不同，所以Q-learning为off-policy算法。[20]
-  2. **基于策略**(policy-based)：该方法是智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的模型来**规划**决策。包括无梯度方法、策略梯度方法Policy Gradient及其衍生的 REINFORCE算法、带基准线的REINFORCE算法。此时我们训练的是不完成任务的一个Critic。
-     1. Gradient-Free：Cross-Entropy Method的DQN演化而成的QT-Opt、Evolution Strategy的SAMUEL
-     2. Gradient-Based：Policy Gradient、TRPO/PPO、ACKTR
-  3. **基于执行者/评论者**（actor-critic）：该方法是智能体结合了值函数和策略的思想。它包含一个执行者（actor）网络和一个评论者（critic）网络，执行者网络用于生成动作，而评论者网络用于估计值函数。![在Actor-Critic 基础上扩展的 DDPN (Deep Deterministic Policy Gradient)、A3C (Asynchronous Advantage Actor-Critic)、DPPO (Distributed Proximal Policy Optimization)。[15] ![执行者/评论者的智能体](img\A+C.png)
-- **基于模型**的智能体 （model-based agent）：该“模型”特指环境，即环境的动力学模型。[21]该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的环境模型来提前规划决策。（model + policy and/or + value function）但缺点是如果模型跟真实世界不一致，那么限制其泛化性能，即在实际使用场景下会表现的不好。预测从给定状态和动作转移到下一个状态的概率: $$\mathbf{P}_{s}^{a}=P\left[S_{t+1}=s^{\prime} \mid S_{t}=s, A_{t}=a\right], \mathbf{R}$$ 环境模型一般可以从数学上抽象为状态转移函数 P (transition function) 和奖励函数 R (reward function)。 在学习R和P之后，所有环境元素都已知，理想情况下，智能体可以不与真实环境进行交互，而只在模拟的环境中，通过RL算法（值迭代、策略迭代等规划方法）最大化累积折扣奖励，得到最优策略。[16]包括：动态规划算法（策略迭代算法、值迭代算法），已给定的模型（Given the Model） MCTS（AlphaGo/AlphaZero），学习这模型（Learn the Mode） I2A 和 World Model。
-- 更多相关：模仿学习智能体（imitation learning agent）：该类智能体不是直接学习环境奖励，而是尝试模仿人类或其他专家的决策。模仿学习可以提供一种简单而有效的方式，使智能体学习到正确的行为。
-
-
-### 常见结构[17]
-
-#### 基于价值函数
-
-##### 价值(value)
+#### 价值(value)
 
 价值(Value): 价值 $V$ 是对未来折扣累积奖励的预测值，是估计该状态的期望回报（即从这个状态出发的未来累积奖励的期望）[18]。
 
-##### 价值函数(value function)
-
-所有状态的价值就组成了价值函数（value function）。价值函数是一个将状态或状态-行动对映射到预期的未来的**累计折扣奖励**的函数。价值函数的值是对未来累计折扣奖励的预测，我们用它来评估状态的好坏。
-
-价值函数通常有两种形式：
-
-- 状态价值函数（state value function）表示在某个状态下的价值函数。$$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$ 其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ 执行后的预期累积奖励，$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
-> 预测下一个即时的奖励: $\mathbf{R}_{}= \mathbb{E}_{\pi}\left[R_{t+1} \mid S_{t}=s, A_{t}=a\right]_{\circ}$
-- 动作价值函数（action value function）表示在某个状态 - 行动对下的价值函数，又叫Q函数。$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积奖励。$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$） 是在策略 $\pi$ 下的期望。注意，动作值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
-
-> 注：不管策略如何，某个状态的价值是不变的，因为在算期望的时候已经就考虑了所有情况的奖励。策略变了，R是变了，但期望是所有的可能轨迹去平均或者怎样，所以跟策略无关，策略只是去选择一条轨迹。
-
-#### 基于策略(Policy)
-
-##### 策略(Policy)
+#### 策略(Policy)
 
 策略(Policy)：策略$\pi(a \mid s)$是指智能体在各个状态下应该采取的行动，即是 State 到 Action 的一个映射。强化学习通过学习来改进策略来最大化总奖励。
 
@@ -247,12 +217,34 @@
 - 强化学习的策略在训练中会不断更新，其对应的数据分布（即占用度量）也会相应地改变。因此，强化学习的一大难点就在于，智能体看到的数据分布是随着智能体的学习而不断发生改变的。
 - 由于奖励建立在状态动作对之上，一个策略对应的价值其实就是一个占用度量下对应的奖励的期望，因此寻找最优策略对应着寻找最优占用度量。[5]
 
+### 优化方法分类：
+
+- 不基于模型，即免模型学习(Model-Free)方法：该方法放弃了对环境的建模，直接与真实环境进行交互，，所以其通常需要较多的数据或者采样工作来优化策略，这也使其对于真实环境具有更好的泛化性能[5]；由于这种方式更加容易实现，也容易在真实场景下调整到很好的状态。所以免模型学习方法更受欢迎，得到更加广泛的开发和测试。
+  1. **基于价值函数**(value-based)：该方法是智能体通过学习价值函数(value function)（如状态值函数或动作值函数）来隐式地构建最优策略，即选择具有最大值的动作。包括，采取回合更新的蒙特卡洛方法（MC）、采取单步或多步更新的时间差分方法（TD）{使用表格学习的 Q-learning、Sarsa算法以及一系列基于Q-learning的算法（具体见off-policy）}。此时我们训练的是一个主要完成任务的Actor。 优点：Value-based算法的样本利用率高、价值函数估值方差小, 不易陷入局部最优；缺点：此类算法只能解决离散动作空间问题, 容易出现过拟合, 且可处理问题的复杂度受限. 同时, 由于动作选取对价值函数的变化十分敏感, value-based算法收敛性质较差。[22]
+     1. 在线控制 或 **同策学习**（on-policy）是指直接对策略进行建模和优化的方法，其目标是找到一个能够最大化期望累积奖励的最优策略。要优化的策略网络（更新参数时使用的策略）恰也是行动策略（生成样本的策略），即学习者与决策者统一。包括Sarsa，Sarsa（λ）[13]。on-policy方法更加稳定但收敛速度较慢。例如，SARAS是基于当前的策略直接执行一次动作选择，然后用动作和对应的状态更新当前的策略，因此生成样本的策略和学习时的策略相同，所以SARAS算法为on-policy算法。该算法会遭遇探索-利用窘境，仅利用目前已知的最优选择，可能学不到最优解，不能收敛到局部最优，而加入探索又降低了学习效率。ϵ - 贪心算法是这种矛盾下的折衷，其优点是直接了当、速度快，缺点是不一定能够找到最优策略。[20]
+     2. 离线控制 或 **异策学习**（off-policy）则是指在训练过程中使用一个不同于当前策略的策略进行采样和更新，也就是说，智能体在执行动作时可以采用任意策略生成的动作进行训练。常见的off-policy方法包括Q-learning，Deep-Q-Network，Deep Deterministic Policy Gradient (DDPG)等方法。通过之前的历史（可是自己的也可以是别人的）进行学习，要优化的策略网络（更新参数时使用的策略）与行动策略（生成样本的策略）不同，即学习者和决策者不需要相同。[14]而off-policy方法则更容易出现不稳定性但收敛速度较快。包括Q-Learning ， Deep Q Network。例如，Q-learning在计算下一状态的预期奖励时使用了最大化操作，直接选择最优动作，而当前策略并不一定能选择到最优的动作，因此这里生成样本的策略和学习时的策略不同，所以Q-learning为off-policy算法。[20]
+  2. **基于策略**(policy-based)：该方法是跨越价值函数, 直接搜索最佳策略。[22]包括无梯度方法(Gradient-Free)、策略梯度方法Policy Gradient及其衍生的 REINFORCE算法、带基准线的REINFORCE算法。此时我们训练的是不完成任务的一个Critic。优点：相比value-based算法, policy-based算法能够处理离散/连续空间问题, 并且具有更好的收敛性；policy-based方法轨迹方差较大、样本利用率低, 容易陷入局部最优的困境。
+     1. Gradient-Free：能够较好地处理低维度问题。[22]Cross-Entropy Method的DQN演化而成的QT-Opt、Evolution Strategy的SAMUEL
+     2. Gradient-Based：基于策略梯度算法仍然是目前应用最多的一类强化学习算法, 尤其是在处理复杂问题时效果更佳, 如AlphaGo 在围棋游戏中的惊人表现。算法在Hopper问题的效果对比，Policy Gradient、VPG（如REINFORCE）、TRPO/PPO、ACKTR。SAC=TD3＞DDPG=TRPO=DPG＞VRG。[22]
+  3. **基于执行者/评论者**（actor-critic）：该方法是智能体结合了值函数和策略的思想。它包含一个执行者（actor）网络和一个评论者（critic）网络，执行者网络用于生成动作，而评论者网络用于估计值函数。![在Actor-Critic 基础上扩展的 DDPN (Deep Deterministic Policy Gradient)、A3C (Asynchronous Advantage Actor-Critic)、DPPO (Distributed Proximal Policy Optimization)。[15] ![执行者/评论者的智能体](img\A+C.png) 优点：actor-critic算法多是off-policy，能够通过经验重放(experience replay)解决采样效率的问题；缺点：策略更新与价值评估相互耦合, 导致算法的稳定性不足, 尤其对超参数极其敏感。Actor-critic算法的调参难度很大, 算法也难于复现, 当推广至应用领域时, 算法的鲁棒性也是最受关注的核心问题之一。
+- **基于模型**的智能体 （model-based agent）：该“模型”特指环境，即环境的动力学模型。[21]该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的环境模型来提前规划决策。（model + policy and/or + value function）但缺点是如果模型跟真实世界不一致，那么限制其泛化性能，即在实际使用场景下会表现的不好。预测从给定状态和动作转移到下一个状态的概率: $$\mathbf{P}_{s}^{a}=P\left[S_{t+1}=s^{\prime} \mid S_{t}=s, A_{t}=a\right], \mathbf{R}$$ 环境模型一般可以从数学上抽象为状态转移函数 P (transition function) 和奖励函数 R (reward function)。 在学习R和P之后，所有环境元素都已知，理想情况下，智能体可以不与真实环境进行交互，而只在模拟的环境中，通过RL算法（值迭代、策略迭代等规划方法）最大化累积折扣奖励，得到最优策略。[16]包括：动态规划算法（策略迭代算法、值迭代算法），已给定的模型（Given the Model） MCTS（AlphaGo/AlphaZero），学习这模型（Learn the Model） I2A 和 World Model。
+- 更多相关：模仿学习智能体（imitation learning agent）：该类智能体不是直接学习环境奖励，而是尝试模仿人类或其他专家的决策。模仿学习可以提供一种简单而有效的方式，使智能体学习到正确的行为。
+
+#### 价值函数(value function)
+
+所有状态的价值就组成了价值函数（value function）。价值函数是一个将状态或状态-行动对映射到预期的未来的**累计折扣奖励**的函数。价值函数的值是对未来累计折扣奖励的预测，我们用它来评估状态的好坏。
+
+价值函数通常有两种形式：
+
+- 状态价值函数（state value function）表示在某个状态下的价值函数。$$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$ 其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ 执行后的预期累积奖励，$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
+> 预测下一个即时的奖励: $\mathbf{R}_{}= \mathbb{E}_{\pi}\left[R_{t+1} \mid S_{t}=s, A_{t}=a\right]_{\circ}$
+- 动作价值函数（action value function）表示在某个状态 - 行动对下的价值函数，又叫Q函数。$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积奖励。$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$） 是在策略 $\pi$ 下的期望。注意，动作值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
+
+> 注：不管策略如何，某个状态的价值是不变的，因为在算期望的时候已经就考虑了所有情况的奖励。策略变了，R是变了，但期望是所有的可能轨迹去平均或者怎样，所以跟策略无关，策略只是去选择一条轨迹。
+
 #### 具体策略
 
 之后会以多臂老虎机N-Armed Bandit (N = 10)问题为例介绍几种策略，见[下一章：多臂老虎机](MAB.md)
-
-####
-
 
 ## 参考文献
 
@@ -277,6 +269,7 @@
 [19]: https://datawhalechina.github.io/easy-rl/#/chapter1/chapter1?id=_123-%e5%ba%8f%e5%88%97%e5%86%b3%e7%ad%96
 [20]: https://www.cnblogs.com/kailugaji/p/16140474.html
 [21]: https://www.cnblogs.com/kailugaji/p/15354491.html#_lab2_0_7
+[22]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19
 
 涉及到的网站已Markdown渲染，更多参考网站：
 

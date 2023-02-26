@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 21:12:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 16:48:00
+ * @LastEditTime: 2023-02-26 21:41:59
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -16,6 +16,11 @@
 # 简介
 
 之前的章节介绍了基于策略梯度的算法 REINFORCE、Actor-Critic 以及两个改进算法——TRPO 和 PPO。这类算法有一个共同的特点：它们都是在线策略算法，这意味着它们的**样本效率**（sample efficiency）比较低。我们回忆一下 DQN 算法，DQN 算法直接估计最优函数 Q，可以做到离线策略学习，但是它只能处理动作空间有限的环境，这是因为它需要从所有动作中挑选一个值最大的动作。如果动作个数是无限的，虽然我们可以像 8.3 节一样，将动作空间离散化，但这比较粗糙，无法精细控制。那有没有办法可以用类似的思想来处理动作空间无限的环境并且使用的是离线策略算法呢？本章要讲解的**深度确定性策略梯度**（deep deterministic policy gradient，DDPG）算法就是如此，它构造一个**确定性策略**，用梯度上升的方法来最大化 $Q$ 值。DDPG 也属于一种 Actor-Critic 算法。我们之前学习的 REINFORCE、TRPO 和 PPO 学习随机性策略，而本章的 DDPG 则学习一个**确定性策略**。
+
+DDPG = Deep + DPG
+
+## DPG算法
+
 
 ## DDPG算法
 
@@ -60,4 +65,6 @@ $$
 
 本章讲解了深度确定性策略梯度算法（DDPG），它是面向连续动作空间的深度确定性策略训练的典型算法。相比于它的先期工作，即确定性梯度算法（DPG），DDPG 加入了**目标网络和软更新**的方法，这对深度模型构建的价值网络和策略网络的稳定学习起到了关键的作用。DDPG 算法也被引入了多智能体强化学习领域，催生了 MADDPG 算法，我们会在后续的章节中对此展开讨论。
 
-更多：# TD3：Double DQN -> DDPG(TD3)
+更多：双延迟确定性策略梯度算法TD3 (Twin Delayed Deep Deterministic policy gradient)：在DDPG的基础上, 引入性能更好的Double DQN, 取两个Critic之间的最小值来限制过拟合。
+
+[2]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19
