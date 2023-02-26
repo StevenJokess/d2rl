@@ -5,12 +5,13 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 17:30:36
+ * @LastEditTime: 2023-02-26 20:20:34
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
+
 # Index
 
 ```toc
@@ -28,10 +29,12 @@ DQN
 Double DQN&Dueling DQN
 REINFORCE in policy-based
 Actor-Critic
+A2C&A3C
 TRPO
 PPO
 DDPG
 SAC
+
 
 IL
 MPC

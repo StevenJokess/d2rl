@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 03:07:14
+ * @LastEditTime: 2023-02-26 19:29:05
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -82,6 +82,12 @@ $$
 - $r$ 是奖励函数，某个状态 $s$ 的奖励 $r(s)$ 指转移到该状态时可以获得奖励的期望。
 - $\gamma$ 是折扣因子 (discount factor)， $\gamma$ 的取值范围为 $[0,1)$ 。引入折扣因子的理由因为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励。
 
+>更多分类：[3]
+>
+> |      |       不考虑动作  |      考虑动作     |
+> | ---- | ---------------- | ---------------- |
+> | 状态完全可见 | 马尔科夫链(MC)| 马尔可夫决策过程(MDP)  |
+> | 状态不完全可见 | 隐马尔可夫模型(HMM)  | 部分可观察马尔可夫决策过程(POMDP)  |
 
 ### 回报  $G_t$ (Return)
 
@@ -270,3 +276,4 @@ $$
 
 [1]: https://hrl.boyuai.com/chapter/1/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B
 [2]: https://www.cnblogs.com/kailugaji/p/16140474.html
+[3]: https://www.cnblogs.com/kailugaji/p/15354491.html#_lab2_0_7

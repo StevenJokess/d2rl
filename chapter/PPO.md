@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:21:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-25 23:33:25
+ * @LastEditTime: 2023-02-26 18:27:21
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,7 +13,7 @@
 -->
 # PPO 算法
 
-第11章介绍的 TRPO 算法在很多场景上的应用都很成功，但是我们也发现它的计算过程非常复杂，每一步更新的运算量非常大。于是，TRPO 算法的改进版——PPO 算法在 2017 年被提出，PPO 基于 TRPO 的思想，但是其算法实现更加简单。并且大量的实验结果表明，与 TRPO 相比，PPO 能学习得一样好（甚至更快），这使得 PPO 成为非常流行的强化学习算法。如果我们想要尝试在一个新的环境中使用强化学习算法，那么 PPO 就属于可以首先尝试的算法。
+第11章介绍的 TRPO 算法在很多场景上的应用都很成功，但是我们也发现它的计算过程非常复杂，每一步更新的运算量非常大。于是，TRPO 算法的改进版—— 近端策略优化算法(Proximal Policy Optimization Algorithms,PPO) [3]算法在 2017 年被提出，PPO 基于 TRPO 的思想，但是其算法实现更加简单。并且大量的实验结果表明，与 TRPO 相比，PPO 能学习得一样好（甚至更快），这使得 PPO 成为非常流行的强化学习算法。如果我们想要尝试在一个新的环境中使用强化学习算法，那么 PPO 就属于可以首先尝试的算法。
 
 回忆一下 TRPO 的优化目标：
 
@@ -22,9 +22,13 @@ $$
 \max _\theta & \mathbb{E}_{s \sim \nu_{\theta_k}} \mathbb{E}_{a \sim \pi_{\theta_k}(\cdot \mid s)}\left[\frac{\pi_\theta(a \mid s)}{\pi_{\theta_k}(a \mid s)} A^{\pi_{\theta_k}}(s, a)\right] \\
 \text { s.t. } & \mathbb{E}_{s \sim \nu^{\pi_k}}\left[D_{K L}\left(\pi_{\theta_k}(\cdot \mid s), \pi_\theta(\cdot \mid s)\right)\right] \leq \delta
 \end{aligned}
-$$
+$$[3]
 
-TRPO 使用泰勒展开近似、共轭梯度、线性搜索等方法直接求解。PPO 的优化目标与 TRPO 相同，但 PPO 用了一些相对简单的方法来求解。具体来说，PPO 有两种形式，一是 PPO-惩罚，二是 PPO-截断，我们接下来对这两种形式进行介绍。
+需要限制新旧策略使两者差异不能太大，TRPO通过添加新旧策略的KL约束项，而PPO是限制两者比率的变化范围
+
+TRPO 使用泰勒展开近似、共轭梯度、线性搜索等方法直接求解。PPO 的优化目标与 TRPO 相同，但 PPO 用了一些相对简单的方法来求解。具体来说，PPO 有两种形式，一是 PPO-惩罚，二是 PPO-截断，我们接下来对这两种形式进行介绍。[2]
+
+
 
 ## PPO-惩罚
 
@@ -83,4 +87,14 @@ PPO 是 TRPO 的一种改进算法，它在实现上简化了 TRPO 中的**复�
 
 PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士毕业后在 OpenAI 公司研究出来的。通过对 TRPO 计算方式的改进，PPO 成为了最受关注的深度强化学习算法之一，并且其论文的引用量也超越了 TRPO。
 
+### 重要性采样的概念
+
+
+
+我们在已知 $q$ 的分布后，可以使用上述公式计算出从 $p$ 分布的期望值。也就可以使用 $q$ 来对于 $p$ 进行采样了，即为重要性采样。
+
+
+
 [1]: https://hrl.boyuai.com/chapter/2/ppo%E7%AE%97%E6%B3%95
+[2]: https://www.cnblogs.com/kailugaji/p/15401383.html#_lab2_0_1
+[3]: https://www.cnblogs.com/kailugaji/p/15396437.html
