@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 23:01:58
+ * @LastEditTime: 2023-02-27 00:27:11
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -77,22 +77,6 @@ $$
 - $r$ 是奖励函数，某个状态 $s$ 的奖励 $r(s)$ 指转移到该状态时可以获得奖励的期望。
 - $\gamma$ 是折扣因子 (discount factor)， $\gamma$ 的取值范围为 $[0,1)$ 。引入折扣因子的理由因为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励。
 
-### 马尔可夫决策过程 （MDP）
-
-在马尔可夫奖励过程的基础上加入动作集合 $\mathcal{A}$ [2]，就可以得到马尔可夫决策过程(Markov decision process)。一个马尔可夫决策过程由 $\langle\mathcal{S}, \mathcal{P}, \mathcal{A}, r, \gamma\rangle$ 构成，各个组成元素的含义如下所示。
-
-- $\mathcal{S}$ 是有限状态的集合。
-- $\mathcal{P}$ 是状态转移矩阵。
-- $\mathcal{A}$ 是所有动作的集合。
-- $r$ 是奖励函数，某个状态 $s$ 的奖励 $r(s)$ 指转移到该状态时可以获得奖励的期望。
-- $\gamma$ 是折扣因子 (discount factor)， $\gamma$ 的取值范围为 $[0,1)$ 。引入折扣因子的理由因为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励。
-
->更多分类：[3]
->
-> |      |       不考虑动作  |      考虑动作     |
-> | ---- | ---------------- | ---------------- |
-> | 状态完全可见 | 马尔科夫链(MC)| 马尔可夫决策过程(MDP) --当给定策略$\pi$即退化为[4]-->马尔可夫奖励过程（MRP） |
-> | 状态不完全可见 | 隐马尔可夫模型(HMM)  | 部分可观察马尔可夫决策过程(POMDP)  |
 
 ### 回报  $G_t$ (Return)
 
@@ -114,11 +98,64 @@ code
 
 ## 价值函数
 
+在马尔可夫奖励过程中，一个状态的期望回报（即从这个状态出发的末来累积 奖励的期望) 被称为这个状态的价值 (value)。所有状态的价值就组成了价值 函数 (value function)，价值函数的输入为某个状态，输出为这个状态的价 值。我们将价值函数写成 $V(s)=\mathbb{E}\left[G_t \mid S_t=s\right]$ ，展开为
 
+$$
+\begin{aligned}
+V(s) & =\mathbb{E}\left[G_t \mid S_t=s\right] \\
+& =\mathbb{E}\left[R_t+\gamma R_{t+1}+\gamma^2 R_{t+2}+\ldots \mid S_t=s\right] \\
+& =\mathbb{E}\left[R_t+\gamma\left(R_{t+1}+\gamma R_{t+2}+\ldots\right) \mid S_t=s\right] \\
+& =\mathbb{E}\left[R_t+\gamma G_{t+1} \mid S_t=s\right] \\
+& =\mathbb{E}\left[R_t+\gamma V\left(S_{t+1}\right) \mid S_t=s\right]
+\end{aligned}
+$$
 
+在上式的最后一个等号中，一方面，即时奖励的期望正是奖励函数的输出，即 $\mathbb{E}\left[R_t \mid S_t=s\right]=r(s)$ ；另一方面，等式中剩余部分 $\mathbb{E}\left[\gamma V\left(S_{t+1}\right) \mid S_t=s\right]$ 可以根据从状态 $s$ 出发的**转移概率**作为权重，来计算所有可能的下一状态 $s^{\prime}$ 对应的价值 $V\left(s^{\prime}\right)$ 的加权平均值，从而得到当前状态 $s$ 的价值 $V(s)$。
 
+$$
+V(s)=r(s)+\gamma \sum_{s^{\prime} \in S} p\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)
+$$
 
-以上解析解的计算复杂度是，其中是状态个数，因此这种方法只适用很小的马尔可夫奖励过程。求解较大规模的马尔可夫奖励过程中的价值函数时，可以使用动态规划（dynamic programming）算法、蒙特卡洛方法（Monte-Carlo method）和时序差分（temporal difference），这些方法将在之后的章节介绍。
+上式就是马尔可夫奖励过程中非常有名的贝尔曼方程 (Bellman equation)，对 每一个状态都成立。若一个马尔可夫奖励过程一共有 $n$ 个状态，即 $\mathcal{S}=\left\{s_1, s_2, \ldots, s_n\right\}$ ，我们将所有状态的价值表示成一个列向量 $\mathcal{V}=\left[V\left(s_1\right), V\left(s_2\right), \ldots, V\left(s_n\right)\right]^T$ ，同理，将奖励函数写成一个列向量 $\mathcal{R}=\left[r\left(s_1\right), r\left(s_2\right), \ldots, r\left(s_n\right)\right]^T$ 。于是我们可以将贝尔曼方程写成矩阵的形式:
+
+$$
+\begin{gathered}
+\mathcal{V}=\mathcal{R}+\gamma \mathcal{P} \mathcal{V} \\
+{\left[\begin{array}{c}
+V\left(s_1\right) \\
+V\left(s_2\right) \\
+\ldots \\
+V\left(s_n\right)
+\end{array}\right]=\left[\begin{array}{c}
+r\left(s_1\right) \\
+r\left(s_2\right) \\
+\ldots \\
+r\left(s_n\right)
+\end{array}\right]+\gamma\left[\begin{array}{cccc}
+P\left(s_1 \mid s_1\right) & p\left(s_2 \mid s_1\right) & \ldots & P\left(s_n \mid s_1\right) \\
+P\left(s_1 \mid s_2\right) & P\left(s_2 \mid s_2\right) & \ldots & P\left(s_n \mid s_2\right) \\
+\ldots & & & \\
+P\left(s_1 \mid s_n\right) & P\left(s_2 \mid s_n\right) & \ldots & P\left(s_n \mid s_n\right)
+\end{array}\right]\left[\begin{array}{c}
+V\left(s_1\right) \\
+V\left(s_2\right) \\
+\ldots \\
+V\left(s_n\right)
+\end{array}\right]}
+\end{gathered}
+$$
+
+我们可以直接根据矩阵运算求解，得到以下解析解:
+
+$$
+\begin{aligned}
+\mathcal{V} & =\mathcal{R}+\gamma \mathcal{P} \mathcal{V} \\
+(I-\gamma \mathcal{P}) \mathcal{V} & =\mathcal{R} \\
+\mathcal{V} & =(I-\gamma \mathcal{P})^{-1} \mathcal{R}
+\end{aligned}
+$$
+
+以上解析解的计算复杂度是 $O(n^{3})$ ，其中 $n$ 是状态个数，因此这种方法只适用很小的马尔可夫奖励过程。求解较大规模的马尔可夫奖励过程中的价值函数时，可以使用动态规划（dynamic programming）算法、蒙特卡洛方法（Monte-Carlo method）和时序差分（temporal difference），这些方法将在之后的章节介绍。
 
 接下来编写代码来实现求解价值函数的解析解方法，并据此计算该马尔可夫奖励过程中所有状态的价值。
 
@@ -153,9 +190,32 @@ $$
 
 可以发现左右两边的值几乎是相等的，说明我们求解得到的价值函数是满足状态为时的贝尔曼方程。读者可以自行验证在其他状态时贝尔曼方程是否也成立。若贝尔曼方程对于所有状态都成立，就可以说明我们求解得到的价值函数是正确的。除了使用动态规划算法，马尔可夫奖励过程中的价值函数也可以通过蒙特卡洛方法估计得到，我们将在 3.5 节中介绍该方法。
 
+## 马尔可夫决策过程
+
+3.2 节和 3.3 节讨论到的马尔可夫过程和马尔可夫奖励过程都是自发改变的随机过程；而如果有一个外界的“刺激”来共同改变这个随机过程，就有了**马尔可夫决策过程**（Markov decision process，MDP）。我们将这个来自外界的刺激称为智能体（agent）的动作，在马尔可夫奖励过程（MRP）的基础上加入动作，就得到了马尔可夫决策过程（MDP）。马尔可夫决策过程由 $\langle\mathcal{S}, \mathcal{P}, \mathcal{A}, r, \gamma\rangle$ 构成，其中
+
+- $\mathcal{S}$ 是有限状态的集合。
+- $\mathcal{P}$ 是状态转移矩阵。
+- $\mathcal{A}$ 是所有动作的集合。
+- $r$ 是奖励函数，某个状态 $s$ 的奖励 $r(s)$ 指转移到该状态时可以获得奖励的期望。
+- $\gamma$ 是折扣因子 (discount factor)， $\gamma$ 的取值范围为 $[0,1)$ 。引入折扣因子的理由因为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励。
+
+>更多分类：[3]
+>
+> |      |       不考虑动作  |      考虑动作     |
+> | ---- | ---------------- | ---------------- |
+> | 状态完全可见 | 马尔科夫链(MC)| 马尔可夫决策过程(MDP) --当给定策略$\pi$即退化为[4]-->马尔可夫奖励过程（MRP） |
+> | 状态不完全可见 | 隐马尔可夫模型(HMM)  | 部分可观察马尔可夫决策过程(POMDP)  |
+
+我们发现 MDP 与 MRP 非常相像，主要区别为 MDP 中的状态转移函数和奖励函数都比 MRP 多了动作作为自变量。注意，在上面 MDP 的定义中，我们不再使用类似 MRP 定义中的状态转移矩阵方式，而是直接表示成了状态转移函数。这样做一是因为此时状态转移与动作也有关，变成了一个三维数组，而不再是一个矩阵（二维数组）；二是因为状态转移函数更具有一般意义，例如，如果状态集合不是有限的，就无法用数组表示，但仍然可以用状态转移函数表示。我们在之后的课程学习中会遇到连续状态的 MDP 环境，那时状态集合都不是有限的。现在我们主要关注于离散状态的 MDP 环境，此时状态集合是有限的。
+
+不同于马尔可夫奖励过程，在马尔可夫决策过程中，通常存在一个智能体来执行动作。例如，一艘小船在大海中随着水流自由飘荡的过程就是一个马尔可夫奖励过程，它如果凭借运气漂到了一个目的地，就能获得比较大的奖励；如果有个水手在控制着这条船往哪个方向前进，就可以主动选择前往目的地获得比较大的奖励。马尔可夫决策过程是一个与时间相关的不断进行的过程，在智能体和环境 MDP 之间存在一个不断交互的过程。一般而言，它们之间的交互是如图 3-3 循环过程：智能体根据当前状态选择动作；对于状态和动作，MDP 根据奖励函数和状态转移函数得到和并反馈给智能体。智能体的目标是最大化得到的累计奖励。智能体根据当前状态从动作的集合中选择一个动作的函数，被称为**策略**。
+
+![图3-3 智能体与环境MDP的交互示意图](../img/MDP.png)
+
 ### 策略
 
-智能体的策略（Policy）通常用字母 $\pi$ 表示。策略是一个函数，表示在输入状态 $s$ 情况下采取动作 $a$ 的概率。当一个策略是**确定性策略**（deterministic policy）时，它在每个状态时只输出一个确定性的动作，即只有该动作的概率为 1，其他动作的概率为 0；当一个策略是**随机性策略**（stochastic policy）时，它在每个状态时输出的是关于动作的概率分布，然后根据该分布进行采样就可以得到一个动作。在 MDP 中，由于马尔可夫性质的存在，策略只需要与当前状态有关，不需要考虑历史状态。回顾一下在 MRP 中的价值函数，在 MDP 中也同样可以定义类似的价值函数。但此时的价值函数与策略有关，这意为着对于两个不同的策略来说，它们在同一个状态下的价值也很可能是不同的。这很好理解，因为不同的策略会采取不同的动作，从而之后会遇到不同的状态，以及获得不同的奖励，所以它们的累积奖励的期望也就不同，即状态价值不同。
+智能体的**策略**（Policy）通常用字母 $\pi$ 表示。策略是一个函数，表示在输入状态 $s$ 情况下采取动作 $a$ 的概率。当一个策略是**确定性策略**（deterministic policy）时，它在每个状态时只输出一个确定性的动作，即只有该动作的概率为 1，其他动作的概率为 0；当一个策略是**随机性策略**（stochastic policy）时，它在每个状态时输出的是关于动作的概率分布，然后根据该分布进行采样就可以得到一个动作。在 MDP 中，由于马尔可夫性质的存在，策略只需要与当前状态有关，不需要考虑历史状态。回顾一下在 MRP 中的价值函数，在 MDP 中也同样可以定义类似的价值函数。但此时的价值函数与策略有关，这意为着对于两个不同的策略来说，它们在同一个状态下的价值也很可能是不同的。这很好理解，因为不同的策略会采取不同的动作，从而之后会遇到不同的状态，以及获得不同的奖励，所以它们的累积奖励的期望也就不同，即状态价值不同。
 
 
 ### 状态价值函数
@@ -168,7 +228,7 @@ $$
 
 ### 动作价值函数
 
-不同于 MRP，在 MDP 中，由于动作的存在，我们额外定义一个动作价值函数 (action-value function)。我们用 $Q^\pi(s, a)$ 表示在 MDP 遵循策略 $\pi$ 时，对当前 状态 $s$ 执行动作 $a$ 得到的期望回报：
+不同于 MRP，在 MDP 中，由于动作的存在，我们额外定义一个**动作价值函数** (action-value function)。我们用 $Q^\pi(s, a)$ 表示在 MDP 遵循策略 $\pi$ 时，对当前 状态 $s$ 执行动作 $a$ 得到的期望回报：
 
 $$
 Q^\pi(s, a)=\mathbb{E}_\pi\left[G_t \mid S_t=s, A_t=a\right]
@@ -202,7 +262,9 @@ TODO:[  ![](../img/Bellman_E_optim.png) [2] 为啥不一样?
 
 一个简单的例子是用蒙特卡洛方法来计算圆的面积。例如，在图 3-5 所示的正方形内部随机产生若干个点，细数落在圆中点的个数，圆的面积与正方形面积之比就等于圆中点的个数与正方形中点的个数之比。如果我们随机产生的点的个数越多，计算得到圆的面积就越接近于真实的圆的面积：
 
-
+$$
+\frac{\text { 圆的面积 }}{\text { 正方形的面积 }}=\frac{\text { 圆中点的个数 }}{\text { 正方形中点的个数 }}
+$$
 
 我们现在介绍如何用蒙特卡洛方法来估计一个策略在一个马尔可夫决策过程中的状态价值函数。回忆一下，一个状态的价值是它的期望回报，那么一个很直观的想法就是用策略在 MDP 上采样很多条序列，计算从这个状态出发的回报再求其期望就可以了，公式如下：
 
