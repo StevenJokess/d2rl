@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 16:51:07
+ * @LastEditTime: 2023-02-28 22:45:31
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -17,15 +17,36 @@
 
 本书之前介绍的 Q-learning、DQN 及 DQN 改进算法都是**基于价值**（value-based）的方法，其中 Q-learning 是处理有限状态的算法，而 DQN 可以用来解决连续状态的问题。在强化学习中，除了基于值函数的方法，还有一支非常经典的方法，那就是**基于策略**（policy-based）的方法。对比两者，基于值函数的方法主要是学习值函数，然后根据值函数导出一个策略，学习过程中并不存在一个显式的策略；而基于策略的方法则是**直接显式地学习一个目标策略**。策略梯度是基于策略的方法的基础，本章从策略梯度算法说起。
 
-## 策略梯度
+## 策略梯度（Policy gradient）
 
 基于策略的方法首先需要将策略参数化。假设目标策略是一个随机性策略，并且处处可微，其中是对应的参数。我们可以用一个线性模型或者神经网络模型来为这样一个策略函数建模，输入某个状态，然后输出一个动作的概率分布。我们的目标是要寻找一个最优策略并最大化这个策略在环境中的期望回报。我们将策略学习的目标函数定义为
 
+$$
+J(\theta)=\mathbb{E}_{s_0}\left[V^{\pi_\theta}\left(s_0\right)\right]
+$$
 
-可以用多种方式对它进行估计。接下来要介绍的 REINFORCE 算法便是采用了蒙特卡洛方法来估计，对于一个有限步数的环境来说，REINFORCE 算法中的策略梯度为：
+其中， $s_0$ 表示初始状态。现在有了目标函数，我们将目标函数对策略 $\theta$ 求导，得 到导数后，就可以用梯度上升方法来最大化这个目标函数，从而得到最优策略。
+我第 3 章讲解过策略 $\pi$ 下的状态访问分布，在此用 $\nu{ }^\pi$ 表示。然后我们对目标函数 求梯度，可以得到如下式子，更详细的推导过程将在 $9.6$ 节给出。
+
+$$
+\begin{aligned}
+\nabla_\theta J(\theta) & \propto \sum_{s \in S} \nu^{\pi_\theta}(s) \sum_{a \in A} Q^{\pi_\theta}(s, a) \nabla_\theta \pi_\theta(a \mid s) \\
+& =\sum_{s \in S} \nu^{\pi_\theta}(s) \sum_{a \in A} \pi_\theta(a \mid s) Q^{\pi_\theta}(s, a) \frac{\nabla_\theta \pi_\theta(a \mid s)}{\pi_\theta(a \mid s)} \\
+& =\mathbb{E}_{\pi_\theta}\left[Q^{\pi_\theta}(s, a) \nabla_\theta \log \pi_\theta(a \mid s)\right]
+\end{aligned}
+$$
 
 
-这个梯度可以用来更新策略。按回合（episode）更新。[2]需要注意的是，因为上式中期望的下标是，所以策略梯度算法为在线策略（on-policy）算法，即必须使用当前策略采样得到的数据来计算梯度。直观理解一下策略梯度这个公式，可以发现在每一个状态下，梯度的修改是让策略更多地去采样到带来较高值的动作，更少地去采样到带来较低值的动作，如图 9-1 所示。
+
+
+
+
+
+这个梯度可以用来更新策略，且按回合（episode）更新。[2]需要注意的是，因为上式中期望的下标是  $\pi_\theta$ ，所以策略梯度算法为**在线策略**（on-policy）算法，即必须使用当前策略 $\pi_\theta$ 采样得到的数据来计算梯度。直观理解一下策略梯度这个公式，可以发现在每一个状态下，梯度的修改是*让策略更多地去采样到带来较高 $Q$ 值的动作更少地去采样到带来较低 $Q$ 值的动作*，可以说是不断试错的公式化，如图 9-1 所示。
+
+在计算策略梯度的公式中，我们需要用到 $Q^{\pi_\theta}(s, a)$ ，可以用多种方式对它进行估计。接下来要介绍的 REINFORCE 算法便是采用了蒙特卡洛方法来估计 $Q^{\pi_\theta}(s, a)$ ，对于一个有限步数的环境来说， REINFORCE 算法中的策略梯度为:
+
+
 
 $\nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\sum_{t=0}^T\left(\sum_{t^{\prime}=t}^T \gamma^{t^{\prime}-t} r_{t^{\prime}}\right) \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right)\right]$
 
@@ -58,12 +79,25 @@ REINFORCE 算法的具体算法流程如下：
 
 在 CartPole-v0 环境中，满分就是 200 分，我们发现 REINFORCE 算法效果很好，可以达到 200 分。接下来我们绘制训练过程中每一条轨迹的回报变化图。由于回报抖动比较大，往往会进行平滑处理。
 
-可以看到，随着收集到的轨迹越来越多，REINFORCE 算法有效地学习到了最优策略。不过，相比于前面的 DQN 算法，REINFORCE 算法使用了更多的序列，这是因为 REINFORCE 算法是一个在线策略算法，之前收集到的轨迹数据不会被再次利用。此外，REINFORCE 算法的性能也有一定程度的波动，这主要是因为每条采样轨迹的回报值波动比较大，这也是 REINFORCE 算法主要的不足。
+可以看到，随着收集到的轨迹越来越多，REINFORCE 算法有效地学习到了最优策略。不过，相比于前面的 DQN 算法，REINFORCE 算法使用了更多的序列，这是因为 REINFORCE 算法是一个在线策略算法，之前收集到的轨迹数据*不会被再次利用。*此外，REINFORCE 算法的性能也有一定程度的波动，这主要是因为每条采样轨迹的回报值波动比较大，这也是 REINFORCE 算法主要的不足。
+
+可以用DP部分观测的MDP[3]
+
+问题：估计梯度时噪声很大，导致收敛缓慢或学习不稳定。
 
 ## 小结
 
 REINFORCE 算法是策略梯度乃至强化学习的典型代表，智能体根据当前策略直接和环境交互，通过采样得到的轨迹数据直接计算出策略参数的梯度，进而更新当前策略，使其向最大化策略期望回报的目标靠近。这种学习方式是典型的从交互中学习，并且其优化的目标（即策略期望回报）正是最终所使用策略的性能，这比基于价值的强化学习算法的优化目标（一般是时序差分误差的最小化）要更加直接。 REINFORCE 算法理论上是能保证局部最优的，它实际上是借助蒙特卡洛方法采样轨迹来估计动作价值，这种做法的一大优点是可以得到无偏的梯度。但是，正是因为使用了蒙特卡洛方法，REINFORCE 算法的梯度估计的方差很大，可能会造成一定程度上的不稳定，这也是第 10 章将介绍的 Actor-Critic 算法要解决的问题。
 
+## 数学推导
+
+
+？？？
+
+![数学推导[5]](../img/PG_math.png)
+
+https://hrl.boyuai.com/chapter/2/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95#96-%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB%EF%BC%9A%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E8%AF%81%E6%98%8E
 
 [1]: https://hrl.boyuai.com/chapter/2/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95
 [2]: https://www.cnblogs.com/kailugaji/p/16140474.html
+[3]: http://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-5.pdf

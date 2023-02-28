@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 21:47:40
+ * @LastEditTime: 2023-03-01 00:08:44
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -16,7 +16,7 @@
 
 这种在复杂、不确定的环境中交互时不断做出选择（sequential decision making）边学习的行为，我们其实早就在进行了。当一个婴儿玩耍，挥动手臂或环顾四周时，他没有明确的老师，但他确实通过直接的感觉与环境联系。他可以通过这种联系获得大量关于因果关系、动作的结果以及如何实现目标的信息。 在我们的生活中，这种交互无疑是环境和自身知识的主要来源。无论我们是学习驾驶汽车还是进行交谈，我们都敏锐地意识到我们的环境如何响应我们的行为，并且我们试图通过我们的行为来影响所发生的事情。
 
-## RL概念
+## RL 基本概念
 
 强化学习（Reinforcement Learning，简称RL），也叫增强学习，是指一类智能体从与环境交互中不断学习以取得最大回报（Return）的问题以及解决这类问题的方法。强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的不断交互，每次交互包括观察（Observate）当前的环境状态（State）、根据这个状态选择某个动作（Action）、并由此获得奖励（Award）或收益（Reward），通过多次交互，智能体学习到了如何使得总体收益（Return）最大化。其中，强化是增加行为的意思，即当某个行为在从环境中获得正奖励后就会倾向去增加这种行为。[1] 更多强化学习的相关历史，可见[2]
 
@@ -40,9 +40,10 @@
 
 ## 基本概念
 
-### 环境 (Environment)
+### 环境 (Environment)及其状态（State）
 
 - 环境 (Environment):强化学习系统中除智能体以外的所有事物，它是智能体交互的对象。环境可以是已知的，也可以是未知的，因此可以对环境建模，也可以不对环境建模。[9]
+- 环境的模型是指一个预测状态转换和奖励的函数。[11]状态和奖励后面介绍。
 
 #### 环境分类
 
@@ -81,7 +82,7 @@
 
 > 特例——马尔科夫状态（Markov State）： 当且仅当：$P\left[S_{t+1} \mid S_{t}\right]=P\left[S_{t+1} \mid S_{1}, \ldots, S_{t}\right]$， $S_{t}$ 是马尔科夫状态。到这一步可以把历史丟掉了, 只要每一步的状态即可。历史 (History):是在截止某刻之前的所有时刻的一序列的观察、行动、奖励。  $H_{t}=A_{1}, O_{1}, R_{1}, \ldots A_{t}, O_{t}, R_{t_{0}}$。其长度取决于任务环境和任务要求。
 
-观察 (Observation):$O_{t}, t$ 时刻对环境的观察。是对于一个状态的部分描述，只包括智能体可以观测到的环境信息，可能漏掉一些信息。以汽车举例，观察则是看到汽车在行驶，听到汽车的发动机声音等。
+观察 (Observation):$O_{t}, t$ 时刻对环境的观察。它是对于一个状态的部分描述，只包括智能体可以观测到的环境信息，可能漏掉一些信息。以汽车举例，观察则是看到汽车在行驶，听到汽车的发动机声音等。
       - 当能观测当前所有环境，即观察即是状态，叫做全观测环境 (Full observability) :$ O_{t}=S_{t}^{a}=S_{t}^{e}$.
       - 部分观测环境 (Partial observability): $S_{t}^{e}$。
 
@@ -170,7 +171,19 @@
 > \mathcal{J}(\theta)=\mathbb{E}_{\tau \sim p_\theta(\tau)}[G(\tau)]=\mathbb{E}_{\tau \sim p_\theta(\tau)}\left[\sum_{t=0}^{T-1} \gamma^t r_{t+1}\right]
 > $$
 >
-> 其中 $\theta$ 为策略函数的参数.
+> 其中 $\theta$ 为**策略函数的参数**.
+>
+> **再特别地**，当MDP时[24]，$$p_\theta(\tau) = p_\theta\left(\mathbf{s}_1, \mathbf{a}_1, \ldots, \mathbf{s}_T, \mathbf{a}_T\right) = p\left(\mathbf{s}_1\right) \prod_{t=1}^T \pi_\theta\left(\mathbf{a}_i \mid \mathbf{s}_t\right) p\left(\mathbf{s}_{t+1} \mid \mathbf{s}_t, \mathbf{a}_t\right)$$
+>
+> $$
+> \theta^{\star}=\arg \max _\theta \underbrace{E_{\tau \sim p_\theta(\tau)}\left[\sum_t r\left(\mathrm{~s}_t, \mathbf{a}_t\right)\right]}_{J(\theta)}
+> $$
+> $$
+> J(\theta)=E_{\tau \sim p_\theta(\tau)}\left[\sum_t r\left(\mathbf{s}_t, \mathbf{a}_t\right)\right] \approx \frac{1}{N} \sum_i \sum_t r\left(\mathbf{s}_{i, t}, \mathbf{a}_{i, t}\right)
+> $$ $\sum_i$ represents sum over samples from $\pi_\theta$
+>
+> - 无限视野情况：$$ \theta^{\star} = \arg \max _\theta E_{\left(\mathbf{s}, \mathbf{a}, \sim p_\theta(\mathbf{s},mathbf{a})\right.}[r(\mathbf{s}, \mathbf{a})]  $$
+> - 有限视野情况：$$ \theta^{\star}=\arg \max _\theta \sum_{t=1}^T E_{\left(\mathbf{s}_t, \mathbf{a}_i\right) \sim p_\theta\left\{\mathbf{s}_t, \mathbf{a}_t\right)}\left[r\left(\mathbf{s}_t, \mathbf{a}_t\right)\right]$$
 
 ### 任务分类
 
@@ -205,7 +218,7 @@
 
 #### 策略(Policy)
 
-策略(Policy)：策略$\pi(a \mid s)$是指智能体在各个状态下应该采取的行动，即是 State 到 Action 的一个映射。强化学习通过学习来改进策略来最大化总奖励。
+策略(Policy)：策略 $\pi(a \mid s)$ 是指智能体在各个状态下应该采取的行动，即是 Observation 到 Action的一个映射 $\pi_\theta\left(\mathbf{a}_t \mid \mathbf{o}_i\right)$  或 State(fully observated) [23] 到 Action 的一个映射 $\pi_\theta\left(\mathbf{a}_t \mid \mathbf{s}_t\right)$ 。强化学习通过学习来改进策略来最大化总奖励。
 
 - 确定性策略（deterministic policy）$\mu(s)$ [21]表示智能体直接采取最有可能（最大概率）的动作，即$\mu(s)= a^* =\underset{a}{\arg \max } \pi(a \mid s)$。
 - 随机性策略（stochastic policy）表示在给定环境状态下，智能体选择一个从概率分布采样得到的动作，即 $\pi(a \mid s) \triangleq p(a \mid s) = P\left[A_{t}=a \mid S_{t}=s\right]$）其中，$\Sigma \pi(a \mid s)=1$
@@ -219,7 +232,7 @@
 
 ### 优化方法分类：
 
-- 不基于模型，即免模型学习(Model-Free)方法：该方法放弃了对环境的建模，直接与真实环境进行交互，，所以其通常需要较多的数据或者采样工作来优化策略，这也使其对于真实环境具有更好的泛化性能[5]；由于这种方式更加容易实现，也容易在真实场景下调整到很好的状态。所以免模型学习方法更受欢迎，得到更加广泛的开发和测试。
+- 不基于模型，即免模型学习(Model-Free)方法：该方法放弃了对环境的建模，直接与真实环境进行交互，所以其通常需要较多的数据或者采样工作来优化策略，这也使其对于真实环境具有更好的泛化性能[5]；由于这种方式更加容易实现，也容易在真实场景下调整到很好的状态。所以免模型学习方法更受欢迎，得到更加广泛的开发和测试。
   1. **基于价值函数**(value-based)：该方法是智能体通过学习价值函数(value function)（如状态值函数或动作值函数）来隐式地构建最优策略，即选择具有最大值的动作。包括，采取回合更新的蒙特卡洛方法（MC）、采取单步或多步更新的时间差分方法（TD）{使用表格学习的 Q-learning、Sarsa算法以及一系列基于Q-learning的算法（具体见off-policy）}。此时我们训练的是一个主要完成任务的Actor。 优点：Value-based算法的样本利用率高、价值函数估值方差小, 不易陷入局部最优；缺点：此类算法只能解决离散动作空间问题, 容易出现过拟合, 且可处理问题的复杂度受限. 同时, 由于动作选取对价值函数的变化十分敏感, value-based算法收敛性质较差。[22]
      1. 在线控制 或 **同策学习**（on-policy）是指直接对策略进行建模和优化的方法，其目标是找到一个能够最大化期望累积奖励的最优策略。要优化的策略网络（更新参数时使用的策略）恰也是行动策略（生成样本的策略），即学习者与决策者统一。包括Sarsa，Sarsa（λ）[13]。on-policy方法更加稳定但收敛速度较慢。例如，SARAS是基于当前的策略直接执行一次动作选择，然后用动作和对应的状态更新当前的策略，因此生成样本的策略和学习时的策略相同，所以SARAS算法为on-policy算法。该算法会遭遇探索-利用窘境，仅利用目前已知的最优选择，可能学不到最优解，不能收敛到局部最优，而加入探索又降低了学习效率。ϵ - 贪心算法是这种矛盾下的折衷，其优点是直接了当、速度快，缺点是不一定能够找到最优策略。[20]
      2. 离线控制 或 **异策学习**（off-policy）则是指在训练过程中使用一个不同于当前策略的策略进行采样和更新，也就是说，智能体在执行动作时可以采用任意策略生成的动作进行训练。常见的off-policy方法包括Q-learning，Deep-Q-Network，Deep Deterministic Policy Gradient (DDPG)等方法。通过之前的历史（可是自己的也可以是别人的）进行学习，要优化的策略网络（更新参数时使用的策略）与行动策略（生成样本的策略）不同，即学习者和决策者不需要相同。[14]而off-policy方法则更容易出现不稳定性但收敛速度较快。包括Q-Learning ， Deep Q Network。例如，Q-learning在计算下一状态的预期奖励时使用了最大化操作，直接选择最优动作，而当前策略并不一定能选择到最优的动作，因此这里生成样本的策略和学习时的策略不同，所以Q-learning为off-policy算法。[20]
@@ -227,20 +240,41 @@
      1. Gradient-Free：能够较好地处理低维度问题。[22]Cross-Entropy Method的DQN演化而成的QT-Opt、Evolution Strategy的SAMUEL
      2. Gradient-Based：基于策略梯度算法仍然是目前应用最多的一类强化学习算法, 尤其是在处理复杂问题时效果更佳, 如AlphaGo 在围棋游戏中的惊人表现。算法在Hopper问题的效果对比，Policy Gradient、VPG（如REINFORCE）、TRPO/PPO、ACKTR。SAC=TD3＞DDPG=TRPO=DPG＞VRG。[22]
   3. **基于执行者/评论者**（actor-critic）：该方法是智能体结合了值函数和策略的思想。它包含一个执行者（actor）网络和一个评论者（critic）网络，执行者网络用于生成动作，而评论者网络用于估计值函数。![在Actor-Critic 基础上扩展的 DDPN (Deep Deterministic Policy Gradient)、A3C (Asynchronous Advantage Actor-Critic)、DPPO (Distributed Proximal Policy Optimization)。[15] ![执行者/评论者的智能体](img\A+C.png) 优点：actor-critic算法多是off-policy，能够通过经验重放(experience replay)解决采样效率的问题；缺点：策略更新与价值评估相互耦合, 导致算法的稳定性不足, 尤其对超参数极其敏感。Actor-critic算法的调参难度很大, 算法也难于复现, 当推广至应用领域时, 算法的鲁棒性也是最受关注的核心问题之一。
-- **基于模型**的智能体 （model-based agent）：该“模型”特指环境，即环境的动力学模型。[21]该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的环境模型来提前规划决策。（model + policy and/or + value function）但缺点是如果模型跟真实世界不一致，那么限制其泛化性能，即在实际使用场景下会表现的不好。预测从给定状态和动作转移到下一个状态的概率: $$\mathbf{P}_{s}^{a}=P\left[S_{t+1}=s^{\prime} \mid S_{t}=s, A_{t}=a\right], \mathbf{R}$$ 环境模型一般可以从数学上抽象为状态转移函数 P (transition function) 和奖励函数 R (reward function)。 在学习R和P之后，所有环境元素都已知，理想情况下，智能体可以不与真实环境进行交互，而只在模拟的环境中，通过RL算法（值迭代、策略迭代等规划方法）最大化累积折扣奖励，得到最优策略。[16]包括：动态规划算法（策略迭代算法、值迭代算法），已给定的模型（Given the Model） MCTS（AlphaGo/AlphaZero），学习这模型（Learn the Model） I2A 和 World Model。
+- **基于模型**的智能体 （model-based agent）：该“模型”特指环境，即环境的动力学模型。[21]该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的环境模型来提前规划决策。（model + policy and/or + value function）但缺点是如果模型跟真实世界不一致，那么限制其泛化性能，即在实际使用场景下会表现的不好。预测从给定状态和动作转移到下一个状态的概率: $$\mathbf{P}_{s}^{a}=P\left[S_{t+1}=s^{\prime} \mid S_{t}=s, A_{t}=a\right], \mathbf{R}$$ 环境模型一般可以从数学上抽象为状态转移函数 P (transition function) 和奖励函数 R (reward function)。 在学习R和P之后，所有环境元素都已知，理想情况下，智能体可以不与真实环境进行交互，而只在模拟的环境中，通过RL算法（值迭代、策略迭代等规划方法）最大化累积折扣奖励，得到最优策略。[16]包括：动态规划算法（策略迭代算法、值迭代算法），已给定的模型（Given the Model） MCTS（AlphaGo/AlphaZero），学习这模型（Learn the Model） I2A 和 World Model。其最大的缺点就是智能体往往不能获得环境的真实模型。如果智能体想在一个场景下使用模型，那它必须完全从经验中学习，这会带来很多挑战。最大的挑战就是，智能体探索出来的模型和真实模型之间存在误差，而这种误差会导致智能体在学习到的模型中表现很好，但在真实的环境中表现得不好（甚至很差）。基于模型的学习从根本上讲是非常困难的，即使你愿意花费大量的时间和计算力，最终的结果也可能达不到预期的效果。[11]
 - 更多相关：模仿学习智能体（imitation learning agent）：该类智能体不是直接学习环境奖励，而是尝试模仿人类或其他专家的决策。模仿学习可以提供一种简单而有效的方式，使智能体学习到正确的行为。
 
-#### 价值函数(value function)
+> 在这个项目中选取了能够呈现强化学习近些年发展历程的核心算法。目前，在 可靠性 (stability)和 采样效率 (sample efficiency)这两个因素上表现最优的策略学习算法是 PPO 和 SAC。从这些算法的设计和实际应用中，可以看出可靠性和采样效率两者的权衡。[11]
 
-所有状态的价值就组成了价值函数（value function）。价值函数是一个将状态或状态-行动对映射到预期的未来的**累计折扣奖励**的函数。价值函数的值是对未来累计折扣奖励的预测，我们用它来评估状态的好坏。
+#### 价值函数(Value Functions)
+
+所有状态的价值就组成了价值函数（Value Functions）。价值函数是一个将状态或状态-行动对映射到预期的未来的**累计折扣奖励**的函数。价值函数的值是对未来累计折扣奖励的预测，我们用它来评估状态的好坏。
 
 价值函数通常有两种形式：
 
-- 状态价值函数（state value function）表示在某个状态下的价值函数。$$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$ 其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ 执行后的预期累积奖励，$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
+- 状态价值函数（state value function）表示在某个状态下之后每一步行动都按照策略 $\pi$ 执行后每个状态的价值函数。$$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$ 其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ 执行后的预期累积奖励，$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
 > 预测下一个即时的奖励: $\mathbf{R}_{}= \mathbb{E}_{\pi}\left[R_{t+1} \mid S_{t}=s, A_{t}=a\right]_{\circ}$
-- 动作价值函数（action value function）表示在某个状态 - 行动对下的价值函数，又叫Q函数。$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积奖励。$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$） 是在策略 $\pi$ 下的期望。注意，动作值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
+- 动作价值函数（action value function）表示从某个状态开始，先随便执行一个行动 $a$ (有可能不是按照策略走的），之后每一步都按照固定的策略 $\pi$ 执行后的每个状态-行为对下的价值函数，又叫Q函数。[11]$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积奖励。$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野 $\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$ ） 是在策略 $\pi$ 下的期望。注意，动作价值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
+- 由二者的定义得，$V^\pi(s)=\mathbb{E}_{a \sim \pi}\left[Q^\pi(s, a)\right]$,
 
-> 注：不管策略如何，某个状态的价值是不变的，因为在算期望的时候已经就考虑了所有情况的奖励。策略变了，R是变了，但期望是所有的可能轨迹去平均或者怎样，所以跟策略无关，策略只是去选择一条轨迹。
+
+> 注：不管策略如何，某个状态的价值是不变的，因为在算期望的时候已经就考虑了所有情况的奖励。策略变了，R是变了，但期望是所有的可能轨迹去平均或者怎样，所以跟策略无关，策略只是去选择一条轨迹。 (？X)
+>
+
+最优价值函数：
+
+- 最优值函数（最优策略的状态价值函数）：表示在某个状态下之后每一步行动都按照最优策略 $*$ 执行后每个状态的价值函数。$$V_{*}(s) = \max_{*} \left[ G_t | S_t = s \right] = \max_{*}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$
+- 最优行动-值函数（最优策略的动作价值函数）：表示从某个状态开始，先随便执行一个行动 $a$ (有可能不是按照策略走的），之后每一步都按照*最优策略* $\pi$ 执行后的每个状态-行为对下的价值函数。$$Q_{*}(s, a) = \max_{*} \left[ G_t \mid S_t = s, A_t = a \right] = \max_{*}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$
+- 由二者的定义得，$$V_{*}(s) = \max_{a}Q_{*}(s, a)$$
+
+#### 优势函数（Advantage Functions)
+
+强化学习中，有些时候我们不需要描述一个行动的绝对好坏，而只需要知道它相对于平均水平的优势。也就是说，我们只想知道一个行动的相对优势 。这就是优势函数的概念。[11]
+
+一个服从策略 $\pi$ 的优势函数，描述的是它在状态 $s$ 下采取行为 $a$ 比随机选择一个行为好多少（假设之后一直服从策略 $\pi$ ）。数学角度上，优势函数的定义为：[11]
+
+$$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
+
+> 我们之后会继续谈论优势函数，它对于策略梯度方法非常重要。
 
 #### 具体策略
 
@@ -270,6 +304,7 @@
 [20]: https://www.cnblogs.com/kailugaji/p/16140474.html
 [21]: https://www.cnblogs.com/kailugaji/p/15354491.html#_lab2_0_7
 [22]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19
+[23]: http://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-2.pdf
 
 涉及到的网站已Markdown渲染，更多参考网站：
 

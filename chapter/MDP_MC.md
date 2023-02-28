@@ -199,6 +199,7 @@ $$
 - $\mathcal{A}$ 是所有动作的集合。
 - $r$ 是奖励函数，某个状态 $s$ 的奖励 $r(s)$ 指转移到该状态时可以获得奖励的期望。
 - $\gamma$ 是折扣因子 (discount factor)， $\gamma$ 的取值范围为 $[0,1)$ 。引入折扣因子的理由因为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励。
+> 有的没有$\gamma$，而是$\rho_0$，它是开始状态的分布。[6]
 
 >更多分类：[3]
 >
@@ -404,3 +405,4 @@ code
 [3]: https://www.cnblogs.com/kailugaji/p/15354491.html#_lab2_0_7
 [4]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19
 [5]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
+[6]: https://spinningup.readthedocs.io/zh_CN/latest/spinningup/rl_intro.html

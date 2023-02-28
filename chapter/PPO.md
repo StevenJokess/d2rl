@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:21:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 18:27:21
+ * @LastEditTime: 2023-02-28 21:53:19
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -89,12 +89,21 @@ PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士�
 
 ### 重要性采样的概念
 
+$$
+\begin{aligned}
+E_{x \sim p i x)}[f(x)] & =\int p(x) f(x) d x \\
+& =\int \frac{q(x)}{q(x)} p(x) f(x) d x \\
+& =\int q(x) \frac{p(x)}{q(x)} f(x) d x \\
+& =E_{x \sim q(x)}\left[\frac{p(x)}{q(x)} f(x)\right]
+\end{aligned}
+$$
 
+我们在已知 $q$ 的分布后，可以使用上述公式计算出从 $p$ 分布的期望值。也就可以使用 $q$ 来对于 $p$ 进行采样了，即为重要性采样。[4]
 
-我们在已知 $q$ 的分布后，可以使用上述公式计算出从 $p$ 分布的期望值。也就可以使用 $q$ 来对于 $p$ 进行采样了，即为重要性采样。
 
 
 
 [1]: https://hrl.boyuai.com/chapter/2/ppo%E7%AE%97%E6%B3%95
 [2]: https://www.cnblogs.com/kailugaji/p/15401383.html#_lab2_0_1
 [3]: https://www.cnblogs.com/kailugaji/p/15396437.html
+[4]: http://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-5.pdf
