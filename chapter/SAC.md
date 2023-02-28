@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:58:18
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-23 21:05:25
+ * @LastEditTime: 2023-03-01 01:40:26
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -19,7 +19,7 @@
 
 ## SAC
 
-
+SAC是Q-learning的变体，它使用随机策略、熵正则化和一些其它技巧来稳定学习，同时在 benchmarks 上获得比 DDPG 更高的分数。[1]
 
 ## SAC代码实践
 
