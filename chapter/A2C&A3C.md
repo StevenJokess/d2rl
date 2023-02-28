@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 02:11:01
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 21:48:32
+ * @LastEditTime: 2023-02-28 19:51:01
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -19,11 +19,18 @@
 
 ## A3C 算法
 
-A3C就是异步优势演员-评论家方法（Asynchronous Advantage Actor-Critic）：评论家学习值函数，同时有多个演员并行训练并且不时与全局参数同步。A3C旨在用于并行训练，是 on-policy 的方法。
+A3C就是**异步**优势演员-评论家方法（Asynchronous Advantage Actor-Critic）：评论家学习值函数，同时有多个演员并行训练并且不时与全局参数同步。A3C旨在用于并行训练，是 on-policy 的方法。
+
+在A3C算法中，有多个并行的环境，每个环境中都有一个智能体执行各自的动作和并计算累计的参数梯度。在一定步数后进行累计，利用累计的参数梯度去更新所有智能体共享的全局参数。
+
+
+不同环境中的智能体可以使用不同的探索策略，会导致经验样本之间的相关性较小，可以提高学习效率。
 
 A3C可根据critic所采用的算法进行同步/异步训练, 能适用于同步策略、异步策略。
 
 使用在线Critic整合策略梯度, 降低训练样本的相关性, 在保证稳定性和无偏估计的前提下, 提升了采样效率和训练速度.[3]
+
+
 
 ## 算法大纲：
 
@@ -58,3 +65,4 @@ $A(s, a)=Q(s, a)-V(s)$ 是为了解决基于价值方法具有高变异性。 �
 
 [2]: https://www.cnblogs.com/kailugaji/p/16140474.html
 [3]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19
+[4]: https://aistudio.baidu.com/aistudio/projectdetail/54249
