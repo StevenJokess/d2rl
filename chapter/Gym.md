@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-02 14:41:35
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-02 14:47:35
+ * @LastEditTime: 2023-03-08 22:16:27
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -38,7 +38,9 @@ Gym当中有很多小游戏等环境可以用。
 MountainCar-v0 例子
 选取**小车上山（MountainCar-v0）**作为例子。
 
-## 观测空间和动作空间
+## Spaces：观测空间和动作空间
+
+Environment对象里有两个空间(Space)：状态空间(State Space)和行为空间(Action Space)，它们定义了所有可能的状态和行为。我们可以查看一些CartPole-v0的Space：
 
 ```python
 import gym
@@ -50,6 +52,7 @@ print('观测范围 = {} ~ {}'.format(env.observation_space.low,
 print('动作数 = {}'.format(env.action_space.n))
 ```
 
+
 输出：
 
 ```
@@ -58,6 +61,9 @@ print('动作数 = {}'.format(env.action_space.n))
 观测范围 = [-1.2  -0.07] ~ [0.6  0.07]
 动作数 = 3
 ```
+
+Box(2,)表示状态由2维向量表示，物理意义分别是TODO
+Discrete(3)表示这个任务有三个选的Action,分别是TODO
 
 小车上山环境有一个参考的回合奖励值 -110，如果连续 100 个回合的平均回合奖励大于 -110，则认为这个任务被解决了。BespokeAgent 类对应的策略的平均回合奖励就在 -110 左右。
 

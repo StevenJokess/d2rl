@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-07 01:36:10
+ * @LastEditTime: 2023-03-08 20:41:58
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -35,21 +35,33 @@
 
 ### 策略优化
 
-> 策略优化定理
->
-> 对于确定的策略 $\pi$ 和 $\pi^{\prime}$, 如果对于任意状态 $s \in S$
-> $$
-> Q_\pi\left(s, \pi^{\prime}(s)\right) \geq Q_\pi(s, \pi(s))
-> $$
-> 那么对于任意状态 $s \in S$, 有
-> $$
-> V_{\pi^{\prime}}(s) \geq V_\pi(s)
-> $$
-> 即策略 $\pi^{\prime}$ 不比 $\pi$ 差
+策略优化定理：
+
+对于确定的策略 $\pi$ 和 $\pi^{\prime}$, 如果对于任意状态 $s \in S$
+$$
+Q_\pi\left(s, \pi^{\prime}(s)\right) \geq Q_\pi(s, \pi(s))
+$$
+那么对于任意状态 $s \in S$, 有
+$$
+V_{\pi^{\prime}}(s) \geq V_\pi(s)
+$$
+即策略 $\pi^{\prime}$ 不比 $\pi$ 差
 
 在讨论如何优化策略之前, 首先需要明确什么是“更好”的策略。分别给出 $\pi$ 和 $\pi^{\prime}$ 两个策略, 如果对于任意状态 $s \in S$, 有 $V_\pi(s) \leq V_{\pi^{\prime}}(s)$, 那么可以 认为策略 $\pi^{\prime}$ 不比策略 $\pi$ 差, 可见“更优”策略是一个偏序关系。
 
+其证明：
 
+$$
+\begin{gathered}
+V^\pi(s) \leq Q^\pi\left(s, \pi^{\prime}(s)\right)=\mathbb{E}\left[R_{t+1}+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s, A_t=\pi^{\prime}(s)\right] \\
+=\mathbb{E}_{\pi^{\prime}}\left[R_{t+1}+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s\right] \\
+\leq \mathbb{E}_{\pi^{\prime}}\left[R_{t+1}+\gamma Q^\pi\left(S_{t+1}\right) \mid S_t=s\right] \\
+=\mathbb{E}_{\pi^{\prime}}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 V^\pi\left(S_{t+2}\right) \mid S_t=s\right] \\
+\quad \cdots \\
+\leq \mathbb{E}_{\pi^{\prime}}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\ldots \mid S_t=s\right] \\
+=V^\pi(s)
+\end{gathered}
+$$
 
 
 

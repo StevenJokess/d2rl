@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 23:43:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-28 20:28:52
+ * @LastEditTime: 2023-03-08 19:04:41
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO:: 伪代码和Code,
@@ -44,7 +44,13 @@ $$
 Q(s, a) \leftarrow Q(s, a)+\alpha\left[r+\gamma \max _{a^{\prime} \in \mathcal{A}} Q\left(s^{\prime}, a^{\prime}\right)-Q(s, a)\right]
 $$
 
-上述公式用**时序差分** (temporal difference，TD) 学习目标 $r+\gamma \max_{a^{\prime} \in \mathcal{A}} Q\left(s^{\prime}, a^{\prime}\right)$ 来增量式更新 $Q(s, a)$ ，也就是说要使 $Q(s, a)$ 和 TD 目标 $r+\gamma \max_{a^{\prime} \in \mathcal{A}} Q\left(s^{\prime}, a^{\prime}\right)$ 靠近。于是，对于一组数据 $\left\{\left(s_i, a_i, r_i, s_i^{\prime}\right)\right\}$ ，我们可以很自然地将 $Q$ 网络的损失函数构造为均方误差的形式:
+上述公式用**时序差分** (temporal difference，TD) 学习目标 $r+\gamma \max_{a^{\prime} \in \mathcal{A}} Q\left(s^{\prime}, a^{\prime}\right)$ 来增量式更新 $Q(s, a)$ ，也就是说要使 $Q(s, a)$ 和 TD 目标 $r+\gamma \max_{a^{\prime} \in \mathcal{A}} Q\left(s^{\prime}, a^{\prime}\right)$ 靠近。于是，对于一组数据 $\left\{\left(s_i, a_i, r_i, s_i^{\prime}\right)\right\}$ ，我们可以很自然地将 $Q$ 网络的损失函数构造为均方误差（squared error）的形式[4]:
+
+$$
+L=\mathbb{E}\left[\left(\boldsymbol{r}+\gamma \max _{\boldsymbol{a}^{\prime}} \boldsymbol{Q}\left(\boldsymbol{s}^{\prime}, \boldsymbol{a}^{\prime}\right)-Q(s, a)\right)^2\right]
+$$
+
+
 
 $$
 \omega^*=\arg \min _\omega \frac{1}{2 N} \sum_{i=1}^N\left[Q_\omega\left(s_i, a_i\right)-\left(r_i+\gamma \max _{a^{\prime}} Q_\omega\left(s_i^{\prime}, a^{\prime}\right)\right)\right]^2
@@ -77,16 +83,16 @@ DQN 算法最终更新的目标是让$Q_\omega(s, a)$逼近$r+\gamma \max _{a^{\
 - 复制相同的参数 $\omega^{-} \leftarrow \omega$ 来初始化目标网络 $Q_{\omega^{\prime}}$
 - 初始化经验回放池 $R$
 - for 序列 $e=1 \rightarrow E$ do
--     获取环境初始状态 $s_1$
--     for 时间步 $t=1 \rightarrow T$ do
--         根据当前网络 $Q_\omega(s, a)$ 以 $\epsilon$-贪婪策略选择动作 $a_t$
--         执行动作 $a_t$ ，获得回报 $r_t$ ，环境状态变为 $s_{t+1}$
--         将 $\left(s_t, a_t, r_t, s_{t+1}\right)$ 存储进回放池 $R$ 中
--         若 $R$ 中数据足够，从 $R$ 中采样 $N$ 个数据 $$\left\{\left(s_i, a_i, r_i, s_{i+1}\right)\right\}_{i=1, \ldots, N}$$
--         对每个数据，用目标网络计算 $$ y_i=r_i+\gamma \max _a Q_{\omega^{-}}\left(s_{i+1}, a\right)$$
--         最小化目标损失 $L=\frac{1}{N} \sum_i\left(y_i-Q_\omega\left(s_i, a_i\right)\right)^2$ ，以此更 新当前网络 $Q_\omega$
--         更新目标网络
--     **end for**
+  - 获取环境初始状态 $s_1$
+  - for 时间步 $t=1 \rightarrow T$ do
+    - 根据当前网络 $Q_\omega(s, a)$ 以 $\epsilon$-贪婪策略选择动作 $a_t$
+    - 执行动作 $a_t$ ，获得回报 $r_t$ ，环境状态变为 $s_{t+1}$
+    - 将 $\left(s_t, a_t, r_t, s_{t+1}\right)$ 存储进回放池 $R$ 中
+    - 若 $R$ 中数据足够，从 $R$ 中采样 $N$ 个数据 $$\left\{\left(s_i, a_i, r_i, s_{i+1}\right)\right\}_{i=1, \ldots, N}$$
+    - 对每个数据，用目标网络计算 $$ y_i=r_i+\gamma \max _a Q_{\omega^{-}}\left(s_{i+1}, a\right)$$
+    - 最小化目标损失 $L=\frac{1}{N} \sum_i\left(y_i-Q_\omega\left(s_i, a_i\right)\right)^2$ ，以此更 新当前网络 $Q_\omega$
+    - 更新目标网络
+  - **end for**
 - **end for**
 
 
@@ -139,3 +145,4 @@ DQN算法演化出众多变体, 如：
 
 [2]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19
 [3]: https://aistudio.baidu.com/aistudio/projectdetail/54249
+[4]: https://www.youtube.com/watch?v=QDzM8r3WgBw&list=PLrAXtmErZgOeiKm4sgNOknGvNjby9efdf
