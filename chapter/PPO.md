@@ -54,6 +54,18 @@ $$
 \underset{\theta}{\arg \max } \mathbb{E}_{s \sim \nu^{\pi_{\theta_k}}} \mathbb{E}_{a \sim \pi_{\theta_k}(\cdot \mid s)}\left[\min \left(\frac{\pi_\theta(a \mid s)}{\pi_{\theta_k}(a \mid s)} A^{\pi_{\theta_k}}(s, a), \operatorname{clip}\left(\frac{\pi_\theta(a \mid s)}{\pi_{\theta_k}(a \mid s)}, 1-\epsilon, 1+\epsilon\right) A^{\pi_{\theta_k}}(s, a)\right)\right]
 $$
 
+$$
+\left.L^{C L I P}(\theta)=\hat{E}_t\left[\min \left(r_t(\theta)\right) \hat{A}_t, \operatorname{clip}\left(r_t(\theta), 1-\varepsilon, 1+\varepsilon\right) \hat{A}_t\right)\right]
+$$
+
+- $\theta$ is the policy parameter
+- $\hat{E}_t$ denotes the empirical expectation over timesteps
+- $r_t$ is the ratio of the probability under the new and old policies, respectively
+- $\hat{A}_t$ is the estimated advantage at time $t$
+- $\varepsilon$ is a hyperparameter, usually 0.1 or 0.2
+
+[5]
+
 其中 $\operatorname{clip}(x, l, r):=\max (\min (x, r), l)$ ，即
 
 TODO:？把 $x$ 限制在 $[l, r]$ 内。
@@ -107,3 +119,4 @@ $$
 [2]: https://www.cnblogs.com/kailugaji/p/15401383.html#_lab2_0_1
 [3]: https://www.cnblogs.com/kailugaji/p/15396437.html
 [4]: http://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-5.pdf
+[5]: https://openai.com/research/openai-baselines-ppo

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 03:31:52
+ * @LastEditTime: 2023-03-07 01:36:10
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -31,7 +31,52 @@
 
 ## 策略迭代算法
 
-策略迭代是策略评估和策略提升不断循环交替，直至最后得到最优策略的过程。本节分别对这两个过程进行详细介绍。
+为了求解最优策略 $\pi^*$，一种思路是：从一个任意的策略开始，首先计算该策略下价值函数（或动作-价值函数），然后根据价值函数调整改进策略使其更优，不断迭代这个过程直到策略收敛。通过策略计算价值函数的过程叫做策略评估（policy evaluation），通过价值函数优化策略的过程叫做策略优化（policy improvement），策略评估和策略优化交替进行的强化学习求解方法叫做通用策略迭代（Generalized Policy Iteration，GPI）。
+
+### 策略优化
+
+> 策略优化定理
+>
+> 对于确定的策略 $\pi$ 和 $\pi^{\prime}$, 如果对于任意状态 $s \in S$
+> $$
+> Q_\pi\left(s, \pi^{\prime}(s)\right) \geq Q_\pi(s, \pi(s))
+> $$
+> 那么对于任意状态 $s \in S$, 有
+> $$
+> V_{\pi^{\prime}}(s) \geq V_\pi(s)
+> $$
+> 即策略 $\pi^{\prime}$ 不比 $\pi$ 差
+
+在讨论如何优化策略之前, 首先需要明确什么是“更好”的策略。分别给出 $\pi$ 和 $\pi^{\prime}$ 两个策略, 如果对于任意状态 $s \in S$, 有 $V_\pi(s) \leq V_{\pi^{\prime}}(s)$, 那么可以 认为策略 $\pi^{\prime}$ 不比策略 $\pi$ 差, 可见“更优”策略是一个偏序关系。
+
+
+
+
+
+### 策略评估
+
+- 初始化 $V_\pi$ 函数
+- 循环
+  - 枚举 $s \in S$
+    - 策略评估：$V_\pi(s) \leftarrow \sum_{a \in A} \pi (s, a ) Q_\pi(s, a) = \sum_{a \in A} \pi (s, a ) { \sum _ { s ^ { \prime } \in S } \operatorname { P r } ( s ^ { \prime } | s , a ) [ R ( s , a , s ^ { \prime } ) + \gamma V _ { \pi } ( s ^ { \prime } ) }] .$
+- 直到 $V_\pi$ 收敛
+
+更新 $V_\pi\left(s_1\right)$ 的值:
+
+$$
+\begin{gathered}
+Q_\pi\left(s_1, \text { 上 }\right)=1 \times(0+0.99 \times 0.3)+0 \times(0+0.99 \times 0.4) \\
++\ldots=0.297 \\
+V_\pi\left(s_1\right)=1 \times q_\pi\left(s_1, \text { 上 }\right)+0 \times q_\pi\left(s_1 \text {, 右 }\right)=0.297
+\end{gathered}
+$$
+
+
+
+缺点：
+
+1. 智能主体需要事先知道状态转移概率;
+2. 无法处理状态集合大小无限的情况
 
 ## 价值迭代算法
 

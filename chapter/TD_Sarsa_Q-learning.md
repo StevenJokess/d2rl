@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 22:19:00
+ * @LastEditTime: 2023-03-08 18:49:14
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -28,16 +28,16 @@
 回顾一下蒙特卡洛方法对价值函数的**增量更新方式**：
 
 $$
-V\left(s_t\right) \leftarrow V\left(s_t\right)+\alpha\left[G_t-V\left(s_t\right)\right]
+V\left(s_t\right) \leftarrow V\left(s_t\right)+\alpha\left[G_t-V\left(s_t\right)\right]   其中，α∈[0,1]
 $$
 
-这里我们将 $3.5$ 节的 $\frac{1}{N(s)}$ 替换成了 $\alpha$ ，表示对价值估计**更新的步长**。可以将 $\alpha$ 取 为一个常数，此时更新方式不再像蒙特卡洛方法那样严格地取期望。蒙特卡洛方法必须要等整个序列结束之后才能计算得到这一次的回报 $G_t$ ，而时序差分方法只需要当前步结束即可进行计算。具体来说，时序差分算法用当前获得的奖励加上下一个状态的价值估计来作为在当前状态会获得的回报，即：
+这里我们将 $3.5$ 节的 $\frac{1}{N(s)}$ 替换成了 $\alpha$ ，表示对价值估计**更新的步长**。可以将 $\alpha$ 取为一个常数，此时更新方式不再像蒙特卡洛方法那样严格地取期望。蒙特卡洛方法必须要等整个序列结束之后才能计算得到这一次的回报 $G_t$ ，而时序差分方法只需要当前步结束即可进行计算。具体来说，时序差分算法用当前获得的奖励加上下一个状态的价值估计来作为在当前状态会获得的回报，即：
 
 $$
-V\left(s_t\right) \leftarrow V\left(s_t\right)+\alpha\left[r_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)\right]
+V\left(s_t\right) \leftarrow V\left(s_t\right)+\alpha\left[r_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)\right]  其中，α∈[0,1]
 $$
 
-其中 $R_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)$ 通常被称为**时序差分 (temporal difference，TD) 误差 (error)**，时序差分算法将其与步长的乘积作为状态价值的更新量。可以 用 $r_t+\gamma V\left(s_{t+1}\right)$ 来代替 $G_t$ 的原因是:
+其中 $r_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)$ 通常被称为**时序差分 (temporal difference，TD) 误差 (error)**，时序差分算法将其与步长的乘积作为状态价值的更新量。这用TD目标值 $r_t+\gamma V\left(s_{t+1}\right)$ 来代替 $G_t$ 的过程称为引导（bootstrapping）[6]，而可以的原因是:
 
 $$
 \begin{aligned}
@@ -50,20 +50,50 @@ $$
 
 因此蒙特卡洛方法将上式第一行作为更新的目标，而时序差分算法将上式最后一行作为更新的目标。于是，在用策略和环境交互时，每采样一步，我们就可以用时序差分算法来更新状态价值估计。时序差分算法用到了 $V\left(s_{t+1}\right)$ 的估计值，可以证明它最终收敛到策略的价值函数，我们在此不对此进行展开说明。
 
+### n-step TD
+
+n-step TD就是不只往前看一步了。比如2-step往前多看两步，此时某个状态的价值变成
+
+$$G_{t}^{(2)}=R_{t+1}+\gamma R_{t+2}+\gamma^{2} V\left(S_{t+2}\right) $$
+
+### TD(λ)
+
+TD(λ)为了避免n-step TD不知道怎么选n的问题，引入了参数λ以便于调超参，sampling时G(t)变成
+
+$$G_{t}^{\lambda}=(1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_{t}^{(n)}$$
+
+### Policy Evalution&Policy Improvment
+
+Policy Evaluation时，套TD的Q公式就行了。
+
+Policy Improvment时，TD常见的on-policy是SARSA，常见的off-policy是Q-learning。
+
+下面分别介绍SARSA和Q-learning。
+
 ## Sarsa 算法
 
-SARSA可以算是Q-learning的改进 (这句话出自「神经网络与深度学 习」的第 342 页) (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，其更新公式为:
+既然我们可以用时序差分方法来估计价值函数，那一个很自然的问题是，我们能否用类似策略迭代的方法来进行强化学习。策略评估已经可以通过时序差分算法实现，那么在不知道奖励函数和状态转移函数的情况下该怎么进行策略提升呢？答案是可以直接用时序差分算法来估计动作价值函数 $Q$ ：
+
+$$
+Q\left(S_{t}, A_{t}\right) \leftarrow Q\left(S_{t}, A_{t}\right)+\alpha\left(G_{t}-Q\left(S_{t}, A_{t}\right)\right) 其中，α∈[0,1]
+$$
+
+
+
+现在，我们就可以得到一个实际的基于时序差分方法的强化学习算法。这个算法被称为 Sarsa，Sarsa 指的是 State-Action-Reward-State-Action，因为它的动作价值更新用到了当前状态、当前动作、获得的奖励、下一个状态和下一个动作，将这些符号拼接后就得到了算法名称。Sarsa 的具体算法如下：
+
+
+
+其更新公式为:
 
 $$
 Q(s, a) \leftarrow Q(s, a)+\alpha\left[r(s, a)+\gamma Q\left(s^{\prime}, a^{\prime}\right)-Q(s, a)\right]
 $$
 
-其为on-policy的， SARSA必须执行两次动作得到 $\left(s, a, r, s^{\prime}, a^{\prime}\right)$ 才可以更新 一次；而且 $a^{\prime}$ 是在特定策略 $\pi$ 的指导下执行的动作，因此估计出来的 $Q(s, a)$ 是在该策略 $\pi$ 之下的 $Q$ 值，样本生成用的 $\pi$ 和估计的 $\pi$ 是同一个，因此是on policy.[2]
+Policy Improvment时使用on-policy， SARSA必须执行两次动作得到 $\left(s, a, r, s^{\prime}, a^{\prime}\right)$ 才可以更新 一次；而且 $a^{\prime}$ 是在特定策略 $\pi$ 的指导下执行的动作，因此估计出来的 $Q(s, a)$ 是在该策略 $\pi$ 之下的 $Q$ 值，样本生成用的 $\pi$ 和估计的 $\pi$ 是同一个，因此是on policy.[2]
 
 
-既然我们可以用时序差分方法来估计价值函数，那一个很自然的问题是，我们能否用类似策略迭代的方法来进行强化学习。策略评估已经可以通过时序差分算法实现，那么在不知道奖励函数和状态转移函数的情况下该怎么进行策略提升呢？答案是可以直接用时序差分算法来估计动作价值函数 $Q$ ：
 
-现在，我们就可以得到一个实际的基于时序差分方法的强化学习算法。这个算法被称为 Sarsa，因为它的动作价值更新用到了当前状态、当前动作、获得的奖励、下一个状态和下一个动作，将这些符号拼接后就得到了算法名称。Sarsa 的具体算法如下：
 
 
 
@@ -83,6 +113,8 @@ code
 ## 多步 Sarsa 算法
 
 蒙特卡洛方法利用当前状态之后每一步的奖励而不使用任何价值估计，时序差分算法只利用一步奖励和下一个状态的价值估计。那它们之间的区别是什么呢？总的来说，蒙特卡洛方法是无偏（unbiased）的，但是具有比较大的方差，因为每一步的状态转移都有不确定性，而每一步状态采取的动作所得到的不一样的奖励最终都会加起来，这会极大影响最终的价值估计；时序差分算法具有非常小的方差，因为只关注了一步状态转移，用到了一步的奖励，但是它是有偏的，因为用到了下一个状态的价值估计而不是其真实的价值。那有没有什么方法可以结合二者的优势呢？答案是多步时序差分！多步时序差分的意思是使用步的奖励，然后使用之后状态的价值估计。用公式表示，将
+
+SARSA可以算是Q-learning的*改进*？ (这句话出自「神经网络与深度学习」的第 342 页) (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，它和Q-learning的区别是它采取的是策略所选择的动作，而非最高Q值的动作。[5]
 
 ## Q-learning 算法
 
@@ -116,4 +148,6 @@ $$
 [2]: https://www.cnblogs.com/kailugaji/p/16140474.html
 [3]: https://www.cnblogs.com/kailugaji/p/15354491.html#_lab2_0_7
 [4]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
+[5]: https://www.youtube.com/watch?v=fhBw3j_O9LE
+[6]: https://zhuanlan.zhihu.com/p/487754856?utm_campaign=&utm_medium=social&utm_oi=772887009306906624&utm_psn=1616864739354681344&utm_source=qq
 答:

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:35:41
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-26 00:17:10
+ * @LastEditTime: 2023-03-06 19:26:57
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -137,7 +137,7 @@ $$
 
 ## 总结
 
-本章介绍了离线强化学习的基本概念和两个与模型无关的离线强化学习算法——BCQ 和 CQL，并讲解了 CQL 的代码。事实上，离线强化学习还有一类基于模型的方法，如 model-based offline reinforcement learning （MOReL）和 model-based offline policy optimization（MOPO），本章由于篇幅原因不再介绍。这一类算法的思路基本是通过模型生成更多数据，同时通过衡量模型预测的不确定性来对生成的偏离数据集的数据进行惩罚，感兴趣的读者可以自行查阅相关资料。
+本章介绍了离线强化学习的基本概念和两个与模型无关的离线强化学习算法——**BCQ 和 CQL**，并讲解了 CQL 的代码。事实上，离线强化学习还有一类基于模型的方法，如 model-based offline reinforcement learning （MOReL）和 model-based offline policy optimization（MOPO），本章由于篇幅原因不再介绍。这一类算法的思路基本是通过模型生成更多数据，同时通过衡量模型预测的不确定性来对生成的偏离数据集的数据进行惩罚，感兴趣的读者可以自行查阅相关资料。
 
 离线强化学习的另一大难点是算法通常对超参数极为敏感，非常难调参。并且在实际复杂场景中通常不能像在模拟器中那样，每训练几轮就在环境中评估策略好坏，如何确定何时停止算法也是离线强化学习在实际应用中面临的一大挑战。此外，离线强化学习在现实场景中的落地还需要关注离散策略评估和选择、数据收集策略的保守性和数据缺失性等现实问题。不过无论如何，离线强化学习和模仿学习都是为了解决在现实中训练智能体的困难而提出的，也都是强化学习真正落地的重要途径。
 

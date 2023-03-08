@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-01 01:21:23
+ * @LastEditTime: 2023-03-06 19:29:38
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -35,10 +35,11 @@ PPO
 DDPG
 SAC
 
-
+Sparse_Reward
 IL
 model-based
 MPC
+offline_RL(BCQ&CQL)
 GoRL&HER
 IPPO
 MADDPG

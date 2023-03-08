@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:38:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-28 22:50:48
+ * @LastEditTime: 2023-03-02 18:49:12
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -44,6 +44,20 @@ $$
 - Actor 要做的是与环境交互，并在 Critic 价值函数的指导下用策略梯度学习一个更好的**策略**。
 - Critic 要做的是通过 Actor 与环境交互收集的数据学习一个**价值函数**，这个价值函数会用于判断在当前状态什么动作是好的，什么动作不是好的，进而帮助 Actor 进行策略更新。
 
+Actor 的更新采用策略梯度的原则，那 Critic 如何更新呢? 我们将 Critic 价值网 络表示为 $V_\omega$ ，参数为 $\omega$ 。于是，我们可以采取时序差分残差的学习方式，对于单 个数据定义如下价值函数的损失函数:
+
+$$
+\mathcal{L}(\omega)=\frac{1}{2}\left(r+\gamma V_\omega\left(s_{t+1}\right)-V_\omega\left(s_t\right)\right)^2
+$$
+
+与 DQN 中一样，我们采取类似于目标网络的方法，将上式中 $r+\gamma V_\omega\left(s_{t+1}\right)$ 作 为时序差分目标，不会产生梯度来更新价值函数。因此，价值函数的梯度为:
+
+$$
+\nabla_\omega \mathcal{L}(\omega)=-\left(r+\gamma V_\omega\left(s_{t+1}\right)-V_\omega\left(s_t\right)\right) \nabla_\omega V_\omega\left(s_t\right)
+$$
+
+然后使用梯度下降方法来更新 Critic 价值网络参数即可。
+
 - 初始化策略网络参数 $\theta$ ，价值网络参数 $\omega$
   - for 序列 $e=1 \rightarrow E$ do:
     - 用当前策略 $\pi_\theta$ 采样轨迹 $\left\{s_1, a_1, r_1, s_2, a_2, r_2, \ldots\right\}$
@@ -58,14 +72,26 @@ $$
 
 我们仍然在车杆环境上进行 Actor-Critic 算法的实验。
 
+code
+
+首先定义策略网络PolicyNet（与 REINFORCE 算法一样）。
+
+code
+
 定义好 Actor 和 Critic，我们就可以开始实验了，看看 Actor-Critic 在车杆环境上表现如何吧！
+
+code
 
 在 CartPole-v0 环境中，满分就是 200 分。和 REINFORCE 相似，接下来我们绘制训练过程中每一条轨迹的回报变化图以及其经过平滑处理的版本。
 
-根据实验结果我们可以发现，Actor-Critic 算法很快便能收敛到最优策略，并且训练过程非常稳定，抖动情况相比 REINFORCE 算法有了明显的改进，这说明价值函数的引入减小了方差。
+code
+
+根据实验结果我们可以发现，Actor-Critic 算法很快便能收敛到最优策略，并且训练过程非常稳定，抖动情况相比 REINFORCE 算法有了明显的改进，这说明价值函数的**引入减小了方差**。
 
 ## 总结
 
 本章讲解了 Actor-Critic 算法，它是基于值函数的方法和基于策略的方法的叠加。价值模块 Critic 在策略模块 Actor 采样的数据中学习分辨什么是好的动作，什么不是好的动作，进而指导 Actor 进行策略更新。随着 Actor 的训练的进行，其与环境交互所产生的数据分布也发生改变，这需要 Critic 尽快适应新的数据分布并给出好的判别。
 
 Actor-Critic 算法非常实用，后续章节中的 TRPO、PPO、DDPG、SAC 等深度强化学习算法都是在 Actor-Critic 框架下进行发展的。深入了解 Actor-Critic 算法对读懂目前深度强化学习的研究热点大有裨益。
+
+[1]: https://hrl.boyuai.com/chapter/2/actor-critic%E7%AE%97%E6%B3%95/#101-%E7%AE%80%E4%BB%8B

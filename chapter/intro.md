@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-02 15:01:06
+ * @LastEditTime: 2023-03-06 22:59:30
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -26,7 +26,7 @@
 
 |      | 监督学习         | 非监督学习     | 强化学习|
 | ---- | ---------------- | ------------- | ------ |
-| 标签 | supervisor提供正确且严格的标签 | 没有标签       | 没有标签、supervisor，时间序列数据（sequential data）是在智能体与环境交互的过程中得到的。如果智能体不采取某个决策动作，那么该动作对应的数据就永远无法被观测到，所以当前智能体的训练数据来自之前智能体的决策结果。
+| 数据 | 一次给定的supervisor提供正确且严格的标签 | 没有标签，       | 没有标签、supervisor，时间序列数据（sequential data）是在智能体与环境交互的过程中得到的。如果智能体不采取某个决策动作，那么该动作对应的数据就永远无法被观测到，所以当前智能体的训练数据来自之前智能体的决策结果。
 | 输入要求 | 独立同分布(i.i.d.), 为了消除数据之间的相关性。    | 独立同分布(i.i.d.)     | 归一化的占用度量（occupancy measure）用于衡量在一个智能体决策与一个动态环境的交互过程中，采样到一个具体的状态动作对（state-action pair）的概率分布。|
 | 动作 | exploration     | exploration | Trial-and-error，即存在exploration和exploitation的平衡 (不一定按照已知的最优做法去做)|
 | 驱动 | 任务驱动      | 数据驱动     | 有目标,从错误中学习[4]，这个错误是模型与目标的距离，通过奖励函数定量判断[5]|
@@ -34,7 +34,7 @@
 | 模型 | 建立新输入对应原标签的预测模型     | 自学习映射关系，以此为模型     | 学习到从环境状态到行为的映射即决策（决策往往会带来“后果”，因此决策者需要为未来负责，在未来的时间点做出进一步的决策。），使得智能体选择的该行为能够获得环境最大的奖励reward|
 | 优化目标公式 | $\text {最优预测模型} =\arg \min _{\text {模型}} \mathbb{E}_{(\text {特征, 标签}) \sim \text {数据分布}}[\text {损失函数 (标签, 模型（特征）)]}$ | $p(\boldsymbol{x})$ 或带隐变量 $\boldsymbol{z}$ 的 $p(\boldsymbol{x} \mid \boldsymbol{z})$ [21]| $\text {最优策略} =\arg \max _{\text {策略}} \mathbb{E}_{(\text {状态, 动作}) \sim \text {策略的占用度量}}[\text {奖励函数 (状态, 动作)]}$|
 | 解释损失函数 | 目的是使预测值和真实值之间的差距尽可能小 | 最小重构错误[21]| 目的是使总奖励的期望尽可能大|
-| 任务 | 预测仅仅产生一个针对输入数据的信号，并期望它和未来可观测到的信号一致，这不会使未来情况发生任何改变。预测任务总是单轮的独立任务。| TODO: |决策往往会带来“后果”，因此决策者需要为未来负责，在未来的时间点做出进一步的决策。决策任务往往涉及多轮交互，即序贯决策[7]（多序列决策） |
+| 任务 | 预测仅仅产生一个针对输入数据的信号，并期望它和未来可观测到的信号一致，这不会使未来情况发生任何改变。预测任务总是单轮的独立任务。| 基于数据结构的假设，去学习数据的分布模式[29] |决策往往会带来“后果”，因此决策者需要为未来负责，在未来的时间点做出进一步的决策。决策任务往往涉及多轮交互，即序贯决策[7]（多序列决策） |
 | 上限（upper bound） | 传统的机器学习算法依赖人工标注好的数据，从中训练好的模型的性能上限是产生数据的模型（人类）的上限      | 可超人类     | 不受人类先验知识所限，表现可超人类 |
 | 适用情况 | 任务(分类/回归) | 数据驱动(聚类) [8]   | “多序列决策问题”，或者说是对应的模型未知，需要通过学习逐渐逼近真实模型的问题。并且当前的动作会影响环境的状态，即具有马尔可夫性的问题。同时应满足所有状态是可重复到达的条件，即满足**可学习条件**。 [5]|
 
@@ -169,13 +169,13 @@
 
 奖励 $r$：是由环境给的一种标量的反馈信号（scalar feedback signal）[26]
 
-回报 $U$：从第 $t$ 时刻状态开始，直到终止状态时，所有奖励某种之和称为回报（Return）。
+回报 $U$：从第 $t$ 时刻状态开始，直到终止状态时，所有奖励某种方式之和称为回报（Return）。
 
 计算回报公式(formulations of return):
 
-- 即时奖励，即当前奖励 $r_t$ 。
-- 远期奖励，又叫延迟奖励，是指在一次行动后在一定时间后（或者是一系列动作后）才获得回报。这种回报可能是一次, 也可能是多次。单个时间步的奖励 $r_t = R(s_t, a_t, s_{t+1})$ 。
-- 注：实际奖励用 $r$ ，而后面的奖励回报用 $R$ 。
+- 即时奖励（immediate / instantaneous [28] reward），即当前 $t$ 时刻的奖励 $r_t$ 或$r(s_t,a_t)$。
+- 远期奖励，又叫延迟奖励，是指在一次行动后在一定时间$k$后（或者是一系列动作后）才获得回报。这种回报可能是一次, 也可能是多次。单个时间步的奖励 $r_{t+k}$ 或 $r(s_{t+k}, a_{t+k})$ 可用奖励函数 $R(s_{t+k}, a_{t+k})$算得。
+- 注：实际奖励用 $r$ ，而后面的奖励函数用 $R$ 。
 
 不同的回报公式可以用来计算在不同任务环境中的回报值:
 
@@ -184,8 +184,8 @@
 - 折扣累积奖励是指在一次行动轨迹中所有奖励值按时间折扣的总和。
    - 折扣因子（discount factor）是一个用来平衡未来奖励的价值衰减因子，表示在未来的每个时刻，奖励会以一定的比例进行衰减。使用时间折扣是为了使强化学习智能体更好地处理长期决策问题，同时能够适应不同的环境和任务。
    - 折扣因子通常表示为 $\gamma$ ，其中 $0 \leq \gamma \leq 1$ 。由于 $\gamma \leq 1$ ，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计奖励公式，越远视；越接近0，越短视。
-   - 从当前时间步$t$开始到未来有限视野T的所有时间步的累积奖励可以表示为：$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots = \sum_{k=0}^{T} \gamma^k r_{t+k+1}$$
-   - 而无限视野(infinite-horizon) 是$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k r_{t+k+1}$$
+   - 从当前时间步$t$开始到未来有限视野T的所有时间步的累积奖励可以表示为：$$G_t = r_{t} + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{T} \gamma^k r_{t+k}$$
+   - 而无限视野(infinite-horizon) 是$$G_t = r_{t} + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{\infty} \gamma^k r_{t+k}$$
    - 其中，$r_t$ 表示在时间步 $t$ 时获得的奖励，$\gamma$ 是时间折扣因子，$G_t$ 表示从时间步 $t$ 开始的累积奖励。[12]
 
 ##### 优化问题(Optimization  problem)
@@ -243,28 +243,39 @@
 
 ### 智能体的常见结构[17]
 
-#### 价值(value)
+#### 奖励函数（Reward Functions）
 
-价值(Value): 价值 $V$ 是对未来折扣累积奖励的预测值，是估计该状态的期望回报（即从这个状态出发的未来累积奖励的期望）[18]。
+奖励函数 $R: S \times S \mapsto \mathbb{R}$, 其中 $R\left(S_t, S_{t+1}\right)$ 描述了从第 $t$ 步状态转移到第 $t+1$ 步状态所获得奖励
+
+在一个序列决策过程中, 不同状态之间的转移产生了一系列的奖励 $\left(R_1, R_2, \cdots\right)$, 其中 $R_{t+1}$ 为 $R\left(S_t, S_{t+1}\right)$ 的简便记法。
+
+引入奖励机制, 这样可以衡量任意序列的优劣, 即对序列决策进行评价。[29]
+
+#### 价值(Value)
+
+**价值(Value)**: 价值 $V$ 是对未来折扣累积奖励的预测值，是估计该状态的期望回报（即从这个状态出发的未来累积奖励的期望）[18]。
 
 ##### 价值函数(Value Functions)
 
-所有状态的价值就组成了价值函数（Value Functions）。价值函数是一个将状态或状态-行动对映射到预期的未来的**累计折扣奖励**的函数。价值函数的值是对未来累计折扣奖励的预测，我们用它来评估状态的好坏。
+所有状态的价值就组成了**价值函数（Value Functions）**。价值函数是一个将状态或状态-行动对映射到预期的未来的**累计折扣奖励**的函数。价值函数的值是对未来累计折扣奖励的预测，我们用它来评估状态的好坏。
 
 价值函数通常有两种形式：
 
-- 状态价值函数（state value function）表示在某个状态下之后每一步行动都按照策略 $\pi$ 执行后每个状态的价值函数。$$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$ 其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ 执行后的预期累积奖励，$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
+- **状态价值函数**（state value function）表示在某个状态下之后每一步行动都按照策略 $\pi$ 执行后每个状态的价值函数。下面公式，只由一个状态s确定V，是由于此时是[马尔可夫决策过程 MDP](MDP_MC.md)。
+  $$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = r_0 + \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$
+  其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ （具体介绍见后）执行后的预期累积奖励，$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野$\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
 > 预测下一个即时的奖励: $\mathbf{R}_{}= \mathbb{E}_{\pi}\left[R_{t+1} \mid S_{t}=s, A_{t}=a\right]_{\circ}$
-- 动作价值函数（action value function）表示从某个状态开始，先随便执行一个行动 $a$ (有可能不是按照策略走的），之后每一步都按照固定的策略 $\pi$ 执行后的每个状态-行为对下的价值函数，又叫Q函数。[11]$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积奖励。$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野 $\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$ ） 是在策略 $\pi$ 下的期望。注意，动作价值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
+- **动作价值函数**（action value function）表示从某个状态开始，先随便执行一个行动 $a$ (有可能不是按照策略走的），之后每一步都按照固定的策略 $\pi$ 执行后的每个状态-行为对下的价值函数，又叫Q函数。[11]下面公式，只由一个状态s和一个动作a确定V，是由于此时是[马尔可夫决策过程 MDP](MDP_MC.md)。
+$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积奖励。$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野 $\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$ ） 是在策略 $\pi$ 下的期望。注意，动作价值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
 - 由二者的定义得，$V^\pi(s)=\mathbb{E}_{a \sim \pi}\left[Q^\pi(s, a)\right]$,
 
-> 注：不管策略如何，某个状态的价值是不变的，因为在算期望的时候已经就考虑了所有情况的奖励。策略变了，R是变了，但期望是所有的可能轨迹去平均或者怎样，所以跟策略无关，策略只是去选择一条轨迹。 (？X)
+> 注：不管策略如何，某个状态的价值是不变的，因为在算期望的时候已经就考虑了所有情况的奖励。策略变了，R是变了，但期望是所有的可能轨迹去平均或者怎样，所以跟策略无关，确定性策略只是去选择一条轨迹。 (？X)
 >
 
-最优价值函数：
+**最优价值函数**：
 
-- 最优值函数（最优策略的状态价值函数）：表示在某个状态下之后每一步行动都按照最优策略 $*$ 执行后每个状态的价值函数。$$V_{*}(s) = \max_{*} \left[ G_t | S_t = s \right] = \max_{*}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$
-- 最优行动-值函数（最优策略的动作价值函数）：表示从某个状态开始，先随便执行一个行动 $a$ (有可能不是按照策略走的），之后每一步都按照*最优策略* $\pi$ 执行后的每个状态-行为对下的价值函数。$$Q_{*}(s, a) = \max_{*} \left[ G_t \mid S_t = s, A_t = a \right] = \max_{*}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$
+- **最优值函数**（最优策略的状态价值函数）：表示在某个状态下之后每一步行动都按照最优策略 $*$ 执行后每个状态的价值函数。$$V_{*}(s) = \max_{*} \left[ G_t | S_t = s \right] = \max_{*}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$
+- **最优行动-值函数**（最优策略的动作价值函数）：表示从某个状态开始，先随便执行一个行动 $a$ (有可能不是按照策略走的），之后每一步都按照*最优策略* $\pi$ 执行后的每个状态-行为对下的价值函数。$$Q_{*}(s, a) = \max_{*} \left[ G_t \mid S_t = s, A_t = a \right] = \max_{*}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$
 - 由二者的定义得，$$V_{*}(s) = \max_{a}Q_{*}(s, a)$$
 
 ##### 优势函数（Advantage Functions)
@@ -279,10 +290,17 @@ $$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
 
 #### 策略(Policy)
 
-策略(Policy)：策略 $\pi(a \mid s)$ 是指智能体在各个状态下应该采取的行动，即是 Observation 到 Action的一个映射 $\pi_\theta\left(\mathbf{a}_t \mid \mathbf{o}_i\right)$  或 State(fully observated) [23] 到 Action 的一个映射 $\pi_\theta\left(\mathbf{a}_t \mid \mathbf{s}_t\right)$ 。强化学习通过学习来改进策略来最大化总奖励。
+策略(Policy)：策略 $\pi$ 是指智能体在各个状态下应该采取的行动。
+
+##### 策略函数(Policy Functions)
+
+某确定状态下某个个具体策略的概率就构成了策略函数(Policy Functions)。策略函数(Policy Functions)是 Observation 到 Action的一个映射 $\pi_\theta\left(\mathbf{a}_t \mid \mathbf{o}_i\right)$  或 State(fully observated) [23] 到 Action 的一个映射 $\pi_\theta\left(\mathbf{a}_t \mid \mathbf{s}_t\right)$ 。强化学习通过学习来改进策略来最大化总奖励。
 
 - 确定性策略（deterministic policy）$\mu(s)$ [21]表示智能体直接采取最有可能（最大概率）的动作，即$\mu(s)= a^* =\underset{a}{\arg \max } \pi(a \mid s)$。
-- 随机性策略（stochastic policy）表示在给定环境状态下，智能体选择一个从概率分布采样得到的动作，即 $\pi(a \mid s) \triangleq p(a \mid s) = P\left[A_{t}=a \mid S_{t}=s\right]$）其中，$\Sigma \pi(a \mid s)=1$
+- 随机性策略（stochastic policy）表示在给定环境状态下，智能体选择一个从概率分布采样[28]得到的动作，即 $\pi(a \mid s) \equiv p(a \mid s) = P\left[A_{t}=a \mid S_{t}=s\right]$）其中，$\Sigma \pi(a \mid s)=1$ 为使记法没那么复杂（less cumbersome），我们会经常用 $\pi(s)$ 代替 $\pi(a \mid s)$ 。
+
+- 最优确定性策略：$\pi^*(s)=\underset{a \in \mathcal{A}}{\operatorname{argmax}}\left[r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right]$
+- 最优随机性策略：其能达到最大平均回报$\pi^* = \underset{\pi}{\operatorname{argmax}} V^\pi\left(s_0\right)$ 。记此时最优策略的价值函数和动作价值函数     $V^* \equiv V^{\pi^*}$ 和 $Q^* \equiv Q^{\pi^*}$
 
 以雅达利游戏为例子，策略函数的输入就是游戏的一帧，它的输出决定智能体向左移动或者向右移动。
 
@@ -290,6 +308,7 @@ $$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
 
 - 强化学习的策略在训练中会不断更新，其对应的数据分布（即占用度量）也会相应地改变。因此，强化学习的一大难点就在于，智能体看到的数据分布是随着智能体的学习而不断发生改变的。
 - 由于奖励建立在状态动作对之上，一个策略对应的价值其实就是一个占用度量下对应的奖励的期望，因此寻找最优策略对应着寻找最优占用度量。[5]
+
 
 
 #### 具体策略
@@ -312,13 +331,11 @@ $$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
   2. **基于策略**(policy-based)：该方法是跨越价值函数, 直接搜索最佳策略。[22]包括无梯度方法(Gradient-Free)、策略梯度方法Policy Gradient及其衍生的 REINFORCE算法、带基准线的REINFORCE算法。此时我们直接再优化你想要的奖励[24]，即训练的是不完成任务的一个Critic。优点：相比value-based算法, policy-based算法能够处理离散/连续空间问题, 并且具有更好的收敛性；policy-based方法轨迹方差较大、样本利用率低, 容易陷入局部最优的困境。
      1. Gradient-Free：能够较好地处理低维度问题。[22]Cross-Entropy Method的DQN演化而成的QT-Opt、Evolution Strategy的SAMUEL
      2. Gradient-Based：基于策略梯度算法仍然是目前应用最多的一类强化学习算法, 尤其是在处理复杂问题时效果更佳, 如AlphaGo 在围棋游戏中的惊人表现。算法在Hopper问题的效果对比，Policy Gradient、VPG（如REINFORCE）、TRPO/PPO、ACKTR。SAC=TD3＞DDPG=TRPO=DPG＞VRG。[22]
-  3. **基于执行者/评论者**（actor-critic）：该方法是智能体结合了值函数和策略的思想。它包含一个执行者（actor）网络和一个评论者（critic）网络，执行者网络用于生成动作，而评论者网络用于估计值函数。![在Actor-Critic 基础上扩展的 DDPN (Deep Deterministic Policy Gradient)、A3C (Asynchronous Advantage Actor-Critic)、DPPO (Distributed Proximal Policy Optimization)。[15] ![执行者/评论者的智能体](img\A+C.png) 优点：actor-critic算法多是off-policy，能够通过经验重放(experience replay)解决采样效率的问题；缺点：策略更新与价值评估相互耦合, 导致算法的稳定性不足, 尤其对超参数极其敏感。Actor-critic算法的调参难度很大, 算法也难于复现, 当推广至应用领域时, 算法的鲁棒性也是最受关注的核心问题之一。
+  3. **基于执行者/评论者**（actor-critic）：该方法是智能体结合了值函数和策略的思想。它包含一个执行者（actor）网络和一个评论者（critic）网络，执行者网络用于生成动作，而评论者网络用于估计值函数。![在Actor-Critic 基础上扩展的 DDPN (Deep Deterministic Policy Gradient)、A3C (Asynchronous Advantage Actor-Critic)、DPPO (Distributed Proximal Policy Optimization)。优点：actor-critic算法多是off-policy，能够通过经验重放(experience replay)解决采样效率的问题；缺点：策略更新与价值评估相互耦合, 导致算法的稳定性不足, 尤其对超参数极其敏感。Actor-critic算法的调参难度很大, 算法也难于复现, 当推广至应用领域时, 算法的鲁棒性也是最受关注的核心问题之一。[15] ![执行者/评论者的智能体](..\img\A+C.png)
 - **基于模型** （model-based）：该“模型”特指环境，即环境的动力学模型。[21]该类智能体尝试学习环境的动态模型，即预测从给定状态和动作转移到下一个状态的概率。然后，智能体可以使用学习到的环境模型来提前规划决策。（model + policy and/or + value function）但缺点是如果模型跟真实世界不一致，那么限制其泛化性能，即在实际使用场景下会表现的不好。预测从给定状态和动作转移到下一个状态的概率: $$\mathbf{P}_{s}^{a}=P\left[S_{t+1}=s^{\prime} \mid S_{t}=s, A_{t}=a\right], \mathbf{R}$$ 环境模型一般可以从数学上抽象为状态转移函数 P (transition function) 和奖励函数 R (reward function)。 在学习R和P之后，所有环境元素都已知，理想情况下，智能体可以不与真实环境进行交互，而只在模拟的环境中，通过RL算法（值迭代、策略迭代等规划方法）最大化累积折扣奖励，得到最优策略。[16]包括：动态规划算法（策略迭代算法、值迭代算法），已给定的模型（Given the Model） MCTS（AlphaGo/**AlphaZero**），学习这模型（Learn the Model） I2A 和 World Model。其优点是可以大幅度提升采样效率；有最大的缺点就是智能体往往不能获得环境的真实模型。如果智能体想在一个场景下使用模型，那它必须完全从经验中学习，这会带来很多挑战。最大的挑战就是，智能体探索出来的模型和真实模型之间存在误差，而这种误差会导致智能体在学习到的模型中表现很好，但在真实的环境中表现得不好（甚至很差）。基于模型的学习从根本上讲是非常困难的，即使你愿意花费大量的时间和计算力，最终的结果也可能达不到预期的效果。[11]
 - 更多相关：模仿学习智能体（imitation learning agent）：该类智能体不是直接学习环境奖励，而是尝试模仿人类或其他专家的决策。模仿学习可以提供一种简单而有效的方式，使智能体学习到正确的行为。
 
 > 在这个项目中选取了能够呈现强化学习近些年发展历程的核心算法。目前，在 可靠性 (stability)和 采样效率 (sample efficiency)这两个因素上表现最优的策略学习算法是 PPO 和 SAC。从这些算法的设计和实际应用中，可以看出可靠性和采样效率两者的权衡。[11]
-
-
 
 ## 参考文献
 
@@ -349,8 +366,11 @@ $$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
 [25]: https://www.zhihu.com/question/574829510/answer/2891438632
 [26]: https://blog.csdn.net/qq_40990057/article/details/125750328
 [27]: https://zhuanlan.zhihu.com/p/493257376
+[28]: https://www.d2l.ai/chapter_reinforcement-learning/value-iter.html#value-function
+[29]: https://aistudio.baidu.com/aistudio/education/preview/3103363
 
-涉及到的网站已Markdown渲染，更多参考网站：
+
+其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了：
 
 > https://spinningup.readthedocs.io/zh_CN/latest/spinningup/rl_intro.html#bellman-equations
 > https://weread.qq.com/web/reader/62332d007190b92f62371aek92c3210025c92cc22753209
