@@ -70,7 +70,11 @@ Policy Evaluation时，套TD的Q公式就行了。
 
 Policy Improvment时，TD常见的on-policy是SARSA，常见的off-policy是Q-learning。
 
+###
+
+最优控制线是指在强化学习中，用于表示在每个状态下采取的最优动作序列的一条线。这条线可以帮助我们找到最优策略，即在每个状态下采取的最优动作序列。
 下面将分别介绍SARSA和Q-learning。
+
 
 ## Sarsa 算法
 
