@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-10 22:52:36
+ * @LastEditTime: 2023-03-11 21:58:50
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,11 +15,11 @@
 
 ## 简介
 
-**动态规划**（dynamic programming）是程序设计算法中非常重要的内容，能够高效解决一些经典问题，例如背包问题和最短路径规划。动态规划的基本思想是将复杂的待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到目标问题的解。动态规划会保存已解决的子问题的答案，在求解目标问题的过程中，需要这些子问题答案时就可以直接利用，避免重复计算。这些能被动态规划求解的问题的特点是，其问题的最优解是由数个小问题的最优解构成，可以通过寻找子问题的最优解来得到复杂问题的最优解；而子问题再复杂问题内重复出现，使得子问题的姐可以被储存起来重复利用。MDP具有上述两个特点，Bellman方程把问题递归为求解子问题，价值函数就相当于存储了一些子问题的解，可以复用。[2]因此可以使用动态规划来求解MDP。本章介绍如何用动态规划的思想来求解在马尔可夫决策过程中的最优策略。动态规划假设知道MDP的全部参数，如已知状态转移概率和奖励[3]。
+**动态规划**（dynamic programming）是程序设计算法中非常重要的内容[1]，能够高效解决一些经典问题，例如背包问题和最短路径规划。动态规划的基本思想是将复杂的待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到目标问题的解。动态规划会保存已解决的子问题的答案，在求解目标问题的过程中，需要这些子问题答案时就可以直接利用，避免重复计算。这些能被动态规划求解的问题的特点是，其问题的最优解是由数个小问题的最优解构成，可以通过寻找子问题的最优解来得到复杂问题的最优解；而子问题再复杂问题内重复出现，使得子问题的姐可以被储存起来重复利用。MDP具有上述两个特点，Bellman方程把问题递归为求解子问题，价值函数就相当于存储了一些子问题的解，可以复用。[2]因此可以使用动态规划来求解MDP。本章介绍如何用动态规划的思想来求解在马尔可夫决策过程中的最优策略。动态规划假设知道MDP的全部参数，如已知状态转移概率和奖励[3]。
 
 基于动态规划的强化学习算法主要有两种：
 
-1.  **策略迭代**（policy iteration），用于预测，即给定一个MDP和策略 $\pi$，要求输出当前策略 $\pi$ 的价值函数。它由两部分组成：**策略评估**（policy evaluation）和**策略提升**（policy improvement）。具体来说，策略迭代中的策略评估使用贝尔曼期望方程来得到一个策略的状态价值函数，这是一个动态规划的过程。
+1. **策略迭代**（policy iteration），用于预测，即给定一个MDP和策略 $\pi$，要求输出当前策略 $\pi$ 的价值函数。它由两部分组成：**策略评估**（policy evaluation）和**策略提升**（policy improvement）。具体来说，策略迭代中的策略评估使用贝尔曼期望方程来得到一个策略的状态价值函数，这是一个动态规划的过程。
 1. **价值迭代**（value iteration），用于控制， 即给定一个MDP，要求确定最优价值函数和最优策略。具体来说，是直接使用贝尔曼最优方程来进行动态规划，得到最终的最优状态价值和最优策略。
 
 不同于 3.5 节介绍的蒙特卡洛方法和第 5 章将要介绍的时序差分算法，基于动态规划的这两种强化学习算法要求事先知道环境的状态转移函数和奖励函数，也就是需要知道整个马尔可夫决策过程。在这样一个**白盒环境**中，不需要通过智能体和环境的大量交互来学习，可以直接用动态规划求解状态价值函数。但是，现实中的白盒环境很少，这也是动态规划算法的局限之处，我们无法将其运用到很多实际场景中。另外，策略迭代和价值迭代通常*只适用于有限马尔可夫决策过程*，即状态空间和动作空间是离散且有限的。
@@ -34,19 +34,35 @@
 
 code
 
-
-## 策略迭代算法
+## 策略迭代（Policy Iteration）
 
 为了求解最优策略 $\pi^*$，一种思路是：从一个任意的策略开始，首先计算该策略下价值函数（或动作-价值函数），然后根据价值函数调整改进策略使其更优，不断迭代这个过程直到策略收敛。通过策略计算价值函数的过程叫做策略评估（policy evaluation），通过价值函数优化策略的过程叫做策略优化（policy improvement），策略评估和策略优化交替进行的强化学习求解方法叫做通用策略迭代（Generalized Policy Iteration，GPI）。
 
+步骤：
 
-### 策略评估
+- 第一步 策略评估 (Policy Evaluation)
+- 第二步 策略提升 (Policy Improvement)
+- 不停的重复策略评估和策略提升，直到策略不再变化为止
 
-- 初始化 $V_\pi$ 函数
-- 循环
-  - 枚举 $s \in S$
+### 策略评估（policy evaluation）
+
+#### 思路：
+
+策略评估（policy evaluation）：计算当前策略下，每个状态的值函数。策略评估可以通过贝尔曼方程进行迭代计算 $V_\pi（s)$ 。如果状态数有限时，也可以通过直接求解Bellman方程来得到得到 $V_\pi（s)$ 。
+
+#### 伪代码（policy_evaluation_part）：
+
+- 随机初始化 $V(s)\in \mathbf{R}$，如 $V(s)=0$，for all $s \in \mathcal{S}$
+- $\Delta \leftarrow float("inf")$
+- $\theta \leftarrow 0.0001$（a small positive number）
+- while $\Delta>\theta$ do :（直到 $V_\pi$ 收敛）
+  - For each $s \in \mathcal{S}$：
+    - $temp \leftarrow V(s)$
     - 策略评估：$V_\pi(s) \leftarrow \sum_{a \in A} \pi (s, a ) Q_\pi(s, a) = \sum_{a \in A} \pi (s, a ) { \sum _ { s ^ { \prime } \in S } \operatorname { P r } ( s ^ { \prime } | s , a ) [ R ( s , a , s ^ { \prime } ) + \gamma V _ { \pi } ( s ^ { \prime } ) }] .$
-- 直到 $V_\pi$ 收敛
+- end while
+
+
+#### 例如：
 
 更新 $V_\pi\left(s_1\right)$ 的值:
 
@@ -63,9 +79,15 @@ $$
 1. 智能主体需要事先知道状态转移概率;
 2. 无法处理状态集合大小无限的情况
 
-### 策略优化
+### 策略优化/改进（policy improvement）
 
-#### 策略优化定理：
+策略优化/改进（policy improvement）：根据值函数来计算当前状态的最好Action，来更新策略，公式是$\pi(s) =argmax_{a} \sum_{s', r} (r + \gamma V(s'))$
+
+#### 思路：
+
+在讨论如何优化策略之前, 首先需要明确什么是“更好”的策略。分别给出 $\pi$ 和 $\pi^{\prime}$ 两个策略, 如果对于任意状态 $s \in S$, 有 $V_\pi(s) \leq V_{\pi^{\prime}}(s)$, 那么可以 认为策略 $\pi^{\prime}$ 不比策略 $\pi$ 差, 可见“更优”策略是一个偏序关系。
+
+**策略优化定理**：
 
 对于确定的策略 $\pi$ 和 $\pi^{\prime}$, 如果对于任意状态 $s \in S$
 $$
@@ -77,26 +99,52 @@ V_{\pi^{\prime}}(s) \geq V_\pi(s)
 $$
 即策略 $\pi^{\prime}$ 不比 $\pi$ 差
 
-在讨论如何优化策略之前, 首先需要明确什么是“更好”的策略。分别给出 $\pi$ 和 $\pi^{\prime}$ 两个策略, 如果对于任意状态 $s \in S$, 有 $V_\pi(s) \leq V_{\pi^{\prime}}(s)$, 那么可以 认为策略 $\pi^{\prime}$ 不比策略 $\pi$ 差, 可见“更优”策略是一个偏序关系。
-
-其证明：
+**其证明**：
 
 $$
 \begin{gathered}
-V^\pi(s) \leq Q^\pi\left(s, \pi^{\prime}(s)\right)=\mathbb{E}\left[R_{t+1}+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s, A_t=\pi^{\prime}(s)\right] \\
+V_\pi(s) \leq Q_\pi\left(s, \pi^{\prime}(s)\right)=\mathbb{E}\left[R_{t+1}+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s, A_t=\pi^{\prime}(s)\right] \\
 =\mathbb{E}_{\pi^{\prime}}\left[R_{t+1}+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s\right] \\
 \leq \mathbb{E}_{\pi^{\prime}}\left[R_{t+1}+\gamma Q^\pi\left(S_{t+1}\right) \mid S_t=s\right] \\
 =\mathbb{E}_{\pi^{\prime}}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 V^\pi\left(S_{t+2}\right) \mid S_t=s\right] \\
 \quad \cdots \\
 \leq \mathbb{E}_{\pi^{\prime}}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\ldots \mid S_t=s\right] \\
-=V^\pi(s)
+=V_\pi(s)
 \end{gathered}
 $$
 
+那么只需要不断寻找更好的策略就能实现策略的优化。
 
+那如何找呢？根据V(s)用下面的贝尔曼期望方程找到更好的策略$\pi(s)$
 
+$$
+V_\pi(s)=\mathbb{E}_{a \sim \pi(s, \cdot)} \mathbb{E}_{s^{\prime} \sim P(\cdot \mid s, a)}\left[R\left(s, a, s^{\prime}\right)+\gamma V_\pi\left(s^{\prime}\right)\right]
+$$
 
-## 价值迭代算法
+#### 伪代码（policy_improvement_part）
+
+- policy-stable $\leftarrow$ true
+- For each $s \in \mathcal{S}$ :
+  - $temp \leftarrow \pi(s)$
+  - $\pi(s) \leftarrow \arg \max _a \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right)\left[r\left(s, a, s^{\prime}\right)+\gamma v\left(s^{\prime}\right)\right]$
+- If $temp \neq \pi(s)$, then $policy-stable \leftarrow false$
+- If $policy-stable$（策略稳定说明已经最优）, then stop and return（停下返回） （最优值函数）$v$ and （最优策略） $\pi$; else go to policy_evaluation_part（在策略不稳定的情况下不停评估策略，计算V(s)）
+
+#### 策略迭代的适用场景
+
+使用价值迭代求解MDP问题时，需要满足以下条件：[5]
+
+- Action对State的影响和回报 $P(State', Reward | State, Action)$ 是已知的，然而绝大多数实际问题中 $P(State', Reward | State, Action)$ 是未知的
+- State和Action都是离散取值，无法应对Action或者State是连续取值的
+- State和Action都是低维度离散取值，因为计算复杂度是随着维度的升高而迅速变大的—— $O(|State| x |Action| x |State|)$
+
+策略迭代中的策略评估和策略改进是交替轮流进行，其中策略评估也是通过一个内部迭代来进行计算，其计算量比较大。
+
+事实上，我们不需要每次计算出每次策略对应的精确的值函数，也就是说内部迭代不需要执行到完全收敛。
+
+## 价值迭代（Value Iteration）
+
+### 思路：
 
 从上面的代码运行结果中我们能发现，策略迭代中的策略评估需要进行很多轮才能收敛得到某一策略的状态函数，这需要很大的计算量，尤其是在状态和动作空间比较大的情况下。我们是否必须要完全等到策略评估完成后再进行策略提升呢？试想一下，可能出现这样的情况：虽然状态价值函数还没有收敛，但是不论接下来怎么更新状态价值，策略提升得到的都是同一个策略。如果只在策略评估中进行一轮价值更新，然后直接根据更新后的价值进行策略提升，这样是否可以呢？答案是肯定的，这其实就是本节将要讲解的价值迭代算法，它可以被认为是一种策略评估只进行了一轮更新的策略迭代算法。需要注意的是，价值迭代中不存在显式的策略，我们只维护一个状态价值函数。
 
@@ -112,24 +160,41 @@ $$
 V^{k+1}(s)=\max _{a \in \mathcal{A}}\left\{r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V^k\left(s^{\prime}\right)\right\}
 $$
 
-价值迭代便是按照以上更新方式进行的。等到 $V^{k+1}$ 和 $V^k$ 相同时，它就是贝尔曼最优方程的不动点，此时对应着最优状态价值函数 $V^*$ 。然后我们利用 $\pi(s)=\arg \max _a\left\{r(s, a)+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) V^{k+1}\left(s^{\prime}\right)\right\}$ ，从中恢复出最优策略即可。
+价值迭代便是按照以上更新方式进行的。等到 $V^{k+1}$ 和 $V^k$ 相同（下面伪算法中的|temp-V(s)| 无限接近于 0） 时，它就是贝尔曼最优方程的不动点，此时对应着最优状态价值函数 $V^{*}$ 。
 
-价值迭代算法流程如下:
+然后我们利用 $\pi(s) = \arg \max _a\left\{r(s, a)+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) V^{k+1}\left(s^{\prime}\right)\right\}$ ，从中恢复出最优策略即可。
 
-- 随机初始化 $V(s)$
+### 伪代码：
+
+价值迭代算法流程如下:[5]
+
+- 随机初始化 $V(s)\in \mathbf{R}$，如 $V(s)=0$，for all $s \in \mathcal{S}$
+- $\Delta \leftarrow float("inf")$
+- $\theta \leftarrow 0.0001$（a small positive number）
 - while $\Delta>\theta$ do :
   - $\Delta \leftarrow 0$
-  - 对于每一个状态 $s \in \mathcal{S}$ :
-    - $v \leftarrow V(s)$
-    - $\quad V(s) \leftarrow \max _a r(s, a)+\gamma \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) V\left(s^{\prime}\right)$
-    - $\Delta \leftarrow \max (\Delta,|v-V(s)|)$
+  - For each $s \in \mathcal{S}$ :
+    - $temp \leftarrow V(s)$
+    - $ V(s) \leftarrow \max _a \left[r(s, a)+\gamma \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) V\left(s^{\prime}\right)\right]$
+    - $\Delta \leftarrow \max (\Delta,|temp-V(s)|)$
 - end while
+- 输出最优策略 $\pi(s) = \arg \max _a\left\{r(s, a)+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) V^{k+1}\left(s^{\prime}\right)\right\}$
+
+### 代码：
 
 我们现在来编写价值迭代的代码。
 
 code
 
 可以看到，解决同样的训练任务，价值迭代总共进行了数十轮，而策略迭代中的策略评估总共进行了数百轮，价值迭代中的循环次数**远少于**策略迭代。
+
+### 价值迭代的适用场景
+
+使用价值迭代求解MDP问题时，需要满足以下条件：[5]
+
+- Action对State的影响和回报 $P(State', Reward | State, Action)$ 是已知的，然而绝大多数实际问题中 $P(State', Reward | State, Action)$ 是未知的
+- State和Action都是离散取值，无法应对Action或者State是连续取值的
+- State和Action都是低维度离散取值，因为计算复杂度是随着维度的升高而迅速变大的—— $O(|State| x |Action| x |State|)$
 
 ## 冰湖环境
 
@@ -148,15 +213,45 @@ code
 
 这个最优策略很看上去比较反直觉，其原因是这是一个智能体会随机滑向其他状态的冰冻湖面。例如，在目标左边一格的状态，采取向右的动作时，它有可能会滑到目标左上角的位置，从该位置再次到达目标会更加困难，所以此时采取向下的动作是更为保险的，并且有一定概率能够滑到目标。我们再来尝试一下价值迭代算法。
 
-Code
+code
 
 可以发现价值迭代算法的结果和策略迭代算法的结果完全一致，这也互相验证了各自的结果。
 
+## 策略迭代 VS 价值迭代
+
+借用Stackoverflow的一张图，我们把价值迭代和策略迭代放在一起看：[6]
+
+![价值迭代 v.s. 策略迭代](../img/value_iteration_vs_policy_iteration.png)
+
+不同点：
+
+在Policy Iteration中
+
+- 第一步 Policy Eval：一直迭代至收敛，获得准确的V(s)。
+- 第二步 Policy Improvement：根据准确的V(s)，求解最好的Action。
+- 不断优化策略以求最优策略：根据贝尔曼方程来更新值函数，并根据当前的值函数来改进策略。
+- 每次迭代的时间复杂度最大为 $O(|S|^3|A|^3)$，最大迭代次数为 $|A|^{|S|}$。
+
+对比之下，在Value Iteration中
+
+- 第一步 Policy Eval：迭代只做一步，获得不太准确的V(s)。
+- 第二步 Policy Improvement：根据不太准确的V(s)，求解最好的Action。
+- 通过求最优的值函数去求最优策略：直接使用贝尔曼最优方程来更新值函数，收敛时的值函数就是最优的值函数，此时即最优策略。
+- 每次迭代的时间复杂度最大为 $O(|S|^{2}|A|)$，但迭代次数要比策略迭代算法更多。
+
+相同点：
+
+- 值迭代和策略迭代都需要经过非常多的迭代次数才能完全收敛。在实际应用中，可以不必等到完全收敛，如阈值$\theta \leftarrow 0.0001$。这样，当状态和动作数量有限时，经过有限次迭代就可以能收敛到近似最优策略。[4]
+- 本质上，Policy Iteration和Value Iteration都属于Model-based方法，这种方法假设我们知道Action带来的Reward和新状态，即P(s', r | s, a)。最明显的特点是，不用玩迷宫游戏，便能根据转移矩阵计算出最优策略。
 
 ## 小结
 
-本章讲解了强化学习中两个经典的动态规划算法：策略迭代算法和价值迭代算法，它们都能用于求解最优价值和最优策略。动态规划的主要思想是利用贝尔曼方程对所有状态进行更新。需要注意的是，在利用贝尔曼方程进行状态更新时，我们会用到马尔可夫决策过程中的奖励函数和状态转移函数。如果智能体无法事先得知奖励函数和状态转移函数，就只能通过和环境进行交互来采样（状态-动作-奖励-下一状态）这样的数据，我们将在之后的章节中讲解如何求解这种情况下的最优策略。
+本章讲解了强化学习中两个经典的动态规划算法：策略迭代算法和价值迭代算法，它们都能用于求解最优价值和最优策略。动态规划的主要思想是利用贝尔曼方程对所有状态进行更新。需要注意的是，在利用贝尔曼方程进行状态更新时，我们会用到马尔可夫决策过程中的奖励函数和状态转移函数。如果智能体无法事先得知奖励函数和状态转移函数，就只能通过和环境进行交互来采样（状态-动作-奖励-下一状态）这样的数据，我们将在之后的章节中讲解如何求解这种情况下的最优策略，即Model-free方法。
+
 
 [1]: https://hrl.boyuai.com/chapter/1/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95
 [2]: https://www.bilibili.com/video/BV1UT411a7d6?p=34&vd_source=bca0a3605754a98491958094024e5fe3
 [3]: https://www.bilibili.com/video/BV1UT411a7d6?p=35&vd_source=bca0a3605754a98491958094024e5fe3
+[4]: https://coladrill.github.io/2018/12/02/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%80%BB%E8%A7%88/
+[5]: https://zhuanlan.zhihu.com/p/33229439
+[6]: https://zhuanlan.zhihu.com/p/34006925

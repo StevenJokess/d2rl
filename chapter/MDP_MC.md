@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-10 22:59:23
+ * @LastEditTime: 2023-03-12 00:08:11
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -29,6 +29,13 @@
 
 > 问：如果数据流不满足马尔科夫性怎么办？应该如何处理?
 > 答：如果不具备马尔可夫性，即下一个状态与之前的状态也有关，若仅用当前的状态来求解决策过程，势必导致决策的泛化能力变差。为了解决这个问题，可以利用循环神经网络(RNN)对历史信息建模，获得包含历史信息的状态表征，表征过程也可以使用注意力机制等手段，最后在表征状态空间求解马尔可夫决策过程问题。[2]
+>
+> 一些违背马尔可夫性的例子：
+>
+>1. 大气污染问题。大气污染的浓度受到许多因素的影响，如天气、地形、交通等等。这些因素不仅与当前状态有关，还与过去状态有关，因此大气污染问题是一个非马尔可夫过程。
+>1. 股票价格变动问题。股票价格的变动不仅受到当前市场情况的影响，还受到过去的价格变动、公司的业绩等因素的影响，因此股票价格变动问题也是一个非马尔可夫过程。
+>1. 自然语言处理问题。在自然语言处理中，词语的出现通常是依赖于前面的词语的，因此自然语言处理问题也是一个非马尔可夫过程。
+
 
 ### 马尔可夫过程
 
@@ -67,6 +74,8 @@ $$
 其中第 $i$ 行 $j$ 列的值 $\mathcal{P}_{i, j}$ 则代表从状态 $s_i$ 转移到 $s_j$ 的概率。
 
 给定一个马尔可夫过程，我们就可以从某个状态出发，根据它的状态转移矩阵生成一个状态**序列** (episode)，这个步骤也被叫做**采样**（sampling）。例如，从 $s_1$ 出发，可以生成序列 $s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_6$ 或序列 $s_1 \rightarrow s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_4 \rightarrow s_5 \rightarrow s_3 \rightarrow s_6$ 等。生成这些序列的概率和状态转移矩阵有关。
+
+马尔科夫链与Episode：Episode可以翻译为片段、情节、回合等，在强化学习问题中，一个Episode就是一个马尔科夫链，根据状态转移矩阵可以得到许多不同的episode，也就是多个马尔科夫链。
 
 ### 马尔可夫奖励过程（MRP）
 
@@ -236,7 +245,9 @@ $$
 Q_\pi(s, a)=\mathbb{E}_\pi\left[G_t \mid S_t=s, A_t=a\right]
 $$
 
-状态价值函数和动作价值函数之间的关系：在使用策略 $\pi$ 中，状态 $s$ 的价值等于在该状态下基于策略 $\pi$ 采取所有动作的概率与相应的价值相乘再求和的结果:
+##### 状态价值函数和动作价值函数之间的关系
+
+在使用策略 $\pi$ 中，状态 $s$ 的价值等于在该状态下基于策略 $\pi$ 采取所有动作的概率与相应的价值相乘再求和的结果:
 
 $$
 V_\pi(s)=\sum_{a \in A} \pi(a \mid s) Q^\pi(s, a)
@@ -245,15 +256,7 @@ $$
 使用策略 $\pi$ 时，状态 $s$ 下采取动作 $a$ 的价值等于即时奖励加上经过衰减后的所有可能的下一个状态的状态转移概率与相应的价值的乘积:
 
 $$
-Q_\pi(s, a)=r(s, a)+\gamma \sum_{s \prime \sigma} P\left(s^{\prime} \mid s, a\right) V_\pi\left(s^{\prime}\right)
-$$
-
-##### 二者关系
-
-某个状态的状态价值函数值是不同动作下的动作价值函数值的累加：$$V_\pi(s)=\sum_{a \in A} \pi(s, a) q_\pi(s, a)$$
-
-
-某个动作的动作价值函数值是动作确定时状态转移后的反馈结果：$$q_\pi(s, a)=\sum_{s^{\prime} \in S} \operatorname{P}\left(s^{\prime} \mid s, a\right)\left[R\left(s, a, s^{\prime}\right)+\gamma V_\pi\left(s^{\prime}\right)\right]$$
+Q_\pi(s, a)=\sum_{s^{\prime} \in S} \operatorname{P}\left(s^{\prime} \mid s, a\right)\left[R\left(s, a, s^{\prime}\right)+\gamma V_\pi\left(s^{\prime}\right)\right]$$
 
 下面以状态$s_1$的计算为例 [8]：
 
@@ -327,6 +330,9 @@ $$
 $$
 
 这种增量式更新（或累进更新）期望的方法已经在第 2 章中展示过。
+
+> - 同策略：在蒙特卡罗方法中，如果采样策略是 $π^ϵ(s)$ ，不断改进策略也是 $π^ϵ(s)$而不是目标策略 $π^ϵ(s)$。这种采样与改进策略相同（即都是 $π^ϵ(s)$）的强化学习方法叫做同策略（on policy）方法。
+> - 异策略：如果采样策略是 $π^ϵ(s)$，而优化目标是策略π，可以通过重要性采样，引入重要性权重来实现对目标策略π 的优化。这种采样与改进分别使用不同策略的强化学习方法叫做异策略（off policy）方法。
 
 #### 代码
 
