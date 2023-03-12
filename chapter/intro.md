@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-11 23:32:25
+ * @LastEditTime: 2023-03-12 20:20:54
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -305,7 +305,10 @@ $$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
 
 ##### 策略（Policy）：
 
-策略（Policy）或 策略函数（Policy Functions）：是观察（Observation）到 行动（Action）的一个映射   或 全观察情况下的状态（fully observated State) [23] 到 行动（Action） 的一个映射。    。它对应于心理学中所谓的一组刺激-反应规则或关联。策略是强化学习个体的核心，因为它本身就足以确定行为。以雅达利游戏为例子，策略函数的输入就是游戏的任一帧，它的输出决定智能体向左移动或者向右移动。强化学习通过学习来改进策略来最大化总奖励。
+策略（Policy）或 策略函数（Policy Functions）：指智能体怎么选择动作。它对应于心理学中所谓的一组刺激-反应规则或关联。策略是强化学习个体的核心，因为它本身就足以确定行为。
+
+- 不利用动作价值函数时：观察（Observation）到 行动（Action）的一个映射   或 全观察情况下的状态（fully observated State) [23] 到 行动（Action） 的一个映射。    。以雅达利游戏为例子，策略函数的输入就是游戏的任一帧，它的输出决定智能体向左移动或者向右移动。强化学习通过学习来改进策略来最大化总奖励。
+- 利用动作价值函数时：动作价值函数Q 到 行动（Action）的一个映射。
 
 根据策略固定与否分为不同的学习模式：
 
