@@ -32,7 +32,7 @@ Actor-Critic
 A2C&A3C
 TRPO
 PPO
-DDPG
+DDPG&TD3
 SAC
 
 Sparse_Reward
