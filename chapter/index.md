@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-08 20:52:58
+ * @LastEditTime: 2023-03-13 00:59:17
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -38,12 +38,14 @@ SAC
 Sparse_Reward
 IL
 model-based
+MCTS
 MPC
 offline_RL(BCQ&CQL)
 Unsupervised RL
 GoRL&HER
 IPPO
 MADDPG
+
 
 conclusion&perspective
 more_resoures

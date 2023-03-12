@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 21:12:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-12 19:08:14
+ * @LastEditTime: 2023-03-12 23:29:51
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -26,11 +26,15 @@
 
 如图 12.3 所示，要输出离散动作，我们就加一个 softmax 层来确保所有的输出是动作概率，并且所有的动作概率和为 1。要输出连续动作，我们一般可以在输出层加一层 tanh 函数。tanh 函数的作用就是把输出限制到 [−1,1] 。我们得到输出后，就可以根据实际动作的范围将其缩放，再输出给环境。比如神经网络输出一个浮点数 2.8，经过 tanh 函数之后，它就可以被限制在 [−1,1] 之间，输出 0.99。假设小车速度的范围是 [−2,2] ，我们就按比例从 [−1,1] 扩大到 [−2,2]，0.99 乘 2，最终输出的就是 1.98，将其作为小车的速度或者推小车的推力输出给环境。
 
-
-
 ## DPG算法(Deterministic Policy Gradient)
 
-顾名思义，DPG是一种deterministic的policy gradient算法。policy gradient算法的基本思想 是，用一个参数化的概率分布 $\pi_\theta(a \mid s)=P[a \mid s ; \theta]$ 来表示policy，并且由于policy是一个概率 分布，那么action $a$ 就是随机选取的，也就是所谓的Stochastic Policy Gradient。
+### Deterministic
+
+顾名思义，DPG是一种deterministic的policy gradient算法。可以说，差不多在2014年以前，学者们都在发展随机**策略搜索**的方法。因为，大家都认为确定性策略梯度是不存在的。直到2014年，强化学习算法大神Silver在论文《Deterministic Policy Gradient Algorithms》中提出了确定性策略理论，策略搜索方法中才出现确定性策略这个方法。[7]
+
+
+
+policy gradient算法的基本思想 是，用一个参数化的概率分布 $\pi_\theta(a \mid s)=P[a \mid s ; \theta]$ 来表示policy，并且由于policy是一个概率 分布，那么action $a$ 就是随机选取的，也就是所谓的Stochastic Policy Gradient。
 
 DPG做的事情，就是摒弃了用概率分布表示policy的方法，转而用一个确定性的函数 $a=\mu_\theta(s)$ 表示policy。也就是说，给定当前的state $s$ ，选取的action $a$ 就是确定的。
 相对于stochastic function，用deterministic function表示policy有其优点和缺点。优点就是， 从理论上可以证明， deterministic policy的梯度就是Q函数梯度的期望，这使得deterministic方 法在计算上比stochastic方法更高效；
@@ -61,7 +65,42 @@ $$
 - 第二行的由来：对 $\left.\nabla_{\theta^\mu} Q\left(s, a \mid \theta^Q\right)\right|_{s=s_t, a=\mu\left(s_t \mid \theta^\mu\right)}$ 使用链式法则，即Q函数对 $\mu$ 的梯度，等于Q函数对 action $a$ 的梯度乘以action $a$ 对 $\mu$ 的梯度，就得到了上述公式的第二行。
 - 左侧：$\nabla_{\theta^\mu} J$ 就是DPG的policy gradient，用这个policy gradient做梯度上升算法，即可优化policy $\mu$ ，使得期望回报最大化。
 
+异策略随机策略梯度: $\nabla_\theta J_\beta\left(\pi_\theta\right)=E_{s \sim \rho^\beta, a \sim \beta}\left[\frac{\pi_\theta(a \mid s)}{\beta_\theta(a \mid s)} \nabla_\theta \log \pi_\theta(a \mid s) Q^\pi(s, a)\right]$
+采样策略为 $\beta$.
+
+为了给出确定性策略AC的方法，我们首先给出确定性策略梯度：
+
+$$
+\nabla_\theta J\left(\mu_\theta\right)=E_{s \sim \rho^\mu}\left[\left.\nabla_\theta \mu_\theta(s) \nabla_a Q^\mu(s, a)\right|_{a=\mu_\theta(s)}\right](8.5)
+$$
+
+(8.5)即为确定性策略梯度。跟随机策略梯度 (8.3) 相比，少了对动作的积分，多了回报函数 对动作的导数。
+
+异策略确定性策略梯度为:
+
+$$
+\nabla_\theta J_\beta\left(\mu_\theta\right)=E_{s \sim \rho^\beta}\left[\left.\nabla_\theta \mu_\theta(s) \nabla_a Q^\mu(s, a)\right|_{a=\mu_\theta(s)}\right](8.6)
+$$
+
+比较 (8.6) 和（8.4) 我们发现，确定性策略梯度求解时少了重要性权重，这是因为重要性采 样是用简单的概率分布区估计复杂的概率分布，而确定性策略的动作是确定值不是概率分 布，另外确定性策略的值函数评估用的是Qlearning的方法，即用TD(0)来估计动作值函数并 忽略重要性权重。
+有了 (8.6)，我们便可以得到确定性策略异策略AC算法的更新过程了:
+
+$$
+\begin{aligned}
+& \delta_t=r_t+\gamma Q^w\left(s_{t+1}, \mu_\theta\left(s_{t+1}\right)\right)-Q^w\left(s_t, a_t\right) \\
+& w_{t+1}=w_t+\alpha_w \delta_t \nabla_w Q^w\left(s_t, a_t\right) \\
+& \theta_{t+1}=\theta_t+\left.\alpha_\theta \nabla_\theta \mu_\theta\left(s_t\right) \nabla_a Q^w\left(s_t, a_t\right)\right|_{a=\mu_\theta(s)}
+\end{aligned}
+$$
+
+（8.7) 的第一行和第二行是利用值函数逼近的方法更新值函数参数，第三行是利用确定性策 略梯度的方法更新策略参数。
+
+以上介绍的是确定性策略梯度方法，可以称为 DPG的方法。有了DPG，我们再讲DDPG。[7]
+
+
 ## DDPG算法
+
+为了打破数据之间的相关性，DQN用了两个技巧：经验回放和独立的目标网络。DDPG的算法便是将这两条技巧用到了DPG算法中。[7]
 
 之前我们学习的策略是随机性的，可以表示为 $a \sim \pi_\theta(\cdot \mid s)$ ；而如果策略是确定性的，则可以记为 $a=\mu_\theta(s)$ 。与策略梯度定理类似，我们可以推导出确定性策略梯度定理 (deterministic policy gradient theorem)：
 
@@ -172,3 +211,5 @@ TD3的作者给出了其对应[PyTorch的实现](https://github.com/sfujim/TD3/)
 [4]: https://github.com/sfujim/TD3/
 [5]: https://zhuanlan.zhihu.com/p/337976595#2.1%20Story
 [6]: https://datawhalechina.github.io/easy-rl/#/chapter12/chapter12
+[7]: https://zhuanlan.zhihu.com/p/26441204
+

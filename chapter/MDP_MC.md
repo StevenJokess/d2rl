@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-12 00:08:11
+ * @LastEditTime: 2023-03-13 01:47:40
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -293,7 +293,12 @@ $$
 > \frac{\text { 圆的面积 }}{\text { 正方形的面积 }}=\frac{\text { 圆中点的个数 }}{\text { 正方形中点的个数 }}
 > $$
 
-我们现在介绍如何用蒙特卡洛方法来估计一个策略在一个马尔可夫决策过程中的状态价值函数。回忆一下，一个状态的价值是它的期望回报，那么一个很直观的想法就是用策略在 MDP 上采样很多条序列，计算从这个状态出发的回报再求其期望就可以了，公式如下：
+我们现在介绍如何用蒙特卡洛方法来估计一个策略在一个马尔可夫决策过程中的状态价值函数。回忆一下，一个状态的价值是它的期望回报，那么一个很直观的想法就是用策略在 MDP 上采样很多条序列，计算从这个状态出发的回报
+，是利用**经验平均**代替随机变量的期望[11]，
+
+何为经验：是指利用该策略做很多次试验，产生很多幕数据。![蒙特卡罗中的经验](../img/experience.png)
+
+具体公式如下：
 
 $$
 V^\pi(s)=\mathbb{E}_\pi\left[G_t \mid S_t=s\right] \approx \frac{1}{N} \sum_{i=1}^N G_t^{(i)}
@@ -307,18 +312,26 @@ $$
 
 假设我们现在用策略从状态开始采样序列，据此来计算状态价值。我们为每一个状态维护一个计数器和总回报，计算状态价值的具体过程如下所示。
 
-(1) 使用策略采样若干条序列：
+##### (1)探索性初始化：
+
+无模型的方法充分评估策略值函数的前提是每个状态都能被访问到。探索性初始化是指每个状态都有一定的几率作为初始状态。
+
+$ s \in S, a \in A(s), Q(s, a) \leftarrow  arbitrary, $
+
+$ \pi(s) \leftarrow arbitrary, \operatorname{Re} turns (s, a) \leftarrow emptylist $
+
+##### (2) 使用策略采样若干条序列：
 
 $$
 s_0^{(i)} \stackrel{a_0^{(i)}}{\longrightarrow} r_0^{(i)}, s_1^{(i)} \stackrel{a_1^{(i)}}{\longrightarrow} r_1^{(i)}, s_2^{(i)} \stackrel{a_2^{(i)}}{\longrightarrow} \cdots \stackrel{a_{T-1}^{(i)}}{\longrightarrow} r_{T-1}^{(i)}, s_T^{(i)}
 $$
 
-(2) 对每一条序列中的每一时间步 $t$ 的状态进行以下操作：
+##### (3) 对每一条序列中的每一时间步 $t$ 的状态进行以下操作：
 
 - 更新状态 $s$ 的计数器 $N(s) \leftarrow N(s) + 1$；
 - 更新状态 $s$ 的总回报 $M(s) \leftarrow M(s) + G_t$；
 
-(3) 每一个状态的价值被估计为回报的平均值 $V(s)=M(s) / N(s)$ 。
+##### (4) 每一个状态的价值被估计为回报的平均值 $V(s)=M(s) / N(s)$ 。
 
 根据大数定律，当 $N(s) \rightarrow \infty$ ，有 $V(s) \rightarrow V^\pi(s)$ 。计算回报的期望时，除了 可以把所有的回报加起来除以次数，还有一种增量更新的方法。对于每个状态 $s$ 和对应回报 $G$ ，进行如下计算:
 
@@ -330,6 +343,13 @@ $$
 $$
 
 这种增量式更新（或累进更新）期望的方法已经在第 2 章中展示过。
+
+
+#### 策略改进
+
+利用学到的值函数进行策略改进
+
+TODO:
 
 > - 同策略：在蒙特卡罗方法中，如果采样策略是 $π^ϵ(s)$ ，不断改进策略也是 $π^ϵ(s)$而不是目标策略 $π^ϵ(s)$。这种采样与改进策略相同（即都是 $π^ϵ(s)$）的强化学习方法叫做同策略（on policy）方法。
 > - 异策略：如果采样策略是 $π^ϵ(s)$，而优化目标是策略π，可以通过重要性采样，引入重要性权重来实现对目标策略π 的优化。这种采样与改进分别使用不同策略的强化学习方法叫做异策略（off policy）方法。
@@ -414,8 +434,8 @@ code
 
 根据 $V^*(s)$ 和 $Q^*(s, a)$ 的关系，我们可以得到**贝尔曼最优方程** (Bellman optimality equation) :
 
-- 最佳价值函数 (optimal value function) $V^*$：$$V^*(s) =  \max_{a \in \mathcal{A}}\left\{r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} p\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right\} $$
-- 最佳策略 (optimal policy) $\pi^*$：$$Q^*(s, a) = r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} p\left(s^{\prime} \mid s, a\right) \max_{a^{\prime} \in \mathcal{A}} Q^*\left(s^{\prime}, a^{\prime}\right)$$
+- 最佳价值函数 (optimal value function) $V^*$：$$V^*(s) =  \max_{a \in \mathcal{A}}\left\{r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right\} $$
+- 最佳策略 (optimal policy) $\pi^*$：$$Q^*(s, a) = r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) \max_{a^{\prime} \in \mathcal{A}} Q^*\left(s^{\prime}, a^{\prime}\right)$$
 
 下图表示了 $V^*$ 和 $\pi^*$ 的 Bellman 最优方程中考虑的未来状态和可选的动作范围[5]：
 
@@ -451,3 +471,4 @@ code
 [8]: https://aistudio.baidu.com/aistudio/education/preview/3103363
 [9]: https://blog.51cto.com/u_15762365/5711481
 [10]: https://www.bilibili.com/video/BV1UT411a7d6?p=33&vd_source=bca0a3605754a98491958094024e5fe3
+[11]: https://www.zhihu.com/people/guoxiansia/posts?page=3
