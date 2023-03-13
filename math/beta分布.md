@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-23 18:41:30
+ * @LastEditTime: 2023-03-14 01:22:20
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -47,7 +47,7 @@ plot_results([thompson_sampling_solver], ["ThompsonSampling"])
 # 汤普森采样算法的累积懊悔为：57.19161964443925
 ```
 
-## 其他分布
+## 其他相关分布
 
 ### 伯努利分布
 
@@ -214,8 +214,16 @@ $$\theta \mid X=k \sim \text{Beta}(\alpha+k,\beta+N-k)。$$
 
 > **涉及相关概念**：
 >
-> - 先验概率（Prior probability）：$P(A)$先验概率就是事情尚未发生前，我们对该事发生概率的估计。利用过去历史资料计算得到的先验概率，称为客观先验概率； 当历史资料无从取得或资料不完全时，凭人们的主观经验来判断而得到的先验概率，称为主观先验概率。例如抛一枚硬币头向上的概率为0.5，这就是主观先验概率。
-> - 后验概率（Posterior probability)：$P(A \mid B)$后验概率是指通过调查或其它方式获取新的附加信息，利用贝叶斯公式对先验概率进行修正，而后得到的概率。
+> - **条件概率**(Conditional probability)：事件X在事件Y发生的条件下发生的概率，P(X|Y)
+> - **联合概率**(Joint probability)：表示两个事件X和Y共同发生的概率，P(X,Y)
+>
+> - 条件概率和联合概率的性质：$P(Y|X) = \frac{P(Y,X)}{P(X)} \quad P(X ) > 0$.
+>   - 推广到 n 个事件，条件概率的链式法则：
+> $$
+> \begin{aligned} P\left(X_{1}, X_{2}, \ldots, X_{n}\right) &=P\left(X_{1} \mid X_{2}, \ldots, X_{n}\right) P\left(X_{2} \mid X_{3}, X_{4}, \ldots, X_{n}\right) \ldots P\left(X_{n-1} \mid X_{n}\right) P\left(X_{n}\right) \\ &=P\left(X_{n}\right) \prod_{i=1}^{n-1} P\left(X_{i} \mid X_{i+1}, \ldots, X_{n}\right) \end{aligned}
+> $$
+> - **先验概率**（Prior probability）：$P(A)$先验概率就是事情尚未发生前，我们对该事发生概率的估计。利用过去历史资料计算得到的先验概率，称为客观先验概率； 当历史资料无从取得或资料不完全时，凭人们的主观经验来判断而得到的先验概率，称为主观先验概率。例如抛一枚硬币头向上的概率为0.5，这就是主观先验概率。
+> - **后验概率**（Posterior probability)：$P(A \mid B)$后验概率是指通过调查或其它方式获取新的附加信息，利用贝叶斯公式对先验概率进行修正，而后得到的概率。
 > - 先验概率和后验概率的区别：先验概率不是根据有关自然状态的全部资料测定的，而只是利用现有的材料(主要是历史资料)计算的；后验概率使用了有关自然状态更加全面的资料，既有先验概率资料，也有补充资料。另外一种表述：先验概率是在缺乏某个事实的情况下描述一个变量；而后验概率（Probability of outcomes of an experiment after it has been performed and a certain event has occured.）是在考虑了一个事实之后的条件概率。[4]
 > - 共轭分布(conjugacy)：后验概率分布函数与先验概率分布函数具有相同形式。
 > - Beta分布的特殊之处：Beta分布是贝叶斯推断中伯努利，二项式，负二项式和几何分布(似乎是涉及成功与失败的分布)的共轭先验。这样的考虑是为了去利用共轭性的性质。
@@ -287,7 +295,6 @@ P(\theta \mid x) & = \frac{C_{n}^x \theta^x (1-\theta)^{n-x} \frac{1}{B(a,b)}\th
 \end{aligned}
 $$
 
-
 ##### 共轭性的应用
 
 共轭性的应用：假设参数$\theta$的先验分布为 Beta 分布 $Beta(\alpha, \beta)$，或者说 $P(\theta) = \frac{1}{B(\alpha,\beta)}\theta^{\alpha-1}(1-\theta)^{\beta-1}$ ，经过二项式 $B(n, \theta)$ 试验（已知该实验总次数为 $N$ 和 观察到的成功次数为$k$，而成功概率 $\theta$  未知）。给定常数 $a, b, 0 \leq a \lt b \leq 1$. 求解条件概率 $P(a \leq \theta \leq b \mid X = k)$
@@ -304,6 +311,19 @@ $$
 
 ---
 
+## 更多分布[14]
+
+### **高斯分布**
+
+高斯分布，又称正态分布(normal)，是实数中最常用的分布，由均值*μ*和标准差*σ*决定其分布，概率密度函数为：
+
+$$
+p(x) = \frac{1}{\sqrt{2 \pi}\sigma}e^{-\frac{(x-\mu)^2}{2 \sigma^2}}
+$$
+
+### **指数分布**
+
+常用来表示独立随机事件发生的时间间隔，参数为λ>0的指数分布概率密度函数为：$p(x) = \lambda e^{-\lambda x} \quad x \geq 0$. 指数分布重要特征是无记忆性。
 
 [1]: https://zh.wikipedia.org/wiki/%CE%92%E5%88%86%E5%B8%83
 [2]: https://zh.wikipedia.org/wiki/%CE%92%E5%87%BD%E6%95%B0#%E4%B8%8D%E5%AE%8C%E5%85%A8%E8%B4%9D%E5%A1%94%E5%87%BD%E6%95%B0
@@ -318,3 +338,4 @@ $$
 [11]: https://en.wikipedia.org/wiki/Combination
 [12]: https://zhuanlan.zhihu.com/p/484275023
 [13]: https://zh.wikipedia.org/zh-hans/%CE%92%E5%88%86%E5%B8%83
+[14]: https://github.com/datawhalechina/unusual-deep-learning/edit/main/docs/02.%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80.md

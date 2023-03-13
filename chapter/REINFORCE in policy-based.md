@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-02-28 22:45:31
+ * @LastEditTime: 2023-03-13 23:10:20
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -36,25 +36,15 @@ $$
 \end{aligned}
 $$
 
-
-
-
-
-
-
 这个梯度可以用来更新策略，且按回合（episode）更新。[2]需要注意的是，因为上式中期望的下标是  $\pi_\theta$ ，所以策略梯度算法为**在线策略**（on-policy）算法，即必须使用当前策略 $\pi_\theta$ 采样得到的数据来计算梯度。直观理解一下策略梯度这个公式，可以发现在每一个状态下，梯度的修改是*让策略更多地去采样到带来较高 $Q$ 值的动作更少地去采样到带来较低 $Q$ 值的动作*，可以说是不断试错的公式化，如图 9-1 所示。
 
 在计算策略梯度的公式中，我们需要用到 $Q^{\pi_\theta}(s, a)$ ，可以用多种方式对它进行估计。接下来要介绍的 REINFORCE 算法便是采用了蒙特卡洛方法来估计 $Q^{\pi_\theta}(s, a)$ ，对于一个有限步数的环境来说， REINFORCE 算法中的策略梯度为:
-
-
 
 $\nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\sum_{t=0}^T\left(\sum_{t^{\prime}=t}^T \gamma^{t^{\prime}-t} r_{t^{\prime}}\right) \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right)\right]$
 
 其中，$T$是和环境交互的最大步数。例如，在车杆环境下，$T = 200$。
 
-
 ## REINFORCE
-
 
 REINFORCE 算法的具体算法流程如下：
 
@@ -83,7 +73,7 @@ REINFORCE 算法的具体算法流程如下：
 
 可以用DP部分观测的MDP[3]
 
-问题：估计梯度时噪声很大，导致收敛缓慢或学习不稳定。
+缺点：在REINFORCE算法中，每次需要根据一个策略采集一条完整的轨迹，并计算这条轨迹上的回报。这种采样方式估计梯度时噪声很大，即方差比较大，学习效率也比较低，即收敛缓慢，或学习不稳定。
 
 ## 小结
 

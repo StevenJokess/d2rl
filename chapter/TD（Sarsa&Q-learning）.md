@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-12 21:50:41
+ * @LastEditTime: 2023-03-13 21:35:54
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -72,11 +72,14 @@ $$G_{t}^{\lambda}=(1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_{t}^{(n)}$$
 - 蒙特卡洛需要采样，必须是完整经历，只适用于回合。其主要思想是通过大量的采样来逼近状态的真实价值。该方法的起始点是任意选取的，一直到终止状态才进行一次更新，因此当动作序列很长时或者出现循环，该方法便不适用。
 - 时序差分需要采样，但经历可以不完整，该方法不像MC需要在每个序列终止后再更新，这种更新叫online，具体来说是下一状态的预估状态价值来预估收获再更新预估价值。[9]其更适用于实际情况，往往效果比MC更好（数学上并无严格证明）。[7]
 
-
 | 方法 | 偏差 | 方差 |
 | DP   | 无偏 | 无方差|
 | MC   | 无偏 | 方差较大|
-| TD   | 有偏 | 无方较小|
+| TD   | 有偏 | 方差较小|
+
+- MC方差大：因为智能体的奖励比较多，所以当我们把N步的奖励加起来时，对应的方差就会比较大。
+- 解决方差：为了缓解方差大的问题，我们可以通过调整N值，在方差与不精确的Q值之间取得一个平衡。
+- TD方差小：这里介绍的参数N是超参数，需要微调参数 N，例如是要多采样3步、还是多采样5步。
 
 ### Policy Evalution&Policy Improvment
 
@@ -204,6 +207,6 @@ $$
 [8]: https://zhuanlan.zhihu.com/p/262019592#3.3%20SARSA(\lambda)%E5%AE%9E%E7%8E%B0
 [9]: https://www.bilibili.com/video/BV1UT411a7d6?p=35&vd_source=bca0a3605754a98491958094024e5fe3
 [10]: https://www.cnblogs.com/jinxulin/p/5116332.html
-
+[11]: https://datawhalechina.github.io/easy-rl/#/chapter5/chapter5
 
 答:
