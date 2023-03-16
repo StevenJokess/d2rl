@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:38:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-12 23:21:31
+ * @LastEditTime: 2023-03-16 16:09:37
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -19,7 +19,7 @@
 
 ## Actor-Critic
 
-回顾一下，在 REINFORCE 算法中，目标函数的梯度中有一项轨迹回报，用于指导策略的更新。REINFOCE 算法用蒙特卡洛方法来估计，能不能考虑拟合一个值函数来指导策略进行学习呢？这正是 Actor-Critic 算法所做的。在策略梯度中，可以把梯度写成下面这个更加一般的形式：
+回顾一下，在 REINFORCE 算法中，目标函数的梯度中有一项轨迹回报，用于指导策略的更新。REINFORCE 算法用蒙特卡洛方法来估计，能不能考虑拟合一个值函数来指导策略进行学习呢？这正是 Actor-Critic 算法所做的。在策略梯度中，可以把梯度写成下面这个更加一般的形式：
 
 $$
 g=\mathbb{E}\left[\sum_{t=0}^T \psi_t \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right)\right]
@@ -34,15 +34,14 @@ $$
 5. $A^{\pi_\theta}\left(s_t, a_t\right)$ : 优势函数;
 6. $r_t+\gamma V^{\pi_\theta}\left(s_{t+1}\right)-V^{\pi_\theta}\left(s_t\right)$ : 时序差分残差。
 
-
-9.5 节提到 REINFORCE 通过蒙特卡洛采样的方法对策略梯度的估计是无偏的，但是方差非常大。我们可以用形式(3)引入基线函数（baseline function）来减小方差。此外，我们也可以采用 Actor-Critic 算法估计一个动作价值函数，代替蒙特卡洛采样得到的回报，这便是**形式(4)**。
+9.5 节提到 REINFORCE 通过蒙特卡洛采样的方法对策略梯度的估计是无偏的，但是*方差非常大*。我们可以用形式(3)引入基线函数（baseline function）来减小方差。此外，我们也可以采用 Actor-Critic 算法估计一个动作价值函数，代替蒙特卡洛采样得到的回报，这便是**形式(4)**。
 
 > 异策略随机策略梯度：采样策略为 $\beta$.
 > $$\nabla_\theta J_\beta\left(\pi_\theta\right)=E_{s \sim \rho^\beta, a \sim \beta}\left[\frac{\pi_\theta(a \mid s)}{\beta_\theta(a \mid s)} \nabla_\theta \log \pi_\theta(a \mid s) Q^\pi(s, a)\right]$$[2]
 
 这个时候，我们可以把状态价值函数作为基线，从函数减去这个函数则得到了函数，我们称之为优势函数（advantage function），这便是形式(5)。更进一步，我们可以利用等式得到形式(6)。
 
-本章将着重介绍形式(6)，即通过时序差分残差来指导策略梯度进行学习。事实上，用值或者值本质上也是用奖励来进行指导，但是用神经网络进行估计的方法可以减小方差、提高鲁棒性。除此之外，REINFORCE 算法基于蒙特卡洛采样，只能在序列结束后进行更新，这同时也要求任务具有有限的步数，而 Actor-Critic 算法则可以在每一步之后都进行更新，并且不对任务的步数做限制。
+本章将着重介绍形式(6)，即通过时序差分残差来指导策略梯度进行学习。事实上，用值或者值本质上也是用奖励来进行指导，但是用神经网络进行估计的方法可以减小方差、提高鲁棒性。除此之外，REINFORCE 算法基于蒙特卡洛采样，只能在序列结束后进行更新，这同时也要求任务具有有限的步数，而 Actor-Critic 算法则可以在每一步之后都进行更新，并且不对任务的步数做限制，所以相对来说计算更复杂，需要更多的超参数。[3]
 
 我们将 Actor-Critic 分为两个部分：Actor（策略网络）和 Critic（价值网络），如图 10-1 所示。
 
@@ -107,3 +106,4 @@ Actor-Critic 算法非常实用，后续章节中的 TRPO、PPO、DDPG、SAC 等
 
 [1]: https://hrl.boyuai.com/chapter/2/actor-critic%E7%AE%97%E6%B3%95/#101-%E7%AE%80%E4%BB%8B
 [2]: https://zhuanlan.zhihu.com/p/26441204
+[3]: https://chat.openai.com/chat

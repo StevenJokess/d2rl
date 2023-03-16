@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-13 23:23:58
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-14 02:07:30
+ * @LastEditTime: 2023-03-16 16:06:33
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -170,8 +170,7 @@ $$
 
 Wasserstein 距离相比 KL 散度和 JS 散度的优势在于：即使两个分布没有重叠或者重叠非常少，Wasserstein距离仍然能反映两个分布的远近。
 
-对于 $mathbb{R}^N$ 空间中的两个高斯分布 $p = mathbb{N}(μ_1,Σ_1)$ 和 $ q = mathbb{N}(μ_2,Σ_2)$
-, 它们的2nd Wasserstein 距离为
+对于 $mathbb{R}^N$ 空间中的两个高斯分布 $p = mathbb{N}(μ_1,Σ_1)$ 和 $ q = mathbb{N}(μ_2,Σ_2)$, 它们的2nd Wasserstein 距离为
 
 $$
 W_{2}(p, q)=\left|\mu_{1}-\mu_{2}\right|{2}^{2}+\operatorname{tr}\left(\Sigma{1}+\Sigma_{2}-2\left(\Sigma_{2}^{\frac{1}{2}} \Sigma_{1} \Sigma_{2}^{\frac{1}{2}}\right)^{\frac{1}{2}}\right)
