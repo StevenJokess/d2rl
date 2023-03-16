@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-13 02:18:46
+ * @LastEditTime: 2023-03-17 03:12:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -321,6 +321,11 @@ $$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
 
 由于奖励建立在状态 - 动作对之上，一个策略对应的价值其实就是一个占用度量下对应的奖励的期望，因此寻找最优策略对应着寻找最优占用度量。[5]
 
+Prediction和Control：
+
+- 预测（Prediction）给你一个policy，这个policy能够得到多少reward，这是一个预估未来的过程。
+- 控制（Control）: 确定众多决策中，哪一个决策能够得到最多的奖励。[35]
+
 ##### 最优策略
 
 - 最优确定性策略：$\pi^*(s)=\underset{a \in \mathcal{A}}{\operatorname{argmax}}\left[r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right]$
@@ -423,6 +428,7 @@ $$
 [32]: https://www.bilibili.com/video/BV1UT411a7d6?p=35&vd_source=bca0a3605754a98491958094024e5fe3
 [33]: https://github.com/qiwihui/reinforcement-learning-an-introduction-chinese/blob/master/source/chapter1/introduction.rst
 [34]: https://zhuanlan.zhihu.com/p/52727881
+[35]: https://zhuanlan.zhihu.com/p/361104667#9.Planning%E5%92%8Clearning
 
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
