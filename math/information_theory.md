@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-13 23:23:58
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-16 16:06:33
+ * @LastEditTime: 2023-03-16 21:48:36
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -78,35 +78,41 @@ $$
 
 ## 相对熵(Relative Entropy) 或 KL散度（Kullback-Leibler Divergence）
 
-相对熵又称KL散度，是描述两个概率分布P和Q差异的一种方法，记做D(P||Q)。在信息论中，D(P||Q)表示用概率分布Q来拟合真实分布P时，产生的信息表达的损耗，其中P表示信源的真实分布，Q表示P的近似分布。
+​相对熵(Relative Entropy)，也叫 KL 散度（Kullback-Leibler Divergence）或KL 距离，是用概率分布Q来近似P时所造成的信息损失量，所以可以用来描述两个概率分布P和Q差异。记做 $D_{\text{KL}}(P||Q)$ 或 $\mathrm{KL}(p, q)$。
 
-​相对熵(Relative Entropy)，也叫 KL 散度（Kullback-Leibler Divergence）或KL 距离或，是用概率分布Q来近似P时所造成的信息损失量。KL散度是按照概率分布Q的最优编码对真实分布为P的信息进行编码，其平均编码长度（即交叉熵）H(p, q)和p的最优平均编码长度（即熵）H(p)之间的差异。
+在信息论中，$D_{\text{KL}}(P||Q)$表示用概率分布Q来拟合真实分布P时，产生的信息表达的损耗，其中P表示信源的真实分布，Q表示P的近似分布。
 
-对于离散概率分布p 和q，从q到p的KL散度定义为：
+KL散度是按照概率分布Q的最优编码对真实分布为P的信息进行编码，其平均编码长度（即交叉熵）H(p, q)和p的最优平均编码长度（即熵）H(p)之间的差异。
 
+1. 对于离散概率分布p 和q，从q到p的KL散度定义为：
 $$
 \mathrm{KL}(p, q)=H(p, q)-H(p) \quad=\sum_x p(x) \log \frac{p(x)}{q(x)}
 $$
 
-对于连续概率分布p 和q，从q到p的KL散度定义为：
-
+2. 对于连续概率分布p 和q，从q到p的KL散度定义为：
 $$
 \mathrm{KL}(p, q)=H(p, q)-H(p) \quad=\int P(x)\log \frac{p(x)}{q(x)}
 $$
 
-其中为了保证连续性，定义
+其中，为了保证连续性，定义：
 
 $$
 0 \log \frac{0}{0}=0,0 \log \frac{0}{q}=0
 $$
 
 
-KL 散度总是非负的，$KL(p,q)≥0$ ，可以衡量两个概率分布之间的距离。KL散度只有当p = q时，$KL(p,q)=0$。如果两个分布越接近，KL散度越小；如果两个分布越远，KL散度就越大。 但KL散度并不是一个真正的度量或距离。
+KL 散度总是非负的，$KL(p,q)≥0$ ，可以衡量两个概率分布之间的距离。
+
+- KL散度只有当p = q时，$KL(p,q)=0$。
+- 如果两个分布越接近，KL散度越小；
+- 如果两个分布越远，KL散度就越大。
+
+但KL散度并不是一个真正的度量或距离，原因是：
 
 - KL散度不满足距离的对称性
 - KL散度不满足距离的三角不等式性质
 
-## 正向KL散度$KL(p||q)$
+### 正向KL散度$KL(p||q)$
 
 $$ \hat{q}=\operatorname{argmin}_{q} \int{x} p(x) \log \frac{p(x)}{q(x)} d x $$
 
@@ -116,7 +122,7 @@ $$ \hat{q}=\operatorname{argmin}_{q} \int{x} p(x) \log \frac{p(x)}{q(x)} d x $$
 
 总体而言，对于正向 KL 散度，在 $p(x)$ 大的地方，想让 KL 散度小，就需要 $q(x)$ 的值也尽量大；在p(x)小的地方，q(x)对整体 KL 影响并不大（因为 log 项本身分子很小，又乘了一个非常小的p(x)。换一种说法，要想使正向 KL 散度最小，则要求在 p 不为 0 的地方，q 也尽量不为 0，所以正向 KL 散度被称为是 zero avoiding。此时得到的分布 q 是一个比较 “宽” 的分布。
 
-## 反向KL散度 $KL(q||p)$
+### 反向KL散度 $KL(q||p)$
 
 $$ \hat{q}=\operatorname{argmin}_{q} \int{x} q(x) \log \frac{q(x)}{p(x)} d x $$
 
@@ -177,8 +183,6 @@ W_{2}(p, q)=\left|\mu_{1}-\mu_{2}\right|{2}^{2}+\operatorname{tr}\left(\Sigma{1}
 $$
 
 当两个分布的方差为 0 时，$2^{nd}-Wasserstein$ 距离等价于欧氏距离。
-
-
 
 [1]: https://datawhalechina.github.io/unusual-deep-learning/#/%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8C%E6%95%A3%E5%BA%A6?id=%e4%ba%a4%e5%8f%89%e7%86%b5%e5%92%8c%e6%95%a3%e5%ba%a6
 [2]: https://github.com/datawhalechina/unusual-deep-learning/edit/main/docs/02.%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80.md

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:59:33
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-13 22:15:44
+ * @LastEditTime: 2023-03-16 21:52:54
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -19,11 +19,19 @@
 
 针对以上问题，我们考虑在更新时找到一块**信任区域**（trust region），在这个区域上更新策略时能够得到某种策略性能的安全性保证，这就是**信任区域策略优化**（trust region policy optimization，TRPO）算法的主要思想。TRPO 算法在 2015 年被提出，它在理论上能够保证策略学习的性能单调性，并在实际应用中取得了比策略梯度算法更好的效果。
 
+## 策略目标
+
+
+
 图7.4 代价函数推导
 
 注意，这时状态s的分布由新的策略产生，对新的策略严重依赖。
 
 TRPO= NPG + Linesearch + monotonic improvement theorem!
+
+
+
+这里的不等式约束定义了策略空间中的一个 KL 球，被称为信任区域。在这个区域中，可以认为当前学习策略和环境交互的状态分布与上一轮策略最后采样的状态分布一致，进而可以基于一步行动的重要性采样方法使当前学习策略稳定提升。TRPO 背后的原理如图 11-1 所示。
 
 
 ## 技巧
@@ -117,11 +125,13 @@ subject to $\bar{D}_{K L}^{\rho_{\theta_{o l d}}}\left(\theta_{o l d}, \theta\ri
 ### 第四个技巧：
 
 $s \sim \rho_{\theta_{\text {old }}} \rightarrow s \sim \pi_{\theta_{\text {old }}}$
+
 最终TRPO问题化简为:
+
 $$
 \begin{aligned}
-& \operatorname{maximize}_\theta E_s \pi_{\theta_{\text {old }}, a \pi_{\theta_{\text {old }}}}\left[\frac{\pi_\theta(a \mid s)}{\pi_{\theta_{\theta l d}}(a \mid s)} A_{\theta_{\text {old }}}(s, a)\right] \\
-& \text { subject to } E_{s \pi_{\theta_{\text {old }}}}\left[D_{K L}\left(\pi_{\theta_{\text {old }}}(\cdot \mid s)|| \pi_\theta(\cdot \mid s)\right)\right] \leq \delta \\
+& \operatorname{maximize}_\theta E_{s \sim \pi_{\theta_{\text {old}}}, a \sim \pi_{\theta_{\text {old}}}}\left[\frac{\pi_\theta(a \mid s)}{\pi_{\theta_{\theta l d}}(a \mid s)} A_{\theta_{\text {old }}}(s, a)\right] \\
+& \text { subject to } E_{s \sim\pi_{\theta_{\text {old }}}}\left[D_{K L}\left(\pi_{\theta_{\text {old }}}(\cdot \mid s)|| \pi_\theta(\cdot \mid s)\right)\right] \leq \delta \\
 &
 \end{aligned}
 $$
@@ -131,11 +141,16 @@ $$
 ![TRPO的伪代码[4]](../img/trpo_Pseudocode.svg)
 
 
+
 ## TRPO 代码实践
 
 本节将使用支持与离散和连续两种动作交互的环境来进行 TRPO 的实验。我们使用的第一个环境是车杆（CartPole），第二个环境是倒立摆（Inverted Pendulum）。
 
 首先导入一些必要的库。
+
+code
+
+接下来在车杆环境中训练 TRPO，并将结果可视化。
 
 code
 
@@ -153,7 +168,7 @@ TRPO 算法是比较难掌握的一种强化学习算法，需要较好的数学
 
 
 
-[1]:
+[1]: https://hrl.boyuai.com/chapter/2/trpo%E7%AE%97%E6%B3%95/#115-%E7%BA%BF%E6%80%A7%E6%90%9C%E7%B4%A2
 [2]: https://www.cnblogs.com/kailugaji/p/15388913.html
 [3]: https://zhuanlan.zhihu.com/p/26308073
 [4]: https://spinningup.openai.com/en/latest/algorithms/trpo.html
