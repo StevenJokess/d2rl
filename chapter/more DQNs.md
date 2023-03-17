@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:03:50
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-13 21:33:35
+ * @LastEditTime: 2023-03-17 05:20:53
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -38,6 +38,7 @@ DQN 算法敲开了深度强化学习的大门，但是作为先驱性的工作�
 其原理是：解耦“选择当前最优的动作价值函数来更新当前的动作价值函数”这两个过程，双深度Q网络使用两个价值网络，一个网络用来执行动作选择，然后用另一个网络的价值函数对应的动作值更新当前网络。
 
 即存在两个Q网络，一个是目标的Q网络，一个是真正需要更新的Q网络。具体实现方法是使用需要更新的Q网络选动作，然后使用目标的Q网络计算价值。双深度Q网络相较于深度Q网络的更改是最少的，它几乎没有增加任何的运算量，甚至连新的网络都不需要。唯一要改变的就是在找最佳动作 $a$ 的时候，本来使用 $Q^′$ 来计算，即用目标的Q网络来计算，现在改成用**需要更新的Q网络**来计算。
+
 
 ## 竞争深度Q网络
 

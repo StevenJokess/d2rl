@@ -5,12 +5,13 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-11 21:58:50
+ * @LastEditTime: 2023-03-17 05:02:28
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
+
 # 动态规划算法
 
 ## 简介
@@ -44,6 +45,8 @@ code
 - 第二步 策略提升 (Policy Improvement)
 - 不停的重复策略评估和策略提升，直到策略不再变化为止
 
+![策略迭代（Policy Iteration）](../img/Policy_Iteration.png)
+
 ### 策略评估（policy evaluation）
 
 #### 思路：
@@ -60,7 +63,6 @@ code
     - $temp \leftarrow V(s)$
     - 策略评估：$V_\pi(s) \leftarrow \sum_{a \in A} \pi (s, a ) Q_\pi(s, a) = \sum_{a \in A} \pi (s, a ) { \sum _ { s ^ { \prime } \in S } \operatorname { P r } ( s ^ { \prime } | s , a ) [ R ( s , a , s ^ { \prime } ) + \gamma V _ { \pi } ( s ^ { \prime } ) }] .$
 - end while
-
 
 #### 例如：
 
@@ -144,9 +146,11 @@ $$
 
 ## 价值迭代（Value Iteration）
 
+从上面的代码运行结果中我们能发现，策略迭代中的策略评估需要进行很多轮才能收敛得到某一策略的状态函数，这需要很大的计算量，尤其是在状态和动作空间比较大的情况下。我们是否必须要完全等到策略评估完成后再进行策略提升呢？试想一下，可能出现这样的情况：虽然状态价值函数还没有收敛，但是不论接下来怎么更新状态价值，策略提升得到的都是同一个策略。如果只在策略评估中进行一轮价值更新，然后直接根据更新后的价值进行策略提升，这样是否可以呢？答案是肯定的，这其实就是本节将要讲解的价值迭代算法。
+
 ### 思路：
 
-从上面的代码运行结果中我们能发现，策略迭代中的策略评估需要进行很多轮才能收敛得到某一策略的状态函数，这需要很大的计算量，尤其是在状态和动作空间比较大的情况下。我们是否必须要完全等到策略评估完成后再进行策略提升呢？试想一下，可能出现这样的情况：虽然状态价值函数还没有收敛，但是不论接下来怎么更新状态价值，策略提升得到的都是同一个策略。如果只在策略评估中进行一轮价值更新，然后直接根据更新后的价值进行策略提升，这样是否可以呢？答案是肯定的，这其实就是本节将要讲解的价值迭代算法，它可以被认为是一种策略评估只进行了一轮更新的策略迭代算法。需要注意的是，价值迭代中不存在显式的策略，我们只维护一个状态价值函数。
+它是一种策略评估只进行了一轮更新的策略迭代算法。需要注意的是，价值迭代中不存在显式的策略，我们只维护一个状态价值函数。
 
 确切来说，价值迭代可以看成一种动态规划过程，它利用的是贝尔曼最优方程：
 
@@ -179,6 +183,7 @@ $$
     - $\Delta \leftarrow \max (\Delta,|temp-V(s)|)$
 - end while
 - 输出最优策略 $\pi(s) = \arg \max _a\left\{r(s, a)+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) V^{k+1}\left(s^{\prime}\right)\right\}$
+
 
 ### 代码：
 
@@ -248,6 +253,97 @@ code
 
 本章讲解了强化学习中两个经典的动态规划算法：策略迭代算法和价值迭代算法，它们都能用于求解最优价值和最优策略。动态规划的主要思想是利用贝尔曼方程对所有状态进行更新。需要注意的是，在利用贝尔曼方程进行状态更新时，我们会用到马尔可夫决策过程中的奖励函数和状态转移函数。如果智能体无法事先得知奖励函数和状态转移函数，就只能通过和环境进行交互来采样（状态-动作-奖励-下一状态）这样的数据，我们将在之后的章节中讲解如何求解这种情况下的最优策略，即Model-free方法。
 
+## 相关例子
+
+假设我们有一个3 x 3的棋盘[7]：
+
+- 有一个单元格是超级玛丽，每回合可以往上、下、左、右四个方向移动
+- 有一个单元格是宝藏，超级玛丽找到宝藏则游戏结束，目标是让超级玛丽以最快的速度找到宝藏
+- 假设游戏开始时，宝藏的位置一定是(1, 2)
+
+![超级玛丽](../img/supermary.jpg)
+
+### MDP吗？
+
+这是一个标准的马尔科夫决策过程(MDP)：
+
+- **状态空间State**：超级玛丽当前的坐标
+- **决策空间Action**: 上、下、左、右四个动作
+- **Action对State的影响和回报 P(State', Reward | State, Action)**：本文认为该关系是已知的
+  - 超级玛丽每移动一步，reward = -1
+  - 超级玛丽得到宝箱，reward = 0并且游戏结束
+
+### 利用Value Iteration解决：
+
+![利用Value Iteration解决超级玛丽](../img/supermary_value——iteration.jpg)
+
+结合上图可以非常简单的理解价值迭代：
+
+初始化：所有state的价值V(s) = 0
+
+第一轮迭代：
+
+- 对于每个state，逐一尝试上、下、左、右四个Action
+- 记录Action带来的Reward、以及新状态 V(s')
+- 选择最优的Action，更新V(s) = Reward + V(s')
+  - 对于宝箱周围的State，最优的Action是一步到达宝箱，V(s) = Reward + V(s') = -1 + 0
+- 第一轮结束后，宝箱周围的State的价值都有V(s) = -1，即从当前位置出发走一步获得Reward=-1
+
+第二轮迭代：
+
+- 对于每个state，逐一尝试上、下、左、右四个Action
+- 记录Action带来的Reward、以及新状态 V(s')
+- 选择最优的Action，更新V(s) = Reward + V(s')
+  - 对于宝箱周围的State，最优的Action是一步到达宝箱，V(s) = Reward + V(s') = -1 + 0
+  - 对于其他State，所有的Action都是一样的，V(s) = Reward + V(s') = -1 + -1
+- 第二轮结束后，宝箱周围的State的价值保持不变 V(s) = -1，出现其他State的价值 V(s) = -2
+
+第三轮迭代：
+
+- 对于每个state，逐一尝试上、下、左、右四个Action
+- 记录Action带来的Reward、以及新状态 V(s')
+- 选择最优的Action，更新V(s) = Reward + V(s')
+  - 对于宝箱周围的State，最优的Action是一步到达宝箱，V(s) = Reward + V(s') = -1 + 0
+  - 对于离宝箱两步距离的State，最优的Action是先一步到达宝箱周边的State，V(s) = Reward + V(s') = -1 + -1
+  - 对于离宝箱三步距离的State，所有Action都是一样的，V(s) = Reward + V(s') = -1 + -2
+- 第三轮结束后，宝箱周围的State保持不变和对于离宝箱两步距离的State的价值保持不变，分别为V(s) = -1、V(s) = -2，出现对于离宝箱三步距离的State的价值 V(s) = -3
+
+
+第四轮迭代：
+
+- 对于每个state，逐一尝试上、下、左、右四个Action
+- 记录Action带来的Reward、以及新状态 V(s')
+- 选择最优的Action，更新V(s) = Reward + V(s')
+  - 对于宝箱周围的State，最优的Action是一步到达宝箱，V(s) = Reward + V(s') = -1 + 0
+  - 对于离宝箱两步距离的State，最优的Action是先一步到达宝箱周边的State，V(s) = Reward + V(s') = -1 + -1
+  - 对于离宝箱三步距离的State，最优的Action是所有Action都是一样的，V(s) = Reward + V(s') = -1 + -2
+- 在第四轮迭代中，所有V(s)更新前后都没有任何变化，价值迭代已经找到了最优策略
+
+需要注意的是，对于Value Iteration来说，在每一轮迭代中，我们都对每一个状态尝试了所有他可能可以尝试的动作，并对这个状态的价值函数进行更新，直到价值函数不再发生变化。
+
+## 利用Policy Iteration解决：
+
+![利用Policy Iteration解决超级玛丽](../img/supermary_value_iteration.jpg)
+
+- 初始化：无论超级玛丽在哪个位置，策略默认为向下走
+  - 策略评估: 计算 $\mathrm{V}(\mathrm{s})$
+    - 如果宝藏恰好在正下方，则期望价值等于到达宝藏的距离 $(-2$ 或者-1)
+    - 如果宝藏不在正下方，则永远也不可能找到宝藏，期望价值为负无穷
+  - 策略提升: 根据 $\mathrm{V}(\mathrm{s})$ 找到更好的策略
+    - 如果宝藏恰好在正下方，则策略已经最优，保持不变
+    - 如果宝藏不在正下方, 根据 $\operatorname{argmax}_a \sum_{s^{\prime}, r}\left(r+\gamma V\left(s^{\prime}\right)\right)$ 可以得出最优策略为横 向移动一步
+
+- 第一轮迭代：通过上一轮的策略提升，这一轮的策略变成了横向移动或者向下移动（如图 所示)
+  - 策略评估：计算 $\mathrm{V}(\mathrm{s})$
+    - 如果宝藏恰好在正下方，则期望价值等于到达宝藏的距离 $(-2$ 或者-1)
+    - 如果宝藏不在正下方，当前策略会选择横向移动，期望价值为 $-3,-2,-1$
+  - 策略提开: 根据 $V(s)$ 找到更好的策略
+    - 如果宝藏恰好在正下方，则策略已经最优，保持不变
+    - 如果宝藏不在正下方，根据 $\operatorname{argmax}_a \sum_{s^{\prime}, r}\left(r+\gamma V\left(s^{\prime}\right)\right)$ 可以得出当前策略已经 最优，保持不变
+
+## 相关Demo
+
+https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_dp.html
 
 [1]: https://hrl.boyuai.com/chapter/1/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95
 [2]: https://www.bilibili.com/video/BV1UT411a7d6?p=34&vd_source=bca0a3605754a98491958094024e5fe3
@@ -255,3 +351,4 @@ code
 [4]: https://coladrill.github.io/2018/12/02/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%80%BB%E8%A7%88/
 [5]: https://zhuanlan.zhihu.com/p/33229439
 [6]: https://zhuanlan.zhihu.com/p/34006925
+[7]: https://www.zhihu.com/column/c_1359967856373874688

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-17 03:33:30
+ * @LastEditTime: 2023-03-17 04:42:08
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -332,7 +332,7 @@ $$
 我们现在介绍如何用蒙特卡洛方法来估计一个策略在一个马尔可夫决策过程中的状态价值函数。回忆一下，一个状态的价值是它的期望回报，那么一个很直观的想法就是用策略在 MDP 上采样很多条序列，计算从这个状态出发的回报
 ，是利用**经验平均**代替随机变量的期望[11]，
 
-何为经验：是指利用该策略做很多次试验，产生很多幕数据。![蒙特卡罗中的经验](../img/experience.png)
+> 何为经验：是指利用该策略做很多次试验，产生很多幕数据。![蒙特卡罗中的经验](../img/experience.png)
 
 具体公式如下：
 
@@ -365,7 +365,7 @@ $$
 ##### (3) 对每一条序列中的每一时间步 $t$ 的状态进行以下操作：
 
 - 更新状态 $s$ 的计数器 $N(s) \leftarrow N(s) + 1$；
-- 更新状态 $s$ 的总回报 $M(s) \leftarrow M(s) + G_t$；
+- 更新状态 $s$ 的总回报 $M(s) \leftarrow M(s) + (G-V(S))$；
 
 ##### (4) 每一个状态的价值被估计为回报的平均值 $V(s)=M(s) / N(s)$ 。
 

@@ -22,4 +22,14 @@ Recommended Courses：
 - Reinforcement Learning by David Silver
 - Deep Reinforcement Learning by Sergey Levine, Chelsea Finn, et al.
 
+## 国内
+
+- 群体决策智能实验室：http://marl.ia.ac.cn/
+- http://rlchina.org/
+- http://www.jidiai.cn/
+- https://space.bilibili.com/604515161/
+## 招聘
+
+http://rlchina.org/topics/node/13
+
 [1]: https://github.com/mimoralea/applied-reinforcement-learning/tree/master/12-recommended-books

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-16 23:25:08
+ * @LastEditTime: 2023-03-17 18:02:16
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -28,6 +28,7 @@ Dyna-Q
 DQN
 more DQNs
 REINFORCE in policy-based
+Eligibility Trace
 Actor-Critic
 A2C&A3C
 TRPO
@@ -43,12 +44,15 @@ MPC
 offline_RL(BCQ&CQL)
 Unsupervised RL
 GoRL&HER
+
+MARL
 IPPO
 MADDPG
 
-
 conclusion&perspective
-more_resoures
+resource
+more_resources
+thinking
 
 ```
 

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-01 00:20:18
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-01 01:12:47
+ * @LastEditTime: 2023-03-17 05:04:05
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -100,5 +100,7 @@ Deep RL是一个令人兴奋的，快速发展的领域，我们需要尽可能�
 ## 核心论文
 
 https://spinningup.readthedocs.io/zh_CN/latest/spinningup/keypapers.html
+
+多智能体：https://marl-doc.readthedocs.io/en/latest/env/
 
 [1]: https://spinningup.readthedocs.io/zh_CN/latest/spinningup/spinningup.html#id2
