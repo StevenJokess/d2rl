@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-13 23:10:20
+ * @LastEditTime: 2023-03-18 01:38:02
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -79,8 +79,55 @@ REINFORCE 算法的具体算法流程如下：
 
 REINFORCE 算法是策略梯度乃至强化学习的典型代表，智能体根据当前策略直接和环境交互，通过采样得到的轨迹数据直接计算出策略参数的梯度，进而更新当前策略，使其向最大化策略期望回报的目标靠近。这种学习方式是典型的从交互中学习，并且其优化的目标（即策略期望回报）正是最终所使用策略的性能，这比基于价值的强化学习算法的优化目标（一般是时序差分误差的最小化）要更加直接。 REINFORCE 算法理论上是能保证局部最优的，它实际上是借助蒙特卡洛方法采样轨迹来估计动作价值，这种做法的一大优点是可以得到无偏的梯度。但是，正是因为使用了蒙特卡洛方法，REINFORCE 算法的梯度估计的方差很大，可能会造成一定程度上的不稳定，这也是第 10 章将介绍的 Actor-Critic 算法要解决的问题。
 
-## 数学推导
+## 扩展阅读：策略梯度证明
 
+策略梯度定理是强化学习中的重要理论。本节我们来证明
+
+$$
+\nabla_\theta J(\theta) \propto \sum_{s \in S} \nu^{\pi_\theta}(s) \sum_{a \in A} Q^{\pi_\theta}(s, a) \nabla_\theta \pi_\theta(a \mid s) 。
+$$
+
+先从状态价值函数的推导开始：
+
+$$
+\begin{aligned}
+\nabla_\theta V^{\pi_\theta}(s) & =\nabla_\theta\left(\sum_{a \in A} \pi_\theta(a \mid s) Q^{\pi_\theta}(s, a)\right) \\
+& =\sum_{a \in A}\left(\nabla_\theta \pi_\theta(a \mid s) Q^{\pi_\theta}(s, a)+\pi_\theta(a \mid s) \nabla_\theta Q^{\pi_\theta}(s, a)\right) \\
+& =\sum_{a \in A}\left(\nabla_\theta \pi_\theta(a \mid s) Q^{\pi_\theta}(s, a)+\pi_\theta(a \mid s) \nabla_\theta \sum_{s^{\prime}, r} p\left(s^{\prime}, r \mid s, a\right)\left(r+\gamma V^{\pi_\theta}\left(s^{\prime}\right)\right)\right. \\
+& =\sum_{a \in A}\left(\nabla_\theta \pi_\theta(a \mid s) Q^{\pi_\theta}(s, a)+\gamma \pi_\theta(a \mid s) \sum_{s^{\prime}, r} p\left(s^{\prime}, r \mid s, a\right) \nabla_\theta V^{\pi_\theta}\left(s^{\prime}\right)\right) \\
+& =\sum_{a \in A}\left(\nabla_\theta \pi_\theta(a \mid s) Q^{\pi_\theta}(s, a)+\gamma \pi_\theta(a \mid s) \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) \nabla_\theta V^{\pi_\theta}\left(s^{\prime}\right)\right)
+\end{aligned}
+$$
+
+为了简化表示，我们让 $\phi(s)=\sum_{a \in A} \nabla_\theta \pi_\theta(a \mid s) Q^{\pi_\theta}(s, a)$ ，定义 $d^{\pi_\theta}(s \rightarrow x, k)$
+
+为策略 $\pi$ 从状态 $s$ 出发 $k$ 步后到达状态 $x$ 的概率。我们继续推导:
+
+$$
+\begin{aligned}
+\nabla_\theta V^{\pi_\theta}(s) & =\phi(s)+\gamma \sum_a \pi_\theta(a \mid s) \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) \nabla_\theta V^{\pi_\theta}\left(s^{\prime}\right) \\
+& =\phi(s)+\gamma \sum_a \sum_{s^{\prime}} \pi_\theta(a \mid s) P\left(s^{\prime} \mid s, a\right) \nabla_\theta V^{\pi_\theta}\left(s^{\prime}\right) \\
+& =\phi(s)+\gamma \sum_{s^{\prime}} d^{\pi_\theta}\left(s \rightarrow s^{\prime}, 1\right) \nabla_\theta V^{\pi_\theta}\left(s^{\prime}\right) \\
+& =\phi(s)+\gamma \sum_{s^{\prime}} d^{\pi_\theta}\left(s \rightarrow s^{\prime}, 1\right)\left[\phi\left(s^{\prime}\right)+\gamma \sum_{s^{\prime \prime}} d^{\pi_\theta}\left(s^{\prime} \rightarrow s^{\prime \prime}, 1\right) \nabla_\theta V^{\pi_\theta}\left(s^{\prime \prime}\right)\right] \\
+& =\phi(s)+\gamma \sum_{s^{\prime}} d^{\pi_\theta}\left(s \rightarrow s^{\prime}, 1\right) \phi\left(s^{\prime}\right)+\gamma^2 \sum_{s^{\prime \prime}} d^{\pi_\theta}\left(s \rightarrow s^{\prime \prime}, 2\right) \nabla_\theta V^{\pi_\theta}\left(s^{\prime \prime}\right) \\
+& =\phi(s)+\gamma \sum_{s^{\prime}} d^{\pi_\theta}\left(s \rightarrow s^{\prime}, 1\right) \phi\left(s^{\prime}\right)+\gamma^2 \sum_{s^{\prime \prime}} d^{\pi_\theta}\left(s^{\prime} \rightarrow s^{\prime \prime}, 2\right) \phi\left(s^{\prime \prime}\right)+\gamma^3 \sum_{s^{\prime \prime \prime}} d^{\pi_\theta}\left(s \rightarrow s^{\prime \prime \prime}, 3\right) \nabla_\theta V^{\pi_\theta}\left(s^{\prime \prime \prime}\right) \\
+& =\cdots \\
+& =\sum_{x \in S} \sum_{k=0}^{\infty} \gamma^k d^{\pi_\theta}(s \rightarrow x, k) \phi(x)
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\nabla_\theta J(\theta) & =\nabla_\theta \mathbb{E}_{s_0}\left[V^{\pi_\theta}\left(s_0\right)\right] \\
+& =\sum_s \mathbb{E}_{s_0}\left[\sum_{k=0}^{\infty} \gamma^k d^{\pi_\theta}\left(s_0 \rightarrow s, k\right)\right] \phi(s) \\
+& =\sum_s \eta(s) \phi(s) \\
+& =\left(\sum_s \eta(s)\right) \sum_s \frac{\eta(s)}{\sum_s \eta(s)} \phi(s) \\
+& \propto \sum_s \frac{\eta(s)}{\sum_s \eta(s)} \phi(s) \\
+& =\sum_s \nu^{\pi_\theta}(s) \sum_a Q^{\pi_\theta}(s, a) \nabla_\theta \pi_\theta(a \mid s)
+\end{aligned}
+$$
+
+证明完毕!
 
 ？？？
 
