@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-19 00:56:14
+ * @LastEditTime: 2023-03-19 01:10:34
  * @Description:
  * @TODO::
  * @Reference:
@@ -208,7 +208,7 @@ $P(A_t = a)$ or $\pi(a \mid S_t = s)$ or $\pi_t(a)$ $ = \frac{e^{H_t(a)}}{\sum_{
 
 其中，$a$ 表示第 $t$ 步选择的动作，$H_t(a)$ 表示在 $t$ 步时动作 $a$ 的权重参数，$e^{H_t(b)}$ 是所有动作的权重参数之和。等式右侧形式是softmax。或者说 $A_t$服从[玻尔兹曼分布](../math/Boltzmmann%E5%88%86%E5%B8%83.md)
 
-举例，可得一开始每个动作都有完全相同的概率被选择，即$\pi_0 = 1/k$
+举例，可得一开始每个动作都有完全相同的概率被选择，即$\pi_0 = 1/K$
 
 再然后，我们选择当前状态的相对偏好值最大的动作，并根据动作的反馈来更新$H$的值，具体来说我们对每个动作的相对偏好值执行如下更新操作：
 
@@ -225,16 +225,16 @@ $P(A_t = a)$ or $\pi(a \mid S_t = s)$ or $\pi_t(a)$ $ = \frac{e^{H_t(a)}}{\sum_{
 **伪算法**：
 
 - 初始化 $H_0 = 0$
-- **For** 时间步t = 0, 1, 2, ..., T **do**:
-  - **For** 动作对应编码a = 1, 2, ..., k **do**:
-    - $P(A_{t} = a)$ or $\pi(a \mid S_{t} = s)$ or $\pi_{t}(a)$ $ = \frac{e^{H_t(a)}}{\sum_{b=1}^k e^{H_t(b)}}$，
-    - 其中，$a$ 表示第 $t$ 步选择的动作，$H_t(a)$ 表示在 $t$ 步时动作 $a$ 的权重参数，$\sum_{b=1}^k e^{H_t(b)}$ 是所有动作的权重参数之和，$k$为动作总数。
-  - 选择当前状态下相对偏好值最大的动作 $A_t = \argmax_{a \in A} \pi_t(a)$
-  - **For** 动作对应编码a = 1, 2, ..., k **do**:
+- **For** 时间步 t = 0, 1, 2, ..., T **do**:
+  - **For** 动作$a$对应编码 i = 1, 2, ..., K **do**:
+    - $P(A_{t} = a_i)$ or $\pi(a \mid S_{t} = s)$ or $\pi_{t}(a_i)$ $ = \frac{e^{H_t(a_i)}}{\sum_{i=1}^k e^{H_t(a_i)}}$，
+    - 其中，$a_i$ 表示第 $t$ 步选择的动作，$H_t(a)$ 表示在 $t$ 步时动作 $a_i$ 的权重参数，$\sum_{i=1}^K e^{H_t(a_i)}$ 是所有动作的权重参数之和，$K$为动作总数。
+  - 选择当前状态下相对偏好值最大的动作 $A_t = \argmax_{a_i \in A} \pi_t(a_i)$
+  - **For** 动作$a$对应编码 i = 1, 2, ..., k **do**:
     - 根据动作的反馈来更新各个动作$H$的值，
-      - $H_{t+1}(a) = H_t(a) + α(R_t - \bar{R}_t)(1 - \pi_t(a)) \quad \textrm{for } a = A_t$
-      - $H_{t+1}(a) \doteq H_t(a) - \alpha (R_t - \bar{R}_t) \pi_t(a) \quad \textrm{for } a \neq A_t$
-      - 其中， $α$ 是步长参数，$R_t$ 是选择动作 $a$ 后得到的奖励， $\bar{R}_t$ 是前 $t$ 步的平均奖励
+      - $H_{t+1}(a_i) = H_t(a_i) + α(R_t - \bar{R}_t)(1 - \pi_t(a_i)) \quad \textrm{for } a_i = A_t$
+      - $H_{t+1}(a_i) \doteq H_t(a_i) - \alpha (R_t - \bar{R}_t) \pi_t(a_i) \quad \textrm{for } a_i \neq A_t$
+      - 其中， $α$ 是步长参数，$R_t$ 是选择动作 $a_i$ 后得到的奖励， $\bar{R}_t$ 是前 $t$ 步的平均奖励
 
 - **end for**
 
