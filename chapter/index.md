@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-17 18:02:16
+ * @LastEditTime: 2023-03-18 01:45:43
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -49,10 +49,13 @@ MARL
 IPPO
 MADDPG
 
+
 conclusion&perspective
 resource
 more_resources
-thinking
+ChatGPT(RLHF)
+author_thinking
+my_thinking
 
 ```
 
