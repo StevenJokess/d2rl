@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:38:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-16 16:09:37
+ * @LastEditTime: 2023-03-20 02:27:01
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,7 +15,9 @@
 
 ## 简介
 
-本书之前的章节讲解了基于值函数的方法（DQN）和基于策略的方法（REINFORCE），其中基于值函数的方法只学习一个价值函数，而基于策略的方法只学习一个策略函数。那么，一个很自然的问题是，有没有什么方法既学习价值函数，又学习策略函数呢？答案就是 Actor-Critic。Actor-Critic 是囊括一系列算法的整体架构，目前很多高效的前沿算法都属于 Actor-Critic 算法，本章接下来将会介绍一种最简单的 Actor-Critic 算法。需要明确的是，Actor-Critic 算法本质上是基于策略的算法，因为这一系列算法的目标都是优化一个带参数的策略，只是会额外学习价值函数，从而帮助策略函数更好地学习。下面都默认是同策。
+本书之前的章节讲解了基于值函数的方法（DQN）和基于策略的方法（REINFORCE），其中基于值函数的方法只学习一个价值函数，而基于策略的方法（REINFORCE）只学习一个策略函数，虽然获得了优势（连续动作），但也带来了劣势（每执行一步之后没得值可以用来估计即时奖励，只能进行回合更新）[4]
+
+那么，一个很自然的问题是，有没有什么方法既学习价值函数，又学习策略函数呢？答案就是 Actor-Critic。Actor-Critic 是囊括一系列算法的整体架构，目前很多高效的前沿算法都属于 Actor-Critic 算法，本章接下来将会介绍一种最简单的 Actor-Critic 算法。需要明确的是，Actor-Critic 算法本质上是基于策略的算法，因为这一系列算法的目标都是优化一个带参数的策略，只是会额外学习价值函数，从而帮助策略函数更好地学习。下面都默认是同策。
 
 ## Actor-Critic
 
@@ -107,3 +109,4 @@ Actor-Critic 算法非常实用，后续章节中的 TRPO、PPO、DDPG、SAC 等
 [1]: https://hrl.boyuai.com/chapter/2/actor-critic%E7%AE%97%E6%B3%95/#101-%E7%AE%80%E4%BB%8B
 [2]: https://zhuanlan.zhihu.com/p/26441204
 [3]: https://chat.openai.com/chat
+[4]: https://thinkwee.top/2019/09/23/easyrl/#more

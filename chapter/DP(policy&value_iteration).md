@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-17 05:02:28
+ * @LastEditTime: 2023-03-20 00:32:21
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -47,6 +47,7 @@ code
 
 ![策略迭代（Policy Iteration）](../img/Policy_Iteration.png)
 
+
 ### 策略评估（policy evaluation）
 
 #### 思路：
@@ -84,6 +85,7 @@ $$
 ### 策略优化/改进（policy improvement）
 
 策略优化/改进（policy improvement）：根据值函数来计算当前状态的最好Action，来更新策略，公式是$\pi(s) =argmax_{a} \sum_{s', r} (r + \gamma V(s'))$
+
 
 #### 思路：
 
@@ -131,6 +133,8 @@ $$
   - $\pi(s) \leftarrow \arg \max _a \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right)\left[r\left(s, a, s^{\prime}\right)+\gamma v\left(s^{\prime}\right)\right]$
 - If $temp \neq \pi(s)$, then $policy-stable \leftarrow false$
 - If $policy-stable$（策略稳定说明已经最优）, then stop and return（停下返回） （最优值函数）$v$ and （最优策略） $\pi$; else go to policy_evaluation_part（在策略不稳定的情况下不停评估策略，计算V(s)）
+
+其收敛性可证明（TODO:），每一次对策略的更新都不会使当前的策略的价值下降。并且可以证明策略的提升有传递性，所以上文算法是可以收敛到最优策略的。[8]
 
 #### 策略迭代的适用场景
 
@@ -275,7 +279,7 @@ code
 
 ### 利用Value Iteration解决：
 
-![利用Value Iteration解决超级玛丽](../img/supermary_value——iteration.jpg)
+![利用Value Iteration解决超级玛丽](../img/supermary_value_iteration.jpg)
 
 结合上图可以非常简单的理解价值迭代：
 
@@ -352,3 +356,4 @@ https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_dp.html
 [5]: https://zhuanlan.zhihu.com/p/33229439
 [6]: https://zhuanlan.zhihu.com/p/34006925
 [7]: https://www.zhihu.com/column/c_1359967856373874688
+[8]: https://www.zhihu.com/column/c_1356366236041924609
