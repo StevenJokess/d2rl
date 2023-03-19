@@ -339,6 +339,7 @@ $$
 **二者关系**：
 
 - 最优状态价值函数 -> 最优动作价值函数：为了使 $Q^\pi(s, a)$ 最大，我们需要在当前的状态动作对 $(s, a)$ 之后的 $s^{\prime}$ 都执行最优策略。于是我们得到了最优状态价值函数和最优动作价值函数之间的关系:
+
 $$
 \begin{aligned}
 Q^*(s, a) &= \mathbb{E}[r + \gamma V^(s')] \\
@@ -346,6 +347,7 @@ Q^*(s, a) &= \mathbb{E}[r + \gamma V^(s')] \\
 &= r(s, a)+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)
 \end{aligned}
 $$
+
   - 这与在普通策略下的状态价值函数和动作价值函数之间的关系是一样的。
 - 最优动作价值函数 -> 最优状态价值函数：最优状态价值是选择此时使最优动作价值最大的那一个动作时的状态价值: $$V^*(s)=\max _{a \in \mathcal{A}} Q^*(s, a)$$
 
