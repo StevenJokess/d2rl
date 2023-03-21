@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-21 20:57:32
+ * @LastEditTime: 2023-03-22 01:40:46
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -421,7 +421,7 @@ $$
 - 商品推荐：推荐系统会在网页上放置推荐展品，而用户的购买行为和推荐行为是有关系的。对于推荐的展品，即使比较普通也可以收到很多客户浏览，而优秀的商品如果没有被推荐出来则可能无人问津。总的来说，决策会影响整个系统。
 - 自然语言处理：把一个句子输出的词或知识库里面的操作，作为强化学习的动作，这样通过强化学习一些方法的可微分性纳入整个可微分学习系统中来。
 
-## 附录——RL里程碑：Alpha Go
+## 附录——RL里程碑：AlphaGo
 
 阿尔法围棋（AlphaGo）是第一个击败人类职业围棋选手、第一个战胜围棋世界冠军的人工智能机器人，由谷歌（Google）旗下DeepMind公司戴密斯·哈萨比斯领衔的团队开发。其主要工作原理是“深度学习”。
 

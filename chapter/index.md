@@ -5,22 +5,22 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-21 20:58:42
+ * @LastEditTime: 2023-03-22 02:04:12
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 
-# Index
+Dive into Deep Reinforcement Learning
+========================
 
-## 内容范围
+```eval_rst
+.. raw:: html
+   :file: frontpage.html
+```
 
-- 不涉及状态信号的构造，变化或者学习。我们采用这种方式并不是因为状态表征不重要，而是为了完全专注于决策问题上。换句话说，我们主要关心的事不是设计状态信号，而是基于任何可用的状态信号决定采取什么动作。（我们实际上在最后的17.3章节中会简要的涉及状态的设计和构造）。言下之意就是我们不搞特征工程。
-- 大多数强化学习方法都是围绕值函数估计构造的，但是严格来说，为了解决强化学习问题这并不是必须的。比如，遗传算法，遗传规划，进化算法（比如Cross-entropy Method）模拟退火以及其他的优化算法都被用来解决强化学习问题，但是并不涉及值函数。
-- 像是进化算法，或者策略搜索方法很多情况下很有效。但是最终表明这个类别最好的方法倾向于以某种方式引入值函数（作者指的是行为-判别器（Actor-Critic）方法，也就是既有策略搜索，也有值函数）。
 
-[1]: https://zhuanlan.zhihu.com/p/53306971
 
 ```toc
 :maxdepth: 2
@@ -38,6 +38,7 @@ Dyna-Q
 
 DQN
 more DQNs
+Policy-based
 REINFORCE in policy-based
 Eligibility Trace
 Actor-Critic
@@ -46,6 +47,11 @@ TRPO
 PPO
 DDPG&TD3
 SAC
+
+Incomplete_observations
+RNN
+Attention
+
 
 Sparse_Reward
 IL
@@ -74,4 +80,56 @@ my_thinking
 
 ```
 
+
+
+```toc
+:maxdepth: 1
+
+chapter_preface/index
+chapter_installation/index
+chapter_notation/index
+```
+
+
+```toc
+:maxdepth: 2
+:numbered:
+
+chapter_introduction/index
+chapter_preliminaries/index
+chapter_linear-regression/index
+chapter_linear-classification/index
+chapter_multilayer-perceptrons/index
+chapter_builders-guide/index
+chapter_convolutional-neural-networks/index
+chapter_convolutional-modern/index
+chapter_recurrent-neural-networks/index
+chapter_recurrent-modern/index
+chapter_attention-mechanisms-and-transformers/index
+chapter_optimization/index
+chapter_computational-performance/index
+chapter_computer-vision/index
+chapter_natural-language-processing-pretraining/index
+chapter_natural-language-processing-applications/index
+chapter_reinforcement-learning/index
+chapter_gaussian-processes/index
+chapter_hyperparameter-optimization/index
+chapter_generative-adversarial-networks/index
+chapter_recommender-systems/index
+chapter_appendix-mathematics-for-deep-learning/index
+chapter_appendix-tools-for-deep-learning/index
+
+```
+
+
+```toc
+:maxdepth: 1
+
+chapter_references/zreferences
+```
+
+
 [1]: https://github.com/d2l-ai/d2l-en/edit/master/chapter_reinforcement-learning/index.md
+[2]: https://github.com/d2l-ai/d2l-en/edit/master/index.md
+
+../img/
