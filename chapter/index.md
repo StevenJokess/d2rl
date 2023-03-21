@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 03:02:26
+ * @LastEditTime: 2023-03-22 03:23:42
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -83,18 +83,8 @@ chapter_notation/index
 
 chapter_introduction/index
 chapter_preliminaries/index
-chapter_linear-regression/index
-chapter_linear-classification/index
-chapter_multilayer-perceptrons/index
-
-chapter_convolutional-neural-networks/index
-chapter_convolutional-modern/index
-chapter_recurrent-neural-networks/index
-chapter_recurrent-modern/index
-chapter_attention-mechanisms-and-transformers/index
-chapter_optimization/index
-chapter_computational-performance/index
-
+chapter_MAB/index
+chapter_MDP/index
 chapter_MC-algs/index
 chapter_TD-algs/index
 
@@ -102,10 +92,8 @@ chapter_TD-algs/index
 chapter_DQN-algs/index
 chapter_Policy-based-algs/index
 chapter_actor-critic-algs/index
-chapter_model-algs/index
+chapter_model-based-algs/index
 chapter_Distributed-algs/index
-
-
 
 chapter_multi-agent_DRL/index
 chapter_hyperparameter-optimization/index
