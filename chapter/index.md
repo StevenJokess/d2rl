@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 02:04:12
+ * @LastEditTime: 2023-03-22 02:28:59
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -62,20 +62,14 @@ offline_RL(BCQ&CQL)
 Unsupervised RL
 GoRL&HER
 
-MAS
-multi-agent_DRL_intro
-MCTS
-self-play
-MARL
-IPPO
-MADDPG
+
 
 
 conclusion&perspective
 resource
 more_resources
 ChatGPT(RLHF)
-author_thinking
+other_authors'_thinking
 my_thinking
 
 ```
@@ -100,7 +94,7 @@ chapter_preliminaries/index
 chapter_linear-regression/index
 chapter_linear-classification/index
 chapter_multilayer-perceptrons/index
-chapter_builders-guide/index
+
 chapter_convolutional-neural-networks/index
 chapter_convolutional-modern/index
 chapter_recurrent-neural-networks/index
@@ -108,16 +102,21 @@ chapter_recurrent-modern/index
 chapter_attention-mechanisms-and-transformers/index
 chapter_optimization/index
 chapter_computational-performance/index
+
+
 chapter_computer-vision/index
 chapter_natural-language-processing-pretraining/index
 chapter_natural-language-processing-applications/index
-chapter_reinforcement-learning/index
-chapter_gaussian-processes/index
+
+chapter_multi-agent_DRL/index
 chapter_hyperparameter-optimization/index
 chapter_generative-adversarial-networks/index
 chapter_recommender-systems/index
-chapter_appendix-mathematics-for-deep-learning/index
-chapter_appendix-tools-for-deep-learning/index
+
+chapter_appendix-mathematics-for-deep-reinforcement-learning/index
+chapter_appendix-tools-for-deep-reinforcement-learning/index
+chapter_appendix-applications-for-deep-reinforcement-learning/index
+chapter_appendix-thinkings-for-deep-reinforcement-learning/index
 
 ```
 
@@ -132,4 +131,3 @@ chapter_references/zreferences
 [1]: https://github.com/d2l-ai/d2l-en/edit/master/chapter_reinforcement-learning/index.md
 [2]: https://github.com/d2l-ai/d2l-en/edit/master/index.md
 
-../img/
