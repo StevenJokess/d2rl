@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 03:23:42
+ * @LastEditTime: 2023-03-22 03:43:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -60,10 +60,6 @@ offline_RL(BCQ&CQL)
 Unsupervised_RL
 GoRL&HER
 
-
-
-
-
 ```
 
 
@@ -92,11 +88,17 @@ chapter_TD-algs/index
 chapter_DQN-algs/index
 chapter_Policy-based-algs/index
 chapter_actor-critic-algs/index
+chapter_policy_optimization/index
 chapter_model-based-algs/index
+
 chapter_Distributed-algs/index
 
+chapter_IL-algs/index
+
+chapter_multi-agent_RL/index
 chapter_multi-agent_DRL/index
 chapter_hyperparameter-optimization/index
+
 chapter_offline_RL/index
 chapter_unsupervised_RL/index
 chapter_meta_RL/index
@@ -105,7 +107,6 @@ chapter_computer-vision/index
 chapter_natural-language-processing-pretraining/index
 chapter_natural-language-processing-applications/index
 chapter_recommender-systems/index
-
 
 chapter_appendix-mathematics-for-deep-reinforcement-learning/index
 chapter_appendix-tools-for-deep-reinforcement-learning/index
