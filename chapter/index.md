@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 02:28:59
+ * @LastEditTime: 2023-03-22 02:56:56
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -36,13 +36,11 @@ TD(Sarsa&Q-learning)
 summary
 Dyna-Q
 
-DQN
-more DQNs
+
 Policy-based
 REINFORCE in policy-based
 Eligibility Trace
-Actor-Critic
-A2C&A3C
+
 TRPO
 PPO
 DDPG&TD3
@@ -59,18 +57,12 @@ model_intro
 model-based
 MPC
 offline_RL(BCQ&CQL)
-Unsupervised RL
+Unsupervised_RL
 GoRL&HER
 
 
 
 
-conclusion&perspective
-resource
-more_resources
-ChatGPT(RLHF)
-other_authors'_thinking
-my_thinking
 
 ```
 
@@ -103,15 +95,28 @@ chapter_attention-mechanisms-and-transformers/index
 chapter_optimization/index
 chapter_computational-performance/index
 
+chapter_MC-algs/index
+chapter_TD-algs/index
+
+
+chapter_DQN-algs/index
+chapter_Policy-based-algs/index
+chapter_actor-critic-algs/index
+chapter_Distributed-algs/index
+
+
+
+chapter_multi-agent_DRL/index
+chapter_hyperparameter-optimization/index
+chapter_offline_RL/index
+chapter_unsupervised_RL/index
+chapter_meta_RL/index
 
 chapter_computer-vision/index
 chapter_natural-language-processing-pretraining/index
 chapter_natural-language-processing-applications/index
-
-chapter_multi-agent_DRL/index
-chapter_hyperparameter-optimization/index
-chapter_generative-adversarial-networks/index
 chapter_recommender-systems/index
+
 
 chapter_appendix-mathematics-for-deep-reinforcement-learning/index
 chapter_appendix-tools-for-deep-reinforcement-learning/index

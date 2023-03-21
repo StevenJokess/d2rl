@@ -7,6 +7,6 @@ conclusion&perspective
 resource
 more_resources
 ChatGPT(RLHF)
-author_thinking
+other_authors'_thinking
 my_thinking
 ```
