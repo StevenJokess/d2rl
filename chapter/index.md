@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 02:56:56
+ * @LastEditTime: 2023-03-22 03:02:26
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -102,6 +102,7 @@ chapter_TD-algs/index
 chapter_DQN-algs/index
 chapter_Policy-based-algs/index
 chapter_actor-critic-algs/index
+chapter_model-algs/index
 chapter_Distributed-algs/index
 
 
