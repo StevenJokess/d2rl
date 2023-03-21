@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-20 02:46:21
+ * @LastEditTime: 2023-03-21 17:58:34
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -129,27 +129,31 @@ $$
 \pi(a \mid s)= \begin{cases}\epsilon /|\mathcal{A}|+1-\epsilon & \text { 如果 } a=\arg \max _{a^{\prime}} Q\left(s, a^{\prime}\right) \\ \epsilon /|\mathcal{A}| & \text { 其他动作 }\end{cases}
 $$
 
-现在，我们就可以得到一个实际的基于时序差分方法的强化学习算法。这个算法被称为 SARSA，SARSA 指的是 「S」tate-「A」ction-「R」eward-「S」tate-「A」ction，因为它的动作价值更新用到了当前状态 $s$ 、当前动作 $a$ 、获得的奖励 $r$ 、下一个状态 $s'$ 和下一个动作 $a'$，将这些符号拼接后就得到了算法名称。SARSA 的具体算法如下：
+现在，我们就可以得到一个实际的基于时序差分方法的强化学习算法。这个算法被称为 SARSA，SARSA 指的是 「S」tate-「A」ction-「R」eward-「S」tate-「A」ction，因为它的动作价值更新用到了当前状态 $S_t$ 、当前动作 $A_t$ 、获得的奖励 $R_t$ 、下一个状态 $S_{t+1}$ 和下一个动作 $A_{t+1}$，将这些符号拼接后就得到了算法名称。
+
+SARSA 的具体算法如下：
 
 - 初始化 $Q(s, a)$
 - for 序列 $e=1 \rightarrow E$ do:
-  - 得到初始状态 $s$
-  - 用 $\epsilon$-greedy 策略根据 $Q$ 选择当前状态 $s$ 下的动作 $a$
-  - for 时间步 $t=1 \rightarrow T$ do :
-    - 得到环境反馈的 $r, s^{\prime}$
-    - 用 $\epsilon$-greedy 策略根据 $Q$ 选择当前状态 $s^{\prime}$ 下的动作 $a^{\prime}$
-    - $Q(s, a) \leftarrow Q(s, a)+\alpha\left[r+\gamma Q\left(s^{\prime}, a^{\prime}\right)-Q(s, a)\right]$
-    - $s \leftarrow s^{\prime}, a \leftarrow a^{\prime}$
+  - 初始化状态 $S_0$
+  - 用 $\epsilon$-greedy 策略根据 $Q$ 选择当前状态 $S_0$ 下的动作 $A_0$
+- for 时间步 $t=0 \rightarrow T$ do:
+  - 得到环境反馈的 $R_{t+1}, S_{t+1}$
+  - 用 $\epsilon$-greedy 策略根据 $Q$ 选择当前状态 $S_{t+1}$ 下的动作 $A_{t+1}$
+  - 用公式去更新动作价值函数 $Q(S_t, A_t)$ ：$Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma Q\left(S_{t+1}, A_{t+1}\right)-Q(S_t, A_t)\right]$
+
+  - $S_{t} \leftarrow S_{t+1}, A_t \leftarrow A_{t+1}$
   - end for
 - end for
 
 其更新公式为:
 
-$$
-Q(s, a) \leftarrow Q(s, a)+\alpha\left[r(s, a)+\gamma Q\left(s^{\prime}, a^{\prime}\right)-Q(s, a)\right]
-$$
+$Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma Q\left(S_{t+1}, A_{t+1}\right)-Q(S_t, A_t)\right]$
 
-Policy Improvment时使用on-policy， SARSA必须执行两次动作得到 $\left(s, a, r, s^{\prime}, a^{\prime}\right)$ 才可以更新 一次；而且 $a^{\prime}$ 是在特定策略 $\pi$ 的指导下执行的动作，因此估计出来的 $Q(s, a)$ 是在该策略 $\pi$ 之下的 $Q$ 值，样本生成用的 $\pi$ 和估计的 $\pi$ 是同一个，因此是on policy.[2]
+Policy Improvment时使用的是on-policy：
+- SARSA必须执行两次动作得到 $\left(s, a, r, s^{\prime}, a^{\prime}\right)$ 才可以更新 一次；而且 $a^{\prime}$ 是在特定策略 $\pi$ 的指导下执行的动作，因此估计出来的 $Q(s, a)$ 是在该策略 $\pi$ 之下的 $Q$ 值，样本生成用的 $\pi$ 和估计的 $\pi$ 是同一个，因此是on policy。[2]
+
+*代码*：
 
 我们仍然在悬崖漫步环境下尝试 SARSA 算法。首先来看一下悬崖漫步环境的代码，这份环境代码和第 4 章中的不一样，因为此时环境不需要提供奖励函数和状态转移函数，而需要提供一个和智能体进行交互的函数`step()`，该函数将智能体的动作作为输入，输出奖励和下一个状态给智能体。
 
@@ -162,6 +166,21 @@ code
 code
 
 可以发现 SARSA 算法会采取比较远离悬崖的策略来抵达目标。
+
+
+### 期望 SARSA 算法（Expected SARSA）
+
+期望 SARSA 算法与普通的 SARSA 算法的区别就是，它不使用基于动作价值的时序差分目标，而是使用基于动作价值的期望的时序差分目标，利用 Bellman 方程，这样的目标又可以写为[12]：
+
+$$
+\begin{aligned}
+Q\left(S_t, A_t\right) & \leftarrow Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \mathbb{E}_\pi\left[Q\left(S_{t+1}, A_{t+1}\right) \mid S_{t+1}\right]-Q\left(S_t, A_t\right)\right] \\
+& \leftarrow Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \sum_a \pi\left(a \mid S_{t+1}\right) Q\left(S_{t+1}, a\right)-Q\left(S_t, A_t\right)\right]
+\end{aligned}
+$$
+
+
+
 
 ### 多步 SARSA 算法
 
@@ -195,18 +214,6 @@ $$
 我们接下来实现一下多步SARSA算法。我们在SARSA代码的基础上进行修改，引入多步时序差分计算。
 
 code
-
-
-### 期望 SARSA 算法（Expected SARSA）
-
-期望 SARSA 算法与普通的 SARSA 算法的区别就是，它不使用基于动作价值的时序差分目标，而是使用基于状态价值的时序差分目标，利用 Bellman 方程，这样的目标又可以写为[12]：
-
-$$
-\begin{aligned}
-Q\left(S_t, A_t\right) & \leftarrow Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \mathbb{E}_\pi\left[Q\left(S_{t+1}, A_{t+1}\right) \mid S_{t+1}\right]-Q\left(S_t, A_t\right)\right] \\
-& \leftarrow Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \sum_a \pi\left(a \mid S_{t+1}\right) Q\left(S_{t+1}, a\right)-Q\left(S_t, A_t\right)\right]
-\end{aligned}
-$$
 
 
 因为需要计算动作价值的求和，所以它有着更大的计算量，但是这样的期望运算减小了 SARSA 算法中出现的个别不恰当决策，这样可以避免在更新后期极个别不当决策对最终效果带来不好的影响，因此它通常需要更大的学习率

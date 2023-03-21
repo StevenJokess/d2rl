@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-20 02:06:37
+ * @LastEditTime: 2023-03-21 20:58:42
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -25,7 +25,7 @@
 ```toc
 :maxdepth: 2
 
-intro
+RL_intro
 
 MAB
 MDP
@@ -33,6 +33,7 @@ MC
 off-policy_MC
 DP(policy&value_iteration)
 TD(Sarsa&Q-learning)
+summary
 Dyna-Q
 
 DQN
@@ -50,12 +51,15 @@ Sparse_Reward
 IL
 model_intro
 model-based
-MCTS
 MPC
 offline_RL(BCQ&CQL)
 Unsupervised RL
 GoRL&HER
 
+MAS
+multi-agent_DRL_intro
+MCTS
+self-play
 MARL
 IPPO
 MADDPG

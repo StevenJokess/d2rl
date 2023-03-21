@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-14 01:22:20
+ * @LastEditTime: 2023-03-21 23:20:32
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -51,7 +51,7 @@ plot_results([thompson_sampling_solver], ["ThompsonSampling"])
 
 ### 伯努利分布
 
-伯努利分布(Bernoulli distribution)又名两点分布或0-1分布，介绍伯努利分布前首先需要引入伯努利试验（Bernoulli trial）。
+伯努利分布（Bernoulli distribution）又名两点分布或0-1分布，介绍伯努利分布前首先需要引入伯努利试验（Bernoulli trial）。
 
 伯努利试验是只有两种可能结果的单次随机试验，即对于一个随机变量X而言：
 
@@ -60,7 +60,7 @@ P[X = 1] = p \\
 P[X = 0] = 1-p
 $$
 
-则，X的概率分布为 $p_{k} = P\{X = k\} = p^k (1-p)^k$
+则，X的概率分布（PMF）为 $p_{k} = P\{X = k\} = p^k (1-p)^k$
 
 由二项分布定义，伯努利分布是二项分布在n=1时的特例
 
@@ -228,6 +228,7 @@ $$\theta \mid X=k \sim \text{Beta}(\alpha+k,\beta+N-k)。$$
 > - 共轭分布(conjugacy)：后验概率分布函数与先验概率分布函数具有相同形式。
 > - Beta分布的特殊之处：Beta分布是贝叶斯推断中伯努利，二项式，负二项式和几何分布(似乎是涉及成功与失败的分布)的共轭先验。这样的考虑是为了去利用共轭性的性质。
 >   - 例如设随机变量 $X$ 服从二项分布 $B(N, \theta)$ ， 已知它有 $N$ 个试验，而 成功概率$\theta$ 未知，则 $\theta$ 的先验分布是参数为 $\alpha$ 和 $\beta$ 的Beta分布，那么给定观测数据和先验， $\theta$ 的后验分布也是一个Beta分布，具有更新的参数： $ \theta \mid X=k \sim \text{Beta}(\alpha+k,\beta+N-k) $
+> - 分布族指某一类分布函数，例如正态分布族，指数分布族，其中分布族中分布函数的参数是不确定的，一旦确定下来，就是一个确定的分布函数。[16]
 
 ##### 共轭性的证明
 
@@ -339,3 +340,5 @@ $$
 [12]: https://zhuanlan.zhihu.com/p/484275023
 [13]: https://zh.wikipedia.org/zh-hans/%CE%92%E5%88%86%E5%B8%83
 [14]: https://github.com/datawhalechina/unusual-deep-learning/edit/main/docs/02.%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80.md
+[15]: https://www.bilibili.com/video/BV1KZ4y167rA/?spm_id_from=333.788&vd_source=bca0a3605754a98491958094024e5fe3
+[16]: https://www.zgbk.com/ecph/words?SiteID=1&ID=231681&SubID=59833#:~:text=%E5%88%86%E5%B8%83%E6%97%8F%E6%8C%87%E6%9F%90%E4%B8%80,%E4%B8%BA%20%EF%BC%8C%E5%85%B6%E4%B8%AD%20%E6%98%AF%E6%9C%AA%E7%9F%A5%E5%8F%82%E6%95%B0%E3%80%82
