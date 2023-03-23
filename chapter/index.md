@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 03:43:29
+ * @LastEditTime: 2023-03-23 19:51:30
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -91,10 +91,12 @@ chapter_actor-critic-algs/index
 chapter_policy_optimization/index
 chapter_model-based-algs/index
 
-chapter_Distributed-algs/index
+chapter_Incomplete_observations/index
+chapter_Sparse_Reward/index
+chapter_goal-oriented_RL/index
+chapter_Distributed-RL/index
 
 chapter_IL-algs/index
-
 chapter_multi-agent_RL/index
 chapter_multi-agent_DRL/index
 chapter_hyperparameter-optimization/index
@@ -104,9 +106,11 @@ chapter_unsupervised_RL/index
 chapter_meta_RL/index
 
 chapter_computer-vision/index
-chapter_natural-language-processing-pretraining/index
-chapter_natural-language-processing-applications/index
+chapter_natural-language-processing/index
+chapter_generative-adversarial-networks/index
 chapter_recommender-systems/index
+chapter_finance/index
+chapter_game/index
 
 chapter_appendix-mathematics-for-deep-reinforcement-learning/index
 chapter_appendix-tools-for-deep-reinforcement-learning/index
