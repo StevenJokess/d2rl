@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-13 01:09:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-13 02:06:35
+ * @LastEditTime: 2023-03-23 22:20:44
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -23,10 +23,7 @@ Guided policy search的中文表达为指导策略搜索。从字面意思来理
 
 在回答这个问题之前，我们先理解下什么是策略搜索。通读过本专栏入门和进阶课程的知友应该对策略搜索这个词很熟悉。上节也讲过无模型的强化学习算法分为基于值函数的强化学习算法和基于直接策略搜索的强化学习算法。所谓直接策略搜索是指将策略进行参数化表示，然后在参数空间进行搜索，得到最优的策略。无模型的策略搜索靠的实实在在的与环境的交互数据，然后利用随机梯度的方法进行搜索。而GPS呢？它对参数的搜索依靠的是最优控制器。
 
-
-
 下面，开始回答GPS如何指导策略网络进行参数搜索（即参数优化），从以下几个方面进行理解。
-
 
 如图1.3 为Guided Policy Search方法的结构图。从图中，我们很容易看出GPS分为两个模块：左边的模块为最优控制器模块，右边的模块为策略搜索模块。
 

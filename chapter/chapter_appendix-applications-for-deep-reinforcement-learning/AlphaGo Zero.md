@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 00:05:23
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 00:10:47
+ * @LastEditTime: 2023-03-23 21:29:19
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -38,5 +38,6 @@ $$
 2. 按照公式 (18.2) 做一次梯度下降, 更新策略网络参数 $\boldsymbol{\theta}$ 。
 3. 按照公式 (18.3) 做一次梯度下降, 更新价值网络参数 $w$ 。
 
+https://en.wikipedia.org/wiki/Self-play_(reinforcement_learning_technique)
 
 [1]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf 18.3.2

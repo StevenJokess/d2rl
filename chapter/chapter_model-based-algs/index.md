@@ -7,4 +7,7 @@
 model_intro
 model-based
 Dyna-Q
+MPC
+MBPO
+
 ```

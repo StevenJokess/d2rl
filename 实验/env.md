@@ -2,7 +2,6 @@
 
 如果你设计出一种新的强化学习方法，你应该将其与已有的标准方法做比较，看新的方法是否有优势。比较和评价强化学习算法最常用的是 OpenAI Gym，它相当于深度学习中的ImageNet。Gym 有几大类控制问题，比如经典控制问题、Atari 游戏、机器人。
 
-
 Gym 中第一类是经典控制问题，都是小规模的简单问题，比如Cart Pole 和Pendulum，见图 3.8。Cart Pole 要求给小车向左或向右的力，移动小车，让上面的杆子能竖起来。Pendulum 要求给钟摆一个力，让钟摆恰好能竖起来。
 
 Pong   Space   Invader Breakout
@@ -18,4 +17,4 @@ Ant   Humanoid   Half Cheetah
 第三类问题是机器人连续的控制问题，比如控制蚂蚁、人、猎豹等机器人走路，见图3.10。这个模拟器叫做MuJoCo，它可以模拟重力等物理量。机器人是智能体，AI 需要控制这些机器人站立和走路。
 
 
-[1]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf 3.6
+> 1: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf 3.6节
