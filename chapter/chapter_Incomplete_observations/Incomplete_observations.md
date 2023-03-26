@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 01:27:06
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 01:44:30
+ * @LastEditTime: 2023-03-26 22:27:55
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,7 +13,7 @@
 -->
 # 对状态的不完全观测
 
-之前章节中的 DQN $Q(s, a ; \boldsymbol{w})$, 策略网络 $\pi(a \mid s ; \boldsymbol{\theta}) 、 \boldsymbol{\mu}(s ; \boldsymbol{\theta})$, 价值网络 $q(s, a ; \boldsymbol{w})$ 、 $v(s ; \boldsymbol{w})$ 都需要把当前状态 $s$ 作为输人。之前我们一直假设可以完全枧测到状态 $s$; 在围 棋、象棋、五了棋等简单的游戏中，棋盘上当前的格局就是完整的状态, 符合完全炑测 的假设。但是在很多实际应用中, 完全观测假设往往不符合实际。比如在星际争霸、英 雄联盟等电了游戏中, 屏幕上当前的画面并不能完整反映出游戏的状态, 因为观测只是 地图的一小部分; 甚至最近的 100 帧也无法反映出游戏真实的状态。
+之前章节中的 DQN $Q(s, a ; \boldsymbol{w})$, 策略网络 $\pi(a \mid s ; \boldsymbol{\theta}) 、 \boldsymbol{\mu}(s ; \boldsymbol{\theta})$, 价值网络 $q(s, a ; \boldsymbol{w})$ 、 $v(s ; \boldsymbol{w})$ 都需要把当前状态 $s$ 作为输人。之前我们一直假设可以完全枧测到状态 $s$; 在围 棋、象棋、五了棋等简单的游戏中，棋盘上当前的格局就是完整的状态, 符合完全炑测 的假设。但是在很多实际应用中, 完全观测假设往往不符合实际。比如在星际争霸、英雄联盟等电了游戏中, 屏幕上当前的画面并不能完整反映出游戏的状态, 因为观测只是 地图的一小部分; 甚至最近的 100 帧也无法反映出游戏真实的状态。
 
 把 $t$ 时刻的状态记作 $s_t$, 把观测记作 $o_t$ 。观测 $o_t$ 可以是当前游戏屏幕上的画面, 也 可以是最近 100 帧出面。我们无法用 $\pi\left(a_t \mid s_t ; \boldsymbol{\theta}\right)$ 做决策, 因为我们不知道 $s_t$ 。最简单的 解决仦法就是用当前炑测 $o_t$ 代替状态 $s_t$, 用 $\pi\left(a_t \mid o_t ; \boldsymbol{\theta}\right)$ 做决策。同理, 对于 DQN 和价 值网络, 也用 $o_t$ 代替 $s_t$ 。虽然这种简单的方法可行, 但是效果恐怕不好。
 
