@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-21 22:19:54
+ * @LastEditTime: 2023-03-25 20:28:32
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -72,9 +72,10 @@
 
 选择(Selection)，拓展(Expansion)，模拟(Simulation)，反向传播(Back Propagation)。
 
-![MCTS的过程](../img/MCTS.png)
+![MCTS的过程](../../img/MCTS.png)
 
 在开始阶段，搜索树只有一个节点，也就是我们需要决策的局面。搜索树中的每一个节点包含了三个基本信息：代表的局面，被访问的次数，累计评分。
+
 
 ### 选择(Selection)
 
@@ -103,6 +104,9 @@
 ### 反向传播(Back Propagation)
 
 在Nn的模拟结束之后，它的父节点N以及从根节点到N的路径上的所有节点都会根据本次模拟的结果来添加自己的累计评分。如果在[1]的选择中直接发现了一个游戏结局的话，根据该结局来更新评分。每一次迭代都会拓展搜索树，随着迭代次数的增加，搜索树的规模也不断增加。当到了一定的迭代次数或者时间之后结束，选择根节点下最好的子节点作为本次决策的结果。
+
+##
+
 
 ## 结合UCB的算法
 
