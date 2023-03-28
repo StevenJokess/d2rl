@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-21 17:58:34
+ * @LastEditTime: 2023-03-26 22:49:02
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -26,6 +26,8 @@
 时序差分（Temporal-Difference，TD）是一种用来估计一个策略的价值函数的方法，它结合了蒙特卡洛（Monte carlo）和动态规划算法（DP）的思想。时序差分方法和蒙特卡洛的相似之处在于可以从样本数据中学习，不需要事先知道环境；和动态规划的相似之处在于根据贝尔曼方程的思想，利用后续状态（successor state[14]）的价值估计来更新当前状态的价值估计，是通过预测去更新而无需等到整个决策完成[4]。引导（Bootstrapping）是个重要思想，在TD算法中智能体在每次完成动作后收到动作的奖励，这种奖励是它离自己的目标是更近与否而估计的。这些宇哥的奖励影响了它未来的行动。
 
 其次，TD算法的「收敛性在理论上也是有保证」的。在Sutton的书中也提到：“如果步长参数是一个足够小的常数，对于任何策略\pi, TD(0)中对状态值的估计的「均值」能够收敛到v_{\pi}。如果该参数能够同时满足以下两个条件，\sum_{n=1}^{\infty}\alpha_n(a) = \infty\\\sum_{n=1}^{\infty}\alpha^2_n(a) < \infty\\，则该值能够依概率1收敛。”[8]
+
+> 由多巴胺神经元激活得到的启示：在获得奖励时，多巴胺神经元会立即放电，这种放电可以被视为一种时间上的预测错误信号。多巴胺神经元的放电是由奖励预测误差所驱动的，即如果获得的奖励与预期的奖励相符，则多巴胺神经元不会放电，否则会放电。[15]
 
 ### TD(0)
 
@@ -282,5 +284,6 @@ Double Q-learning 加倍了内存开销，但是却没有增加额外的计算�
 [12]: https://chengfeng96.com/blog/2020/02/16/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89-%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E5%AD%A6%E4%B9%A0/#%E6%9C%9F%E6%9C%9B-sarsa-%E7%AE%97%E6%B3%95expected-sarsa
 [13]: https://www.bilibili.com/video/BV1Y24y1q7CX?p=3&vd_source=bca0a3605754a98491958094024e5fe3
 [14]: https://zhuanlan.zhihu.com/p/56907086
+[15]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2023/2/9/27c20431-8ed3-4562-83b5-5c82706f28a5.pdf
 
 答:
