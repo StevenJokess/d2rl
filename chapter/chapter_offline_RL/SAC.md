@@ -107,7 +107,6 @@ Q_{\text {soft }}^\pi\left(s_{t^{\prime}} a_t\right) & \triangleq r_t+E_\pi\left
 \end{aligned}
 $$
 
-
 之前求最优策略，从策略的优化目标（用Q代替r）：
 $J(\pi)=\sum_t E_{\left(s_{t^{\prime}} a_t\right) \sim \pi}\left[Q_{\text {soft }}^\pi\left(s_{t^{\prime}} a_t\right)+\alpha \mathrm{H}\left(\pi\left(\cdot \mid s_t\right)\right)\right]$
 ，得最优策略：$\pi_{*}=\argmax_{\pi} J(\pi)$。这种方法，要求一步到位，实际运算中很难解。
@@ -119,7 +118,6 @@ $J(\pi)=\sum_t E_{\left(s_{t^{\prime}} a_t\right) \sim \pi}\left[Q_{\text {soft 
 $$
 \pi_{\text {new }}=\arg \min _{\pi^{\prime}} D_{K L}\left(\pi^{\prime}(\cdot \mid s), \frac{\exp \left(\frac{1}{\alpha} Q^{\pi_{\text {old }}}(s, \cdot)\right)}{Z^{\pi_{\text {old }}}(s, \cdot)}\right)
 $$
-
 
 利用 Soft 策略提升公式可以改进策略（具体策略改进定理见最后），不断得到 $\pi_{\text {new}}$：
 
