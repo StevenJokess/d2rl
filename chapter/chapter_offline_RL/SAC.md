@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:58:18
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-29 05:07:42
+ * @LastEditTime: 2023-03-29 05:10:28
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -254,12 +254,12 @@ code
 
 ## 附录：为何可以用分布逼近Q函数去优化策略
 
-即证明：
+即需证明：
 
 $D_{K L}\left(\pi\left(\cdot \mid s_t\right) \| \exp \left(\frac{1}{\alpha} Q_{s o f t}\left(s_{t^{\prime}} a_t\right)-\log Z\left(s_t\right)\right)\right)$ 等价于最大化 $J(\pi)$
 
 
-证明：
+**证明：**
 
 $$
 \begin{aligned}
@@ -271,6 +271,7 @@ D_{K L}\left(\pi\left(\cdot \mid s_t\right) \| \exp \left(\frac{1}{\alpha} Q_{\t
 $$
 
 推到这一步，我们发现，基于KL散度的优化方向实际上就是在优化最大熵RL的目标（$\log Z^\pi\left(s_t\right)$是仅和状态有关的常数，与优化目标无关）——使得每个状态的奖励和该状态下动作的熵最大化。
+
 ## 附录：策略改进定理
 
  TODO:
