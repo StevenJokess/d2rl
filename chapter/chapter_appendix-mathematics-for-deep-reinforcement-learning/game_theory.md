@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-27 01:54:55
+ * @LastEditTime: 2023-03-29 22:46:33
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -68,40 +68,70 @@ MAX 先行，两人轮流出招，直到游戏结束。游戏结束时给优胜�
 
 对 MAX 的最挂行棋进行求解时做了 MIN 也按最佳行棋的假设——尽可能最大化MAX 的最坏情况。如果 MIN 不按最佳行棋行动怎么办？这种情况下显然（习题 5.7）MAX可以做得更好。可能有一些策略在对付非最优化对手方面做得比极小极大策略好，但是用这些策略对付最优化对手则会得到更差的结果。
 
+## Minimax 树搜索
 
-## Le Her 游戏
+![Minimax 树搜索的棋盘[8]](../../img/Minimax_tree_search.png)
 
-冯·诺伊曼的极小极大值定理也就是说，具有有限多个纯策略的两人零和博弈在Maximin和Minimax 策略相同的情况下有解。这可以保证玩家在最坏的情况下最小化可能的损失。[1]
+![Minimax 树搜索的状态](../../img/Minimax_tree_state.png)
 
-# Min-max搜索
+minimax算法：如果树的层数比较浅，我们可以穷举计算每个节点输赢的概率，那么可以使用一种最简单的策略，叫做minmax算法。基本思路是这样的，从树的叶子结点开始看，如果是本方回合就选择max的，如果是对方回合就选择min的（实际上这也是假设对方是聪明的也会使用minmax算法）。
 
-1928：John von Neumann 的 minimax 定理给出了关于对手树搜索的方法，这形成了计算机科学和人工智能的从诞生至今的决策制定基础。
-
-其思路为，如果树的层数比较浅，我们可以穷举计算每个节点输赢的概率，那么可以使用一种最简单的策略，叫做minmax算法。基本思路是这样的，从树的叶子结点开始看，如果是本方回合就选择max的，如果是对方回合就选择min的（实际上这也是假设对方是聪明的也会使用minmax算法）。这样在博弈论里面就达到一个纳什均衡点。因此，我们可以推出著名的几个理论比如井字棋是必定和棋，五子棋在8*8以下的棋盘是和棋，以上的则是先手必胜。
-
-流程如上图所示。当然，我们可以使用alpha-beta对这个搜索树剪枝。
+这样在博弈论里面就达到一个*纳什均衡点*（附录有相应定理）。因此，我们可以推出著名的几个理论比如井字棋是必定和棋，五子棋在8*8以下的棋盘是和棋，以上的则是先手必胜。
 
 但是如果每一层的搜索空间都很大，这种方法就极其得低效率了，以围棋为例我们把围棋的每一步所有可能选择都作为树的节点，第零层只有1个根节点，第1层就有361种下子可能和节点，第2层有360种下子可能和节点，这是一颗非常大的树。如果我们只有有限次评价次数，minimax方法就是不可行的（往往只能跑2-3层，太浅了）[3]
 
-## minimax theorem
+1997年的深蓝（Deep Blue）告诉我们，可以通过Alpha-Beta对这个搜索树剪枝来提高搜索效率。
 
-令 X \subset \mathbb{R}^n 和 Y \subset \mathbb{R}^m 是紧凸集，如果 f: X \times Y \rightarrow \mathbb{R} 是一个连续的凸凹（convex-concave）函数，即：
+## Alpha-Beta 剪枝（Alpha-Beta Pruning）
 
-f(\cdot, y): X \rightarrow \mathbb{R} 对于固定的 y 是凸的，且：
+举例来说：
 
-f(x, \cdot): Y \rightarrow \mathbb{R} 对于固定的 x 是凹的.
+![Alpha-Beta 剪枝](../../img/Alpha-Beta_Pruning.png)
+
+1. 剪枝一：由于Rival会选择最小化奖励，不会选择 $>=6$ 这个状态，所以不需要再去搜索$>=6$这个状态后的另一状态。
+1. 剪枝二：由于Agent会选择最大化奖励，不会选择 $<=3$ 这个状态，所以不需要再去搜索$<=3$ 这个状态后的状态。
+1. 这样我们就提高了搜索效率。
+1. 下棋每一步都是树搜索，这与强化学习的策略不同。
+
+## 总结
+
+- 前向 Forward：起始状态（根节点）一直搜索状态到最终状态（叶节点）
+- 反向 Back up：把各最终状态（叶节点）的价值反向传播到之前状态直到起始状态（根节点），其间可通过Alpha-Beta对搜索树剪枝来减少需要搜索的最终状态来提高搜索效率。
+
+## 附录：纳什均衡点
+
+纳什均衡（英语：Nash equilibrium，或称纳什均衡点）是指在包含两个或以上参与者的非合作博弈（Non-cooperative game）中，假设每个参与者都知道其他参与者的均衡策略的情况下，没有参与者可以透过改变自身策略使自身受益时的一个概念解。[9]
+
+在Maximin和Minimax策略相同的情况下，我们可以得到一个稳定的策略，这就是所谓的**纳什均衡**。在纳什均衡下，每个玩家都无法通过单方面改变自己的策略来获得更多的收益。
+
+## 附录：极小极大值定理 minimax theorem
+
+冯·诺伊曼的极小极大值定理是说，具有有限多个纯策略的两人零和博弈在Maximin和Minimax 策略相同的情况下**有解**，即存在纳什均衡。这可以保证玩家在最坏的情况下最小化可能的损失。[1]
+
+令 $X \subset \mathbb{R}^n$ 和 $Y \subset \mathbb{R}^m$ 是紧凸集，如果 $f: X \times Y \rightarrow \mathbb{R}$ 是一个连续的凸凹（convex-concave）函数，即：
+
+$f(\cdot, y): X \rightarrow \mathbb{R}$ 对于固定的 y 是凸的，且：
+
+$f(x, \cdot): Y \rightarrow \mathbb{R}$ 对于固定的 x 是凹的.
 
 那么我们有
 
-\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).
+$\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 
 这个定理说的是对于一类特殊的函数，该函数沿着一个变量变化的方向是凸的，沿着另一个变量变化的方向是凹的（这可以视为一个马鞍面），那么在鞍点的时候，上式成立。[2]
 
-[1]: https://zh.wikipedia.org/wiki/%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E5%80%BC%E5%AE%9A%E7%90%86
 
+
+[1]: https://zh.wikipedia.org/wiki/%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E5%80%BC%E5%AE%9A%E7%90%86
 [2]: https://www.zhihu.com/question/51080557/answer/671522746
 [3]: https://zhuanlan.zhihu.com/p/520638488
 [4]: https://jwc.gdufe.edu.cn/_upload/article/files/68/96/872c060340f68ed6f57bd9450b2f/c651f566-3867-4bae-a585-68fe17cec17b.pdf
 [5]: https://zh.wikipedia.org/zh-sg/%E4%BA%95%E5%AD%97%E6%A3%8B
 [6]: https://www.cnblogs.com/royalflush/p/12460242.html
 [7]: https://www.youtube.com/watch?v=J8fjBHJeifQ
+[8]: https://www.bilibili.com/video/BV1464y127i7/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
+[9]: https://zh.wikipedia.org/wiki/%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1
+
+## 更多参考：
+
+> 1. https://chat.openai.com ; Prompt：在Maximin和Minimax策略相同的情况下，我们可以得到一个稳定的策略，这就是所谓的纳什均衡。在纳什均衡下，每个玩家都无法通过单方面改变自己的策略来获得更多的收益。

@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-19 01:13:41
+ * @LastEditTime: 2023-03-29 21:51:57
  * @Description:
  * @TODO::
  * @Reference:
@@ -62,7 +62,23 @@ Q_k & =\frac{1}{k} \sum_{i=1}^k r_i \\
 \end{aligned}
 $$
 
+其中，$Q_k$ 是新估计，$Q_{k-1}$ 是旧估计，$r_k-Q_n$ 是奖励估计误差（Reward Pridiction Error）， $1/n$ 是学习率[10]
+
 如果将所有$r_i$求和再除以次数，其缺点是每次更新的时间复杂度和空间复杂度均为 $O(n)$ 。而采用增量式更新，时间复杂度和空间复杂度均为 $O(1)$ 。
+
+> 用常数 $\alpha$ 作为学习率会怎样？[10]
+>
+> $$
+> \begin{aligned}
+> Q_k & =Q_{k-1}+\alpha\left> (R_n-Q_n\right) \\
+> & =(1-\alpha)^n Q_1+\sum_{\mathrm{i}> =1}^n \alpha(1-\alpha)^{n-i} R_n
+> \end{aligned}
+> $$
+>
+> 这种方法是，加权平均计算Q，而$Q_k & =\frac{1}{k} \sum_{i=1}^k r_i \\
+& =\frac{1}{k}\left(r_k+\sum_{i=1}^{k-1} r_i\right) $是算术平均计算Q。
+
+### 实际代码
 
 下面我们编写代码来实现一个拉杆数为 10 的多臂老虎机。其中拉动每根拉杆的回报服从伯努利分布（Bernoulli distribution），即每次拉下拉杆有 $p$ 的概率获得的回报为 1，有 $1-p$ 的概率获得的回报为 0。奖励为 1 代表获奖，奖励为 0 代表没有获奖。
 
@@ -258,7 +274,7 @@ $\pi_{\theta}=\mu_{\theta}+\varepsilon ,\varepsilon \sim N\left(0,\sigma^2\right
 [7]: https://stats.stackexchange.com/questions/498158/is-there-any-difference-between-ucbupper-bound-confidence-and-ucb1upper-bound
 [8]: https://arxiv.org/pdf/1707.02038.pdf
 [9]: https://zhuanlan.zhihu.com/p/54159132
-
+[10]: https://www.bilibili.com/video/BV1Hk4y1m7xQ/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
 
 更多资料：
 
@@ -267,3 +283,4 @@ $\pi_{\theta}=\mu_{\theta}+\varepsilon ,\varepsilon \sim N\left(0,\sigma^2\right
 > 1.  https://arxiv.org/pdf/1204.5721.pdf
 > 1.  https://chat.openai.com/chat Prompt：我们不一定要用动作价值函数啊，试试别的，比如相对偏好:
 > 1.  https://chat.openai.com/chat Prompt：这里的相对偏好是什么？
+> 1.  https://www.bilibili.com/video/BV1nt4y1X79f/?spm_id_from=333.999.0.0 真实的老虎机，超搞笑 我的评论：话说为啥不把Value的初始值设为0，每次动作的价值不是负的吗？这是花钱，不是赚钱。选择，不应该有个不去选择任何一个老虎机。[酸了]
