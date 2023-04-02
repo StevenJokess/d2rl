@@ -3,34 +3,14 @@
 <!--
  * @version:
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-03-29 20:43:11
+ * @Date: 2023-04-02 17:02:47
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-01 02:39:47
+ * @LastEditTime: 2023-04-02 17:03:00
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
+# 最优化理论（Optimization theory）
 
-# Actor-Critic algs
-:label:`chap_gans`
-
-```toc
-:maxdepth: 2
-
-game
-Go
-AlphaGo
-AlphaGo Zero
-Alpha Zero
-Muzero
-KataGo
-real-world
-vizdoom
-
-finance
-Marketing_making
-
-
-```
-
+凸集与凸函数/最优化问题/梯度下降法/牛顿法/带约束优化问题

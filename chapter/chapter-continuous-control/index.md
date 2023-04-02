@@ -3,34 +3,22 @@
 <!--
  * @version:
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-03-29 20:43:11
+ * @Date: 2023-03-23 19:52:05
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-01 02:39:47
+ * @LastEditTime: 2023-04-01 03:59:05
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-
-# Actor-Critic algs
-:label:`chap_gans`
+# Continuous control
+:label:`chap_continuous_control`
 
 ```toc
-:maxdepth: 2
 
-game
-Go
-AlphaGo
-AlphaGo Zero
-Alpha Zero
-Muzero
-KataGo
-real-world
-vizdoom
-
-finance
-Marketing_making
+DPG
+DDPG
+TD3
 
 
 ```
-

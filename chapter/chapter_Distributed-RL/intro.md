@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 03:10:55
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 03:11:01
+ * @LastEditTime: 2023-04-01 03:43:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -25,4 +25,16 @@
 
 综上所述，分布式强化学习是一个更加综合的研究子领域，需要深度强化学习算法 + 分布式系统设计的互相感知和协同。
 
+## Distributional RL vs Distributed RL
+
+Distributional RL是一种强化学习算法，旨在通过将值函数表示为概率分布来更好地处理不确定性和风险。它通过使用分布形式的值函数来近似真实值函数的分布，从而可以更好地处理复杂的环境和任务。
+
+Distributed RL则是一种分布式的强化学习方法，旨在通过将智能体和环境分布在多个计算节点上，以加速训练和提高性能。它通过将环境和智能体拆分成多个部分，并在不同的计算节点上进行并行计算，以加快训练和提高决策质量。
+
+因此，Distributional RL和Distributed RL是两个不同的概念，它们分别关注于处理不确定性和风险以及提高训练和决策效率。
+
 [1]: https://opendilab.github.io/DI-engine/02_algo/distributed_rl_zh.html#id2
+
+> 1. https://chat.openai.com; Prompt:distributional RL 跟 distributioned RL的区别
+TODO:伯克利计算机课程CS294 System AI——概述 - 飞天游侠的文章 - 知乎
+https://zhuanlan.zhihu.com/p/232284234

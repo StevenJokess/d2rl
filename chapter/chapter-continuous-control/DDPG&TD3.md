@@ -233,3 +233,5 @@ TD3的作者给出了其对应[PyTorch的实现](https://github.com/sfujim/TD3/)
 [6]: https://datawhalechina.github.io/easy-rl/#/chapter12/chapter12
 [7]: https://zhuanlan.zhihu.com/p/26441204
 
+TODO:DDPG论文: 深强化学习连续控制 - Johnson7788的文章 - 知乎
+https://zhuanlan.zhihu.com/p/371451813

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-26 22:49:02
+ * @LastEditTime: 2023-04-02 13:40:25
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -172,7 +172,9 @@ code
 
 ### 期望 SARSA 算法（Expected SARSA）
 
-期望 SARSA 算法与普通的 SARSA 算法的区别就是，它不使用基于动作价值的时序差分目标，而是使用基于动作价值的期望的时序差分目标，利用 Bellman 方程，这样的目标又可以写为[12]：
+期望 SARSA 算法与普通的 SARSA 算法的区别就是，它不使用基于动作价值的时序差分目标，而是使用基于动作价值的**期望**的时序差分目标，即在更新Q值时考虑了在下一状态中采取所有可能动作的平均值，而不仅仅是在下一状态中采取某一个特定动作时的Q值。
+
+利用 Bellman 方程，这样的目标又可以写为[12]：
 
 $$
 \begin{aligned}

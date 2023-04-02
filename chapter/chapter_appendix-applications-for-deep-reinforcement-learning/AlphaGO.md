@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 23:48:20
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-30 00:41:23
+ * @LastEditTime: 2023-03-30 02:06:51
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -14,6 +14,8 @@
 # AlphaGo
 
 ## 简述
+
+AlphaGo 是第一个打败围棋世界冠军的程序，共18个冠军。[5]
 
 AlphaGo 具备深度学习能力，可结合人类专家比赛中学到的棋谱，以及在和自己下棋（Self-Play）中进行强化学习。2016 年，人工智能AlphaGo 在围棋竞技中击败李世石，标志着AI 具备了自我迭代和学习强化的能力。AlphaGo 的深度学习模型可分为策略网络和价值网络，分别解决了围棋中的“下一手最佳策略”和“下一手后的胜率”两个问题，并以此为核心通过学习人类棋谱和自我对弈，不断调整策略提升棋力。AlphaGo 较好地模拟了人类棋手对于围棋落子的直觉判断，即，由于围棋存在的广度（每一步的可能性）和深度（棋局从开始到结束的步数）导致计算机无法模拟计算所有的可能性，AlphaGo 通过策略网络减少搜索广度，即每一步搜索少量节点，而通过价值网络减少搜索深度，无需将棋局下到底即可得出当前局势的判断。[3]
 
@@ -147,3 +149,4 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 [2]: http://ir.ia.ac.cn/handle/173211/15288
 [3]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2023/2/9/27c20431-8ed3-4562-83b5-5c82706f28a5.pdf
 [4]: https://www.bilibili.com/video/BV147411i7tM/?spm_id_from=333.337.search-card.all.click
+[5]: https://www.bilibili.com/video/BV1EV41177VF/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:58:18
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-29 05:10:28
+ * @LastEditTime: 2023-04-01 03:38:51
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -29,7 +29,21 @@ $$
 H(X)=\mathbb{E}_{x \sim p}[-\log p(x)]
 $$
 
+> 例如：超级玛丽游戏中，动作空间是A= {左, 右, 上}。基于当前状态s，策略网络的输出是
+> - $p_1 = π(左∣∣s; θ) = 0.03,$
+> - $p_2 = π(右∣∣s; θ) = 0.96,$
+> - $p_3 = π(上∣∣s; θ) = 0.01.$
+> 对于上述离散概率分布p= [p1, p2, p3]，熵等于
+> $H(p) = -\sum_{i=1}^3 p_i \cdot \ln p_i$ = -(-3.506-0.041-4.605) = 8.152
+
+熵小说明概率质量很集中随机性不大，熵大说明随机性很大。
+
 在强化学习中，我们可以使用 $H(\pi(\cdot \mid s))$ 来表示策略 $\pi$ 在状态 $s$ 下的*随机程度*，即可表示*探索性*。
+
+> 一些常见的平衡点（仅供参考）包括：
+> - 对于连续控制问题，通常使用较小的熵权重，例如0.01到0.1之间；
+> - 对于离散动作控制问题，通常使用较大的熵权重，例如1到10之间；
+> - 对于基于价值函数的方法，通常需要更高的熵权重来促进探索，例如0.1到1之间。
 
 ### 思想
 
@@ -43,7 +57,7 @@ $$
 
 其中， $\alpha$ 是一个正则化的系数，用来控制熵的重要程度。（原版有问题，后参考了[5]）
 
-熵正则化增加了强化学习算法的探索的程度， $\alpha$ 越大，*探索性*就越强，有助于加速后续的策略学习，并减少策略陷入较差的局部最优的可能性。传统强化学习和最大熵强化学习的区别如图 14-1 所示。
+熵正则（entropy regularization）化增加了强化学习算法的探索的程度， $\alpha$ 越大，*探索性*就越强，有助于加速后续的策略学习，并减少策略陷入较差的局部最优的可能性。传统强化学习和最大熵强化学习的区别如图 14-1 所示。
 
 ![传统强化学习和最大熵强化学习的区别](../../img/traditional_RL_vs_max_entropy_RL.png)
 
@@ -282,3 +296,6 @@ $$
 [3]: https://github.com/StevenJokess/Hands-on-RL/blob/main/%E7%AC%AC14%E7%AB%A0-SAC%E7%AE%97%E6%B3%95.ipynb
 [4]: https://zhuanlan.zhihu.com/p/557418338#6%E3%80%81SAC-%E7%A6%BB%E6%95%A3
 [5]: https://github.com/Junfeng-Huang/Soft-Reinforcement-learning
+[6]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf
+
+> 1. https://chat.openai.com/chat; 熵多大算大？;比如常见的平衡点

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-02 15:05:52
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-12 19:34:57
+ * @LastEditTime: 2023-04-01 04:18:56
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -91,8 +91,12 @@
 
 1. 基于选项（option）的强化学习
 1. 基于分层抽象机（Hierarchical  of  abstract  machines）的分层强化学习
-1. 基于 MaxQ 函数分解（  MaxQ  value  function  decomposition）的分层强化学习
+1. 基于 MaxQ 函数分解（MaxQ  value  function  decomposition）的分层强化学习
 1. 端到端的（end to end）的分层强化学习
+
+FuNs，分级网络 FeUdal Networks ，分层强化学习不再用单一策略去解决这些更复杂的问题，而是将策略分为上层策略与多个下层策略 sub-policy 。上层策略会根据不同的状态决定使用哪个下层策略。它使用了同策路on-policy的A3C算法
+HIRO，使用异策略进行校正的分层强化学习 HIerarchical Reinforcement learning with Off-policy correction，警惕HIRO这个算法：FuN使用同策路on-policy的A3C算法，HIRO使用异策略off-policy的TD3算法，这个让我警惕：我个人认为不能像HIRO那样去使用TD3算法。
+Option-Critic，有控制权的下层策略，让将上层的策略和下层策略的控制权也当成是可以学习的，让下层的策略学习把“决定使用哪个策略的选择权”交还给上层策略的时机，这是一种隐式的分层强化学习方案，我没有复现过这个算法，我不确定这是否真的有效。
 
 [1]: https://datawhalechina.github.io/easy-rl/#/chapter10/chapter10
 [2]: http://www.icdai.org/ibbb/2019/ID-0004.pdf

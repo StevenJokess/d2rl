@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-13 01:09:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-23 22:20:44
+ * @LastEditTime: 2023-04-01 02:13:57
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -38,5 +38,8 @@ Guided policy search的中文表达为指导策略搜索。从字面意思来理
 1. iLQG：即迭代线性二次高斯调节器
 1. DDP：即微分动态规划
 
+
+CS229 学习笔记第十六章：LQR, DDP 和 LQG - 口仆的文章 - 知乎
+https://zhuanlan.zhihu.com/p/149130180
 
 [1]: https://zhuanlan.zhihu.com/p/31084371

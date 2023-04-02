@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:59:33
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-22 03:25:39
+ * @LastEditTime: 2023-04-01 03:23:04
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -17,7 +17,7 @@
 
 本书之前介绍的基于策略的方法包括策略梯度算法和 Actor-Critic 算法。这些方法虽然简单、直观，但在实际应用过程中会遇到训练不稳定的情况。回顾一下基于策略的方法：参数化智能体的策略，并设计衡量策略好坏的目标函数，通过*梯度上升的方法来最大化这个目标函数*，使得策略最优。具体来说，假设  表示策略  的参数，定义，基于策略的方法的目标是找到 ，策略梯度算法主要沿着  方向迭代更新策略参数 。但是这种算法有一个明显的缺点：当策略网络是深度模型时，*沿着策略梯度更新参数，很有可能由于步长太长，策略突然显著变差*，进而影响训练效果。
 
-针对以上问题，我们考虑在更新时找到一块**信任区域**（trust region），在这个区域上更新策略时能够得到某种策略性能的安全性保证，这就是**信任区域策略优化**（trust region policy optimization，TRPO）算法的主要思想。TRPO 算法在 2015 年被提出，它在理论上能够保证策略学习的性能单调性，并在实际应用中取得了比策略梯度算法更好的效果。
+针对以上问题，我们考虑在更新时找到一块**信任区域**（trust region）或叫置信域，在这个区域上更新策略时能够得到某种策略性能的安全性保证，这就是**信任区域策略优化**（trust region policy optimization，TRPO）算法的主要思想。TRPO 算法在 2015 年由Schulman 等人[5]提出，它在理论上能够保证策略学习的性能单调性，并在实际应用中取得了比策略梯度算法更好的效果。
 
 ## 策略目标
 
@@ -171,3 +171,6 @@ TRPO 算法是比较难掌握的一种强化学习算法，需要较好的数学
 [2]: https://www.cnblogs.com/kailugaji/p/15388913.html
 [3]: https://zhuanlan.zhihu.com/p/26308073
 [4]: https://spinningup.openai.com/en/latest/algorithms/trpo.html
+[5]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf
+
+TODO:https://zhuanlan.zhihu.com/p/126288378#%E5%8D%81%E4%B8%89%E3%80%81Hessian%20Free

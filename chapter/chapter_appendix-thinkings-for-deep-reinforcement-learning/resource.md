@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 02:25:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-29 04:29:16
+ * @LastEditTime: 2023-04-01 02:29:21
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -43,7 +43,7 @@
 
 **简单是最重要的 **你要对自己的工作有合理的规划，从最简单的算法开始，然后慢慢引入复杂性。如果你一开始就构建很多复杂的部分，有可能会耗费你接下来几周的时间来尝试调试。对于刚刚接触强化学习的人来说，这是很常见的问题。如果你发现自己被困在其中，不要气馁，尝试回到最开始然后换一种更简单的算法。
 
-**哪些算法？** 你可以按照 vanilla policy gradient(也被称为 REINFORCE )、DQN, A2C ( A3C 的同步版本), PPO (具有 clipped objective 特性的变体), DDPG 的顺序来学习。 这些算法的最简版本可以用几百行代码编写（大约250-300行），有些更少，比如 a no-frills version of VPG 只需要 80 行的代码。再写并行版本代码之前，先尝试写单线程版本的。（至少实现一种并行的算法）
+**哪些算法？** 你可以按照 vanilla policy gradient(也被称为 REINFORCE)、DQN, A2C ( A3C 的同步版本), PPO (具有 clipped objective 特性的变体), DDPG 的顺序来学习。 这些算法的最简版本可以用几百行代码编写（大约250-300行），有些更少，比如 a no-frills version of VPG 只需要 80 行的代码。再写并行版本代码之前，先尝试写单线程版本的。（至少实现一种并行的算法）
 
 **注重理解** 编写有效的强化学习代码需要对于算法有明确的理解，同时注重细节。因为错误的代码总是悄无声息：看起来运行的很正常，但实际上智能体什么也没有学到。这种情况通常是因为有些公式写错了，或者分布不对，又或者数据传输到了错误的地方。有时候找到这些错误的唯一办法，就是批判性地阅读代码，明确知道它应该做什么，找到它偏离正确行为的地方。这就需要你一方面了解学术文献，另一方面参考已有的实现，所以你要花很多时间在这些上面。
 
