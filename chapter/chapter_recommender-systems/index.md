@@ -3,16 +3,17 @@
 <!--
  * @version:
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-04-02 22:21:53
+ * @Date: 2023-04-03 02:48:49
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-02 23:35:18
+ * @LastEditTime: 2023-04-03 02:49:00
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 要饭日记
 
-记录讨饭日子、饭和资助人
+#
 
-- 2023/4/2；夜宵（烤鸭）16.9元；**元 5元
+推荐系统遇上深度学习 (十五)-- 强化学习在京东推荐中的探索
+
+https://www.6aiq.com/article/1547826520120

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-02 20:11:16
+ * @LastEditTime: 2023-04-03 03:10:14
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -67,6 +67,8 @@ GoRL&HER
 ```toc
 :maxdepth: 1
 
+copyleft
+resource&support
 preface
 prologue
 chapter_installation/index
@@ -80,7 +82,7 @@ chapter_notation/index
 
 chapter_introduction/index
 chapter_preliminaries/index
-chapter_MAB/index
+chapter_Bandits/index
 chapter_MDP/index
 chapter_MC-algs/index
 chapter_TD-algs/index
@@ -125,6 +127,7 @@ chapter_appendix-thinkings-for-deep-reinforcement-learning/index
 :maxdepth: 1
 
 chapter_references/zreferences
+
 ```
 
 

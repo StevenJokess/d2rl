@@ -1,4 +1,32 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-03-29 20:42:36
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-04-03 23:31:35
+ * @Description:
+ * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # 围棋
+
+## 规则
+
+### 下法
+
+1. 对局双方各执一色棋子。
+1. 空枰开局。
+1. 黑先白后，交替着一子于棋盘的点上。
+1. 棋子下定后，不再向其他点移动。
+1. 轮流下子是双方的权利，但允许任何一方放弃下子权而使用虚着。[4]
+
+### 胜负判定
+
+- 棋盘总点数的一半180.5点为归本数。一方总得点数超过此数为胜，等于此数为和，小于此数为负。
+- 黑棋由于先行，需贴还3又3/4，即需贴7.5子[3]7目半是中国的规则，日韩是贴6目半。[5]
 
 ## 强化学习元素
 
@@ -49,6 +77,7 @@ Exploration vs. Exploitation
 - 状态空间复杂度（State-space Complexity）：$3^361 ≈ 10^172$；对比，Tic-Tac-Toe：$10^4$，Chess：$10^43$
 - 游戏-树尺寸（Game-tree Size）：$361! ≈ 10^768$
 - 排除规则中不可能的，游戏-树复杂度（Game-tree Size）Complexity）：$250^150 ≈ 10^360$；对比，Tic-Tac-Toe：$10^5$，Chess：$10^123$，用质子去填满全宇宙，需要：$10^122$个
+
 #
 
 ## 下棋
@@ -58,3 +87,6 @@ Exploration vs. Exploitation
 
 [1]: https://www.bilibili.com/video/BV1LZ4y1u7Rn/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
 [2]: https://www.bilibili.com/video/BV1464y127i7/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
+[3]: https://www.bilibili.com/video/BV1V44y1n793?p=32&vd_source=bca0a3605754a98491958094024e5fe3
+[4]: https://baike.baidu.com/item/%E4%B8%AD%E5%9B%BD%E5%9B%B4%E6%A3%8B%E8%A7%84%E5%88%99/5425065
+[5]: https://www.zhihu.com/question/25576990/answer/269988801
