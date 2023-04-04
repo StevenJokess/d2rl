@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 23:48:20
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-30 02:06:51
+ * @LastEditTime: 2023-04-04 21:49:08
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -17,7 +17,7 @@
 
 AlphaGo 是第一个打败围棋世界冠军的程序，共18个冠军。[5]
 
-AlphaGo 具备深度学习能力，可结合人类专家比赛中学到的棋谱，以及在和自己下棋（Self-Play）中进行强化学习。2016 年，人工智能AlphaGo 在围棋竞技中击败李世石，标志着AI 具备了自我迭代和学习强化的能力。AlphaGo 的深度学习模型可分为策略网络和价值网络，分别解决了围棋中的“下一手最佳策略”和“下一手后的胜率”两个问题，并以此为核心通过学习人类棋谱和自我对弈，不断调整策略提升棋力。AlphaGo 较好地模拟了人类棋手对于围棋落子的直觉判断，即，由于围棋存在的广度（每一步的可能性）和深度（棋局从开始到结束的步数）导致计算机无法模拟计算所有的可能性，AlphaGo 通过策略网络减少搜索广度，即每一步搜索少量节点，而通过价值网络减少搜索深度，无需将棋局下到底即可得出当前局势的判断。[3]
+AlphaGo 具备深度学习能力，可结合人类专家比赛中学到的棋谱，以及在和自己下棋（Self-Play）中进行强化学习。2016年3月，人工智能AlphaGo 在围棋竞技中以4：1[6]击败李世石，标志着AI 具备了自我迭代和学习强化的能力。AlphaGo 的深度学习模型可分为策略网络和价值网络，分别解决了围棋中的“下一手最佳策略”和“下一手后的胜率”两个问题，并以此为核心通过学习人类棋谱和自我对弈，不断调整策略提升棋力。AlphaGo 较好地模拟了人类棋手对于围棋落子的直觉判断，即，由于围棋存在的广度（每一步的可能性）和深度（棋局从开始到结束的步数）导致计算机无法模拟计算所有的可能性，AlphaGo 通过策略网络减少搜索广度，即每一步搜索少量节点，而通过价值网络减少搜索深度，无需将棋局下到底即可得出当前局势的判断。[3]
 
 ## 计算机围棋的发展历史与现状(Development history and present situation of computer Go)
 
@@ -25,6 +25,8 @@ AlphaGo 具备深度学习能力，可结合人类专家比赛中学到的棋谱
 值函数来评估棋局和选择落子位置, 其中b是搜索的宽度, d是搜索的深度。与象棋等具有有限搜索空间的棋类不同, 围棋的计算复杂度约为$250^150$. 如果采用传统的暴力搜索方式, 按照现有的计算能力是远远无法解决围棋问题的。早期计算机围棋通过专家系统和模糊匹配缩小搜索空间, 减轻计算强度, 但受限于计算资源和硬件能力, 实际效果并不理想。
 
 2006年, 蒙特卡罗树搜索的应用标志着计算机围棋进入了崭新的阶段。 现代计算机围棋的主要算法是基于蒙特卡罗树的优化搜索. Coulom采用这种方法开发的CrazyStone在2006年计算机奥运会上首次夺得九路(9 × 9的棋盘)围棋的冠军。2008年, 王一早开发的MoGo在9路围棋中达到段位水平。2012年, 加藤开发的Zen在19路(19 × 19的全尺寸棋盘) 围棋上以3:1击败二段棋手约翰特朗普. 2014年, 职业棋手依田记基九段让四子不敌razyStone, 这在围棋界引起了巨大的轰动. 赛后依田记基表示此时的Crazy-Stone大概有业余六七段的实力, 但是他依然认为数年内计算机围棋很难达到职业水准. 与此同时, 加藤英树也表示计算机围棋需要数十年的时间才能达到职业水准, 这也是当时大多数围棋领域和人工智能领域的专家持有的观点. 然而, 随着深度学习和蒙特卡罗树搜索方法的结合, 这一观点开始受到挑战. 2015年,Facebook人工智能研究院的Tian结合深度卷积神经网络和蒙特卡罗树搜索开发出的计算机围棋DarkForest表现出了与人类相似的下棋风格和惊人的实力, 这预示着计算机围棋达到职业水准的时间可能会提前。而2016年3月AlphaGo的横空出世彻底宣告基于人工智能算法的计算机围棋达到了人类顶尖棋手水准。
+
+
 
 ## 原理分析
 
@@ -141,12 +143,33 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 虽然根据公开发表的资料, 初弈号所使用的强化学习、深度学习、蒙特卡罗树搜索等人工智能算法都是已有的、广为人知的方法, 但初弈号与人类棋手对弈的结果表明, 它已具备了高级智能, 达到
 了顶级棋手的对弈水准。
 
-## 进一步研究
+## 附录：AlphaGo不同版本
 
-在AlphaGo 基础上，谷歌公司后续推出了迭代版本AlphaGo Zero，增强了AI 在面对人类棋谱中未出现过的局势时的自我推理和学习能力，标志着AI 的自我学习具备了一定的迁移能力。
+- AlphaGo-Fan，DeepMind 第一篇 Nature 论文 Mastering the game of Go with deep neural networks and tree search 中提及的围棋软件，其多次击败欧洲围棋冠军樊麾，最强实力可达职业5段，这是第一个击败职业围棋手的软件。其需要学习人类的围棋对弈，运行时需要数千CPU和数百GPU才能发挥最强性能。
+- AlphaGo-Lee，在国际公开赛上以4-1击败李世石的版本，引起世界轰动。基本和 AlphaGo-Fan 相同，可能使用了更强的算力（后来的论文中作为基准线时，使用了48个TPU）。其段位约为9.5。
+- AlphaGo-Master，在野狐等在线围棋对局平台上以快棋（限时1分钟）的形式60连胜世界范围内的顶级职业围棋手，引起棋界轰动，并在乌镇比赛上3-0击败柯洁。其学习的对战棋局来自 AlphaGo-Lee，运行时仅需4个TPU和2个CPU（单个计算节点，也就是只要一个小机箱就够了，峰值功耗预计500W）。棋力据称可以让 AlphaGo-Lee 3子（被戏称为职业20段）
+- AlphaGo-Zero，DeepMind 第二篇 Nature 论文 Mastering the game of Go without human knowledge 的主角，不使用任何直接间接来自人类的对战棋谱，不使用除了对战规则以外的任何围棋知识，仅用时3天就以100-0的战绩完胜AlphaGo-Lee（黄士杰称“人类千年围棋，zero三天走过”）。其硬件配置同 Master。AlphaGo-Zero 的最强版本对 AlphaGo-Master 100局胜率为 89%
+- AlphaZero，DeepMind最近的作品，硬件配置和算法基本同 AlphaGo-Zero，但是其同一套算法除了解决围棋外，还能够解决国际象棋和日本将棋问题，并击败了 Stockfish（Stockfish使用了版本 8，64个CPU线程，并调节哈希表至其战力最强）。并且其用仅用8个小时就超过了 AlphaGo-Lee。[7]
+
+具体的 Elo 评分（来自 AlphaGo-Zero 论文）：
+
+- AlphaGo-Zero: 5185
+- AlphaGo-Zero（仅含网络，不用任何搜索）: 3055
+- AlphaGo-Master: 4858
+- AlphaGo-Lee: 3739
+- AlphaGo-Fan: 3144
+
+200 分的 Elo 差距对应 75% 胜率。
+
+以及它们的功耗对比（按照硬件散热设计功耗TDP计，一般达不到这些样的功耗）：
+
+
+其中 AlphaGo Lee 的功耗大幅下降得益于硬件（TPU 取代 GPU），而 Master 和 Zero 得益于算法 （删除了 Rollout）。
 
 [1]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf
 [2]: http://ir.ia.ac.cn/handle/173211/15288
 [3]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2023/2/9/27c20431-8ed3-4562-83b5-5c82706f28a5.pdf
 [4]: https://www.bilibili.com/video/BV147411i7tM/?spm_id_from=333.337.search-card.all.click
 [5]: https://www.bilibili.com/video/BV1EV41177VF/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
+[6]: https://www.bilibili.com/video/BV1PD4y147gK/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
+[7]: https://zhuanlan.zhihu.com/p/31809930#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E9%9B%B6%E5%92%8C%E5%AE%8C%E5%85%A8%E4%BF%A1%E6%81%AF%E4%B8%A4%E4%BA%BA%E5%8D%9A%E5%BC%88

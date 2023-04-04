@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-03 03:10:14
+ * @LastEditTime: 2023-04-05 02:40:01
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -21,46 +21,6 @@ Dive into Deep Reinforcement Learning
 ```
 
 
-
-```toc
-:maxdepth: 2
-
-RL_intro
-
-MAB
-MDP
-MC
-off-policy_MC
-DP(policy&value_iteration)
-TD(Sarsa&Q-learning)
-summary
-Dyna-Q
-
-
-Policy-based
-REINFORCE in policy-based
-Eligibility Trace
-
-TRPO
-PPO
-DDPG&TD3
-SAC
-
-Incomplete_observations
-RNN
-Attention
-
-
-Sparse_Reward
-IL
-model_intro
-model-based
-MPC
-offline_RL(BCQ&CQL)
-Unsupervised_RL
-GoRL&HER
-
-```
 
 
 
@@ -102,18 +62,11 @@ chapter_Distributed-RL/index
 chapter_IL-algs/index
 chapter_multi-agent_RL/index
 chapter_multi-agent_DRL/index
-chapter_hyperparameter-optimization/index
+
 
 chapter_offline_RL/index
 chapter_unsupervised_RL/index
 chapter_meta_RL/index
-
-chapter_computer-vision/index
-chapter_natural-language-processing/index
-chapter_generative-adversarial-networks/index
-chapter_recommender-systems/index
-chapter_finance/index
-chapter_game/index
 
 chapter_appendix-mathematics-for-deep-reinforcement-learning/index
 chapter_appendix-tools-for-deep-reinforcement-learning/index
@@ -129,6 +82,7 @@ chapter_appendix-thinkings-for-deep-reinforcement-learning/index
 chapter_references/zreferences
 
 ```
+
 
 
 [1]: https://github.com/d2l-ai/d2l-en/edit/master/chapter_reinforcement-learning/index.md

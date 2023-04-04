@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:38:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-20 02:27:01
+ * @LastEditTime: 2023-04-04 18:18:33
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -98,6 +98,11 @@ code
 
 根据实验结果我们可以发现，Actor-Critic 算法很快便能收敛到最优策略，并且训练过程非常稳定，抖动情况相比 REINFORCE 算法有了明显的改进，这说明价值函数的**引入减小了方差**。
 
+# 优缺点：
+
+- 优点：可以进行单步更新，不需要跑完一个episode再更新网络参数，相较于传统的PG更新更快。传统PG对价值的估计虽然是无偏的，但方差较大，AC方法牺牲了一点偏差，但能够有效降低方差；
+- 缺点：Actor的行为取决于 Critic 的Value，但是因为 Critic本身就很难收敛和actor一起更新的话就更难收敛了。（为了解决收敛问题， Deepmind 提出了 Actor Critic 升级版 Deep Deterministic Policy Gradient，后者融合了 DQN 的一些 trick, 解决了收敛难的问题）。
+
 ## 总结
 
 本章讲解了 Actor-Critic 算法，它是基于值函数的方法和基于策略的方法的叠加。价值模块 Critic 在策略模块 Actor 采样的数据中学习分辨什么是好的动作，什么不是好的动作，进而指导 Actor 进行策略更新。随着 Actor 的训练的进行，其与环境交互所产生的数据分布也发生改变，这需要 Critic 尽快适应新的数据分布并给出好的判别。
@@ -110,3 +115,5 @@ Actor-Critic 算法非常实用，后续章节中的 TRPO、PPO、DDPG、SAC 等
 [2]: https://zhuanlan.zhihu.com/p/26441204
 [3]: https://chat.openai.com/chat
 [4]: https://thinkwee.top/2019/09/23/easyrl/#more
+[5]: 深度强化学习技术概述 - 阿里云云栖号的文章 - 知乎
+https://zhuanlan.zhihu.com/p/556399318

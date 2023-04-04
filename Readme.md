@@ -5,85 +5,90 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-22 16:07:02
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-02 22:07:02
+ * @LastEditTime: 2023-04-05 02:37:35
  * @Description:
  * @TODO::
  * @Reference:
 -->
-# StevenJokess（蔡舒起）学强化学习
+# Hands-on Deep Reinforcement Learning, by StevenJokess（动手学深度强化学习，蔡舒起作）
 
-https://github.com/StevenJokess/
+## Author's bio（作者简介）
 
-《动手学深度学习》作者之一（主要贡献GAN的MXNet->PyTorch\TF2，DCGAN的MXNet->PyTorch\TF2和被封号拉黑)再去动手学 《动手学强化学习》、EasyRL等项目
+I am an enthusiast of artificial intelligence and also a successor of the **Communism**（You should really re-examine and try to achieve the goal pf communism in this era of AI.） 我是一名热衷于人工智能的爱好者，同时也是共产主义事业的接班人。（你真应该在这个AI时代重新了解和试着完成共产主义的目标）
 
-创新点：
+I'm also one of the authors of the book "Dive into Deep Learning".（Past ID:@StevenJokes(not existed)，Now:@StevenJokess：https://github.com/StevenJokess/）我是《动手学深度学习》作者之一（过去ID为@StevenJokes（已不存在），现在为@StevenJokess：https://github.com/StevenJokess/）
 
-- 超级全面的试验记录
-- 增加大量篇幅的内容
+Main contributions of the book include: Converting GAN/DCGAN models in last chapter from MXNet to PyTorch/TF2 firstly and a series of learning notes and discussions. 主要贡献是该书最后一章的GAN\DCGAN的MXNet->PyTorch\TF2，DCGAN的MXNet->PyTorch\TF2）和一系列的学习笔记和讨论。
 
-## 本项目
+Prove 证明：
 
-本项目及其内容欢迎fork、转载，但需注明转载链接，若进行商用需咨询（邮箱：llgg8679@qq.com）后同意才可使用。本项目暂时无其他商业模式的意向，只接受向往共产主义的人士资助。
+- Contribution 贡献：https://github.com/StevenJokess/d2l-en-read/tree/master/My%20contribution
+- notes 笔记：https://github.com/StevenJokess/d2l-en-read
+- Discussion 讨论：https://discuss.d2l.ai/u/stevenjokes/summary
+- Discussion 讨论：https://discuss.d2l.ai/u/stevenjokess/summary
+- Resume(with face) 简历（带头像）：https://stevenjokess.github.io/2bPM/get_started.html
 
-### 项目收款码和Q群号
+## The Repo's Introduction（本项目的介绍）
+
+This project is a synthesis of my hands-on learning from a series of projects, including "Hands-on Reinforcement Learning," "EasyRL," and other (deep) reinforcement learning resources that I was able to find and understand on the internet. 此项目是我再去动手学 《动手学强化学习》、EasyRL等一系列项目和浏览理解了互联网所有我能找到的（深度）强化学习资料后，综合而成的项目。
+
+Innovation points 创新点有：
+
+- A Tutorial Anyone Can Learn From 傻瓜都能学会的教程！
+- Comprehensive historic experimental records 全面的历史试验记录！
+- Addition of a large amount of content 增加大量篇幅的内容！
+  - detailed and smooth introduction to algorithms 详尽、顺畅的算法介绍
+  - the forefront of RL（DRL, MARL, MADRL,Distributed RL，unsupervised RL，Meta RL）前沿发展，含深度强化学习、多智能体强化学习、多智能体深度强化学习、无监督强化学习、元强化学习...
+  - mathematical foundations 数学基础
+  - cutting-edge applications 前沿应用
+  - my nonsense thinkings 笔者的一些胡说八道式的思考
+  - detailed reference materials 详尽的参考资料
+  - Chinese and English content 中英双语
+  - repo's multiple iteration process visualization  代码库多次迭代过程可视化
+  - unlike a book need to be pulished, it is forever unfinished and never perfect 不像需要被出版的书，它永不完结、永不完美
+
+## The Repo's Statement (本项目的声明)
+
+This project and its content are welcome to be forked and reposted, but the link must be placed in the first position, otherwise it will be considered as riding on the popularity. If commercial use is intended, please contact (email: llgg8679@qq.com) for approval before use, otherwise, there will be consequences. This project currently has no other commercial intentions, and only accepts help that can provide me with enough necessary goods and services for living. 本项目及其内容欢迎fork、转载，但转载时必须将链接放在第一的位置，否则必去蹭热度。若进行商用必先咨询（邮箱：llgg8679@qq.com）后同意才可使用，否则必去叨扰。本项目暂时无其他商业模式的意向，只接受帮我获得足够生活所需物品和服务的帮助。
+
+## My Mission（我的使命）
+
+My mission is to ensure that artificial general intelligence (AGI) benefits me a poor guy to have all the necessary things and services for living at least, pursue my passions freely, and have a happy life first, then same to all poors in my mainland China, lastly same to all poors in the world. 我的使命是确保人工智能通用智能（AGI）首先使我，一个穷人，至少拥有所有生活所需物品和服务，自由地追求自己的激情，拥有幸福生活。然后是让祖国所有贫困人口也能如此，最后是让全球所有贫困人口也能如此。
+
+Talking about AGI, virtuously "safety" AGI, I'm not sure that poors like me can handle it and be benefited from it. 说到AGI，伪善的说辞是"安全"AGI，我不确定像我这样的穷人能否应对并从中受益。
+
+It is obvious that now lots of company utilize AI technology only to reduce staff and save labor costs, rather than helping poor people to get enough necessary goods and free to any dream career. 显然，现在很多公司都利用人工智能技术只为了裁员和节省劳动力成本，而不是帮助穷人得到充足的生活所需的物品和服务和拥有选择任何梦想的造业的自由。
+
+I had only about 300 CNY income last three years. 我过去三年大约只有300元人民币的收入。
+
+## Help me please（请帮助我）
+
+### If you are not Chinese：
+
+The donation Bitcoin address / 捐赠比特币地址：I don't have any Bitcoins. Fxxk any Shitcoins（They are only useful to financial speculator and made GPUs expensive）!/我没比特币，去他妈的屎币！（他们只对金融投机家有用，还导致了GPUs昂贵）
+
+You can star or fork this repo as a payment to my Communism work.(The only requirement is that you can't delete this Readme.md file's content!) 你可以star和fork这个代码库作为我共产主义工作的回报。(唯一要求是你不能删除该文件的已有内容！)
+
+You can also email me to have a friendly chat and maybe kindly help me get some “foreign” things or service I need in life. 你也可以邮箱联系我，来友善交流，有可能的话友善地帮我搞点生活所需的“外国”货或服务。
+
+My email: a867907127@gmail.com
+
+### 若是中国人：
 
 >问：本项目是骗钱吗？
 >
->1. 首先本项目由我自己与家里存款赞助我自己。我只是出于兴趣做的，是出于在实际生活中发现了我的不自由，并去寻找我不自由的原因和试图反抗不自由的作品。为了要反抗同人的真正活动和本质属性相背离相割裂的“资本”，为了我继续符合我本质的活动，顺便也帮更多人做出符合其自由的活动。钱目前是为了尽可能cover掉创造该项目时的我的生活成本，使我不用在该项目完成前被迫去从事一项短期能赚钱的劳动，目前当然没cover掉，当然能帮我实现项目完成后的自由就更好不过了。
->2. 再谈资本主义下的“收入”（我对货币的需要，正是由于所谓“占有”我所需要的物品对其的需要。越是持资本主义的观念的人，越会怼那些坚信共产主义的要追求美好生活、甚至仅仅维持生活的物质需要的钱的活动，仿佛必须要我们街头饿死才得逞，要知道我们的惨境正是这些观念所造成的，而我们要争取的也是你们的自由和幸福啊！），马上就要被赶出来了！"正如马克思所说，人们首先必须吃、喝、住、穿，然后才能从事政治、科学、艺术、宗教等等；"（：祝福共产主义快点实现！而由于物质的有限性，被资本控制了，
+>1. 首先本项目主要是由我自己与家里存款赞助我自己。我只是出于兴趣做的，对深度强化学习强大的兴趣所致的作品。为了要反抗同人的真正活动和本质属性相背离相割裂的“资本”，为了我继续符合我本质的活动，顺便也帮更多人做出符合其自由的活动。钱目前是为了尽可能cover掉创造该项目时的我的生活成本，使我不用在该项目完成前被迫去从事一项短期能赚钱的劳动，目前当然没cover掉，当然能帮我实现项目完成后的自由就更好不过了。
+>2. 再谈资本主义下的“收入”（我对货币的需要，正是由于所谓“占有”我所需要的物品对其的需要。越是持资本主义的观念的人，越会怼那些坚信共产主义的要追求美好生活、甚至仅仅维持生活的物质需要的钱的活动，仿佛必须要我们街头饿死才得逞，要知道我们的惨境正是这些观念所造成的，而我们要争取的也是你们的自由和幸福啊！），马上就要被赶出来了！"正如马克思所说，人们首先必须吃、喝、住、穿，然后才能从事政治、科学、艺术、宗教等等；"（：祝福共产主义快点实现！而由于某些物质的有限性、生产的效率低、人为设定的门槛（专利、秘方），生产资料和所需品常被少数人所控制。
 >3. 于是放上收款码，如果对你有任何帮助、或仅仅为了帮助我，请支持一二，在家"失业"三年，虽然包吃住但是全职被骂，也不好受。
 
-- 如果愿意可以先交个朋友（＋QQ群（之前一个偏PM和共产主义的群：171097552），也可以邮箱发送你的联系方式：llgg8679@qq.com
+- 如果愿意可以先交个朋友，可＋QQ群 171097552（表面讨论AI、PM和共产主义，实则群主要饭群：[要饭日记](./%E8%A6%81%E9%A5%AD%E6%97%A5%E8%AE%B0.md），也可以邮箱联系我：llgg8679@qq.com
 - 当当代的恩格斯，自愿送点你的闲钱，可以慷慨赞助我但不要影响你自由的那种：）或者以其他方式（很多你认为是废品的东西，对我却是宝贝，欢迎邮寄）赞助我。
-- 该项目收入我也会尽量公开，如果太多就不需要赞助了我会撤下收款码，目前0元收入。
+- 该项目收入我也会尽量公开，如果生活所需满足了，也就不需要赞助了，我就会撤下收款码。目前收入10元左右。
 
 ![收款码](img/收.jpg)
 
-更多项目：
+## More Projects 更多项目：
 
-- [成为AI产品经理](https://stevenjokess.github.io/2bPM/)
-- [《动手学深度学习》读书笔记](https://github.com/StevenJokess/d2l-en-read)
+- [To be AI PM 成为AI产品经理](https://stevenjokess.github.io/2bPM/)
+- [d2l notes《动手学深度学习》读书笔记](https://github.com/StevenJokess/d2l-en-read)
 
-### 关于开源代码的几问
-
-一、开源代码怎么不被别人搭便车？
-
-开源代码的确存在被别人搭便车的风险，但也有一些方法可以减少这种情况发生：
-
-1. 使用适当的许可证：选择一个适合你的项目的开源许可证，该许可证明确规定了使用你的代码的条件。例如，GPL要求所有使用该代码的项目都必须开源，而MIT则允许使用者以任何方式使用和分发代码，但必须保留原始许可证和版权声明。
-1. 建立社区：通过建立社区，你可以吸引一些对你的项目感兴趣的人，他们可能会帮助你改进你的代码，并维护你的项目。同时，如果有人想要使用你的代码，他们会被鼓励向社区贡献代码。
-1. 保持代码更新：通过定期更新你的代码，你可以防止其他人使用过时的代码版本。你还可以通过添加新的功能和修复错误来使你的项目更加有吸引力。
-1. 注重品牌形象：建立自己的品牌形象，包括名称、标志和网站，可以增加你的项目的可见性和识别度，并使潜在用户更容易找到你的项目，而不是使用其他人的代码。
-1. 考虑商业模式：考虑将你的项目作为商业模式的一部分，这样你可以赚取收益，并为你的项目提供资金支持，以便持续改进和维护。例如，你可以提供专业支持服务，或者提供高级功能的专业版本。
-
-二、你觉得应该给共产主义意识形态的项目拿一怎样的开源许可证？
-
-选择开源许可证是一个非常个人化的决定，需要考虑项目的性质、目的和社区的需求。对于共产主义意识形态的项目，选择一种许可证可能需要考虑以下因素：
-
-1. 保护知识产权：共产主义意识形态的项目可能包含具有独特性和商业价值的知识产权，因此可能需要选择一种许可证来保护这些权利。例如，选择GPL或LGPL等“强副本左翼许可证”可以要求使用者在他们发布的任何派生作品中使用相同的许可证。
-1. 促进社区贡献：一个共产主义意识形态的项目可能需要尽可能多的贡献，以增强项目的功能和实用性。因此，选择一个允许用户更容易贡献代码的许可证，比如Apache或MIT许可证，可能会更好。
-1. 符合项目的价值观：共产主义意识形态的项目通常与某些价值观相匹配，因此可能需要选择一种许可证，以确保这些价值观在项目中得到维护和传承。例如，AGPL许可证鼓励用户通过必须公开派生作品的源代码来分享贡献，这符合共产主义意识形态的价值观。
-
-总之，选择适当的开源许可证需要综合考虑多个因素，包括知识产权保护、社区贡献、项目价值观等等。最重要的是，你应该选择一个许可证，使你的项目符合你的愿景和目标，并吸引到最有价值的贡献者。
-
-三、有没有可能既保护知识产权又能促进社区贡献
-
-是的，有一些开源许可证可以既保护知识产权，又能促进社区贡献。例如，GPL、LGPL和AGPL等“强副本左翼许可证”要求使用者在他们发布的任何派生作品中使用相同的许可证，这可以保护原始代码的知识产权，但也可以促进社区贡献，因为其他人必须向原始项目贡献代码。此外，像Apache和MIT这样的“宽松许可证”则在保护知识产权的同时允许更灵活的使用，使社区更容易参与贡献。
-
-因此，选择适当的开源许可证需要综合考虑多个因素，包括知识产权保护、社区贡献、项目价值观等等。最重要的是，您应该选择一个许可证，使您的项目符合您的愿景和目标，并吸引到最有价值的贡献者。
-
-四、GPL、LGPL和AGPL的区别
-
-GPL、LGPL和AGPL都是“强副本左翼许可证”，它们在保护开源软件代码的开放性和共享性方面都具有相似的特点，但在使用和分发上有所不同。
-
-- GPL（GNU通用公共许可证）：它要求使用或修改GPL许可证的软件必须使用相同的许可证发布。这意味着使用或修改GPL软件的任何派生作品必须是开源的，包括源代码和二进制文件，任何人都可以自由地使用和分发这些代码和二进制文件，但必须保留版权和许可证信息。这保证了在修改和发布代码时的开放性和共享性，但也可能限制了商业应用的可能性。
-- LGPL（GNU宽通用公共许可证）：它要求使用或修改LGPL许可证的软件必须在可执行代码中包含原始LGPL代码的副本，以及提供链接使用库的源代码，而不要求使用相同的许可证发布派生作品。这使得LGPL更适合于使用库的开源软件项目，因为LGPL允许链接使用库的可执行代码与其他许可证兼容的代码一起发布，同时保持库源代码的开放性和共享性。
-- AGPL（GNU Affero通用公共许可证）：它是GPL的衍生许可证，强调了网络环境下的开源代码使用和共享。如果使用AGPL许可证的软件在网络上提供服务，则必须向所有用户提供源代码，并允许修改和重新分发。这种要求确保了网络应用程序的开放性和共享性，即使在没有物理拷贝的情况下，也能让用户在网络上访问和修改代码。
-
-总之，GPL、LGPL和AGPL是三种相似但具有不同要求的开源许可证，开发者应该根据项目的性质和目的来选择最适合的许可证。
-
-五、有没有可能既保护知识产权又能促进社区贡献又能维持生活
-
-选择合适的开源许可证可以在保护知识产权的同时促进社区贡献，但这并不一定能够维持生活。开源软件通常是由志愿者开发的，他们为了自己或社区的利益而做出贡献。如果你想要从开源软件中获得收益，你可能需要将其商业化或提供付费支持服务。在这种情况下，你需要考虑选择哪种许可证，以使你的产品符合你的商业模式并维护你的知识产权。但是，这可能会对社区贡献产生不利影响，因为它可能会限制其他人使用、修改和分发你的软件。因此，选择开源许可证需要权衡不同的因素，并找到最适合你项目的平衡点。
-
-六、

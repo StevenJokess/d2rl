@@ -5,13 +5,13 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-17 18:44:12
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-18 00:56:57
+ * @LastEditTime: 2023-04-04 19:54:48
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# ChatGPT背后的技术RLHF
+# ChatGPT以及技术RLHF
 
 斯坦福大学CS224N——深度学习自然语言处理（NLP with DL）——的Prompting、Instruction Finetuning和RLHF这一讲[8]的课件，读完之后顿觉醍醐灌顶，再加上课件本身逻辑清晰、内容层层推进且覆盖了NLP领域最新进展（2023年冬季课程[7]）。
 
@@ -63,7 +63,7 @@ Instruction Finetuning
 - SuperNaturalInstructions dataset[2]（1,600+任务，3,000,000+样例）
 - BIG-bench[3]
 
-显然，instruction finetuing的缺点有两个：
+显然，instruction finetuning的缺点有两个：
 
 - 数据准备代价巨大 Collecting demonstrations for so many tasks is expensive
 - 语言模型对错误token的惩罚使用同样的权重，这一点与人类偏好不一样 Mismatch between LM objective and human preferences
@@ -71,6 +71,8 @@ Instruction Finetuning
 为了解决上述两个缺点，RLHF出场了
 
 ## Reinforcement Learning from Human Feedback(RLHF)
+
+---
 
 Finally, we have everything we need:
 
@@ -84,17 +86,64 @@ Now to do RLHF:
   - Pay a price when $$p_\theta^{R L}(s)>p^{P T}(s)$$
   - $\beta \log \left(\frac{p_\theta^{R L}(s)}{p^{P T}(s)}\right)$This is a penalty which prevents us from diverging too far from the pretrained model. In expectation, it is known as the Kullback-Leibler (KL) divergence between $p_\theta^{R L}(s)$ and $p^{P T}(s)$.
 
-Pay a price when  & p_\theta^{R L}(s)>p^{P T}(s)$.
+Pay a price when  $ p_\theta^{R L}(s)>p^{P T}(s)$.
 
-因为涉及到较多的公式，这一部分的原理就不再详细解释了，说一下简单的思路。
+---
 
-为了解决instruction finetuning中存在的数据准备代价大的问题，一个直观的想法就是是否可以用模型生成的内容作为人工构造内容的平替。为了达到这个目的，一种做法就是利用强化学习。强化学习基本知识可以参考王树森和张志华老师写的一本书——《深度强化学习》[2]，这本书还有对应的视频教程[3]，讲解深入浅出，值得一看。
+### Preference-based RL (Human-in-the-loop RL)原理
+
+希望解决的问题是什么：**奖励函数复杂、难以定义的任务**，希望在无需明确奖励函数的情况下解决该问题
+
+适用的问题场景：
+
+- 人类**只能识别所需的行为**，但不一定能够提供演示（若有演示可以使用BC/IRL等方法）
+- 允许完全**无领域知识的非专家用户进行操作**
+- 需要扩展到大规模问题
+- 用户给出反馈的成本不高
+
+核心做法：**根据人类的偏好拟合奖励函数，训练策略优化当前预测的奖励函数**
+
+![RLHF](../../img/RLHF.png)
+
+首先简单介绍目前Preference-based RL的通用流程，即如何从Preference中进行奖励函数学习 （主要参考自NIPS2017的Pref PPO和NIPS2021的 P-Bref）。
+
+- Segment $\sigma$ is a observation-action sequence $\left\{\mathbf{s}_k, \mathbf{a}_k, \ldots, \mathbf{s}_{k+H}, \mathbf{a}_{k+H}\right\}$.
+- Elicit preferences $y$ for $\sigma_0$ and $\sigma_1 \quad y \in\{(0,1),(1,0),(0.5,0.5)\}$
+- Recorded in a Dataset $D$ as a triple $\left(\sigma^0, \sigma^1, y\right)$
+- Model preference predictor using the reward function $\widehat{r_\psi}$
+
+$$
+P_\psi\left[\sigma^1 \succ \sigma^0\right]=\frac{\exp \sum_t \widehat{r}_\psi\left(\mathbf{s}_t^1, \mathbf{a}_t^1\right)}{\sum_{i \in\{0,1\}} \exp \sum_t \widehat{r}_\psi\left(\mathbf{s}_t^i, \mathbf{a}_t^i\right)}
+$$
+
+where $\sigma^i \succ \sigma^j$ denotes the event that segment $i$ is preferable to（优于） segment $j$.
+
+$$
+\begin{aligned}
+\mathcal{L}^{\text {Reward }}=-\underset{\left(\sigma^0, \sigma^1, y\right) \sim \mathcal{D}}{\mathbb{E}}[ & {\left[y(0) \log P_\psi\left[\sigma^0 \succ \sigma^1\right]\right.} \\
+& \left.+y(1) \log P_\psi\left[\sigma^1 \succ \sigma^0\right]\right]
+\end{aligned}
+$$
+
+$y(0)$ and $y(1)$ represent the first and second elements of the preference y, respectively.
+
+在这个过程中，每隔一定的时间步，就会**引入人类反馈，对两组状态-动作序列进行评估，打上偏好标签(1, 0) (0, 1) (0.5, 0.5)**，并根据reward model来算出片段1好于片段2的概率，并使用已经标记的数据来更新reward model。
+
+有了这个不断在更新的reward function，就可以接入正常的强化学习算法进行训练。考虑到在这个过程中奖励函数会在训练过程中剧烈变化，PrefPPO (NIPS2017, OpenAI & DeepMind)使用了on-policy的PPO算法来规避训练的不稳定问题。
+
+---
+
+关于如何运用到ChatGPT的，其思路简单说一下。
+
+为了解决instruction finetuning中存在的数据准备代价大的问题，一个直观的想法就是是否可以用模型生成的内容作为人工构造内容的平替。为了达到这个目的，一种做法就是利用强化学习。
+
+奖励函数复杂、难以定义的任务，希望在无需明确奖励函数的情况下解决该问题
 
 为了应用强化学习，需要构造出一个reward函数，该函数将语言模型生成的句子作为输入，输出句子对应的评分。如何构造出reward函数呢，这里采用了一个神经网络来对奖励进行学习，但是如果直接对句子进行评分的话，人的主观因素对结果影响过大，这里采用两个句子的相对得分对模型进行训练。
 
 有了reward函数，以及初始的语言模型，再有一个依据reward对语言模型参数进行更新的策略，就可以进行RLHF了。具体如下图所示：
 
-![RLHF、Instruction Finetuning、仅预训练的效果对比](../img/RLHF_vs_Ialleviate such data requirementsnstruciton_Finetuning_vs_only_pretrain.png)
+![RLHF、Instruction Finetuning、仅预训练的效果对比](../../img/RLHF_vs_Ialleviate such data requirementsnstruciton_Finetuning_vs_only_pretrain.png)
 
 问题：奖励黑客（Reward Hacking）是指在强化学习领域中，智能体（Agent）在试图最大化奖励时，找到了一种意外的、与设计者的初衷不符的方式。这种情况通常是由于奖励设置的不完善或者过于简化所导致。智能体可能会利用设计者未预料到的漏洞，以实现更高的奖励，但这种行为可能会导致不良的结果或者损害系统的整体性能。
 为了避免奖励黑客现象，设计者需要仔细审查奖励函数并尽量确保其能够准确反映任务目标。同时，可以通过引入正则化项、限制行动空间、人类反馈等方法来降低奖励黑客的风险。
@@ -123,3 +172,4 @@ Pay a price when  & p_\theta^{R L}(s)>p^{P T}(s)$.
 [6]: https://mp.weixin.qq.com/s/zgynAhmdklbPJMCy6Ex1hw
 [7]: https://web.stanford.edu/class/cs224n/
 [8]: https://web.stanford.edu/class/cs224n/slides/cs224n-2023-lecture11-prompting-rlhf.pdf
+[9]: https://zhuanlan.zhihu.com/p/587757125#Preference-based%20RL%20(Human-in-the-loop%20RL)

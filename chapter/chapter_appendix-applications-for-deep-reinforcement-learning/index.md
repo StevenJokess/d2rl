@@ -5,29 +5,30 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-29 20:43:11
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-01 02:39:47
+ * @LastEditTime: 2023-04-04 21:11:30
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 
-# Actor-Critic algs
-:label:`chap_gans`
+# Applications for deep reinforcement learning
+:label:`chap_app_drl`
 
 ```toc
 :maxdepth: 2
 
 game
+vizdoom
 Go
 AlphaGo
-AlphaGo Zero
-Alpha Zero
+AlphaGo_Zero
+Deepmind_and_more_Alpha
+Alpha_Zero
 Muzero
 KataGo
+OpenAI-Five
 real-world
-vizdoom
-
 finance
 Marketing_making
 
