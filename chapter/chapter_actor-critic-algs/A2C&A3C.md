@@ -5,13 +5,16 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 02:11:01
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-06 23:02:57
+ * @LastEditTime: 2023-04-06 02:08:25
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 # AC演化
+
+- 如果去掉 Asynchronous，只有 Advantage Actor-Critic，就叫做 A2C。
+- 如果加了 Asynchronous，变成Asynchronous Advantage Actor-Critic，就变成 A3C。[6]
 
 ## A2C 算法
 
@@ -26,6 +29,7 @@ A3C就是**异步**优势演员-评论家方法（Asynchronous Advantage Actor-C
 
 在A3C算法中，有多个并行的环境，每个环境中都有一个智能体执行各自的动作和并计算累计的参数梯度。在一定步数后进行累计，利用累计的参数梯度去更新所有智能体共享的全局参数。
 
+> 使用了多线程的方式，一个主线程负责更新Actor和Critic的参数，多个辅线程负责分别和环境交互，得到梯度更新值，汇总更新主线程的参数。而所有的辅线程会定期从主线程更新网络参数。这些辅线程起到了类似DQN中经验回放的作用，但是效果更好。[5]
 
 不同环境中的智能体可以使用不同的探索策略，会导致经验样本之间的相关性较小，可以提高学习效率。
 
@@ -69,3 +73,5 @@ $A(s, a)=Q(s, a)-V(s)$ 是为了解决基于价值方法具有高变异性。 �
 [2]: https://www.cnblogs.com/kailugaji/p/16140474.html
 [3]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19
 [4]: https://aistudio.baidu.com/aistudio/projectdetail/54249
+[5]: https://paddlepedia.readthedocs.io/en/latest/tutorials/reinforcement_learning/Actor-Critic.html#id5
+[6]: https://paddlepedia.readthedocs.io/en/latest/tutorials/reinforcement_learning/Actor-Critic.html#id5

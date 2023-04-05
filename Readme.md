@@ -5,13 +5,13 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-22 16:07:02
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-05 02:45:35
+ * @LastEditTime: 2023-04-05 02:50:06
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# Hands-on Deep Reinforcement Learning, by StevenJokess（动手学深度强化学习，蔡舒起作）
+# Hands-on Deep Reinforcement Learning with Tianshou, by StevenJokess（偷天动手学深度强化学习，蔡舒起作）
 
 ## Author's bio（作者简介）
 
@@ -47,6 +47,7 @@ Innovation points 创新点有：
   - Chinese and English content 中英双语
   - repo's multiple iteration process visualization  代码库多次迭代过程可视化
   - unlike a book need to be pulished, it is forever unfinished and never perfect 不像需要被出版的书，它永不完结、永不完美
+  - TODO：use Tianshou DRL repo to train 用Tianshou库来训练
 
 ## The Repo's Statement (本项目的声明)
 

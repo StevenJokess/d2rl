@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 23:43:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-20 02:42:39
+ * @LastEditTime: 2023-04-06 02:32:52
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO:: 伪代码和Code,
@@ -130,7 +130,7 @@ DQN 算法最终更新的目标是让$Q_\omega(s, a)$逼近$r+\gamma \max _{a^{\
 
 ## 问题
 
-- 深度强化学习可能是采样非常低效的(sample inefficient)
+- 由于神经需要大量的数据才能进行训练，且强化学习中通常需要对状态空间进行抽样以便代表性地学习到状态空间中的信息[9]，深度强化学习可能是采样非常低效的(sample inefficient)
 - 如果你仅仅关心最终的性能，那么很多问题都能够通过其他方法更好地解决
 - 奖励函数的设计是困难的
 - 即使给定了较好的奖励函数，也很难跳出局部最优
