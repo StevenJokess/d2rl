@@ -196,6 +196,13 @@ AlphaGo Zero巧妙了使用MCTS搜索树和神经网络一起，通过MCTS搜索
 
 相关开源程序：[5]
 
+## PUCT
+
+PUCT则是对UCT的改进，主要用于棋类游戏中。PUCT通过考虑位置信息，对UCT进行了扩展，引入了一个额外的参数来调整UCB公式中的探索项。具体而言，PUCT将UCB公式中的探索项扩展为两部分，一部分是全局探索项，另一部分是局部探索项，用于考虑当前节点所在的棋盘位置。这样可以使得PUCT在搜索过程中更加注重对棋盘中关键位置的探索，从而提高搜索的效果。
+
+因此，PUCT可以看作是对UCT的一种改进，通过引入位置信息，使得搜索算法更加针对特定的棋类游戏进行优化，从而在搜索过程中更加有效地选择和扩展节点。
+
+
 [1]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf 18.3.2
 [2]: https://www.bilibili.com/video/BV1qx411j7Tq/?spm_id_from=333.999.0.0
 [3]: https://www.bilibili.com/video/BV1V44y1n793?p=35&vd_source=bca0a3605754a98491958094024e5fe3
@@ -204,3 +211,5 @@ AlphaGo Zero巧妙了使用MCTS搜索树和神经网络一起，通过MCTS搜索
 [6]: https://www.deepmind.com/blog/alphago-zero-starting-from-scratch
 [7]: https://cloud.tencent.com/developer/article/1408923?areaSource=&traceId=
 [8]: http://incompleteideas.net/book/RLbook2020.pdf
+
+TODO:https://zhiqingxiao.github.io/rl-book/en2022/code/TicTacToe-v0_AlphaZero_torch.html

@@ -28,5 +28,5 @@ information_theory
 applied_stochastic_process
 numerical_analysis
 game_theory
-
+graph_theory
 ```
