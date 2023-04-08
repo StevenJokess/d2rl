@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 17:03:52
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-17 17:21:21
+ * @LastEditTime: 2023-04-09 01:06:18
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -33,24 +33,24 @@ Dyna-Q 算法是一个经典的基于模型的强化学习算法。如图 6-1 �
 
 下面我们来看一下 Dyna-Q 算法的具体流程：
 
-- 初始化 $Q(s, a)$，初始化模型 $M(s, a)$
-- **for** 序列 $e=1 \rightarrow E$ **do**：
-- **for** $t=1 \rightarrow T$ **do**:
-- 用 $\epsilon$-贪婪策略根据 $Q$ 选择当前状态 $s$ 下的动作 $a$
-  - 得到环境反馈的 $r, s^{\prime}$
+- 初始化 $Q(s, a)$，初始化模型 $M(s, a)$ 【具体来说，包括奖励模型 $R(s, a)$ 和状态转移概率模型 $P(s, a)$[2]】
+
+- **for** $t=1 \rightarrow T$ **do**：
+  - 用 $\epsilon$-贪婪策略根据 $Q$ 选择当前状态 $s$ 下的动作 $a$
+  - 得到环境反馈的 $s^{\prime}, r$
   - $Q(s, a) \leftarrow Q(s, a)+\alpha\left[r+\gamma \max _{a^{\prime}} Q\left(s^{\prime}, a^{\prime}\right)-Q(s, a)\right]$
-  - $\quad M(s, a) \leftarrow r, s^{\prime}$
+  - $M(s, a) \leftarrow r, s^{\prime}$【使用 $s, a, s^{\prime}$ 更新状态模型 $P(s, a)$ ，使用 $s, a, r$ 更新状态模型 $R(s, a)$】
   - **for** 次数 $n=1 \rightarrow N$ **do**:
     - 随机选择一个曾经访问过的状态 $s_m$
     - 采取一个曾经在状态 $s_m$ 下执行过的动作 $a_m$
-    - $r_m, s_m^{\prime} \leftarrow M\left(s_m, a_m\right)$
+    - $r_m, s_m^{\prime} \leftarrow M\left(s_m, a_m\right)$【基于模型 $P(s, a)$ 得到 $s^{\prime}$, 基于模型 $R(s, a)$ 得到 $r$】
     - $Q\left(s_m, a_m\right) \leftarrow Q\left(s_m, a_m\right)+\alpha\left[r_m+\gamma \max _{a^{\prime}} Q\left(s_m^{\prime}, a^{\prime}\right)-Q\left(s_m, a_m\right)\right]$
-    - $\quad$ end for
-    - $s \leftarrow s^{\prime}$
   - **end for**
 - **end for**
 
-可以看到，在每次与环境进行交互执行一次 Q-learning 之后，Dyna-Q 会做n次Q-planning。其中 Q-planning 的次数 $N$ 是一个事先可以选择的超参数，当其为 0 时就是普通的 Q-learning。值得注意的是，上述 Dyna-Q 算法是执行在一个离散并且确定的环境中，所以当看到一条经验数据 $\left(s, a, r, s^{\prime}\right)$ 时，可以直接对模型做出更新，即 $M(s, a) \leftarrow r, s^{\prime}$ 。
+可以看到，在每次与环境进行交互执行一次 Q-learning 之后，Dyna-Q 会做 $N$ 次Q-planning。其中 Q-planning 的次数 $N$ 是一个事先可以选择的超参数，当其为 0 时就是普通的 Q-learning。
+
+值得注意的是，上述 Dyna-Q 算法是执行在一个离散并且确定的环境中，所以当看到一条经验数据 $\left(s, a, r, s^{\prime}\right)$ 时，可以直接对模型做出更新，即 $M(s, a) \leftarrow r, s^{\prime}$ 。
 
 ## Dyna-Q 代码实践
 
@@ -76,3 +76,4 @@ code
 本章讲解了一个经典的基于模型的强化学习算法 Dyna-Q，并且通过调整在悬崖漫步环境下的 Q-planning 步数，直观地展示了 Q-planning 步数对于收敛速度的影响。我们发现基于模型的强化学习算法 Dyna-Q 在以上环境中获得了很好的效果，但这些环境比较简单，模型可以直接通过经验数据得到。如果环境比较复杂，状态是连续的，或者状态转移是随机的而不是决定性的，如何学习一个比较准确的模型就变成非常重大的挑战，这直接影响到基于模型的强化学习算法能否应用于这些环境并获得比无模型的强化学习更好的效果。
 
 [1]: https://hrl.boyuai.com/chapter/1/dyna-q%E7%AE%97%E6%B3%95/
+[2]: https://cloud.tencent.com/developer/article/1398231

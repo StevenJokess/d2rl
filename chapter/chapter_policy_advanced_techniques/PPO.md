@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:21:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-16 21:40:09
+ * @LastEditTime: 2023-04-08 22:33:59
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -154,3 +154,5 @@ PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士�
 [5]: https://openai.com/research/openai-baselines-ppo
 [6]: https://chat.openai.com/chat/
 [7]: https://hjp-muser.github.io/2019/11/15/TRPO-PPO-%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%8B%EF%BC%89/
+
+TODO:https://www.huaxiaozhuan.com/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/chapters/19_Deep_RL.html

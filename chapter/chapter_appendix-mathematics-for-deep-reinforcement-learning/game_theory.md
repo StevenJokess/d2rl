@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-04 22:54:29
+ * @LastEditTime: 2023-04-08 22:37:51
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -49,6 +49,8 @@ MAX 先行，两人轮流出招，直到游戏结束。游戏结束时给优胜�
 - $UTILITY(s,p)$：效用函数（也可称为目标函数或收益函数），定义游戏者 p 在终止状态 s 下的数值。在国际象棋中，结果是赢、输或平，分别赋予数值+1，0，或 1/2。有些游戏可能有更多的结果，例如 双陆棋的结果是从 0 到+192。零和博弈是指在同样的棋局实例中所有棋手的总收益**都一样**的情况。国际象棋是零和博弈，棋局的收益是 0+1，1+0 或1/2 + 1/2。“常量和”可能是更好的术语，但称为零和更传统，可以将这看成是下棋前每个棋手都被收了 1/2 的入场费。
 
 ### 博弈树及玩家为何如此命名
+
+> 博弈树的定义：博弈树的每个节点都代表一个状态，其下一个状态的集合构成了状态的子节点，比如任意一个棋盘局面就是一个状态，该局面下所有可能落子的情况形成的新局面集合，构成了该状态的子节点。[17]
 
 初始状态、ACTIONS 函数和 RESULT 函数定义了游戏的**博弈树**——其中结点是状态，边是移动。图 5.1 给出了井字棋的部分博弈树。在初始状态 MAX 有九种可能的棋招。游戏轮流进行，MAX 下 X，MIN 下 O，直到到达了树的终止状态即一位棋手的标志占领一行、一列、一对角线或所有方格都被填满。
 
@@ -209,7 +211,7 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 [14]: https://www.bilibili.com/video/BV1Yz411e7cp/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 [15]: https://cloud.tencent.com/developer/news/257574
 [16]: https://zhuanlan.zhihu.com/p/31809930#Rollout
-
+[17]: https://www.bilibili.com/video/BV1hV4y1Q7TR/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 
 ## 更多参考：
 

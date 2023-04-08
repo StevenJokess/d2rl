@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-20 00:37:16
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-02 17:25:08
+ * @LastEditTime: 2023-04-08 22:33:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -43,6 +43,8 @@ def integral():   # 直接数值积分
 
 ## 蒙特卡洛方法
 
+> 因为作者之一乌拉姆的叔叔经常在摩纳哥的蒙特卡罗赌场输钱得名。[9]
+>
 蒙特卡洛(monte carlo，简称MC)方法，也称为统计模拟方法，是1940年代中期由于科学技术的发展和电子计算机的发明，而提出的一种以概率统计理论为指导的数值计算方法。[3]
 
 蒙特卡洛方法就是通过大量的随机样本来估算或近似真实值，比如近似估算圆的面经、近似定积分、近似期望、近似随机梯度。
@@ -54,6 +56,10 @@ def integral():   # 直接数值积分
 ![](../../img/MC_points_approximate_definite_integral.png)
 
 红点占所有点的比例，乘方形面积，就是函数f(x)的积分值。
+
+$\int_a^b f(x) d x=\frac{N}{T} \times(b-a) \times c$
+
+其中N为红点数，T为总点数。[9]
 
 ```py
 def MC_1():  # 蒙特卡洛求定积分1：投点法
@@ -212,6 +218,8 @@ TODO:https://juejin.cn/post/6844904105849126926
 [6]: https://baike.baidu.com/item/%E6%95%B0%E5%80%BC%E6%B3%95/5331680
 [7]: https://baike.baidu.com/item/%E5%BC%BA%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B/18913315
 [8]: https://face2ai.com/Math-Numerical-Analysis-0-0-Introduction/
+[9]: https://www.bilibili.com/video/BV1hV4y1Q7TR/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
+
 
 ---
 

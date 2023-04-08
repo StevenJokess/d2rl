@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-19 23:32:35
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-21 19:18:33
+ * @LastEditTime: 2023-04-09 00:03:26
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -41,6 +41,8 @@
 
 - 分布式模型（distribution model）：返回各种可能的状态 $s’$ 和奖励 $r$ 对应的概率
 - 样本式模型（sample model）：只按照概率返回其中的一种可能性 $s’, r$
+
+$M_{v,π}$ 通常用来表示一个包含状态值函数和策略的模型。
 
 ### 为什么要学习一个模型
 
@@ -89,12 +91,16 @@ model-based learning:
 - Learn a model from real experience
 - Plan value function (and/or policy)from simulated experience
 
-
+将不基于模型的真实经历和基于模型采样得到的模拟经历结合起来：
 
 - Learn a model from real experience
 - Learn and plan value function (and/or policy)from real andsimulated experience
 
-将不基于模型的真实经历和基于模型采样得到的模拟经历结合起来，提出一种新的架构 Dyna
+提出了一种新的架构 [Dyna](Dyna-Q.md)。
 
 [1]: https://www.bilibili.com/video/BV1HT411C78A?p=42&vd_source=bca0a3605754a98491958094024e5fe3
 [2]: https://zhuanlan.zhihu.com/p/37898383
+
+> https://chat.openai.com; M_v,π是啥意思；"M_v,π" 通常用来表示一个包含状态值函数和策略的模型。 不应该是 M_{v,π}
+
+
