@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-29 21:51:57
+ * @LastEditTime: 2023-04-09 10:57:56
  * @Description:
  * @TODO::
  * @Reference:
@@ -151,10 +151,10 @@ $$
 
 同时，我们设定一个系数 $c$ 来控制不确定性的比重，此时 $a=\arg \max _{a \in \mathcal{A}} \hat{Q}(a)+c \cdot \hat{U}(a) 。$
 
-在A Finite-Time Analysis of Multi-armed Bandits Problems with Kullback-Leibler Divergences的中的UCB1中[6]这个$c = 2$。[7]
+在A Finite-Time Analysis of Multi-armed Bandits Problems with Kullback-Leibler Divergences的中的UCB1中[6]这个$c = \sqrt2$。[7]
 
-TODO:WHY？考虑了价值函数本身的大小和搜索次数, 能够自动实现探索和利用的自动平衡, 并能够有效减少探索次数.
-[3]
+考虑了价值函数本身的大小和搜索次数, 能够自动实现探索和利用的自动平衡, 并能够有效减少探索次数。[3]
+
 
 #### 汤普森采样算法
 

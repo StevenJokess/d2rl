@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-26 23:13:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-03 22:25:41
+ * @LastEditTime: 2023-04-09 11:07:56
  * @Description
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -45,7 +45,11 @@
 
 雅达利(Atari)游戏机是一种由北美游戏制造商雅达利公司于1977年推出的视频游戏游戏机。雅达利曾是历史上最受欢迎的游戏系统之一，在30年的时间里，它的销量超过了3000万部，发布了418个不同的原创游戏，包括冒险，小行星，突破，恶魔攻击，青蛙，和知名的吃豆人和Pong。
 
+Atari 2600 是一个具有挑战性的 RL 测试平台，它为智能体提供高维视觉输入（ 60Hz 的 210 × 160 RGB 视频）和一组多样化且有趣的任务，这些任务旨在对人类玩家来说是困难的。作者的目标是创建一个能够成功学习玩尽可能多的游戏的单一神经网络智能体。网络没有提供任何特定于游戏的信息或人工设计的视觉特征，也不知道模拟器的内部状态；它只从视频输入、奖励和终端信号以及一组可能的动作中学习——就像人类玩家一样。此外，用于训练的网络架构和所有超参数在整个游戏中保持不变。[8]
+
 2013年底，当时鲜为人知的公司DeepMind在强化学习领域取得了突破：使用深度强化学习，他们实现了一个人工智能系统可以玩许多经典Atari游戏。而且在主机Atari 2600的数十个经典游戏中，基于强化学习的游戏AI已经在将近一半的游戏中超过人类的历史最佳结果。
+
+
 
 ## 智能博弈
 
@@ -82,3 +86,4 @@ AI通过较高的拟人性、差异化的段位和风格，能够很好地解决
 [5]: https://www.dianwannan.com/app/1000000182014/
 [6]: https://www.51cto.com/article/716590.html
 [7]: https://www.bilibili.com/video/BV1a14y1V78N/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
+[8]: https://zhuanlan.zhihu.com/p/441314394?utm_campaign=&utm_medium=social&utm_oi=772887009306906624&utm_psn=1628228840898924544&utm_source=qq
