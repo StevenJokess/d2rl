@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 02:11:01
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 01:13:41
+ * @LastEditTime: 2023-04-09 14:55:55
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -47,8 +47,6 @@ A3C可根据critic所采用的算法进行同步/异步训练, 能适用于同�
 
 使用在线Critic整合策略梯度, 降低训练样本的相关性, 在保证稳定性和无偏估计的前提下, 提升了采样效率和训练速度.[3]
 
-
-
 ## 算法大纲：
 
 - 定义全局参数 $\theta$ 和 $w$ 以及特定线程参数 $\theta^{\prime}$ 和 $w^{\prime}$ 。
@@ -75,10 +73,11 @@ $A(s, a)=Q(s, a)-V(s)$ 是为了解决基于价值方法具有高变异性。 �
 - 如果 $A(s, a)>0$ : 梯度被推向了该方向
 - 如果 $A(s, a)<0$ : (我们的action比该状态下的平均值还差) 梯度被推向了反方
 
+但是这样就需要两套价值函数，所以可以使用**时序差分方法**做估计：
 
-但是这样就需要两套价值函数，所以可以使用**时序差分方法**做估计： $A(s, a)=r+\gamma V\left(s^{\prime}\right)-V(s)$ 。
+- TD(0)：$A(s, a)=r+\gamma V\left(s^{\prime}\right)-V(s)$ 。
 
-
+- TD(n)：$\sum_{i=0}^{k-1} \gamma^i r_{t+i}+\gamma^k V\left(s_{t+k} ; \theta_v\right)-V\left(s_t ; \theta_v\right)$
 
 [2]: https://www.cnblogs.com/kailugaji/p/16140474.html
 [3]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19

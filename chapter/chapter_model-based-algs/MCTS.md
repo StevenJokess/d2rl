@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 01:35:21
+ * @LastEditTime: 2023-04-09 19:41:42
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -36,7 +36,7 @@
 
 > 什么是基于模拟的搜索呢? 当然主要是两个点: 一个是模拟，一个是搜索。
 
-> - 模拟是基于强化学习模型进行采样，得到样本数据。但是这是数据不是基于和环境交互获得的真实数据，所以是“模拟”。
+> - 模拟是基于强化学习模型（已知）进行采样，得到样本数据。但是这是数据不是基于和环境交互获得的真实数据，所以是“模拟”。
 > - 搜索是为了利用模拟的样本结果来帮我们计算到底应该采用什么样的动作，以实现我们的长期受益最大化。
 
 那么为什么要进行基于模拟的搜索呢? 在这之前我们先看看最简单的前向搜索（forward search）。前向搜索算法 从当前我们考虑的状态节点 $S_t$ 开始考虑，怎么考虑呢? 对该状态节点所有可能的动作进行扩展，建立一颗以 $S_t$ 为根节点的搜索树，这个搜索树也是一个MDP，只是它是以当前状态为根节点，而不是以起始状态为根节点，所以也叫做subMDP。我们求解这个sub-MDP问题，然后得到 $S_t$ 状态最应该采用的动作 $A_t$ 。前向搜索的sub-MDP如下图：
@@ -46,8 +46,6 @@
 前向搜索建立了一个sub-MDP来求解，这很精确，而且这在状态动作数量都很少的时候没有问题，但是只要稍微状态动作数量多一点，每个状态的选择就都特别慢了，因此不太实用，此时基于模拟的搜索就是一种比较好的折哀。
 
 广义的强化学习算法包括策略评估和策略改善，蒙特卡罗树在构建和使用的过程中同样包括这两个过程，所以蒙特卡罗树也是一种强化学习算法。我已经讲过，基于值函数的方法包括动态规划方法，蒙特卡罗模拟方法和时间差分方法。这三种方法的唯一不同点在于值函数的评估方法不同，动态规划方法通过模型来评估值函数，蒙特卡罗模拟的方法通过随机模拟，并求解经验平均来估计，时间差分方法则通过一步或多步bootstrap方法来评估值函数，而蒙特卡罗树搜索呢？
-
-具体通过构造蒙特卡罗树来估计动作值函数。
 
 ## 蒙特卡罗树搜索概念
 
@@ -286,6 +284,10 @@ class MCTS(object):
         return "MCTS"
 ```
 
+
+
+
+
 ## 结合UCB的蒙特卡罗树搜索--UCT
 
 蒙特卡罗树搜索真正强大起来，还需要结合UCB的算法。
@@ -353,22 +355,96 @@ $$
 
 TODO:
 
-### AlphaGo上的应用
+## 蒙特卡罗树搜索算法继续演化
 
 蒙特卡罗树搜索算法一经提出，便在很多领域得到广泛应用。当然，围棋从2006年的UCT算法到2017年的[AlphaGo Zero](..\chapter_appendix-applications-for-deep-reinforcement-learning\AlphaGo_Zero.md)，又经过十多年无数科学家的研究。这个技术如何演化的也是一个很有意思的课题，如果大家感兴趣可以找相关的论文来看。
 
-最容易想到的就是枚举之后的每一种下法，然后计算每步赢棋的概率，选择概率最高的就好了。但是，对于围棋而言，状态空间实在是太大了，没有办法完全枚举。这个时候就需要蒙特卡洛树搜索进行启发式地搜索，这里所谓的启发式搜索，就是一种小范围尝试性探索的优化思路，随机朝一个方向前进，如果效果好就继续，如果效果不好就退回来。
+### 在AlphaGo上的应用
 
-- 在当前状态（每一步棋）的基础上，选择一个备选动作/状态（下一步棋），即一次采样；
-- 从备选动作/状态开始，「走两步」，不需要枚举后续所有状态，只要以一定的策略（如随机策略和 AlphaGo 中的快速走棋网络）一直模拟到游戏结束为止；
-- 计算这次采样的回报；
-- 重复几次，将几次回报求平均，获得该备选动作/状态的价值。
+阿尔法围棋使用了PUCT(Predictor＋UCT)方法。PUCT在UCT方法上进行了微调。其公式推导如以下论文所示：C D Rosin. Mult-iarmed Bandits with Episode Context. Annals of Mathematics and Artificial Intelligence，March 2011，Volume 61，Issue 3，203-230.
 
-另外：
+PUCT利用了围棋中信息的完备性，PUCT算法假设在每个节点的子节点中，所有可能的动作都已经被完全知晓，并可以进行准确的值估计。因此，PUCT算法在节点扩展时会根据子节点的**准确值**进行选择，而不是随机模拟。
 
-蒙特卡罗树适用的场合是：模型已知，可以进行模拟。每次模拟需要很短的时间。因此，蒙特卡罗树搜索可以看成是基于模型的强化学习算法。对于那些模型未知的场合，还得依靠时间差分，A3C，DDPG，PPO等无模型的强化学习算法。
+### PUCT
 
-那么这些无模型的强化学习算法是否也可以利用UCB呢？我们下次再更新，敬请期待！
+import numpy as np
+
+class PUCTNode:
+    def __init__(self, state):
+        self.state = state
+        self.parent = None
+        self.children = {}
+        self.visit_count = 0
+        self.total_reward = 0
+
+    def select_action(self, c_puct):
+        best_action = None
+        best_score = float('-inf')
+        for action, child in self.children.items():
+            q = child.total_reward / (child.visit_count + 1e-8)
+            u = c_puct * np.sqrt(np.log(self.visit_count + 1) / (child.visit_count + 1e-8))
+            score = q + u
+            if score > best_score:
+                best_score = score
+                best_action = action
+        return best_action
+
+    def expand(self, action_list):
+        for action in action_list:
+            if action not in self.children:
+                self.children[action] = PUCTNode(None)
+
+    def update(self, reward):
+        self.visit_count += 1
+        self.total_reward += reward
+
+    def is_leaf(self):
+        return len(self.children) == 0
+
+class PUCT:
+    def __init__(self, action_space, predictor, c_puct=1.0):
+        self.action_space = action_space
+        self.predictor = predictor
+        self.c_puct = c_puct
+        self.root = PUCTNode(None)
+
+    def search(self, state, num_simulations):
+        for i in range(num_simulations):
+            self._simulate(state, self.root)
+        best_action = self.root.select_action(self.c_puct)
+        return best_action
+
+    def _simulate(self, state, node):
+        if node.is_leaf():
+            node.expand(self.action_space)
+        action = node.select_action(self.c_puct)
+        next_state, reward, done = self._perform_action(state, action)
+        if action not in node.children:
+            node.children[action] = PUCTNode(next_state)
+        child_node = node.children[action]
+        if not done:
+            reward += self._simulate(next_state, child_node)
+        child_node.update(reward)
+        return reward
+
+    def _perform_action(self, state, action):
+        # 在这里执行动作并返回下一个状态、奖励和是否终止的标志
+        # 这里只是一个示例，具体实现需要根据具体的问题进行
+        next_state = self.predictor.predict(state, action)
+        reward = self.predictor.get_reward(state, action)
+        done = self.predictor.is_terminal(state, action)
+        return next_state, reward, done
+
+# 使用示例
+action_space = [0, 1, 2, 3]  # 动作空间
+predictor = MyPredictor()  # 自定义的预测器，需要实现predict、get_reward和is_terminal方法
+c_puct = 1.0  # PUCT算法中的探索参数
+num_simulations = 1000  # 模拟的次数
+state = 0  # 初始状态
+puct = PUCT(action_space, predictor, c_puct)
+best_action = puct.search(state, num_simulations)
+print("Best action:", best_action)
+```
 
 [1]: https://zhuanlan.zhihu.com/p/33578829
 [2]: https://github.com/junxiaosong/AlphaZero_Gomoku/blob/master/mcts_alphaZero.py

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 10:58:48
+ * @LastEditTime: 2023-04-09 20:43:26
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -19,6 +19,7 @@ Dive into Deep Reinforcement Learning
 .. raw:: html
    :file: frontpage.html
 ```
+
 ```toc
 :maxdepth: 1
 
@@ -26,6 +27,7 @@ copyleft
 resource&support
 preface
 prologue
+thanks
 chapter_installation/index
 chapter_notation/index
 ```
@@ -74,7 +76,10 @@ chapter_appendix-thinkings-for-deep-reinforcement-learning/index
 ```toc
 :maxdepth: 1
 
+notations
 chapter_references/zreferences
+
+
 
 ```
 

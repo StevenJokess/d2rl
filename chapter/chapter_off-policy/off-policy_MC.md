@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-20 00:47:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-20 01:18:26
+ * @LastEditTime: 2023-04-09 11:54:01
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -20,12 +20,45 @@
 
 ## 重要性采样（Importance Sampling）
 
-公式（1）称为普通重要性采样（ordinary importance sampling）。其有两个重要特性
+考虑一个场景，假如正在尝试计算函数 $f(x)$ 的期望值，其中 $x \sim p(x)$ 服从某种分布。则对 $E(f(x))$ 有以下估计:
 
-- 对期望的估计无偏
-- 方差有可能无穷大（unbound）
+$$
+E_{x \sim p}[f(x)]=\int f(x) p(x) d x \approx \frac{1}{n} \sum_i f\left(x_i\right)
+$$
 
-为了解决普通重要性采样的方差无穷大问题，我们会经常使用另一种【加权重要性采样（weighted importance sampling）】
+蒙特卡洛抽样方法是简单地从分布 $p(x)$ 中抽出 $x$ ，然后取所有样本的平均值来得到期望值的估 计。那么问题来了，如果 $p(x)$ 非常难取样怎么办? 是否能够根据一些已知的、容易抽样的分布来 估计期望值？
+
+答案是肯定的。公式的一个简单转换就可以做到
+
+$$
+E_{x \sim p}[f(x)]=\int f(x) p(x) d x=\int f(x) \frac{p(x)}{q(x)} q(x) d x=E_{x \sim q}\left[f(x) \frac{p(x)}{q(x)}\right]
+$$
+
+其中 $x$ 从分布 $q(x)$ 中采样， $q(x)$ 不应为 0。通过这种方式，估计期望能够从另一个分布 $q(x)$ 中 采样， $p(x) / q(x)$ 是称为采样率或采样权重，它作为校正权重以抵消来自不同分布的概率采样。
+
+该公式称为普通重要性采样（ordinary importance sampling）。
+
+### 重要性采样的缺陷
+
+虽然重要性采样保证了期望的一致，但是这里来计算一下方差是否一致
+
+方差的计算：
+
+$$
+\operatorname{Var}[X]=E\left[X^2\right]-(E[X])^2
+$$
+
+分别计算方差：
+
+$$
+\begin{gathered}
+\operatorname{Var}_{x \sim p}[f(x)]=E_{x \sim p}\left[f(x)^2\right]-\left(E_{x \sim p}[f(x)]\right)^2 \\
+\operatorname{Var}_{x \sim q}\left[f(x) \frac{p(x)}{q(x)}\right]=E_{x \sim q}\left[\left(f(x) \frac{p(x)}{q(x)}\right)^2\right]-\left(E_{x \sim q}\left[f(x) \frac{p(x)}{q(x)}\right]\right)^2 \\
+=E_{x \sim p}\left[f(x)^2 \frac{p(x)}{q(x)}\right]-\left(E_{x \sim p}[f(x)]\right)^2
+\end{gathered}
+$$
+
+可以发现两者虽然期望相等但方差并不一致，甚至方差有可能无穷大（unbound）。为了解决普通重要性采样的方差无穷大问题，我们会经常使用另一种【加权重要性采样（weighted importance sampling）】
 
 ### 加权重要性采样
 
@@ -74,7 +107,6 @@ $$
 
 $\rho_N = \rho_{N-1}\frac{1}{\mu(a_N|s_N)}$
 
-
 ## 异策略蒙特卡洛（递增形式）算法（every visit）
 
 - 初始化:
@@ -94,3 +126,5 @@ $\rho_N = \rho_{N-1}\frac{1}{\mu(a_N|s_N)}$
     - $\pi\left(s_t\right) \leftarrow \operatorname{argmax}_a q\left(s_t, a_t\right)$ ，由于序列已经采样好，所以策略在for循环内更新更 在for循环外再加一层for更新策略没有区别
 
 [1]: https://zhuanlan.zhihu.com/p/360265418
+
+code:https://github.com/CHH3213/chhRL/blob/master/02-chh_MonteCarlo/MC_OffPolicy.py

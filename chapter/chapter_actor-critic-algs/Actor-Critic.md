@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:38:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-06 02:07:09
+ * @LastEditTime: 2023-04-09 23:37:08
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -98,10 +98,15 @@ code
 
 根据实验结果我们可以发现，Actor-Critic 算法很快便能收敛到最优策略，并且训练过程非常稳定，抖动情况相比 REINFORCE 算法有了明显的改进，这说明价值函数的**引入减小了方差**。
 
-# 优缺点：
+## 优缺点：
 
 - 优点：可以进行单步更新，不需要跑完一个episode再更新网络参数，相较于传统的PG更新更快。传统PG对价值的估计虽然是无偏的，但方差较大，AC方法牺牲了一点偏差，但能够有效降低方差；
 - 缺点：Actor的行为取决于 Critic 的Value，但是因为 Critic本身就很难收敛和actor一起更新的话就更难收敛了。（为了解决收敛问题， Deepmind 提出了 Actor Critic 升级版 Deep Deterministic Policy Gradient，后者融合了 DQN 的一些 trick，使用了双Actor神经网络和双Critic神经网络的方法[6]， 解决了收敛难的问题）。
+
+## 与基于价值的模型(Critic only)的对比
+
+- 只基于价值的模型(Critic only)，只会对整个序列完成后才给reward和更新，对中间好的action损失较多，
+- 基于价值和策略的模型就不会(例如Actor-critic)，从Loss函数就能看出来。策略损失通常基于动作概率和优势函数的梯度，而价值损失通常基于TD误差（时间差分误差）。
 
 ## 总结
 

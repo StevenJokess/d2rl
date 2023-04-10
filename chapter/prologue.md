@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-02 19:57:53
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 01:06:46
+ * @LastEditTime: 2023-04-09 20:23:06
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -35,6 +35,7 @@
 深度强化学习既有以下独特的优势和适用性：
 
 1. 适用于连续状态和动作空间：传统的强化学习算法可以应用于连续的状态和动作空间，而不仅限于离散的空间。深度强化学习中的深度神经网络结合了非线性函数逼近的能力，可以对连续状态和动作空间进行处理，因此在这些领域具有更好的适用性。
+2. 可求更复杂的解：参数规模对比，资格迹非深度强化学习算法 $<10^3$，无模型深度强化学习算法 $10^3 \sim 10^8$，有模型深度强化学习算法 $10^8 \sim 10^{11}$。
 
 深度强化学习具有以下局限性：
 
