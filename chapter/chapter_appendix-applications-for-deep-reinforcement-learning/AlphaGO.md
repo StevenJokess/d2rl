@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 23:48:20
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 01:19:05
+ * @LastEditTime: 2023-04-12 00:32:34
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -124,10 +124,13 @@ AlphaGo在对人类顶尖棋手的对弈中取得了令人瞩目的成绩, 但�
 
 ### 第4局失利分析(Analysis of losing the 4th game)
 
-
 在第4局的失利也让我们认识到它需要改进的地方还很多. 训练初弈号所用的棋谱, 只有小部分是人类职业选手的棋局, 总数上亿的棋局是“自我博弈”产生的, 这远远多于高质量的人类棋谱. 在整个训练数据集中, 低质量的样本占据了绝大多数. 训练样本分布的不均衡可能是导致初弈号失利的原因之一。 蒙特卡罗树搜索本质上是一种随机搜索，只能在一定的概率下得到正确的搜索结果, 相比于人类基于逻辑推理的方式, 可能会对局势产生非准确的判断。初弈号在“自我博弈”的过程中使用的是强化学习. 而强化学习的一个突出问题是存在学习的盲区, 即在整个学习过程中, 存在没有被探索到的部分状态空间[110]。 AlphaGo另一研发成员哈萨比斯赛后也提到其可能存在短暂盲区。如果找到了AlphaGo学习的盲区, 就能找到相应的与其对弈的策略。
 
-### 评价(Evaluation）
+李世石唯一赢的一盘，即第四盘的78手是神之一手导致AlphaGo崩溃，![第四盘的78手](../../img/AlphaGo_lee_4th.png)
+
+提示：AlphaGo的程序设计每一步耗时上限是5分钟，正是由于这个设定导致崩盘。[8]
+
+### 评价(Evaluation)
 
 围棋因为复杂的落子选择和庞大的搜索空间在人工智能领域具有显著的代表性。AlphaGo基于深度卷积神经网络的策略网络和价值网络减小了搜索空间, 并且在训练过程中创新性地结合了监督学习和强化学习, 最后成功地整合蒙特卡罗树搜索算法。
 AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点：
@@ -171,3 +174,4 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 [5]: https://www.bilibili.com/video/BV1EV41177VF/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 [6]: https://www.bilibili.com/video/BV1PD4y147gK/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 [7]: https://zhuanlan.zhihu.com/p/31809930#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E9%9B%B6%E5%92%8C%E5%AE%8C%E5%85%A8%E4%BF%A1%E6%81%AF%E4%B8%A4%E4%BA%BA%E5%8D%9A%E5%BC%88
+[8]: https://www.bilibili.com/video/BV1Fj411374z?p=5&vd_source=bca0a3605754a98491958094024e5fe3

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-08 22:37:51
+ * @LastEditTime: 2023-04-12 02:41:34
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -100,10 +100,15 @@ MAX、MIN交替走步过程的图示如下，
 
 ![Minimax 树搜索的状态](../../img/minimax_tree_state.png)
 
-Minimax算法：如果树的层数比较浅，我们可以**穷举**计算每个节点输赢的概率，那么可以使用一种最简单的策略，叫做Minimax算法。基本思路是这样的，从树的叶子结点开始看，如果是本方回合就选择Max的，如果是对方回合就选择Min的（实际上这也是假设对方是聪明的也会使用Minimax算法）。
+如果树的层数比较浅，我们可以**穷举**计算每个节点输赢的概率，那么可以使用一种最简单的策略，叫做Minimax算法。
+
+### Minimax算法
+
+Minimax算法的基本思路是这样的，从树的叶子结点开始看，如果是本方回合就选择Max的，如果是对方回合就选择Min的（实际上这也是假设对方是聪明的也会使用Minimax算法）。
+
+可以这么认为，每次我都需要从对手给我选择的最差（Min）局面中选出最好（Max）的一个，这就是这个算法名称 Minimax 的意义。[19]
 
 > Minimax算法到最后会到达一个博弈论里的*纳什均衡点*（附录有相关定理）。因此，我们可以推出著名的几个理论比如井字棋是必定和棋，五子棋在8*8以下的棋盘是和棋，以上的则是先手必胜。
->
 
 但是如果每一层的搜索空间都很大，这种方法就极其得低效率了也不太可能穷举出所有的可能性。[10]
 
@@ -123,26 +128,114 @@ Minimax算法：如果树的层数比较浅，我们可以**穷举**计算每个
 > - Alpha-Beta 算法：它是著名人工智能学者、图灵奖获得者约翰·麦卡锡在50年代就开始从事计算机下棋方面的研究工作[10]
 > - 深蓝：1996年，正值人工智能诞生40周年之际，一场举世瞩目的国际象棋大战在深蓝与卡斯帕罗夫之间举行，可惜当时的深蓝功夫欠佳，以2:4的比分败下阵来。1997年，经过改进的深蓝再战卡斯帕罗夫，这次深蓝不负众望，终于以3.5:2.5的比分战胜卡斯帕罗夫，可以说是人工智能发展史上的一个里程碑事件。
 
+#### 伪代码[20]
+
+```pseudocode
+Func Minimax(node, ):
+  if node is a terminal node
+    return value of the node
+  if node is a "MIN" node
+    bestV = +infinity
+    for all child node:
+      bestV = min(bestV, Minimax(childnode))
+  else:
+    bestV = -infinity
+    for all child node:
+      bestV = max(bestV, Minimax(childnode))
+  return bestV
+```
+
+#### Python代码[19]
+
+```py
+def mini_max(node):
+    if node.child is None:
+        return node.value
+
+    if not node.is_max: # 不是“MAX”层的节点，即是“MAX”层的节点！
+        best_value = float('inf')
+        for c in node.child:
+            best_value = min(best_value, mini_max(c))
+    else:
+        best_value = -float('inf')
+        for c in node.child:
+            best_value = max(best_value, mini_max(c))
+    return best_value
+```
+
+### Negamax
+
+只比MAX值，原MIN层是单次的负，MAX是双次的负。
+
+#### 伪代码[20]
+
+```pseudocode
+Func Negamax(node, ):
+  if node is a terminal node
+    return -value of the node
+
+    bestV = -infinity
+    for all child node:
+      bestV = max(bestV, -Negamax(childnode))
+```
+
+#### Python代码[19]
+
+```py
+def negative_max(node):
+    if node.child is None:
+        return -node.value
+
+    best_value = -float('inf')
+    for c in node.child:
+        best_value = -max(best_value, negative_max(c))
+    return best_value
+```
+
 ## Alpha-Beta 剪枝（Alpha-Beta Pruning）
+
+### 剪枝概念介绍
+
+- 剪枝：搜索常用的优化手段，把指数级的复杂度，优化到近似多项式的复杂度。
+- 把不会产生答案的，或不必要的枝条“剪掉”。
+- 剪枝的关键：什么枝该剪、在什么地方减。
+- 剪枝分为BFS剪枝和DFS剪枝。[18]
+
+### Alpha-Beta 剪枝
+
+Alpha-Beta 剪枝，是DFS剪枝的一种形式，用于排除等效冗余的搜索，从而提高搜索算法的效率。（自己想的，经ChatGPT确认）
 
 Alpha-Beta 剪枝通过省去探索没必要的节点，来提高搜索效率。
 
-例一（最简单）：
+具体来说，
+
+1. Alpha-Beta剪枝通过维护两个值，即Alpha和Beta，来对搜索进行剪枝。其中，Alpha表示MAX节点在搜索路径上已找到的最好（最大）值，Beta表示MIN节点在搜索路径上已找到的最好（最小）值。
+1. 即如果出现了某个节点的值 Beta_new <= Alpha 或 Alpha_new >= Beta 的情况，则不用搜索该节点的其他子树了，未搜索的部分子树将被忽略，即被剪枝。[19]
+1. 这样就避免了对等效的搜索节点进行重复搜索，减少了搜索的计算量，提高了搜索效率。
+
+#### 例子
+
+##### 例一（最简单）：
 
 ![Alpha-Beta 剪枝 例一](../../img/Alpha-Beta_easy.png)
 
 如果在下层的MAX节点发现得到的值为5，那么意味着上层的MIN节点的数值一定不大于5。而如果本层的MAX节点的值已经至少为8（比如因为下层的MIN节点为8），那么就可以剪掉右边的分支（即右边的分支不必继续探索）。[16]
 
-例二（较复杂）：
+如果用Alpha、Beta值来规范化描述算法的具体过程：
+
+1. 1步Min节点：左 Beta=8 -> 0步Max节点：下界Alpha=8 -> 1步Min节点：右 下界Alpha=8
+2. 2步Max节点的5值 -> 1步Min节点：右 上界Beta_new =5 -> 出现了 Beta_new <= Alpha 的情况 -> 不用搜索1步Min节点：右的其他子树，即剪枝“...”的节点。
+
+##### 例二（较复杂）：
 
 ![Alpha-Beta 剪枝 例二](../../img/Alpha-Beta_Pruning.png)
 
 1. 剪枝一：由于Rival会选择最小化奖励，不会选择 $>=6$ 这个状态，所以不需要再去搜索$>=6$这个状态后的另一状态。
-1. 剪枝二：由于Agent会选择最大化奖励，不会选择 $<=3$ 这个状态，所以不需要再去搜索$<=3$ 这个状态后的状态。
+2. 剪枝二：由于Agent会选择最大化奖励，不会选择 $<=3$ 这个状态，所以不需要再去搜索$<=3$ 这个状态后的状态。
 
 注意：下棋每一步都是树搜索，这与强化学习的策略不同。
 
-例三（很复杂）：
+##### 例三（很复杂）：
 
 ![Alpha-Beta 剪枝 例三](../../img/Alpha-Beta_Pruning_process.png)
 
@@ -158,6 +251,54 @@ Alpha-Beta 剪枝通过省去探索没必要的节点，来提高搜索效率。
 ## 最好情况的复杂度
 
 由例一得，如果我们运气很好（实际中依赖估值函数预先猜几个），直接搜到了最好的情况， Alpha-Beta可以剪去大部分分支。在这种情况下，复杂度可以约化为 $\sqrt{b^d}$ ，也就是 $b^{\frac{d}{2}}$ (证明 略）。这是很有趣的事情：虽然Alpha-Beta剪枝优化的是分支因子 $b$ ，但是在算法的实际运行中，效果反而类似于优化了深度 $d$ 。良好的Alpha-Beta剪枝可以使得算力相同时搜索深度增大一倍，而能看远一倍的对手是非常可怕的。[16]
+
+#### Alpha-Beta剪枝 Minimax的伪代码[20]
+
+```pseudocode
+Func ABMinimax(node, alpha, beta):
+  if node is a terminal node
+    return value of the node
+
+  if node is a "MIN" node
+    bestV = +infinity
+    for all child node:
+      value = ABMinimax(childnode, alpha, beta)
+      bestV = min(bestV, value)
+      beta = min(beta, bestV)
+      if alpha >= beta break
+  else:
+    bestV = -infinity
+    for all child node:
+      value = ABMinimax(childnode, alpha, beta)
+      bestV = max(bestV, value)
+      alpha = max(alpha, bestV)
+      if alpha >= beta break
+  return bestV
+```
+
+#### Alpha-Beta剪枝 Minimax的Python代码[19]
+
+TODO
+
+#### Alpha-Beta剪枝 Negamax的伪代码[20]
+
+```pseudocode
+Func ABNegamax(node, alpha, beta):
+  if node is a terminal node
+    return - value of the node
+
+  bestV = -infinity
+  for all child node:
+    value = ABMinimax(childnode, alpha, beta)
+    bestV = min(bestV, value)
+    beta = min(alpha, bestV)
+    if alpha >= beta break
+  return bestV
+```
+
+#### Alpha-Beta剪枝 Negamax的Python代码[19]
+
+TODO
 
 ### Alpha-Beta剪枝的局限性
 
@@ -193,8 +334,6 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 
 这个定理说的是对于一类特殊的函数，该函数沿着一个变量变化的方向是凸的，沿着另一个变量变化的方向是凹的（这可以视为一个马鞍面），那么在鞍点的时候，上式成立。[2]
 
-
-
 [1]: https://zh.wikipedia.org/wiki/%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E5%80%BC%E5%AE%9A%E7%90%86
 [2]: https://www.zhihu.com/question/51080557/answer/671522746
 [3]: https://zhuanlan.zhihu.com/p/520638488
@@ -212,6 +351,10 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 [15]: https://cloud.tencent.com/developer/news/257574
 [16]: https://zhuanlan.zhihu.com/p/31809930#Rollout
 [17]: https://www.bilibili.com/video/BV1hV4y1Q7TR/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
+[18]: https://www.bilibili.com/video/BV1Aj411c7SS/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
+[19]: https://juejin.cn/post/6844903575999479815
+[20]: https://blog.csdn.net/weixin_38878828/article/details/123654601
+[21]: https://www.bilibili.com/video/BV1bT4y1C7P5/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 
 ## 更多参考：
 

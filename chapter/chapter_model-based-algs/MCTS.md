@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 19:41:42
+ * @LastEditTime: 2023-04-12 00:25:12
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -173,7 +173,7 @@ print(result)
 
 ### 二、拓展(Expansion)
 
-在选择阶段结束时候，我们查找到了一个最迫切被拓展的节点N，以及他一个尚未拓展的动作A。在搜索树中创建一个新的节点 $N_n$作为N的一个新子节点。Nn的局面就是节点N在执行了动作A之后的局面。
+在选择阶段结束时候，我们查找到了一个最迫切被拓展的节点N，以及他一个尚未拓展的动作A。在搜索树中创建一个新的节点 $N_n$ 作为N的一个新子节点。$N_n$ 的局面就是节点N在执行了动作A之后的局面。
 
 ### 三、模拟(Simulation)
 
@@ -284,10 +284,6 @@ class MCTS(object):
         return "MCTS"
 ```
 
-
-
-
-
 ## 结合UCB的蒙特卡罗树搜索--UCT
 
 蒙特卡罗树搜索真正强大起来，还需要结合UCB的算法。
@@ -315,13 +311,16 @@ $$
 $$
 
 其中，
+
 - 前部分是已有胜率：$w_i$ 是 $i$ 节点的胜利次数， $n_i$ 是 $i$ 节点的模拟次数，可见$w_i/n_i$ 是 $i$ 节点的胜率。
 - 根号部分考虑探索性：$N_i$ 是所有模拟次数，![UCT 根号部分函数图像](../../img/UCT_sqrt_part.png)，可见UCT更倾向于选择还没被统计过的节点。
 - $\mathrm{c}$ 是**探索常数**，理论值为 $\sqrt{2}$ ， 可根据经验调整，c 越大就越偏向于广度搜索，c 越小就越偏向于深度搜索。最后我们选择分数最高的动作节点。
 
-每次都选择UCT值最高的节点进行搜索，重复多次后，访问次数最高的节点就是最佳节点。[8]
+每次都选择UCT值最高的节点进行搜索，
 
-### 结合例子
+重复多次后，访问次数最高的节点就是最佳节点。[8]
+
+#### 结合例子
 
 比如对于下面的棋局，对于根节点来说，有 3 个选择，第一个选择 7 胜 3 负，第二个选择 5 胜 3 负，第三个选择 0 胜 3 负。
 
@@ -361,12 +360,23 @@ TODO:
 
 ### 在AlphaGo上的应用
 
-阿尔法围棋使用了PUCT(Predictor＋UCT)方法。PUCT在UCT方法上进行了微调。其公式推导如以下论文所示：C D Rosin. Mult-iarmed Bandits with Episode Context. Annals of Mathematics and Artificial Intelligence，March 2011，Volume 61，Issue 3，203-230.
+#### DNN+MCTS
 
-PUCT利用了围棋中信息的完备性，PUCT算法假设在每个节点的子节点中，所有可能的动作都已经被完全知晓，并可以进行准确的值估计。因此，PUCT算法在节点扩展时会根据子节点的**准确值**进行选择，而不是随机模拟。
+- 一、Selection
+- 二、Simulation：Tree Policy（UCT）：
+- 三、TODO:https://www.bilibili.com/video/BV1Dh411Q77P/?spm_id_from=333.788.recommend_more_video.0
+- $\text { Backup } \mathrm{Q}(\mathrm{s}, \mathrm{a}): \mathrm{Q}(\mathrm{s}, \mathrm{a}) =\mathrm{W}(\mathrm{s}, \mathrm{a})$
+- $\text { Backup } W(\mathrm{s}, \mathrm{a}): \mathrm{W}(\mathrm{s}, \mathrm{a})=\sum V\left(S_{\text {leaf}}\right) $
+- $\text { Backup } V\left(S_{\text {leaf }}\right): 1 \text { if win; }-1 \text { if loses }$
+阿尔法围棋使用了PUCT(Predictor＋UCT)方法。PUCT在UCT方法上进行了微调。其公式推导如以下论文所示：C D Rosin. Mult-iarmed Bandits with Episode Context. Annals of Mathematics and Artificial Intelligence，March 2011，Volume 61，Issue 3，203-230.
 
 ### PUCT
 
+PUCT利用了围棋中信息的完备性，PUCT算法假设在每个节点的子节点中，所有可能的动作都已经被完全知晓，并可以进行准确的值估计。因此，PUCT算法在节点扩展时会根据子节点的**准确值**进行选择，而不是随机模拟。
+
+### PUCT 代码
+
+```py
 import numpy as np
 
 class PUCTNode:
@@ -434,7 +444,9 @@ class PUCT:
         reward = self.predictor.get_reward(state, action)
         done = self.predictor.is_terminal(state, action)
         return next_state, reward, done
+```
 
+```py
 # 使用示例
 action_space = [0, 1, 2, 3]  # 动作空间
 predictor = MyPredictor()  # 自定义的预测器，需要实现predict、get_reward和is_terminal方法
