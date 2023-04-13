@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-01 02:28:37
+ * @LastEditTime: 2023-04-12 23:44:25
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -79,9 +79,12 @@ REINFORCE 算法的具体算法流程如下：
 
 可以用DP部分观测的MDP[3]
 
-缺点：在REINFORCE算法中，每次需要根据一个策略采集一条完整的轨迹，并计算这条轨迹上的回报。这种采样方式估计梯度时噪声很大，即方差比较大，学习效率也比较低，即收敛缓慢，或学习不稳定。
+## 缺点：
 
-## 小结
+- 学习效率也比较低，即收敛缓慢。因为样本利用率低，由于每次更新需要根据一个策略采集一条完整的轨迹，并计算这条轨迹上的回报，而且每次更新后就要将这些样本扔掉，重新采样，再实现更新。[7]
+- 难收敛，学习困难，由于利用策略梯度法计算的结果方差会很大。
+
+## 小结：
 
 REINFORCE 算法是策略梯度乃至强化学习的典型代表，智能体根据当前策略直接和环境交互，通过采样得到的轨迹数据直接计算出策略参数的梯度，进而更新当前策略，使其向最大化策略期望回报的目标靠近。这种学习方式是典型的从交互中学习，并且其优化的目标（即策略期望回报）正是最终所使用策略的性能，这比基于价值的强化学习算法的优化目标（一般是时序差分误差的最小化）要更加直接。 REINFORCE 算法理论上是能保证局部最优的，它实际上是借助蒙特卡洛方法采样轨迹来估计动作价值，这种做法的一大优点是可以得到无偏的梯度。但是，正是因为使用了蒙特卡洛方法，REINFORCE 算法的梯度估计的方差很大，可能会造成一定程度上的不稳定，这也是第 10 章将介绍的 Actor-Critic 算法要解决的问题。
 
@@ -169,3 +172,4 @@ https://hrl.boyuai.com/chapter/2/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E
 [4]: https://fanpu.io/blog/2022/deriving-the-policy-gradient-update/
 [5]: https://www.bilibili.com/video/BV18M411c7uL/?spm_id_from=pageDriver&vd_source=bca0a3605754a98491958094024e5fe3
 [6]: https://zhuanlan.zhihu.com/p/271000523
+[7]: https://weread.qq.com/web/reader/62332d007190b92f62371aek81232fb025f812b4ba28a23

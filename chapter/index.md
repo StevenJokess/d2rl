@@ -65,6 +65,7 @@ chapter_offline_RL/index
 chapter_unsupervised_RL/index
 chapter_meta_RL/index
 
+chapter_RL_and_GAN/index
 chapter_appendix-mathematics-for-deep-reinforcement-learning/index
 chapter_appendix-tools-for-deep-reinforcement-learning/index
 chapter_appendix-applications-for-deep-reinforcement-learning/index

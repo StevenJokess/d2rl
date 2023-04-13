@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-12 02:41:34
+ * @LastEditTime: 2023-04-12 19:13:30
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -29,13 +29,11 @@
 
 博弈因为难于求解而更加令人感兴趣。例如国际象棋的平均分支因子大约是 35，一盘棋一般每个棋手走 50 步，所以搜索树大约有 $35^{100}$ 或者 $10^{154}$ 个结点（尽管搜索图“只可能”有大约 $10^{40}$ 个不同的结点）。如同现实世界，博弈要求具备在无法计算出最优决策的情况下也要给出某种决策的能力。博弈对于低效率有严厉的惩罚。在其他条件相同的情况下，只有一半效率的 A*搜索意味着运行两倍长的时间，于是只能以一半效率利用可用时间的国际象棋程序就很可能被击败。所以，博弈在如何尽可能地利用好时间上产生了一些有趣的研究结果。
 
-## 主要介绍内容
-
-我们从最佳招数的定义和寻找它的搜索算法开始。接着讨论时间有限时如何选择好的招数。**剪枝**允许我们在搜索树中忽略那些不影响最后决定的部分，启发式的评估函数允许在不进行完全搜索的情况下估计某状态的真实效用值。5.5 节讨论诸如西洋双陆棋这类包含概率因素的游戏；我们也讨论桥牌，它包含不完整信息，桥牌中每个人都不能看到所有的牌。最后我们看看最高水平的博弈程序如何与人类对手抗衡以及未来的发展趋势。
-
 ## 井字棋（Tic-Tac-Toe）
 
 下面讨论两人参与的井字棋（Tic-Tac-Toe）[5]，井字棋是一种在3 * 3格子上进行的连珠游戏，和五子棋类似，分别代表O和X的两个游戏者轮流在格子里留下标记（一般来说先手者为X），任意三个标记形成一条直线，则为获胜。[6]
+
+可见：它是完美信息、确定性、零和博弈、每个代理交替行动的游戏。[23]（可见：[AI中的游戏类型](../chapter_appendix-applications-for-deep-reinforcement-learning/game.md)
 
 玩家分别是MAX 和 MIN，马上就会讨论玩家这样命名的原因。
 
@@ -102,31 +100,17 @@ MAX、MIN交替走步过程的图示如下，
 
 如果树的层数比较浅，我们可以**穷举**计算每个节点输赢的概率，那么可以使用一种最简单的策略，叫做Minimax算法。
 
+
+
 ### Minimax算法
+
+Mini-max算法是一种递归或回溯算法，用于决策和博弈论。它为玩家提供了一个最佳的动作，假设对手也在玩最佳状态。[22]
 
 Minimax算法的基本思路是这样的，从树的叶子结点开始看，如果是本方回合就选择Max的，如果是对方回合就选择Min的（实际上这也是假设对方是聪明的也会使用Minimax算法）。
 
 可以这么认为，每次我都需要从对手给我选择的最差（Min）局面中选出最好（Max）的一个，这就是这个算法名称 Minimax 的意义。[19]
 
 > Minimax算法到最后会到达一个博弈论里的*纳什均衡点*（附录有相关定理）。因此，我们可以推出著名的几个理论比如井字棋是必定和棋，五子棋在8*8以下的棋盘是和棋，以上的则是先手必胜。
-
-但是如果每一层的搜索空间都很大，这种方法就极其得低效率了也不太可能穷举出所有的可能性。[10]
-
-以围棋为例，我们把围棋的每一步所有可能选择都作为树的节点，第零层只有1个根节点，第1层就有361种下子可能和节点，第2层有360种下子可能和节点，这是一颗非常大的树。
-
-> - 游戏-树尺寸（Game-tree Size）：$361! ≈ 10^768$
-> - 游戏-树复杂度（Game-tree Size）Complexity）：$250^150 ≈ 10^360$；对比，Tic-Tac-Toe：$10^5$，Chess：$10^123$，用质子去填满全宇宙，需要：$10^122$个
-
-如果我们只有有限次评价次数，Minimax方法就是不可行的（往往只能跑2-3层，太浅了）[3]
-
-以下国际象棋的深蓝（Deep Blue）为例，基本上要搜索12步，搜索树的节点数在 $10^{18}$ 量级，据估算，即便在深蓝这样的专用计算机上，完成一次搜索也需要大概17年的时间，[11]
-
-好在，深蓝还告诉我们，可以通过 Alpha-Beta 算法对这个搜索树剪枝来提高搜索效率。
-
-> 历史：
->
-> - Alpha-Beta 算法：它是著名人工智能学者、图灵奖获得者约翰·麦卡锡在50年代就开始从事计算机下棋方面的研究工作[10]
-> - 深蓝：1996年，正值人工智能诞生40周年之际，一场举世瞩目的国际象棋大战在深蓝与卡斯帕罗夫之间举行，可惜当时的深蓝功夫欠佳，以2:4的比分败下阵来。1997年，经过改进的深蓝再战卡斯帕罗夫，这次深蓝不负众望，终于以3.5:2.5的比分战胜卡斯帕罗夫，可以说是人工智能发展史上的一个里程碑事件。
 
 #### 伪代码[20]
 
@@ -191,6 +175,35 @@ def negative_max(node):
         best_value = -max(best_value, negative_max(c))
     return best_value
 ```
+
+#### 时空复杂度：
+
+- 时间复杂度：执行DFS时，MiniMax算法的时间复杂度为O(b^m)，其中b是树的分支树，m是树的最大深度。
+- 空间复杂度：类似于DFS，即O(bm)。[23]
+
+##### 缺点：
+
+由时间复杂度的指数级得，如果每一层的搜索空间都很大，这种方法就极其得低效率了也不太可能穷举出所有的可能性。[10]
+
+##### 围棋：不可行
+
+以围棋为例，我们把围棋的每一步所有可能选择都作为树的节点，第零层只有1个根节点，第1层就有361种下子可能和节点，第2层有360种下子可能和节点，这是一颗非常大的树。
+
+> - 游戏-树尺寸（Game-tree Size）：$361! ≈ 10^768$
+> - 游戏-树复杂度（Game-tree Size）Complexity）：$250^150 ≈ 10^360$；对比，Tic-Tac-Toe：$10^5$，Chess：$10^123$，用质子去填满全宇宙，需要：$10^122$个
+
+如果我们只有有限次评价次数，对于围棋，Minimax方法就是不可行的（往往只能跑2-3层，太浅了）[3]
+
+##### 国际象棋：可改进
+
+以下国际象棋的深蓝（Deep Blue）为例，基本上要搜索12步，搜索树的节点数在 $10^{18}$ 量级，据估算，即便在深蓝这样的专用计算机上，完成一次搜索也需要大概17年的时间，[11]
+
+好在，深蓝还告诉我们，可以通过 Alpha-Beta 算法对这个搜索树剪枝来提高搜索效率。
+
+> 历史：
+>
+> - Alpha-Beta 算法：它是著名人工智能学者、图灵奖获得者约翰·麦卡锡在50年代就开始从事计算机下棋方面的研究工作[10]
+> - 深蓝：1996年，正值人工智能诞生40周年之际，一场举世瞩目的国际象棋大战在深蓝与卡斯帕罗夫之间举行，可惜当时的深蓝功夫欠佳，以2:4的比分败下阵来。1997年，经过改进的深蓝再战卡斯帕罗夫，这次深蓝不负众望，终于以3.5:2.5的比分战胜卡斯帕罗夫，可以说是人工智能发展史上的一个里程碑事件。
 
 ## Alpha-Beta 剪枝（Alpha-Beta Pruning）
 
@@ -278,7 +291,34 @@ Func ABMinimax(node, alpha, beta):
 
 #### Alpha-Beta剪枝 Minimax的Python代码[19]
 
-TODO
+```py
+def alpha_beta(node, alpha, beta):
+    # alpha表示己方,要提高到最大利益,beta表示敌方,要降到最小利益
+    # alpha大于beta的时候就可以开始剪枝了,因为己方收益已经可以保证大于敌方收益了
+    # min层修改beta(最小化敌方收益),max层修改alpha(最大化己方收益)
+    if node.child is None:
+        return node.value
+    if not node.is_max:
+        # 该层为min层,要最小化敌方收益,所以best_value取越小越好(初始一个无穷大)
+        best_value = float('inf')
+        for c in node.child:
+            value = alpha_beta(c, alpha, beta)
+            best_value = min(best_value, value)
+            beta = min(beta, best_value)
+            if alpha >= beta:
+                break
+    else:
+        # 该层为max层,要最大化己方收益,所以best_value取越大越好(初始一个无穷小)
+        best_value = -float('inf')
+        for c in node.child:
+            value = alpha_beta(c, alpha, beta)
+            best_value = max(best_value, value)
+            alpha = max(alpha, best_value)
+            if alpha >= beta:
+                break
+    return best_value
+```
+
 
 #### Alpha-Beta剪枝 Negamax的伪代码[20]
 
@@ -355,6 +395,8 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 [19]: https://juejin.cn/post/6844903575999479815
 [20]: https://blog.csdn.net/weixin_38878828/article/details/123654601
 [21]: https://www.bilibili.com/video/BV1bT4y1C7P5/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
+[22]: https://www.yiibai.com/artificial-intelligence-tutorial/mini-max-algorithm-in-ai.html#article-start
+[23]: https://www.yiibai.com/artificial-intelligence-tutorial/ai-adversarial-search.html
 
 ## 更多参考：
 

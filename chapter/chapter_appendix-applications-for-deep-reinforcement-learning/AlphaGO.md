@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 23:48:20
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-12 00:32:34
+ * @LastEditTime: 2023-04-13 01:18:45
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -22,7 +22,7 @@ AlphaGo 具备深度学习能力，可结合人类专家比赛中学到的棋谱
 ## 计算机围棋的发展历史与现状(Development history and present situation of computer Go)
 
 计算机围棋起源于20世纪60年代, 长期以来, 它被认为是人工智能领域的一大挑战, 并为智能学习算法的研究提供了一个很好的测试平台. 计算机围棋通过计算一个大约含 $b^d$ 个落子情况序列的搜索树上的最优
-值函数来评估棋局和选择落子位置, 其中b是搜索的宽度, d是搜索的深度。与象棋等具有有限搜索空间的棋类不同, 围棋的计算复杂度约为$250^150$. 如果采用传统的暴力搜索方式, 按照现有的计算能力是远远无法解决围棋问题的。早期计算机围棋通过专家系统和模糊匹配缩小搜索空间, 减轻计算强度, 但受限于计算资源和硬件能力, 实际效果并不理想。
+值函数来评估棋局和选择落子位置, 其中b是搜索的宽度, d是搜索的深度。与象棋等具有有限搜索空间的棋类不同, 围棋的计算复杂度约为 $250^150$ . 如果采用传统的暴力搜索方式, 按照现有的计算能力是远远无法解决围棋问题的。早期计算机围棋通过专家系统和模糊匹配缩小搜索空间, 减轻计算强度, 但受限于计算资源和硬件能力, 实际效果并不理想。
 
 2006年, 蒙特卡罗树搜索的应用标志着计算机围棋进入了崭新的阶段。 现代计算机围棋的主要算法是基于蒙特卡罗树的优化搜索. Coulom采用这种方法开发的CrazyStone在2006年计算机奥运会上首次夺得九路(9 × 9的棋盘)围棋的冠军。2008年, 王一早开发的MoGo在9路围棋中达到段位水平。2012年, 加藤开发的Zen在19路(19 × 19的全尺寸棋盘) 围棋上以3:1击败二段棋手约翰特朗普. 2014年, 职业棋手依田记基九段让四子不敌razyStone, 这在围棋界引起了巨大的轰动. 赛后依田记基表示此时的Crazy-Stone大概有业余六七段的实力, 但是他依然认为数年内计算机围棋很难达到职业水准. 与此同时, 加藤英树也表示计算机围棋需要数十年的时间才能达到职业水准, 这也是当时大多数围棋领域和人工智能领域的专家持有的观点. 然而, 随着深度学习和蒙特卡罗树搜索方法的结合, 这一观点开始受到挑战. 2015年,Facebook人工智能研究院的Tian结合深度卷积神经网络和蒙特卡罗树搜索开发出的计算机围棋DarkForest表现出了与人类相似的下棋风格和惊人的实力, 这预示着计算机围棋达到职业水准的时间可能会提前。而2016年3月AlphaGo的横空出世彻底宣告基于人工智能算法的计算机围棋达到了人类顶尖棋手水准。
 
@@ -67,11 +67,13 @@ $$
 \Delta \theta \propto \frac{\partial \log p_\rho\left(a_t \mid s_t\right)}{\partial \rho} z_t,
 $$
 
-其中 $z_t$ 是在时间步长为 $t$ 时的奖赏, 胜方为 +1 、败方 为 -1 。在与监督学习的策略网络 $p_\theta$ 的对恋中, 强化学 习的策略网络 $p_\rho$ 能够获得 $80 \%$ 的胜率。
+其中 $z_t$ 是在时间步长为 $t$ 时的奖赏, 胜方为 +1 、败方 为 -1 。在与监督学习的策略网络 $p_\theta$ 的对弈中, 强化学习的策略网络 $p_\rho$ 能够获得 $80 \%$ 的胜率。
 
 #### 第 3 阶段
 
 第3阶段, 使用 “自我博弈” 产生的棋谱, 根据最终胜负结果来训练价值网络 $v_\theta$. 训练价值网络时, 使用随机梯度降序法来最小化预测值 $v_\theta(s)$ 和相应结果 $z$ 间的差值。
+
+
 
 $$
 \Delta \rho \propto \frac{\partial v_\theta(s)}{\partial \theta}\left(z-v_\theta(s)\right),
@@ -108,6 +110,10 @@ $$
 其中 $1(s, a, i)$ 表示进行第 $i$ 次模拟时状态动作对 $(s, a)$ 是否被访问. $Q$ 值越大, 之后的模拟选择此走法的次 数越多. 模拟结束时, 遍历过的节点的状态动作值和访问次数得到更新. 每个节点累计经过此节点的访问次数和平均估值。反复进行上述过程达到一定次数后搜索完成, 算法选取从根节点出发访问次数最多的那条路径落子。
 
 ![AlphaGo原理](../../img/principle_of_AlphaGo.png)
+
+？
+$a_t=\operatorname{argmax}_a\left(Q\left(s_t, a\right)+u\left(s_t, a\right)\right)$
+$u(s, a) \propto \frac{P(s, a)}{1+N(s, a)} \quad P(s, a)=p_\rho(a \mid s) \\ V\left(s_L\right)=(1-\lambda) v_\theta\left(s_L\right)+\lambda z_L \\ N(s, a)=\sum_{i=1}^n 1(s, a, i) \\ Q(s, a)=\frac{1}{N(s, a)} \sum_{i=1}^n 1(s, a, i) V\left(s_L^i\right)$
 
 ## AlphaGo性能分析(Performance analysis of AlphaGo)
 
@@ -148,7 +154,7 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 
 - AlphaGo-Fan，DeepMind 第一篇 Nature 论文 Mastering the game of Go with deep neural networks and tree search 中提及的围棋软件，其多次击败欧洲围棋冠军樊麾，最强实力可达职业5段，这是第一个击败职业围棋手的软件。其需要学习人类的围棋对弈，运行时需要数千CPU和数百GPU才能发挥最强性能。
 - AlphaGo-Lee，在国际公开赛上以4-1击败李世石的版本，引起世界轰动。基本和 AlphaGo-Fan 相同，可能使用了更强的算力（后来的论文中作为基准线时，使用了48个TPU）。其段位约为9.5。
-- AlphaGo-Master，在野狐等在线围棋对局平台上以快棋（限时1分钟）的形式60连胜世界范围内的顶级职业围棋手，引起棋界轰动，并在乌镇比赛上3-0击败柯洁。其学习的对战棋局来自 AlphaGo-Lee，运行时仅需4个TPU和2个CPU（单个计算节点，也就是只要一个小机箱就够了，峰值功耗预计500W）。棋力据称可以让 AlphaGo-Lee 3子（被戏称为职业20段）
+- AlphaGo-Master，在野狐等在线围棋对局平台上以快棋（限时1分钟）的形式60连胜世界范围内的顶级职业围棋手，引起棋界轰动，并在乌镇比赛上3-0击败未满20岁的柯洁[10]。其学习的对战棋局来自 AlphaGo-Lee，运行时仅需4个TPU和2个CPU（单个计算节点，也就是只要一个小机箱就够了，峰值功耗预计500W）。棋力据称可以让 AlphaGo-Lee 3子（被戏称为职业20段）。
 - AlphaGo-Zero，DeepMind 第二篇 Nature 论文 Mastering the game of Go without human knowledge 的主角，不使用任何直接间接来自人类的对战棋谱，不使用除了对战规则以外的任何围棋知识，仅用时3天就以100-0的战绩完胜AlphaGo-Lee（黄士杰称“人类千年围棋，zero三天走过”）。其硬件配置同 Master。AlphaGo-Zero 的最强版本对 AlphaGo-Master 100局胜率为 89%
 - AlphaZero，DeepMind最近的作品，硬件配置和算法基本同 AlphaGo-Zero，但是其同一套算法除了解决围棋外，还能够解决国际象棋和日本将棋问题，并击败了 Stockfish（Stockfish使用了版本 8，64个CPU线程，并调节哈希表至其战力最强）。并且其用仅用8个小时就超过了 AlphaGo-Lee。[7]
 
@@ -164,8 +170,19 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 
 以及它们的功耗对比（按照硬件散热设计功耗TDP计，一般达不到这些样的功耗）：
 
-
 其中 AlphaGo Lee 的功耗大幅下降得益于硬件（TPU 取代 GPU），而 Master 和 Zero 得益于算法 （删除了 Rollout）。
+
+
+## 附录：KataGo
+
+贯彻人类棋道，赢最多子。
+
+- Github repo[11]
+- 介绍视频[12]
+- 训练成果[13]
+
+
+
 
 [1]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf
 [2]: http://ir.ia.ac.cn/handle/173211/15288
@@ -175,3 +192,6 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 [6]: https://www.bilibili.com/video/BV1PD4y147gK/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 [7]: https://zhuanlan.zhihu.com/p/31809930#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E9%9B%B6%E5%92%8C%E5%AE%8C%E5%85%A8%E4%BF%A1%E6%81%AF%E4%B8%A4%E4%BA%BA%E5%8D%9A%E5%BC%88
 [8]: https://www.bilibili.com/video/BV1Fj411374z?p=5&vd_source=bca0a3605754a98491958094024e5fe3
+[11]: https://github.com/lightvector/KataGo
+[12]: https://www.bilibili.com/video/BV1464y127i7?p=8&vd_source=bca0a3605754a98491958094024e5fe3
+[13]: https://www.bilibili.com/video/BV18v411v794/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3

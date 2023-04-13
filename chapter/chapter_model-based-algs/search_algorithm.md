@@ -1,3 +1,16 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-03-26 23:58:54
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-04-12 17:59:34
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # 搜索求解
 
 - 许多复杂的问题可以“逐步”解决。
@@ -9,13 +22,21 @@
 
 通常通过搜索前，根据条件降低搜索规模，根据问题约束条件进行剪枝，利用搜索过程中的中间解，避免重复计算这几种方法进行优化。
 
-## 状态转移图
+搜索算法可以分为树搜索和图搜索。
+
+## 状态转移图（state transition graph）与搜索树（search tree）
+
+### 状态转移图（state transition graph）
 
 当前步和下一步之间存在联系，下一个状态画成图，就成为“状态转移图”。[4]
 
-状态转移图（state transition graph）是一种图形化表示方式，用来表示系统在不同状态下通过不同动作转移到下一状态的关系。状态转移图通常由一组节点和边组成，其中节点表示状态，边表示状态之间的转移。
+状态转移图（state transition graph）或状态空间图 是一种图形化表示方式，用来表示系统在不同状态下通过不同动作转移到下一状态的关系。
 
-搜索目标就是在状态转移图中寻找最优的路线，又称为“状态图搜索”方法。
+状态转移图通常由一组节点和边组成，其中节点表示状态，边表示状态之间的转移。目标测试是当前节点是否是目标节点
+
+其搜索目标就是在状态转移图中寻找最优的路线，又称为“状态图搜索”方法。
+
+注意：每个状态只出现一次！状态图有时很大难以完全构建，但它是一个有用的概念。
 
 ### 搜索树（search tree）
 
@@ -24,6 +45,54 @@
 搜索树的建立。树是一种数据结构，是包含n个节点的有穷集，其中每个元素称为结点（node），有一个特定结点被称为根结点或树根（root），度为零的结点称为叶节点或终端结点，排在前的结点叫父结点，其后的结点叫子结点。
 
 完成搜索的过程就是找到一条从根节点到目标结点的路径，找出一个最优解。
+
+### 状态图 vs 搜索树
+
+![状态图 vs 搜索树](../../img/state_graph_vs__search_tree.png)
+
+有一个4节点状态图,它的搜索树有多大（从S 状态开始）？无穷大
+
+![状态图 vs 搜索树 例子](../../img/state_graph_vs__search_tree2.png)
+
+存在许多重复的树枝结构！[6]
+
+## 图搜索与数搜索
+
+搜索算法可以分为树搜索和图搜索。
+
+简单来说，树搜索算法可能会导致状态的重复，所以在图上往往使用图搜索，当然如果你可以保证你的算法不会遇到重复状态的话，也可以放心的使用树搜索。[5]
+
+### 图搜索的伪代码：
+
+- **function** GRAPH-SEARCH(problem) **returns** a solution,or failure
+- initialize the frontier using the initial state of problem
+- **initialize the explored set to be empty**
+- **loop do**
+  - **if** the frontier is empty **then return** failure
+  - choose a leaf node and remove it from the frontier
+  - **if** the node contains a goal state **then return** the corresponding solution
+  - add the node to the explored set
+  - expand the chosen node,adding the resulting nodes to the frontier **only if not in the frontier or explored set**
+
+### 树搜索的伪代码：
+
+- **function** TREE-SEARCH(problem)**returns** a solution,or failure
+  - initialize the frontier using the initial state of problem
+  - loop do
+    - **if** the frontier is empty **then return** failure
+    - choose a leaf node and remove it from the frontier
+    - **if** the node contains a goal state **then return** the corresponding solution
+    - expand the chosen node,adding the resulting nodes to the frontier
+
+### 图搜索与树搜索的区别
+
+容易看出，图搜索比树搜索多维护了一个`explored`队列，这个队列用来记录算法经过的节点，通过检查新的节点是否在这个队列中，图搜索避免了重复。
+
+而两者都有的`frontier`队列，则是用来记录将要探索的节点。
+
+算法开始的时候把初始节点放到 `frontier`里，接下来一直探索，如果`frontier`空了却没有找到最终的目标，说明目标是不存在的，算法返回failure。
+
+### 搜索算法的组成部分
 
 搜索算法划分成两个部分：控制结构（扩展结点的方式）和产生系统（扩展结点），所有的算法优化和改进主要都是通过修改其控制结构来完成的。
 
@@ -136,5 +205,7 @@ A* Planner算法赢得了2009年马里奥AI大赛的冠军。
 [2]: https://www.youtube.com/watch?v=kwWyKjeuL3E
 [3]: https://cloud.tencent.com/developer/news/257574
 [4]: https://www.bilibili.com/video/BV1sV4y1G7ob/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
+[5]: https://zhuanlan.zhihu.com/p/187283548#%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E7%9A%84%E8%83%8C%E6%99%AF%E5%92%8C%E5%AE%9A%E4%B9%89
+[6]: https://qiqi789.github.io/teaching/AI/lecture03.pdf
 
 > https://chat.openai.com/chat;搜索树是状态转移图的特例吗？

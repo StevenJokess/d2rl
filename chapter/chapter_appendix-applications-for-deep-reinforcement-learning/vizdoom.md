@@ -15,4 +15,7 @@
 
 VizDoom 是让强化学习模型进行Doom游戏的平台。清华大学人工智能研究院在Doom上的CrowdAI比赛上获得了 Visual Doom AI Competition 2018 Track1 的冠军，同时在 Visual Doom AI Competition 2018 Track2 以微弱劣势屈居第二。
 
+相关视频：[2]
+
 [1]: https://ml.cs.tsinghua.edu.cn/thuai/#/ai_frameworks
+[2]: https://www.bilibili.com/video/BV1vV4y1p7R1/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3

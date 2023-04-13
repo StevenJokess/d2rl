@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 00:05:23
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-06 03:54:12
+ * @LastEditTime: 2023-04-13 02:53:13
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,7 +13,11 @@
 -->
 # AlphaGo Zero
 
-AlphaGo Zero没有专家动作过程的监督学习（即完全不需要人类棋谱），通过自我对弈完成棋力提高。
+## 简介
+
+AlphaGo的团队于2017年10月19日在《自然》杂志上发表了一篇文章[10]，介绍了AlphaGo Zero，这是一个没有用到人类数据（即完全不需要人类棋谱）的版本，通过自我对弈完成棋力提高，比以前任何击败人类的版本都要强大。通过跟自己对战，AlphaGo Zero经过3天的学习，以100:0的成绩超越了AlphaGo Lee的实力，21天后达到了AlphaGo Master的水平，并在40天内超过了所有之前的版本。[9]
+
+## 模型
 
 主要使用了两个模型，第一个就是我们之前介绍MCTS树结构，另一个是一个神经网络。策略网络（输出各个落子动作对应的获胜概率p）和价值网络（输出获胜或者失败的评估[-1,1]）整合到单个残差神经神经网络中（即走棋和估值网络合并为一个网络：$(p,v)=f(s)$ [3]），
 
@@ -185,8 +189,13 @@ $$
 
 https://en.wikipedia.org/wiki/Self-play_(reinforcement_learning_technique
 
+## 训练时长与成绩
 
+DeepMind 团队在超过 490 万次的向我对局上训练 Alph Go Zero 花了接近 3 天的时间 每个对局中的每一步走子的选择都需要 MCTS 1600 次迭代，每一步走子需要花费 0.4s 左右的时间 网络参数的更新超过了 70 万个批量块，每个批量块由 2048 个棋盘局面组成。[8]
 
+DeepMind 团队还比较了用 16 万盘对局里的包含接近 3000 万个局面位置的数据集有监督地训练和 AlphaGo Zero 网络相同的独立的神经网络他们发现开始有监督方法训练出来的策略性能确实要比 AlphaGo Zero 的好。但一天后，就被逐渐超过。该现象说明 AlphaGo Zero找到了不同于人类棋手下棋的策略，确实发现了新的定式。
+
+AlphaGo Zero 算法的最后测试版本使用了更大的人工神经网络以及超过 2900 个自我对局的数据来训练，权重初始化仍然是随机的，训练共花费了大约 40天。AlphaGo Zero与AlphaGo Master比赛100场成绩是 89:11。
 
 ## 总结
 
@@ -211,5 +220,6 @@ PUCT则是对UCT的改进，主要用于棋类游戏中。PUCT通过考虑位置
 [6]: https://www.deepmind.com/blog/alphago-zero-starting-from-scratch
 [7]: https://cloud.tencent.com/developer/article/1408923?areaSource=&traceId=
 [8]: http://incompleteideas.net/book/RLbook2020.pdf
+[9]: https://www.nature.com/articles/nature24270
 
 TODO:https://zhiqingxiao.github.io/rl-book/en2022/code/TicTacToe-v0_AlphaZero_torch.html

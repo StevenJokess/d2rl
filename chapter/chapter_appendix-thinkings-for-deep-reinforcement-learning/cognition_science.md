@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-09 21:56:25
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 21:58:23
+ * @LastEditTime: 2023-04-12 18:37:30
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -26,5 +26,7 @@
 无独有偶，DeepMind 团队也进行了相似的研究[4]，通过自动生成大量不同的环境和游戏目标，智能体可以接受各种各样任务的训练（图 1.5），在大规模的开放（Open-Ended）环境中，智能体甚至学会了举一反三，做到了现有深度神经网络难以做到的零样本学习（Zero-Shot Learning）。强化学习和进化对于具身智能体和通用智能的重要性可见一斑。
 
 具身智能体的一个显著特征是可以利用不同的感觉器官获取环境的信息进行整合，并执行多种不同的任务。例如，动物们可以通过视觉、听觉、触觉等不同的感官获取环境信息，并进行觅食、逃跑、迁徙等等。而当前的人工智能大多只能执行非常单一的或者少数任务，即便是 DeepMind 宣称的可以执行几百万种不同任务的智能体，仍然有具体任务相似性太高的缺陷。与之形成鲜明对比的是，生物智能体能够执行的任务种类要多得多，并且通常涵盖多种不同的认知功能。在认知科学中，我们经常通过不同的任务范式去研究人类智能的一些特征甚至缺陷。这些任务范式通常是为了特定实验目的定制的，然而其中的一些单一任务对于目前的人工智能而言仍然有一定的难度，更不用说让智能体同时完成多种任务。
+
+
 
 [1]: https://www.ncsti.gov.cn/kcfw/kchzhsh/2021yjqyrdzs/yjqyrdzs2021_xgxx/202203/P020220323629836767560.pdf
