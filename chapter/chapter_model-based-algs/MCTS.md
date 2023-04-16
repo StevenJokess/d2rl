@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-12 00:25:12
+ * @LastEditTime: 2023-04-16 20:25:30
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -198,6 +198,19 @@ print(result)
 
 以上就是MCTS搜索的整个过程。这4步一般是通用的，但是MCTS树结构上保存的内容而一般根据要解决的问题和建模的复杂度而不同。
 
+### 伪代码
+
+```pseudocode
+function MCTS即Monte carlo tree search(state)returns一个动作
+tree<-Node(state)
+while Is-TIME-REMAINING() do
+  leaf<-SELECT(tree)
+  child<-EXPAND(leaf)
+  result<-SIMULATE(child)
+  BACK-PROPAGATE(result,child)
+return ACTIONS(state)中指向模拟次数最多的节点的移动
+```
+
 ### 代码（TODO：）
 
 ```python
@@ -284,7 +297,7 @@ class MCTS(object):
         return "MCTS"
 ```
 
-## 结合UCB的蒙特卡罗树搜索--UCT
+## 结合UCB的蒙特卡罗树搜索——UCT
 
 蒙特卡罗树搜索真正强大起来，还需要结合UCB的算法。
 
@@ -354,7 +367,26 @@ $$
 
 TODO:
 
-## 蒙特卡罗树搜索算法继续演化
+
+### 优缺点与误解：
+
+
+
+
+优点：蒙特卡罗搜索可以应用于没有任何经验可以用来定义评价函数的全新博弈。只要我们知道博弈规则，蒙特卡罗搜索不需要任何附加信息。选择和模拟策略可以充分利用人工制定的专家知识，也可以通过仅仅使用自我对弈训练得到的神经网络来学习好的策略。
+
+缺点：
+
+1. 当单步移动可以改变游戏进程时，蒙特卡罗搜索存在缺陷，因为蒙特卡罗搜索的随机性意味着它可能不会考虑这一移动。换句话说，蒙特卡罗搜索中的B型剪枝意味着它可能根本没有探索关键路线。
+1. 当博弈状态“明显”是一方或另一方获胜时（根据人类的知识和评价函数），蒙特卡罗搜索也存在缺陷，它仍然需要模拟很多步来验证获胜者。
+
+误解：
+
+1. 长期以来，人们一直认为，在国际象棋等具有较低分支因子和较好评价函数的游戏中，Alpha-Beta 搜索更好。但最近，蒙特卡罗方法在国际象棋及其他游戏中也取得了成功。
+
+
+
+## 蒙特卡罗树搜索算法的继续演化
 
 蒙特卡罗树搜索算法一经提出，便在很多领域得到广泛应用。当然，围棋从2006年的UCT算法到2017年的[AlphaGo Zero](..\chapter_appendix-applications-for-deep-reinforcement-learning\AlphaGo_Zero.md)，又经过十多年无数科学家的研究。这个技术如何演化的也是一个很有意思的课题，如果大家感兴趣可以找相关的论文来看。
 

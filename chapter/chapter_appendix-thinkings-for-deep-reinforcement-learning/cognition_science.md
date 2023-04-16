@@ -5,13 +5,29 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-09 21:56:25
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-12 18:37:30
+ * @LastEditTime: 2023-04-14 02:22:13
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 # 认知科学
+
+## 认知科学与人工智能的诞生
+
+此同时的美国，计算机建模的发展导致了认知科学（cognitive science）领域的诞生。这个领域可以说是开始于1956 年9 月麻省理工学院的一次研讨会上，并且仅仅两个月后，人工智能本身就“诞生”了。
+
+
+
+在研讨会上，乔治·米勒（George Miller）发表了“The Magic Number Seven”，诺姆·乔姆斯基（Noam Chomsky）发表了“Three Models of Language”，艾伦·纽厄尔和赫伯特·西蒙发表了“The Logic Theory Machine”。这 3 篇影响广泛的论文分别展示了如何使用计算机模型处理记忆、语言和逻辑思维的心理学问题。现在心理学家普遍认为“认知理论应该就像一个计算机程序”（Anderson, 1980），也就是说，认知理论应该从信息处理的角度来描述认知功能的运作。
+
+为了综述目的，我们将人机交互（human-computer interaction，HCI）领域归于心理学下。人
+机交互的先驱之一道格·恩格巴特（Doug Engelbart）倡导智能增强（intelligence augmentation）的
+理念（IA 而非AI）。他认为，计算机应该增强人类的能力，而不是完全自动化人类的任务。1968 年，
+在恩格巴特的“所有演示之母”（mother of all demos）上首次展示了计算机鼠标、窗口系统、超文本
+和视频会议，所有这些都是为了展示人类知识工作者可以通过某些智能增强来共同完成工作。
+今天，我们更倾向于将IA 和AI 视为同一枚硬币的两面，前者强调人类控制，而后者强调
+机器的智能行为，都是机器有利于人类所必需的。
 
 ## 具身认知与强化学习
 
