@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-16 20:25:30
+ * @LastEditTime: 2023-04-16 20:53:56
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -370,9 +370,6 @@ TODO:
 
 ### 优缺点与误解：
 
-
-
-
 优点：蒙特卡罗搜索可以应用于没有任何经验可以用来定义评价函数的全新博弈。只要我们知道博弈规则，蒙特卡罗搜索不需要任何附加信息。选择和模拟策略可以充分利用人工制定的专家知识，也可以通过仅仅使用自我对弈训练得到的神经网络来学习好的策略。
 
 缺点：
@@ -382,7 +379,8 @@ TODO:
 
 误解：
 
-1. 长期以来，人们一直认为，在国际象棋等具有较低分支因子和较好评价函数的游戏中，Alpha-Beta 搜索更好。但最近，蒙特卡罗方法在国际象棋及其他游戏中也取得了成功。
+1. 长期以来，人们一直认为，在国际象棋等具有较低分支因子和较好评价函数的游戏中，Alpha-Beta 搜索更好。但最近，蒙特卡罗方法在国际象棋及其他游戏中也取得了成功。[9]
+
 
 
 
@@ -498,6 +496,7 @@ print("Best action:", best_action)
 [6]: https://cloud.tencent.com/developer/article/1403975
 [7]: https://en.wikipedia.org/wiki/Monte_Carlo_tree_search
 [8]: https://www.bilibili.com/video/BV1hV4y1Q7TR/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
+[9]: https://weread.qq.com/web/reader/fc332020813ab7942g0102adk70e32fb021170efdf2eca12
 
 ## 更多参考
 

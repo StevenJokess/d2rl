@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-13 23:23:58
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-29 03:27:27
+ * @LastEditTime: 2023-04-21 21:39:54
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,7 +15,7 @@
 
 ## 熵(Entropy)
 
-信息熵，可以看作是样本集合纯度一种指标，也可以认为是样本集合包含的平均信息量。
+信息熵，可以看作是样本集合纯度的一种指标，也可以认为是样本集合包含的平均信息量。
 
 假定当前样本集合X中第*i*类样本 $𝑥_𝑖$ 所占的比例为$P(𝑥_𝑖)(i=1,2,...,n)$，则*X*的信息熵定义为：
 
@@ -186,3 +186,6 @@ $$
 
 [1]: https://datawhalechina.github.io/unusual-deep-learning/#/%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8C%E6%95%A3%E5%BA%A6?id=%e4%ba%a4%e5%8f%89%e7%86%b5%e5%92%8c%e6%95%a3%e5%ba%a6
 [2]: https://github.com/datawhalechina/unusual-deep-learning/edit/main/docs/02.%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80.md
+
+
+TODO:https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#information

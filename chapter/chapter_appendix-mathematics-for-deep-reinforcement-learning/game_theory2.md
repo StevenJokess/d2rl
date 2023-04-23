@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-16 20:28:07
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-16 20:43:09
+ * @LastEditTime: 2023-04-16 20:50:18
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -31,10 +31,11 @@
 
 任何参与多人博弈（如Diplomacy或Settlers of Catan游戏）的参与者都会很快意识到，比起双人博弈，多人博弈要复杂得多。多人博弈通常涉及参与者之间的**正式或非正式联盟(alliance)**。联盟会随着博弈的发展建立和瓦解。我们如何理解这种行为？联盟是多人博弈中每个参与者都按照最优策略行动的自然结果吗？事实证明的确如此。
 
+#### 联盟OR背叛？
+
 例如，假设现在A和B处于弱势，而C处于强势。那么，对A和B来说，**最理想的做法往往是一起攻击C，而不是彼此攻击，以免C对它们逐个消灭。**这样的话，合作其实产生于纯粹的自私行为。当然，一旦C在联合攻击下被削弱，联盟就失去了价值，A或B都有可能违反协议。
 
 在某些情况下，显式联盟只是将无论如何都会发生的事情具体化。而在其他情况下，破坏联盟会被记录为社会污点，所以参与者必须权衡破坏联盟所带来的即时优势和失去信任所造成的长期劣势。有关这些复杂问题的更多讨论，详见[2]
-
 
 #### 双人也可联盟
 

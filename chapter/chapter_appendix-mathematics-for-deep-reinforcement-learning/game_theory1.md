@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-14 02:07:05
+ * @LastEditTime: 2023-04-23 22:54:11
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,36 +13,11 @@
 -->
 # 博弈论
 
-## 决策论
-
-决策论（decision theory）结合了概率论和效用理论，为在不确定性下做出个体决策（经济的或其他的）提供了一个形式化完整的框架，也就是说，概率适当地描述了决策者所处的环境。这适用于“大型”经济体，在这种经济体中，每个主体都无须关注其他独立主体的行为。[24]
-
-对“小型”经济体而言更像是一场博弈（game）：一个参与者的行为可以显著影响另一个参与者的效用（积极或消极的）。
-
-## 博弈
-
-博弈一一是指在一定的游戏规则约束下，基于直接相互作用的环境条件，各参与人依据所掌握的信息，选择各自的策略（行动）以实现利益最大化的过程。[7]例如：剪刀石头布、囚徒困境、寡头垄断（产量决策根据对竞争对手的预期）、
-
-博弈的常见特征：有规则、有结果、策略很重要、策略有相互依赖性。
-
-### 博弈的分类
-
-博弈又分静态博弈和动态博弈：
-
-- 静态博弈指参与者同时采取行动，或者尽管参与者行动的采取有先后顺序，但后行动的人不知道先采取行动的人采取的是什么行动。
-- 动态博弈指参与者的行动有先后顺序，并且后采取行动的人可以知道先采取行动的人所采取的行动。
-
-从知识的拥有程度来看，博弈分为完全信息博弈和不完全信息博弈。信息是博弈论中重要的内容。完全信息博弈指参与者对所有参与者的策略空间及策略组合下的代价有"完全的了解"，否则是不完全信息博弈。
-
-严格地讲，完全信息博弈是指参与者的策略空间及策略组合下的支付，是博弈中所有参与者的"公共知识"的博弈。对于不完全信息博弈，参与者所做的是努力使自己的期望支付或期望效用最大化。
-
-## 博弈论
-
 博弈论又被称为对策论（Game Theory），它是现代数学的一个新分支，也被应用到经济学下的运筹学（operations research）[25]。博弈论是研究决策主体的行为在相互影响时的最优决策以及相应的均衡结果。[4]博弈论分为合作博弈与非合作博弈。更多内容见课程教学大纲[4]
 
-## 人工智能里的博弈论
+## 本章节里的博弈论
 
-在人工智能中把多 Agent 环境看成是博弈，其中每个 Agent都会受到其他 Agent 的“显著”影响，不论这些 Agent 间是合作的还是非合作的。本章节的“博弈”是两人对弈的完美信息博弈[15]，即专指博弈论专家们称为**有完整信息**的、确定性的、轮流行动的、两个游戏者的零和游戏（如国际象棋）。术语中，这是指在确定的、完全可观察的环境中两个 Agent必须**轮流**行动，在游戏结束时效用值总是相等并且符号相反。例如下国际象棋，一个棋手赢了，则对手一定是输了。正是 Agent 之间效用函数的对立导致了环境是对抗的。
+本章节里把多 Agent 环境看成是博弈，其中每个 Agent都会受到其他 Agent 的“显著”影响，不论这些 Agent 间是合作的还是非合作的。本章节的“博弈”是两人对弈的完美信息博弈[15]，即专指博弈论专家们称为**有完整信息**的、确定性的、轮流行动的、两个游戏者的零和游戏（如国际象棋）。术语中，这是指在确定的、完全可观察的环境中两个 Agent必须**轮流**行动，在游戏结束时效用值总是相等并且符号相反。例如下国际象棋，一个棋手赢了，则对手一定是输了。正是 Agent 之间效用函数的对立导致了环境是对抗的。
 
 ## 常用于棋牌类
 
@@ -403,7 +378,7 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 [4]: https://jwc.gdufe.edu.cn/_upload/article/files/68/96/872c060340f68ed6f57bd9450b2f/c651f566-3867-4bae-a585-68fe17cec17b.pdf
 [5]: https://zh.wikipedia.org/zh-sg/%E4%BA%95%E5%AD%97%E6%A3%8B
 [6]: https://www.cnblogs.com/royalflush/p/12460242.html
-[7]: https://www.youtube.com/watch?v=J8fjBHJeifQ
+TODO:Del [7]: https://www.youtube.com/watch?v=J8fjBHJeifQ
 [8]: https://www.bilibili.com/video/BV1464y127i7/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
 [9]: https://zh.wikipedia.org/wiki/%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1
 [10]: https://www.bilibili.com/read/cv15543561?spm_id_from=333.999.0.0
@@ -420,8 +395,9 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 [21]: https://www.bilibili.com/video/BV1bT4y1C7P5/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 [22]: https://www.yiibai.com/artificial-intelligence-tutorial/mini-max-algorithm-in-ai.html#article-start
 [23]: https://www.yiibai.com/artificial-intelligence-tutorial/ai-adversarial-search.html
-[24]: https://ticket-assets.baai.ac.cn/uploads/%E3%80%8A%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%9A%E7%8E%B0%E4%BB%A3%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89%E3%80%8B%E6%A0%B7%E7%AB%A0.pdf
+TODO:Del [24]: https://ticket-assets.baai.ac.cn/uploads/%E3%80%8A%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%9A%E7%8E%B0%E4%BB%A3%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89%E3%80%8B%E6%A0%B7%E7%AB%A0.pdf
 [25]: https://zhuanlan.zhihu.com/p/58472297
+TODO:Del [26]: https://zhuanlan.zhihu.com/p/427303297
 
 ## 更多参考：
 

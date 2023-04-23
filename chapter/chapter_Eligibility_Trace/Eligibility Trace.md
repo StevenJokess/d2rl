@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-17 05:15:29
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-10 00:24:49
+ * @LastEditTime: 2023-04-19 00:44:08
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -36,6 +36,8 @@ $$
 
 ### SARSA ($\lambda$)
 
-SARSA($\lambda$)算法是在SARSA算法的基础上引入了「资格迹（eligibility trace）」，直观上解释就是让算法对于经历过的状态有一定的记忆性，如sutton书中所述，资格迹对所获取的轨迹起到了短期记忆的效果。从下图可以直观看出，经历过的状态不再是经历过之后直接删除，而是存在一个「平滑的衰减过渡」，保存了一定程度上的信息。也可以说，该算法增加了距离目标点最近的状态的权重，从而加快算法的收敛性（直观意义上的说法）。[8]
+SARSA($\lambda$)算法是在SARSA算法的基础上引入了「资格迹（eligibility trace）」，直观上解释就是让算法对于经历过的状态有一定的记忆性，如sutton书中所述，资格迹对所获取的轨迹起到了短期记忆的效果。从下图可以直观看出，经历过的状态不再是经历过之后直接删除，而是存在一个「平滑的衰减过渡」，保存了一定程度上的信息。也可以说，该算法增加了距离目标点最近的状态的权重，从而加快算法的收敛性（直观意义上的说法）。[2]
 
 [2]: https://yuancl.github.io/2019/01/28/rl/%E4%B8%8D%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%A2%84%E6%B5%8B/
+[3]:
+[4]:

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-10 00:25:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-16 19:17:27
+ * @LastEditTime: 2023-04-16 21:00:19
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -57,7 +57,7 @@ YiWu是ASB共私开发的深度强化学习框架，不兼容目前主流的深�
 
 
 
-————DotaWhile 建学习社群和嫖开源代码以推广云服务器商和社区的不存在的公众号
+————DaystudyWhile 建学习社群和嫖开源代码以推广云服务器商和社区的不存在的公众号
 
 ## 读者人群
 

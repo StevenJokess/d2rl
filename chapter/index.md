@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-13 23:50:17
+ * @LastEditTime: 2023-04-16 21:40:45
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -51,10 +51,11 @@ chapter_model-based-algs/index
 
 chapter_Incomplete_observations/index
 chapter_Sparse_Reward/index
+chapter_Define_Reward_difficulty/index
 chapter_goal-oriented_RL/index
+chapter_multi_goals/index
 chapter_Distributed-RL/index
 
-chapter_IL-algs/index
 chapter_multi-agent_RL/index
 chapter_multi-agent_DRL/index
 
@@ -63,7 +64,6 @@ chapter_offline_RL/index
 chapter_unsupervised_RL/index
 chapter_meta_RL/index
 
-chapter_RL_and_GAN/index
 chapter_appendix-mathematics-for-deep-reinforcement-learning/index
 chapter_appendix-tools-for-deep-reinforcement-learning/index
 chapter_appendix-applications-for-deep-reinforcement-learning/index

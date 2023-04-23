@@ -21,26 +21,45 @@
 
 ## 策略目标
 
-
 图7.4 代价函数推导
 
 注意，这时状态s的分布由新的策略产生，对新的策略严重依赖。
 
 TRPO= NPG + Linesearch + monotonic improvement theorem!
 
-
-
 这里的不等式约束定义了策略空间中的一个 KL 球，被称为信任区域。在这个区域中，可以认为当前学习策略和环境交互的状态分布与上一轮策略最后采样的状态分布一致，进而可以基于一步行动的重要性采样方法使当前学习策略稳定提升。TRPO 背后的原理如图 11-1 所示。
 
+## 新的和旧的策略的奖励函数之间的关系
+
+新的和旧的策略的无限时域奖励函数之间的关系为
+
+$$
+\eta(\tilde{\pi})=\eta(\pi)+E_{s_0, a_0}, \ldots \sim \tilde{\pi}\left[\sum_{t=0}^{\infty} \gamma^t A_\pi\left(s_t, a_t\right)\right](54)
+$$
+
+其中, $E_{s_0, a_0, \cdots \sim \tilde{\pi}}[\cdots]$ 表示动作以 $a_t \sim \tilde{\pi}\left(\cdot \mid s_t\right)$ 方式采样. 令 $\rho_\pi$ 为状态 $s$ 折扣访问频率：
+
+$$
+\rho_\pi(s)=P\left(s_0=s\right)+\gamma P\left(s_1=s\right)+\gamma^2 P\left(s_2=s\right)+\cdots(55)
+$$
+其中, $\rho_0$ 为初始状态 $s_0$ 的概率分布, 假定初始状态之 后的动作都是根据策略 $\pi$ 来选择. 则式 (54) 可以重新表示为
+
+$$
+\begin{aligned}
+\eta(\tilde{\pi}) & =\eta(\pi)+\sum_{t=0}^{\infty} \sum_s P\left(s_t=s \mid \tilde{\pi}\right) \sum_a \tilde{\pi}(a \mid s) \gamma^t A_\pi(s, a) \\
+& =\eta(\pi)+\sum_s \sum_{t=0}^{\infty} \gamma^t P\left(s_t=s \mid \tilde{\pi}\right) \sum_a \tilde{\pi}(a \mid s) A_\pi(s, a) \\
+& =\eta(\pi)+\sum_s \rho_{\tilde{\pi}}(s) \sum_a \tilde{\pi}(a \mid s) A_\pi(s, a)
+\end{aligned}
+$$[6]
 
 ## 技巧
 
 ### 第一个技巧
 
-这时，我们引入TRPO的第一个技巧对状态分布进行处理。我们忽略状态分布的变化，依然采 用旧的策略所对应的状态分布。这个技巧是对原代价函数的第一次近似。其实，当新旧参数很接近时，我们将用旧的状态分布代替新的状态分布也是合理的。这时，原来的代价函数变成了:
+这时，我们引入TRPO的第一个技巧对状态分布进行处理。我们忽略状态分布的变化，依然采 用旧的策略所对应的状态分布。这个技巧是对原代价函数的第一次近似。其实，当新旧参数很接近时，我们将用旧的状态分布代替新的状态分布也是合理的。这时，原来的奖励函数变成了:
 
 $$
-L_\pi(\tilde{\pi})=\eta(\pi)+\sum_s \rho_\pi(s) \sum_a \tilde{\pi}(a \mid s) A^\pi(s, a)(7.5)
+\eta_\pi(\tilde{\pi})=\eta(\pi)+\sum_s \rho_\pi(s) \sum_a \tilde{\pi}(a \mid s) A^\pi(s, a)(7.5)
 $$
 我们再看(7.5)式的第二项策略部分，这时的动作a是由新的策略 $\tilde{\pi}$ 产生。可是新的策略 $\tilde{\pi}$ 是 带参数 $\theta$ 的，这个参数是末知的，因此无法用来产生动作。这时，我们引入TRPO的第二个技巧。
 
@@ -172,5 +191,6 @@ TRPO 算法是比较难掌握的一种强化学习算法，需要较好的数学
 [3]: https://zhuanlan.zhihu.com/p/26308073
 [4]: https://spinningup.openai.com/en/latest/algorithms/trpo.html
 [5]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf
+[6]: http://cjc.ict.ac.cn/online/onlinepaper/42-6-15-201968180907.pdf
 
 TODO:https://zhuanlan.zhihu.com/p/126288378#%E5%8D%81%E4%B8%89%E3%80%81Hessian%20Free
