@@ -50,3 +50,7 @@ Centralised Critic (CC) : CC 专注于学习从集中状态到价值估计的批
 
 [1]: http://www.jidiai.cn/algorithm#marl_title
 [2]: https://developer.aliyun.com/article/818419?spm=a2c6h.12873639.article-detail.55.7fa137a8RUrUg3
+
+TODO:
+
+https://opendilab.github.io/DI-engine/02_algo/multi_agent_cooperation_rl_zh.html

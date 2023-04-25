@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-16 20:53:56
+ * @LastEditTime: 2023-04-25 23:09:03
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -363,6 +363,17 @@ $$
 - 如果探索率c设置的比较大，可能去选第三个节点
 - 如果探索率c设置的比较小，可能去选第一个节点
 
+
+### 算法描述[10]
+
+对于已经建立的一棵树
+1. 从根节点开始
+1. 利用UCB公式计算每个子节点的UCB值，选择最大值的子节点
+1. 若此节点不是叶节点，则从此节点开始，重复2
+1. 直到遇到叶节点，play叶节点，得到收益，将这个收益更新到该节点及它的每一级祖先节点上去
+1. 回到1，除非时间结束或者达到预设循环次数
+1. 从根节点的子节点中挑选平均收益最高的，作为最佳点
+
 ### 代码
 
 TODO:
@@ -497,6 +508,8 @@ print("Best action:", best_action)
 [7]: https://en.wikipedia.org/wiki/Monte_Carlo_tree_search
 [8]: https://www.bilibili.com/video/BV1hV4y1Q7TR/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 [9]: https://weread.qq.com/web/reader/fc332020813ab7942g0102adk70e32fb021170efdf2eca12
+[10]: https://blog.csdn.net/oyd/article/details/3300852
+
 
 ## 更多参考
 

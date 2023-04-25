@@ -60,7 +60,12 @@ $$
 若 $p(x) \geq 0$ on $S \subseteq \operatorname{dom} f: \int_S p(x) d x=1$
 则 $f\left(\int_S p(x) x d x\right) \leq \int_S f(x) p(x) d x \quad f(\mathbf{E} x) \leq \mathbf{E} f(x)$
 
+### 优化算法
+
+TODO:[3]
+
 ## 非凸优化
 
 [1]: https://www.bilibili.com/video/BV1UV411z7um/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
 [2]: https://flashgene.com/archives/23923.html
+[3]: https://datawhalechina.github.io/unusual-deep-learning/#/08.%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95
