@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 03:10:55
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-01 03:43:29
+ * @LastEditTime: 2023-05-06 18:53:47
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -33,7 +33,13 @@ Distributed RL则是一种分布式的强化学习方法，旨在通过将智能
 
 因此，Distributional RL和Distributed RL是两个不同的概念，它们分别关注于处理不确定性和风险以及提高训练和决策效率。
 
+## 分布式训练：
+
+机器学习模型的训练往往需要分布式的计算节点并行完成。其中，常见的并行训练方法包括数据并行、模型并行、混合并行和流水线并行。这些并行训练方法通常由远端程序调用（Remote Procedure Call, RPC）、集合通信（Collective Communication）或者参数服务器（Parameter Server）实现。[2]
+
+
 [1]: https://opendilab.github.io/DI-engine/02_algo/distributed_rl_zh.html#id2
+[2]: https://openmlsys.github.io/chapter_introduction/architecture.html
 
 > 1. https://chat.openai.com; Prompt:distributional RL 跟 distributioned RL的区别
 TODO:伯克利计算机课程CS294 System AI——概述 - 飞天游侠的文章 - 知乎

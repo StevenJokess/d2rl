@@ -1,0 +1,31 @@
+from setuptools import setup, find_packages
+
+# Read requirements.txt, ignore comments
+try:
+    REQUIRES = list()
+    f = open("requirements.txt", "rb")
+    for line in f.read().decode("utf-8").split("\n"):
+        line = line.strip()
+        if "#" in line:
+            line = line[:line.find("#")].strip()
+        if line:
+            REQUIRES.append(line)
+except:
+    print("'requirements.txt' not found!")
+    REQUIRES = list()
+
+setup(
+    name = "YiWu",
+    version = "0.0.1",
+    include_package_data=True,
+    author='StevenJokess',
+    author_email='zhding@gmail.com',
+    url = "https://github.com/StevenJokess/d2rl/code_framework" ,
+    license = "Check the LISENSE file" ,
+    packages = find_packages(),
+    install_requires = REQUIRES,
+    description = "Deep reinforcement learning algorithms",
+    keywords = "Deep Reinforcment Learning",
+    platform=['any'],
+    python_requires='>=3.5',
+)

@@ -5,13 +5,17 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-01 02:35:04
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-01 02:49:53
+ * @LastEditTime: 2023-04-26 21:35:03
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# AlphaStar及背景简介
+# AlphaStar
+
+AlphaStar for mulitiplayer online games
+
+## 背景简介
 
 相比于之前的深蓝和AlphaGo，对于《星际争霸Ⅱ》等策略对战型游戏，使用AI与人类对战的难度更大。比如在《星际争霸Ⅱ》中，要想在玩家对战玩家的模式中击败对方，就要学会各种战术，各种微操和掌握时机。在游戏中玩家还需要对对方阵容的更新实时地做出正确判断以及行动，甚至要欺骗对方以达到战术目的。总而言之，想要让AI上手这款游戏是非常困难的。但是DeepMind做到了。
 

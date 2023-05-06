@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-23 22:55:04
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-24 02:20:10
+ * @LastEditTime: 2023-04-26 23:13:25
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -47,20 +47,22 @@ PAPI（by Eric Rasmusen）：
 
 从博弈者对其他参与博弈者所了解的信息的完全程度来看，博弈分为完全信息博弈和不完全信息博弈。信息是博弈论中重要的内容。
 
-- 完全信息博弈指参与者对所有参与者的策略空间及策略组合下的代价有"完全的了解"，否则是不完全信息博弈。
+- 完全信息博弈指参与者对所有参与者的策略空间及策略组合下的代价有"完全的了解"（知道存在一些随机事件，以及概率），否则是不完全信息博弈。
 - 如Chess知道全局所有的信息，而德州扑克各玩家之间是不知道对方的底牌的。
 - 严格地讲，完全信息博弈是指参与者的策略空间及策略组合下的支付，是博弈中所有参与者的"公共知识"的博弈。
 - 对于不完全信息博弈，参与者所做的是努力使自己的期望支付或期望效用最大化。
 
 > 按各Agent之间的历史动作是否可知，分完美信息博弈和非完美信息博弈：
+>
 > - 完美信息博弈是指在博弈过程中各方都知道其他Agent之前都有过哪些策略，但无法确定在这一次博弈过程中会采取哪一套策略；如Chess一直可以看到对方是怎么走棋的。完美信息博弈的例子包括井字博弈 Tic-tac-toe 、跳棋 Checkers 、无限象棋 Infinite chess 和围棋 Go 。完美信息博弈已经在组合博弈论 Combinatorial game theory 中得到研究，发展出新颖的表示法，例如超现实数字 Surreal numbers ，以及利用组合和代数（有时是非构造性的）的证明方法来解决特定类型的博弈，包括可能导致无限长移动序列的“环形”博弈。
 > - 非完美信息博弈是指双方均不能完全掌握对方之前采取过哪些策略。StarCraft在开局阶段存在战争迷雾，并不知道对方在搞什么。如：扑克和桥牌[19]，西洋双陆棋 Backgammon【你必须在对方完成之前，把所有的十五个棋子送到你的领地去】
 
 > 完美信息和完全信息的区别：
 >
-> - 完美信息是指了解对方在之前的博弈中都采取过哪些策略，但并不能确定在这一次博弈中到底会采取哪一种策略，只能综合对手之前所有采取过的策略来估测这一次博弈中采取某种策略的概率。
-> - 完全信息是指双方都熟知对手在这一次博弈中将会采取什么策略，即能够根据一个State准确的推出对手将采取的action，而完美信息只能根据一个State推测出对手采取各个可能action的概率。
-> - 因此，完全信息不一定是完美的，不完全信息一定不是完美的。[14]
+> - 完美信息是指了解对方在之前的博弈中都采取过哪些策略（即行为历史），但并不能确定在这一次博弈中到底会采取哪一种策略，只能综合对手之前所有采取过的策略来估测这一次博弈中采取某种策略的概率。（本身就包含了序贯的概念），但不保证你知道其他博弈者的支付矩阵和博弈的结构及其步骤。总结起来就是了解所有历史。
+> - 完全信息是指双方都熟知对手在这一次博弈中将会采取什么策略，即能够根据一个State推出对手将采取的各种action（space[21]）及其概率[20]。总结起来就是了解所有当下。；而完美信息推测不出对手将采取的各种action。（info set里只有一个node）
+> - 因此，完全信息不一定是完美的，不完全信息**也不一定**是完美的。
+> - 非完美但完全信息的例子很普遍，如：囚徒困境。不完全但完美的信息博弈，如：扑克。
 
 > - 在不完全信息博弈中，首先行动的是自然（Nature）。
 > - 确定的博弈指的是不存在由自然做出这种行动的博弈，
@@ -81,21 +83,25 @@ PAPI（by Eric Rasmusen）：
 
 与上述四种博弈相对应的均衡概念为：纳什均衡、子博弈精炼纳什均衡（subgame perfect Nash equilibrium）、贝叶斯纳什均衡、精炼贝叶斯纳什均衡（perfect Bayesian Nash equilibrium）。
 
+- 纳什均衡：纳什均衡被定义为所有参与者的联合策略（策略组合），其中没有一个参与者从该组合的偏离中受益。[22]
+- 子博弈精炼纳什均衡（subgame perfect Nash equilibrium）
+- 贝叶斯纳什均衡
+- 精炼贝叶斯纳什均衡（perfect Bayesian Nash equilibrium）
+
 ![博弈的四种情况](../../img/game_table.jpg)
 
 ### 从博弈者之间是否有合作关系看
 
-#### 绝对不合作
+#### 绝对不合作/严格竞争
 
-- 零和博弈（Zero-sum Game）：，最常见的“损人利己”情况，自己的收益等于对手的损失，加和为零。
-- 例如：猜硬币、剪刀·石头·布[13]
+- 常和博弈（Constant-Sum Game）：博弈各方的收益和总为一个常数c。
+- 零和博弈（Zero-sum Game）：是最常见的“损人利己”情况，自己的收益等于对手的损失，即c为零。
+  - 例如：猜硬币、剪刀石头布[13]
 - 重要象征意义：胜利者的光荣后往往隐藏着失败者的辛酸和苦涩。一方物质财富的增加意味着对其他的掠夺。[17]
 
 #### 合作不确定
 
-- 非零和博弈（Non-Zero-Sum Game）：非零和博弈指的是博弈各方的收益和不为零。
-  - 常和博弈（Constant-Sum Game）：博弈各方的收益和总为一个常数。分为：负和、正和。
-  - 变和博弈（Variable-Sum Game）：博弈各方的收益之和不总是一个常数。[14]
+- 变和博弈（Variable-Sum Game）：博弈各方的收益之和不总是一个常数。[14]
 
 ##### 正和博弈/合作博弈
 
@@ -127,11 +133,11 @@ TODO: 差分博弈 Differential games：
 
 ### 博弈解决方案的推理（Game Solution Reasoning）
 
-最佳对策 Best Response (BR)：在其他agent的动作都确定下来后，当前agent都在动作空间中，选出的最有利于自己的动作。
+- 最佳对策 Best Response (BR)：在其他agent的动作都确定下来后，当前agent都在动作空间中，选出的最有利于自己的动作。
   - Given $a_{-i} \in A_1 \times \cdots \times A_{i-1} \times A_{i+1} \times \cdots \times A_n$
   - $a_i$ is best response to $a_{-i} \Leftrightarrow u_i\left(a_i, a_{-i}\right) \geq u_i\left(a_i^{\prime}, a_{-i}\right), \forall a_i{ }^{\prime} \in A_i$
 
-占优策略 Dominant Strategy (DS)：无论其他agent采取什么动作，当前agent的动作 a_{i} 都是best response，当然DS可能存在有可能不存在。
+- 占优策略 Dominant Strategy (DS)：无论其他agent采取什么动作，当前agent的动作 a_{i} 都是best response，当然DS可能存在有可能不存在。
   - $a_i$ is dominant strategy Given any $a_{-i}$,$a_i$ is best response
 
 #### 单次发生的囚徒困境
@@ -151,7 +157,13 @@ TODO: 差分博弈 Differential games：
 
 #### 纳什均衡
 
-- 唯一均衡是不合作（即坦白）
+- 给定别人的策略，自己的策略是最优。
+- 在上面的囚徒困境中，有单一的纳什均衡—两人都不合作即出卖同伙。
+- 通常一个博弈并不一定有一个纳什均衡。有时会不存在纳什均衡，而有时则又有好几个（即几组稳定且自我强化的策略）。
+
+> 纳什均衡与占优策略均衡的区别：[23]
+> 占优策略均衡是纳什均衡的一个特例，每个博弈方可以不用考虑别人的策略，就可以达到自己的最优（不论对方选什么策略） 。
+> 占优策略均衡一定是纳什均衡，纳什均衡不一定是占优策略均衡
 
 #### 多次重复的囚徒困境
 
@@ -281,3 +293,7 @@ DeepStack for Texas Hold’em poker
 [17]: https://baike.baidu.com/item/%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88/3562463
 [18]: https://baike.baidu.com/item/%E5%90%88%E4%BD%9C%E5%8D%9A%E5%BC%88/554635
 [19]: https://swarma.org/?p=23962
+[20]: https://www.zhihu.com/question/57529962/answer/153365291
+[21]: https://www.zhihu.com/question/57529962/answer/153400564
+[22]: https://www.zhihu.com/question/30163532/answer/2356671861
+[23]: https://zhuanlan.zhihu.com/p/496461249

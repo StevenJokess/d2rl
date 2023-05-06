@@ -5,18 +5,21 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-20 00:47:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 11:54:01
+ * @LastEditTime: 2023-04-28 21:40:42
  * @Description:
- * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
+
 # 异策略（off-policy）&同策略（on-policy）
 
-## 定义
+为解决MC保证有充分的探索，一个简单的方法就是使用exploring starts，让每个episode从不同的状态开始，从而使得所有状态都能探索到。当然这个假设有时候不切实际，因此我们引入离策略机制。让行为策略是一个随机策略以保证探索，而待优化的目标策略是确定性策略。
 
-- **异策略**（off-policy）：在执行【策略评估】和【策略提升】的时候，使用的不是相同的策略。off表示在策略评估时，我们使用的策略（我们叫做behavior policy）【偏离】了我们的目标策略（target policy）。
-- **同策略**（on-policy）：在执行【策略评估】和【策略提升】的时候，使用的是相同的策略。
+> - 同策略（On-policy：在蒙特卡罗方法中，如果采样策略是 $π^ϵ(s)$ ，不断改进策略也是 $π^ϵ(s)$而不是目标策略 $π^ϵ(s)$。这种采样与改进策略相同（即都是 $π^ϵ(s)$）的强化学习方法叫做同策略（on policy）方法。
+> - 异策略（Off-policy）：如果采样策略是 $π^ϵ(s)$，而优化目标是策略π，可以通过重要性采样，引入重要性权重来实现对目标策略π 的优化。这种采样与改进分别使用不同策略的强化学习方法叫做异策略（off policy）方法。
+
+为了弥补由于离策略引入的偏差，介绍重要性采样技术。
 
 ## 重要性采样（Importance Sampling）
 

@@ -3,17 +3,16 @@
 <!--
  * @version:
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-04-26 01:23:45
+ * @Date: 2023-04-27 00:32:07
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-26 01:35:24
+ * @LastEditTime: 2023-05-06 18:57:28
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# RRL
+# Bayesian reinforcement learning
 
-https://zhuanlan.zhihu.com/p/59652737
+Week 15. Bayesian reinforcement learning and regret bounds
 
-论文阅读 - Reinforcement Learning for Trading - Cerulean的文章 - 知乎
-https://zhuanlan.zhihu.com/p/36632686
+[1]: http://coregroup.snu.ac.kr/teaching/

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-23 22:54:11
+ * @LastEditTime: 2023-04-26 22:42:31
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -29,7 +29,7 @@
 
 下面讨论两人参与的井字棋（Tic-Tac-Toe）[5]，井字棋是一种在3 * 3格子上进行的连珠游戏，和五子棋类似，分别代表O和X的两个游戏者轮流在格子里留下标记（一般来说先手者为X），任意三个标记形成一条直线，则为获胜。[6]
 
-可见：它是完美信息、确定性、零和博弈、每个代理交替行动的游戏。[23]（可见：[AI中的游戏类型](../chapter_appendix-applications-for-deep-reinforcement-learning/game.md)
+可见：它是完美信息、确定性、零和博弈、每个代理交替行动的游戏。[23]（可见：[AI中的游戏类型](../chapter_appendix-applications-for-deep-reinforcement-learning/game.md)和[博弈的分类](game_theory0.md)）
 
 玩家分别是MAX 和 MIN，马上就会讨论玩家这样命名的原因。
 
@@ -56,8 +56,8 @@ MAX 先行，两人轮流出招，直到游戏结束。游戏结束时给优胜�
 
 而在中间过程，为了计算机处理，也有那么一个值（对应强化学习里的状态的价值[14]），来先去估计局面对先行方的有利程度并并将其量化，那么在理性的情况下，
 
-- 各方总是选择对自己最有利的节点作为自己的走步，
-- 对自己最有利总是对对方最不利，是相互对抗的。
+- 各方总是选择对自己最有利的节点作为自己的走步，即都执行最优策略。
+- 因为是相互对抗的，对自己最有利总是对对方最不利，即对手是最坏的。[7]
 **具体来说**：
   - 先行方总是选择具有极大值的节点作为自己的走步，故可叫MAX。
   - 后行方总是选择具有极小值的节点作为自己的走步，故可叫MIN。
@@ -95,8 +95,6 @@ MAX、MIN交替走步过程的图示如下，
 ![Minimax 树搜索的状态](../../img/minimax_tree_state.png)
 
 如果树的层数比较浅，我们可以**穷举**计算每个节点输赢的概率，那么可以使用一种最简单的策略，叫做Minimax算法。
-
-
 
 ### Minimax算法
 
@@ -378,7 +376,7 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 [4]: https://jwc.gdufe.edu.cn/_upload/article/files/68/96/872c060340f68ed6f57bd9450b2f/c651f566-3867-4bae-a585-68fe17cec17b.pdf
 [5]: https://zh.wikipedia.org/zh-sg/%E4%BA%95%E5%AD%97%E6%A3%8B
 [6]: https://www.cnblogs.com/royalflush/p/12460242.html
-TODO:Del [7]: https://www.youtube.com/watch?v=J8fjBHJeifQ
+[7]: https://www.zhihu.com/question/30163532/answer/2356671861
 [8]: https://www.bilibili.com/video/BV1464y127i7/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
 [9]: https://zh.wikipedia.org/wiki/%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1
 [10]: https://www.bilibili.com/read/cv15543561?spm_id_from=333.999.0.0
