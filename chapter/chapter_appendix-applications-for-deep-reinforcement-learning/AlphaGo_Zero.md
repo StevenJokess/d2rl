@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 00:05:23
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-13 02:53:13
+ * @LastEditTime: 2023-05-14 01:01:36
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -57,21 +57,28 @@ $L=(z-v)^2-\pi^T \log (p)+c\|\theta\|^2$
 
 由于围棋是19x19的361个点组成的棋局，每个点的状态有二种：
 
-- 如果当前是黑方行棋，则当前有黑棋的点取值1，有白棋或者没有棋子的位置取值为0，
-- 反过来，如果当前是白方行棋，则当前有白棋的点取值1，有黑棋或者没有棋子的位置取值为0。
+- 如果当前是黑方行棋，则当前有黑棋的点取值1，有白棋或者没有棋子的位置取值为0，（即记录黑棋位置）
+- 反过来，如果当前是白方行棋，则当前有白棋的点取值1，有黑棋或者没有棋子的位置取值为0。（即记录白棋位置）
 
 同时，为了提供更多的信息，输入的棋局状态不光只有当前的棋局状态，包括了黑棋白棋各自前8步对应的棋局状态。
+
 除了这16个棋局状态，还有一个单独的棋局状态用于标识当前行棋方，如果是当前黑棋行棋，则棋局状态上标全1，白棋则棋局状态上标全0。如下图所示：
 
 ![神经网络输入：状态](../../img/AlphaGo_Zero_state.png)
 
-最终神经网络的输入是一个19x19x17的张量。里面包含黑棋和白棋的最近8步行棋状态和当前行棋方的信息。
+所以总共有17（=16+1）个通道作为输入。[10]最终神经网络的输入是一个19x19x17的张量。里面包含黑棋和白棋的最近8步行棋状态和当前行棋方的信息。
 
-接着我们看看神经网络的输出，神经网络的输出包括策略部分和价值部分。对于策略部分，它预测当前各个行棋点落子的概率。由于围棋有361个落子点，加上还可以Pass一手，因此一共有362个策略端概率输出。对于价值端，输出就简单了，就是当前局面胜负的评估值，在[-1,1]之间。
+接着我们看看神经网络的输出，神经网络的输出包括策略部分和价值部分。对于策略部分，它预测当前各个行棋点落子的概率。由于围棋有361个落子点，加上还可以Pass一手（放弃行为），因此一共有362（=19*19+1）个策略端概率输出。对于价值端，输出就简单了，就是当前局面胜负的评估值，在[-1,1]之间。
 
 看完了神经网络的输入和输出，我们再看看神经网络的结构，主要是用CNN组成的深度残差网络。如下图所示：
 
-![AlphaGo Zero的神经网络结构](../,,/img/AlphaGo_Zero_NN.png)
+![AlphaGo Zero的神经网络结构](../../img/AlphaGo_Zero_NN.png)
+
+注：
+
+1. 每个批量完成之后，对卷积层的输出做一次均值为0、方差为1的归一化，防止数据漂移。
+2. “19个残差模块（20版本）或39个残差模块（40版本）”。
+3. 具体策略网络和估值网络： ![具体策略网络和估值网络](../../img/AlphaGo_Zero(Policy_Value_nets).png)
 
 在19x19x17的张量做了一个基本的卷积后，使用了19层或者39层的深度残差网络，这个是ResNet的经典结构。理论上这里也可以使用DenseNet等其他流行的网络结构。神经网络的损失函数部分我们在第二节已经将了。整个神经网络就是为了当MCTS遇到没有见过的局面时，提供的当前状态下的局面评估和落子概率参考。这部分信息会被MCTS后续综合利用。
 
@@ -87,26 +94,27 @@ $L=(z-v)^2-\pi^T \log (p)+c\|\theta\|^2$
 
 - $N(s, a)$ :记录边的访问次数
 - $W(s, a)$ ：合计行动价值
-- $Q(s, a):$ 平均行动价值
+- $Q(s, a):$ 平均行动价值，$Q\left(s,a\right)=\frac{\sum_{i=1}^n v_i\left(s,a\right)}{n}$，其中: $(s,a)$ 为 $\mathrm{s}$ 棋局下在 $a$ 处落子的动作的情况。
 - $P(s, a)$ : 选择该条边的先验概率
 其中 $s$ 为当前棋局状态， $a$ 为某一落子选择对应的树分支。
 
 有了MCTS上的数据结构，我们看看AlphaGo Zero的MCTS搜索的4个阶段流程：
 
-### 首先是选择
+### 首先是选择过程
 
 在MCTS内部，出现过的局面，我们会使用UCT选择子分支。子分支的UCT原理和上一节一样。但是具体的公式稍有不同，如下：
 
-$$
-\begin{gathered}
-U(s, a)=c_{p u c t} P(s, a) \frac{\sqrt{\sum_b N(s, b)}}{1+N(s, a)} \\
-a_t=\underset{a}{\arg \max }\left(Q\left(s_t, a\right)+U\left(s_t, a\right)\right)
-\end{gathered}
-$$
+探索项：$U(s, a)=c_{p u c t} P(s, a) \frac{\sqrt{\sum_b N(s, b)}}{1+N(s, a)}$
 
-最终我们会选择Q+U最大的子分支作为搜索分支，一直走到棋局结束，或者走到了没有到终局MCTS的叶子节点。$c_puct$ 是决定探索程度的一个系数，上一篇已讲过。
+其中：$N()$为模拟次数、$P(s,a)$为策略网络在a出下棋的概率、c为加权系数。
 
-如果到了没有到终局的MCTS叶子节点，那么我们就需要进入MCTS的第二步，扩展阶段,以及后续的第三步仿真阶段。我们这里一起讲。对于叶子节点 状态 $s$ ，会利用神经网络对叶子节点做预测，得到当前叶子节点的各个可能的子节点位置 $s_L$ 落子的概率 $p$ 和对应的价值 $v$, 对于这些可能的新节点我们在MCTS中创 建出来，初始化其分支上保存的信息为：
+$a_t=\underset{a}{\arg \max }\left(Q\left(s_t, a\right)+U\left(s_t, a\right)\right)$
+
+我们会优先选择Q+U最大的子分支（而非信心上限$I_j$）作为搜索分支，一直走到棋局结束，或者走到了没有到终局MCTS的叶子节点$s_l$，该节点被选中。$c_{puct}$ 是决定探索程度的一个系数，上一篇已讲过。
+
+### 第二步，扩展阶段
+
+如果到了没有到终局的MCTS叶子节点，那么我们就需要进入MCTS的第二步，扩展阶段，以及后续的第三步仿真阶段。我们这里一起讲。对于叶子节点 状态 $s$ ，会利用神经网络对叶子节点做预测，得到当前叶子节点的各个可能的子节点位置 $s_L$ 落子的概率 $p$ 和对应的价值 $v$, 对于这些可能的新节点我们在MCTS中创 建出来，初始化其分支上保存的信息为：
 
 $$
 \left\{N\left(s_L, a\right)=0, W\left(s_L, a\right)=0, Q\left(s_L, a\right)=0, P\left(s_L, a\right)=P_a\right\}
@@ -114,7 +122,18 @@ $$
 
 这个过程如下图所示：
 
-![MCTS的第二步，扩展阶段,以及后续的第三步仿真阶段](../../img/AlphaGoZero_MCTS_2and3step.png)
+![MCTS的第二步，扩展阶段，以及后续的第三步仿真阶段](../../img/AlphaGoZero_MCTS_2and3step.png)
+
+### 第三步，模拟过程（仿真）
+
+- 在MCTT舍弃了模拟过程，
+- 而用估值网络输出取代模拟过程：$v_i(s_l) = value(s_l)$
+- 规定了总的模拟次数
+
+### 第四步，回传过程
+
+![回传过程](../../img/AlphaGoZero_backup.png)
+
 
 ---
 
@@ -128,7 +147,8 @@ Q\left(s_t, a_t\right) & =\frac{W\left(s_t, a_t\right)}{N\left(s_t, a_t\right)}
 \end{aligned}
 $$
 
-这个MCTS搜索过程在一次真正行棋前，一般会进行约1600次搜索，每次搜索都会进行上述4个阶段。I
+这个MCTS搜索过程在一次真正行棋前，一般会进行约1600次搜索，每次搜索都会进行上述4个阶段。
+
 这上干次MCTS搜索完毕后，AlphaGo Zero就可以在MCTS的根节点 $s$ 基于以下公式选择行棋的MCTS分支了:
 
 $$
@@ -138,6 +158,8 @@ $$
 其中， $\tau$ 为温度参数，控制探索的程度， $\tau$ 越大，不同走法间差异变小，探索比例增大，反之，则更多选择当前最优操作。每一次完整的自我对恋的前 30 步，参数 $\tau=1$ ，这是早期鼓励探索的设置。游戏剩下的步数，该参数将逐渐降低至 0 。如果是比赛，则直接为 0 .
 
 ---
+
+
 
 .. then select a move
 
@@ -161,6 +183,22 @@ where $\tau$ is a temperature parameter, controlling exploration
 
 以上就是AlphaGo Zero MCTS搜索的过程。
 
+### 引入多样性
+
+- 防止走向错误的方向, 人为引入噪声 a 对策略网络的输出增加噪声
+- 狄利克雷分布
+  - 通过参数可以产生一些符合一定条件的概率分布 a 控制参数:
+  - $\mathrm{n}:$ 概率分布向量的长度
+  - $\alpha:$ 分布浓度
+  - 当 $\alpha$ 比较小时, 产生的概率分布多数为 0 , 少数比较大
+- 落子概率: $\lambda p_a+(1-\lambda) p_d$
+  - $p_a$ ：策略网络输出
+  - $p_d$ : 狄利克雷分布采样
+
+### 探索的合理性
+
+引入噪声会引起还良反应”吗？不会，MCTS的纠错能力。
+
 ---
 
 $$
@@ -181,13 +219,27 @@ $$
 \boldsymbol{w}_{\text {new }} \leftarrow \boldsymbol{w}_{\text {now }}-\alpha \cdot \frac{1}{n} \sum_{t=1}^n\left(\widehat{v}_t-u_t\right) \cdot \nabla_{\boldsymbol{w}} v\left(s_t ; \boldsymbol{w}_{\text {now }}\right) .
 $$
 
-训练流程：随机初始化策略网络参数 $\theta$ 和价值网络参数 $w$ 。然后让 MCTS 自我溥 恋, 玩很多局游戏; 每完成一局游戏, 更新一次 $\theta$ 和 $w$ 。训练的具体流程就是重复下面 三个步骤直到收敛：
+![AlphaGo Zero中的深度强化学习](../../img/AlphaGo_Zero_VS_AlphaGo.png)
+
+训练流程：随机初始化策略网络参数 $\theta$ 和价值网络参数 $w$ 。然后让 MCTS 自我溥 恋, 玩很多局游戏; 每完成一局游戏, 更新一次 $\theta$ 和 $w$ 。训练的具体流程就是重复下面三个步骤直到收敛：
 
 1. 让 MCTS 自我博弈, 完成一局游戏, 收集到 $n$ 个三元组: $\left(s_1, \boldsymbol{p}_1, u_1\right), \cdots,\left(s_n, \boldsymbol{p}_n, u_n\right)$ 。
 2. 按照公式 (18.2) 做一次梯度下降, 更新策略网络参数 $\boldsymbol{\theta}$ 。
 3. 按照公式 (18.3) 做一次梯度下降, 更新价值网络参数 $w$ 。
 
-https://en.wikipedia.org/wiki/Self-play_(reinforcement_learning_technique
+其中[10]：
+
+- 估值网络的损失函数: $L_1=(z-v)^2$； 其中: 获胜时 $z$ 为 1 , 失败时为 $-1, v$ 为估值网络的输出。
+- 策略网络的损失函数: $L_2=-\pi_1 \log \left(p_1\right)-\pi_2 \log \left(p_2\right)-\cdots-\pi_{162} \log \left(p_{162}\right)$；其中: $\pi_i$ 为MCTS给出的每个落子点的概率 (含放弃) $p_2$ 为策略网络输出的每个落子点的概率 (含放弃)
+- 总损失函数: $L=L_1+L_2+\|\theta\|_2^2$
+- 如何获得$\pi_i$：
+  - 选中次数转化为概率，选中a,b,c的次数分别为7,20,13
+  - π(a)=7/(7+20+13)=0.175
+  - π(b)=20/(7+20+13)=0.513
+  - π(c)=13/(7+20+13)=0.325
+  - 对选择次数进行优化
+
+![AlphaGo_Zero 的强化学习过程](../../img/AlphaGo_Zero_training_process.png)
 
 ## 训练时长与成绩
 
@@ -196,6 +248,7 @@ DeepMind 团队在超过 490 万次的向我对局上训练 Alph Go Zero 花了�
 DeepMind 团队还比较了用 16 万盘对局里的包含接近 3000 万个局面位置的数据集有监督地训练和 AlphaGo Zero 网络相同的独立的神经网络他们发现开始有监督方法训练出来的策略性能确实要比 AlphaGo Zero 的好。但一天后，就被逐渐超过。该现象说明 AlphaGo Zero找到了不同于人类棋手下棋的策略，确实发现了新的定式。
 
 AlphaGo Zero 算法的最后测试版本使用了更大的人工神经网络以及超过 2900 个自我对局的数据来训练，权重初始化仍然是随机的，训练共花费了大约 40天。AlphaGo Zero与AlphaGo Master比赛100场成绩是 89:11。
+
 
 ## 总结
 
@@ -221,5 +274,8 @@ PUCT则是对UCT的改进，主要用于棋类游戏中。PUCT通过考虑位置
 [7]: https://cloud.tencent.com/developer/article/1408923?areaSource=&traceId=
 [8]: http://incompleteideas.net/book/RLbook2020.pdf
 [9]: https://www.nature.com/articles/nature24270
+[10]: https://www.bilibili.com/video/BV1S5411U7q2/
+
 
 TODO:https://zhiqingxiao.github.io/rl-book/en2022/code/TicTacToe-v0_AlphaZero_torch.html
+https://en.wikipedia.org/wiki/Self-play_(reinforcement_learning_technique)

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-25 23:09:03
+ * @LastEditTime: 2023-05-13 22:54:32
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -297,6 +297,23 @@ class MCTS(object):
         return "MCTS"
 ```
 
+### 蒙特卡洛树搜索的优缺点与误解：
+
+优点：
+
+1. 可以达到业余4、5段的水平，将计算机围棋引向了正确的发展方向。
+1. 蒙特卡洛树搜索可以应用于没有任何经验可以用来定义评价函数的全新博弈。只要我们知道博弈规则，蒙特卡罗搜索不需要任何附加信息。选择和模拟策略可以充分利用人工制定的专家知识，也可以通过仅仅使用自我对弈训练得到的神经网络来学习好的策略。
+
+
+缺点：
+
+1. 当单步移动可以改变游戏进程时，蒙特卡罗搜索存在缺陷，因为蒙特卡罗搜索的随机性意味着它可能不会考虑这一移动。换句话说，蒙特卡罗搜索中的B型剪枝意味着它可能根本没有探索关键路线。
+1. 当博弈状态“明显”是一方或另一方获胜时（根据人类的知识和评价函数），蒙特卡罗搜索也存在缺陷，它仍然需要模拟很多步来验证获胜者。
+
+误解：
+
+1. 长期以来，人们一直认为，在国际象棋等具有较低分支因子和较好评价函数的游戏中，Alpha-Beta 搜索更好。但最近，蒙特卡罗方法在国际象棋及其他游戏中也取得了成功。[9]
+
 ## 结合UCB的蒙特卡罗树搜索——UCT
 
 蒙特卡罗树搜索真正强大起来，还需要结合UCB的算法。
@@ -374,23 +391,24 @@ $$
 1. 回到1，除非时间结束或者达到预设循环次数
 1. 从根节点的子节点中挑选平均收益最高的，作为最佳点
 
-### 代码
+### 伪代码[11]
+
+function UctSearch $(s_0)$
+- 状态 $s_0$ 创建根节点 $v_0$ ;
+  - while 尚末用完计算时长 do:
+    - $v_1=\operatorname{TreePolicy}(v_0)$ ;
+    - $\triangle =  DefaultPolicy \left(\mathrm{s}\left(\mathrm{v}_1\right)\right) ;$
+    - $\operatorname{Backup}\left(\mathrm{v}_1, \triangle\right)$;
+  - end while
+- return $a(BestChild (v_0, 0) )$;
+
+
+### Python代码
 
 TODO:
 
 
-### 优缺点与误解：
 
-优点：蒙特卡罗搜索可以应用于没有任何经验可以用来定义评价函数的全新博弈。只要我们知道博弈规则，蒙特卡罗搜索不需要任何附加信息。选择和模拟策略可以充分利用人工制定的专家知识，也可以通过仅仅使用自我对弈训练得到的神经网络来学习好的策略。
-
-缺点：
-
-1. 当单步移动可以改变游戏进程时，蒙特卡罗搜索存在缺陷，因为蒙特卡罗搜索的随机性意味着它可能不会考虑这一移动。换句话说，蒙特卡罗搜索中的B型剪枝意味着它可能根本没有探索关键路线。
-1. 当博弈状态“明显”是一方或另一方获胜时（根据人类的知识和评价函数），蒙特卡罗搜索也存在缺陷，它仍然需要模拟很多步来验证获胜者。
-
-误解：
-
-1. 长期以来，人们一直认为，在国际象棋等具有较低分支因子和较好评价函数的游戏中，Alpha-Beta 搜索更好。但最近，蒙特卡罗方法在国际象棋及其他游戏中也取得了成功。[9]
 
 
 
@@ -509,6 +527,7 @@ print("Best action:", best_action)
 [8]: https://www.bilibili.com/video/BV1hV4y1Q7TR/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 [9]: https://weread.qq.com/web/reader/fc332020813ab7942g0102adk70e32fb021170efdf2eca12
 [10]: https://blog.csdn.net/oyd/article/details/3300852
+[11]: https://www.bilibili.com/video/BV1WY411n7Zf/?spm_id_from=333.880.my_history.page.click&vd_source=bca0a3605754a98491958094024e5fe3
 
 
 ## 更多参考
