@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-13 22:54:32
+ * @LastEditTime: 2023-05-14 01:29:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -53,7 +53,9 @@
 
 ### 1. 首先蒙特卡罗树搜索是一种基于树的搜索方法
 
-**树结构**：树结构定义了一个可行解的解空间，每一个叶子节点到根节点的路径都对应了一个解（solution），解空间的大小为$2^N$（N等于决策次数，即树深度）
+> **树结构**：树结构定义了一个可行解的解空间，每一个叶子节点到根节点的路径都对应了一个解（solution），解空间的大小为$2^N$（N等于决策次数，即树深度）
+
+更具体地说这是棵决策树。
 
 基于树的搜索算法历史悠长，可以追溯到计算机的诞生，并且基于树的搜索算法得到了广泛的应用，可以说当今文明的背后都是一个个基于树的搜索算法在起作用。比如最早的击败顶级人类国际象棋选手的“深蓝”用的是基于树的搜索算法；在机器人学中最常用的路径规划算法 $A^*$ 算法，也是基于树的搜索算法。
 
@@ -417,9 +419,13 @@ TODO:
 
 蒙特卡罗树搜索算法一经提出，便在很多领域得到广泛应用。当然，围棋从2006年的UCT算法到2017年的[AlphaGo Zero](..\chapter_appendix-applications-for-deep-reinforcement-learning\AlphaGo_Zero.md)，又经过十多年无数科学家的研究。这个技术如何演化的也是一个很有意思的课题，如果大家感兴趣可以找相关的论文来看。
 
-### 在AlphaGo上的应用
 
-#### DNN+MCTS
+
+###
+
+蒙特卡洛树搜索（MCTS）在 AlphaGo 之前已被用于围棋软件。根据雷锋网报道，在 AlphaGo 之前，MCTS 已被用于围棋对弈商业软件 Crazy Stone 和 Zen，还有最大的开源软件 Pachi 和 Fuego，并取得了较好的成绩。
+
+#### 在AlphaGo上的应用：DNN+MCTS
 
 - 一、Selection
 - 二、Simulation：Tree Policy（UCT）：
@@ -427,12 +433,14 @@ TODO:
 - $\text { Backup } \mathrm{Q}(\mathrm{s}, \mathrm{a}): \mathrm{Q}(\mathrm{s}, \mathrm{a}) =\mathrm{W}(\mathrm{s}, \mathrm{a})$
 - $\text { Backup } W(\mathrm{s}, \mathrm{a}): \mathrm{W}(\mathrm{s}, \mathrm{a})=\sum V\left(S_{\text {leaf}}\right) $
 - $\text { Backup } V\left(S_{\text {leaf }}\right): 1 \text { if win; }-1 \text { if loses }$
+-
 阿尔法围棋使用了PUCT(Predictor＋UCT)方法。PUCT在UCT方法上进行了微调。其公式推导如以下论文所示：C D Rosin. Mult-iarmed Bandits with Episode Context. Annals of Mathematics and Artificial Intelligence，March 2011，Volume 61，Issue 3，203-230.
 
 ### PUCT
 
 PUCT利用了围棋中信息的完备性，PUCT算法假设在每个节点的子节点中，所有可能的动作都已经被完全知晓，并可以进行准确的值估计。因此，PUCT算法在节点扩展时会根据子节点的**准确值**进行选择，而不是随机模拟。
 
+TODO:
 ### PUCT 代码
 
 ```py
