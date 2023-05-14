@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-29 20:42:36
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-14 01:02:43
+ * @LastEditTime: 2023-05-14 02:23:57
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -14,6 +14,11 @@
 # 围棋
 
 围棋是一项历史悠久的棋类项目。围棋棋盘是19×19的网格，纵横各19路直线，形成361个交叉点。围棋棋子分为黑白两种，白子180颗，黑子181颗，共361颗棋子。
+
+## 特点
+
+规则明确且条目数较少、目标明确（结果最多只有赢、
+输、平）、对阵方有限(几个，通常 2 个）、局面变化**多**、没有随机因素（不像扑克牌有发牌的随机因素）
 
 ## 规则
 
@@ -51,7 +56,6 @@
 2017年，腾讯公司的计算机围棋程序绝艺（Fineart）击败DeepZenGo，获得了第10届UEC杯冠军。
 
 关于计算机科学家征服计算机围棋的计划，参见以下文献：Sylvain Gelly，Levente Kocsis，Marc Schoenauer，et al.The Grand Challenge of Computer Go：Monte-Carlo Tree Search and Extensions.Communications of the ACM，Vol.55，no.3(2012)：106-113.
-
 
 ## 强化学习元素
 
@@ -99,16 +103,23 @@ Exploration vs. Exploitation
 
 例子：AlphaGo带来新定式、骚操作，尖顶。
 
-## 复杂性
+## 穷举不可行
+
+### 复杂性
 
 - 状态空间复杂度（State-space Complexity）：$3^361 ≈ 10^172$；对比，Tic-Tac-Toe：$10^4$，Chess：$10^43$
 - 游戏-树尺寸（Game-tree Size）：$361! ≈ 10^768$
 - 排除规则中不可能的，游戏-树复杂度（Game-tree Size）Complexity）：$250^150 ≈ 10^360$；对比，Tic-Tac-Toe：$10^5$，Chess：$10^123$，用质子去填满全宇宙，需要：$10^122$个
 
+### 与计算性能对比
+
+第二代谷歌 TPU 计算能力是的 45 TFLOPS（每秒 45*10^12 浮点数运算），与围棋的可能性数量级相差甚远。[12]
+
 ## 下棋
 
 - 作弊：悔棋，
 - 计划：在头脑里预演，来提前放弃不好的动作。
+
 
 ## 为什么α-β剪枝方法在围棋上失效？
 
@@ -168,3 +179,4 @@ $L(w)=-t_a \log \left(p_a\right)$ 其中，s为当前棋局为，a是在自我�
 [9]: https://www.bilibili.com/read/cv16184765
 [10]: https://www.bilibili.com/read/cv16184436
 [11]: https://www.bilibili.com/video/BV1eL4y1L7Mx/
+[12]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2017/10/20/bff2daa6-042b-41f8-837c-4b8575431726.pdf

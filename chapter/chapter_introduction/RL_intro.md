@@ -39,6 +39,7 @@
 
 |      | 监督学习  | 非监督学习  | 强化学习 |
 | ---- | ---------------- | ------------- | ------ |
+| 朴素定义 |老师教一部分例子，学生通过例子归纳出原理，再通过原理解决之前没有遇到的问题 | 没有老师，学生通过自学摸索出原理，再通过原理解决问题 | 老师在学生做出某个动作之后，只反馈结果怎样，而不是去教学生该如何去做[47] |
 | 数据 | 一次性给定的supervisor提供正确且严格的标签  | 没有标签  | 没有标签、supervisor，属于semi supervised learning。在智能体与环境交互的过程中得到评价反馈 或 指导性反馈，这些反馈是时间序列数据（sequential data）。如果智能体不采取某个决策动作，那么该动作对应的数据就永远无法被观测到，所以当前智能体的训练数据来自之前智能体的决策结果。
 | 输入要求 | 独立同分布(i.i.d.), 为了消除数据之间的相关性。    | 独立同分布(i.i.d.)   | 归一化的占用度量（occupancy measure）用于衡量在一个智能体决策与一个动态环境的交互过程中，采样到一个具体的状态动作对（state-action pair）的概率分布。|
 | 动作 | exploration | exploration | Trial-and-error，即存在exploration和exploitation的平衡 (不一定按照已知的最优做法去做)|
@@ -544,6 +545,8 @@ $$
 [44]: https://zhuanlan.zhihu.com/p/109217883
 [45]: https://zhuanlan.zhihu.com/p/109755443
 [46]: https://picture.iczhiku.com/weixin/message1600948045742.html
+[47]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2017/10/20/bff2daa6-042b-41f8-837c-4b8575431726.pdf
+
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 
