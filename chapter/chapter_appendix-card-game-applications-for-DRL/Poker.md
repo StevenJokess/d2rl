@@ -1,6 +1,19 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-04-28 21:20:34
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-05-14 23:44:35
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # poker
 
-## hold'em
+## hold'em（HUNL）
 
 德州扑克与围棋的区别在于德州扑克属于非完备信息博弈问题，是计算机博弈的另一分支。非完备信息机器博弈问题已被证明是一个NP 难问题[153]，一对一有限注德州扑克的状态复杂度约为3.16×10^17,包含其中的状态大多是无法确认的，有极大的随机性和不确定性，因此，德州扑克也是人工智能领域非常具有挑战性和代表性的博弈课题。图7-1 展示了德州扑克的牌局实例。
 
@@ -12,8 +25,9 @@
 - JohannesHeinrich[155]提出了一种Kuhn poker 的近似纳什均衡策略；
 - 2011 年，文献[156]中首次应用了模式匹配算法研究德州扑克游戏。
 - 2015 年，加拿大阿尔伯特大学发表了关于一对一有限注德州扑克系统的研究成果，得到了该博弈问题的理论解。该研究小组开发的系统采用了反现实悔恨值最小化（Counterfactual regret minimization,简称CFR）算法，该算法通过多次的自对弈与评估过程，通过迭代得到近似的纳什均衡。
-- 2017 年，阿尔伯特大学在Science 发表了关于一对一无限注德州扑克的DeepStack 算法研究[157]，DeepStack 是首个打败职业扑克玩
-家的计算机程序
+- 2017 年，阿尔伯特大学在Science 发表了关于一对一无限注德州扑克的DeepStack 算法研究[157]，DeepStack 是首个打败职业扑克玩家的计算机程序
+
+纸牌游戏作为典型的不完美信息游戏，长期以来一直是人工智能的挑战。DeepStack 和 Libratus 是在 HUNL 中击败职业扑克玩家的两个典型 AI 系统。
 
 ## Libratus
 

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-23 22:55:04
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-12 23:42:08
+ * @LastEditTime: 2023-05-16 02:28:48
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -19,6 +19,10 @@
 
 对“小型”经济体而言更像是一场博弈（game）：一个参与者的行为可以显著影响另一个参与者的效用（积极或消极的）。
 
+## 博弈论
+
+博弈论又被称为对策论（Game Theory），它是现代数学的一个新分支，也被应用到经济学下的运筹学（operations research）[25]。博弈论是研究决策主体的行为在相互影响时的最优决策以及相应的均衡结果。[4]博弈论分为合作博弈与非合作博弈。更多内容见课程教学大纲[4]
+
 ## 博弈
 
 博弈一一是指在一定的游戏规则约束下，基于直接相互作用的环境条件，各参与人依据所掌握的信息，选择各自的策略（行动）以实现利益最大化的过程。[7]
@@ -26,6 +30,7 @@
 例如：剪刀石头布、囚徒困境、寡头垄断（产量决策根据对竞争对手的预期）、
 
 博弈的常见特征：有规则、有结果、策略很重要、策略有相互依赖性（决策结果不仅取决于他们的选择还取决于互动的其他个体的选择）。
+
 
 ### 基本元素
 
@@ -331,3 +336,5 @@ DeepStack for Texas Hold’em poker
 [25]: https://zhuanlan.zhihu.com/p/465332477
 [26]: http://www.guob.org/course/comss32.pdf
 [27]: https://zhuanlan.zhihu.com/p/396395706
+[28]: https://zhuanlan.zhihu.com/p/58472297
+[29]: https://jwc.gdufe.edu.cn/_upload/article/files/68/96/872c060340f68ed6f57bd9450b2f/c651f566-3867-4bae-a585-68fe17cec17b.pdf

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-12 02:40:36
+ * @LastEditTime: 2023-05-16 02:15:15
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -234,7 +234,7 @@ SARSA可算是Q-learning的*改进* (这句话出自「神经网络与深度学�
 
 ## Q-learning 算法
 
-Q-learning通常假设智能体贪婪地选择动作，即只选择 Q 值最大的动作，其他动作的选择概率为0，从而保证了Q学习的收敛性。[3]
+Q-learning通常假设智能体贪婪地选择动作，即只选择 Q 值最大的动作，其他动作的选择概率为0，从而保证了Q学习的收敛性。[3]而Q=learning里的Q指的是Quality。
 
 具体来说，Q-learning是通过计算*最优*动作值函数来求策略的一种时序差分的学习方法，其Q的更新公式为:
 

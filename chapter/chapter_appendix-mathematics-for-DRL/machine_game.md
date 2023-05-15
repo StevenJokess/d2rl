@@ -5,15 +5,16 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-26 22:42:31
+ * @LastEditTime: 2023-05-16 02:26:31
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 博弈论
 
-博弈论又被称为对策论（Game Theory），它是现代数学的一个新分支，也被应用到经济学下的运筹学（operations research）[25]。博弈论是研究决策主体的行为在相互影响时的最优决策以及相应的均衡结果。[4]博弈论分为合作博弈与非合作博弈。更多内容见课程教学大纲[4]
+# 机器博弈
+
+博弈行为是多个带有相互竞争性质的智能体，为达到各自目标和利益，采取的带有对抗性质的行为，即“两害相权取其轻，两利相权取其重”。博弈是健壮人工智能所需内在秉性。
 
 ## 本章节里的博弈论
 
@@ -29,7 +30,7 @@
 
 下面讨论两人参与的井字棋（Tic-Tac-Toe）[5]，井字棋是一种在3 * 3格子上进行的连珠游戏，和五子棋类似，分别代表O和X的两个游戏者轮流在格子里留下标记（一般来说先手者为X），任意三个标记形成一条直线，则为获胜。[6]
 
-可见：它是完美信息、确定性、零和博弈、每个代理交替行动的游戏。[23]（可见：[AI中的游戏类型](../chapter_appendix-applications-for-deep-reinforcement-learning/game.md)和[博弈的分类](game_theory0.md)）
+可见：它是完美信息、确定性、零和博弈、每个代理交替行动的游戏。[23]（可见：[AI中的游戏类型](../chapter_appendix-applications-for-deep-reinforcement-learning/game.md)和[博弈的分类](game_theory.md)）
 
 玩家分别是MAX 和 MIN，马上就会讨论玩家这样命名的原因。
 
@@ -373,7 +374,7 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 [1]: https://zh.wikipedia.org/wiki/%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E5%80%BC%E5%AE%9A%E7%90%86
 [2]: https://www.zhihu.com/question/51080557/answer/671522746
 [3]: https://zhuanlan.zhihu.com/p/520638488
-[4]: https://jwc.gdufe.edu.cn/_upload/article/files/68/96/872c060340f68ed6f57bd9450b2f/c651f566-3867-4bae-a585-68fe17cec17b.pdf
+Del [4]: https://jwc.gdufe.edu.cn/_upload/article/files/68/96/872c060340f68ed6f57bd9450b2f/c651f566-3867-4bae-a585-68fe17cec17b.pdf
 [5]: https://zh.wikipedia.org/zh-sg/%E4%BA%95%E5%AD%97%E6%A3%8B
 [6]: https://www.cnblogs.com/royalflush/p/12460242.html
 [7]: https://www.zhihu.com/question/30163532/answer/2356671861
@@ -394,7 +395,7 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 [22]: https://www.yiibai.com/artificial-intelligence-tutorial/mini-max-algorithm-in-ai.html#article-start
 [23]: https://www.yiibai.com/artificial-intelligence-tutorial/ai-adversarial-search.html
 TODO:Del [24]: https://ticket-assets.baai.ac.cn/uploads/%E3%80%8A%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%9A%E7%8E%B0%E4%BB%A3%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89%E3%80%8B%E6%A0%B7%E7%AB%A0.pdf
-[25]: https://zhuanlan.zhihu.com/p/58472297
+TODO:Del [25]: https://zhuanlan.zhihu.com/p/58472297
 TODO:Del [26]: https://zhuanlan.zhihu.com/p/427303297
 
 ## 更多参考：

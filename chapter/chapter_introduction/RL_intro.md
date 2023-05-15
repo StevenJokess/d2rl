@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-28 22:53:23
+ * @LastEditTime: 2023-05-16 02:12:27
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -333,7 +333,10 @@ $s, a$ ：可以称之为一步。智能体的行为可以描述为一系列步�
 
 其决策者选择动作的方式：
 
-- 改变策略[45]
+- 有时候会收敛到非最优策略。与环境的轨迹是固定的，过程中没有得到任何有关目标的信息
+  - 外力：缺乏推动智能主体改变策略的外在因素[48]
+  - 内因：智能主体缺乏从内部改变策略的动力
+- 改变策略[45]，使得其具有创新精神。
 - 要以试错探索（trial-and-error exploration）的方式选择动作去获取奖励的过程。
   - 利用（exploitation）：利用指采取已知的可以获得最多奖励的动作，重复执行这个动作，因为我们知道这样做可以获得一定的奖励。如果智能体过于偏向于利用已知的最优策略，那么它可能会错过更好的策略，从而无法获得更高的累计奖励。这种现象被称为“局部最优”（local optimum）。
   - 探索（exploration）：指尝试一些未知状态和未知动作，以获取更多信息或奖励的过程。这可能使我们得到更多的奖励，也有可能使我们“一无所有”。如果智能体过于偏向于探索新的动作，那么它可能会花费大量的时间和资源在次优的策略上，从而导致学习过程的效率低下。
@@ -546,7 +549,7 @@ $$
 [45]: https://zhuanlan.zhihu.com/p/109755443
 [46]: https://picture.iczhiku.com/weixin/message1600948045742.html
 [47]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2017/10/20/bff2daa6-042b-41f8-837c-4b8575431726.pdf
-
+[48]: https://www.youtube.com/watch?v=d0p6MyB86Os
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 
