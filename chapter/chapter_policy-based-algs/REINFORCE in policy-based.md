@@ -54,10 +54,10 @@ $\nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\sum_{t=0}^T\left(\sum_{t^
 
 REINFORCE 算法的具体算法流程如下：
 
-- 初始化策略参数 $\theta$
+- 随机初始化策略参数 $\theta$
   - for 序列 $e=1 \rightarrow E$ do :
-    - 用当前策略 $\pi_\theta$ 采样轨迹 $\left\{s_1, a_1, r_1, s_2, a_2, r_2, \ldots s_T, a_T, r_T\right\}$
-    - 计算当前轨迹每个时刻 $t$ 往后的回报 $\sum_{t^{\prime}=t}^T \gamma^{t^{\prime}-t} r_{t^{\prime}}$ ，记为 $\psi_t$
+    - 用当前策略 $\pi_\theta$ 采样轨迹 $\left\{s_1, a_1, r_2, s_2, a_2, r_3, \ldots s_{T-1}, a_{T-1}, r_T\right\}$
+    - 计算当前轨迹每个时刻 $t$ 往后到 $T-1$ 的回报 $\sum_{t^{\prime}=t}^T \gamma^{t^{\prime}-t} r_{t^{\prime}}$ ，记为 $\psi_t$
     - 对 $\theta$ 进行更新， $\theta=\theta+\alpha \sum_t^T \psi_t \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right)$
 - end for
 
@@ -81,8 +81,10 @@ REINFORCE 算法的具体算法流程如下：
 
 ## 缺点：
 
-- 学习效率也比较低，即收敛缓慢。因为样本利用率低，由于每次更新需要根据一个策略采集一条完整的轨迹，并计算这条轨迹上的回报，而且每次更新后就要将这些样本扔掉，重新采样，再实现更新。[7]
-- 难收敛，学习困难，由于利用策略梯度法计算的结果方差会很大。
+- 学习效率也比较低，即收敛缓慢。因为样本利用率低，由于每次更新需要根据一个策略采集一条完整的轨迹（即,由于蒙特卡洛的特性，只有到终止状态的序列，才能被采样），并计算这条轨迹上的回报，而且每次更新后就要将这些样本扔掉，重新采样，再实现更新。[7]
+- 难收敛，由于利用策略梯度法计算的结果方差会很大。学习困难，由于 agent 在一个序列中会采取很多动作，我们很难
+说哪个动作对最后结果是有用的。
+- 只有在能够对序列采样的 episodic 环境下使用。[8]
 
 ## 小结：
 
@@ -173,3 +175,4 @@ https://hrl.boyuai.com/chapter/2/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E
 [5]: https://www.bilibili.com/video/BV18M411c7uL/?spm_id_from=pageDriver&vd_source=bca0a3605754a98491958094024e5fe3
 [6]: https://zhuanlan.zhihu.com/p/271000523
 [7]: https://weread.qq.com/web/reader/62332d007190b92f62371aek81232fb025f812b4ba28a23
+[8]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
