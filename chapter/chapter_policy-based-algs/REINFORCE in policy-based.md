@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-12 23:44:25
+ * @LastEditTime: 2023-05-23 23:19:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -46,9 +46,9 @@ $$
 
 对于一个有限步数的环境来说， REINFORCE 算法中的策略梯度为：
 
-$\nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\sum_{t=0}^T\left(\sum_{t^{\prime}=t}^T \gamma^{t^{\prime}-t} r_{t^{\prime}}\right) \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right)\right]$
+$\nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\sum_{t=0}^{T-1}\left(\sum_{t^{\prime}=t}^T \gamma^{t^{\prime}-t} r_{t^{\prime}+1}\right) \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right)\right]$
 
-其中，$T$是和环境交互的最大步数。例如，在车杆环境下，$T = 200$。
+其中，$T-1$ 是和环境交互的最大步数。例如，在车杆环境下，$T-1 = 200$。
 
 ## REINFORCE
 
