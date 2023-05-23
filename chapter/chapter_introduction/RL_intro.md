@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-16 02:12:27
+ * @LastEditTime: 2023-05-17 00:19:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -155,7 +155,7 @@
 
 **例如**：
 
-Atari Breakout游戏的四大要素：
+Atari Breakout（横杆接小球）游戏的四大要素：
 
 - 性能度量：分数最大化
 - 环境：Atari Breakout

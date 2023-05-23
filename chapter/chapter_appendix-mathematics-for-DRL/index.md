@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 02:09:11
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-16 02:30:57
+ * @LastEditTime: 2023-05-16 02:58:07
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -30,9 +30,9 @@ numerical_analysis
 graph_theory
 probabilistic_graphical_model
 game_theory
-machine_game
+machine_game(perfect_information)
 game_theory2
-game_theory3
+machine_game(imperfect_information)
 game_theory4
 optimization_theory
 control_theory

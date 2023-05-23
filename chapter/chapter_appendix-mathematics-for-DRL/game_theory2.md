@@ -5,13 +5,19 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-16 20:28:07
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-16 20:50:18
+ * @LastEditTime: 2023-05-17 00:11:19
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 # 博弈论进阶--多人博弈
+
+## 多人博弈
+
+对于 $\mathrm{n}$ 人博恋，参与人从 1 到 $\mathrm{n}$ ，统称为参与人 $\mathrm{i}$ 。令 $S_i$ 表示参与人 $\mathrm{i}$ 可用的策略集，即 $\mathrm{i}$ 的策略空间，令 $s_i$ 表示这个集合中的任意元素，即 $s_i \in S_i$ 。设一个人的策略组合为 $\left(s_1, \ldots, s_n\right)$ ，则参与人 $\mathrm{i}$ 采用该策略组合的收益函数为 $u_i\left(s_1, \ldots, s_n\right)$ 。
+$\mathbf{n}$ 人博亦的标准形式定义: 指定参与者的策略空间 $\left(S_1, \ldots, S_n\right)$ 及其收益函数 $\left(u_1, \ldots, u_n\right)$ 。该博亦表示为 $G=\left\{S_1, \ldots, S_n ; u_1, \ldots, u_n\right\}$ 。[3]
+
 
 ## 多人博弈中的最优决策
 
@@ -43,3 +49,4 @@
 
 [1]: https://weread.qq.com/web/reader/fc332020813ab7942g0102adk70e32fb021170efdf2eca12
 [2]: https://weread.qq.com/web/reader/fc332020813ab7942g0102adk341323f021e34173cb3824c
+[3]: https://zhuanlan.zhihu.com/p/365539786

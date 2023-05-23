@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-16 02:15:15
+ * @LastEditTime: 2023-05-17 00:20:19
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -250,9 +250,24 @@ $$
 
 缺点：比如状态和动作都假设是离散且有限的，对于复杂的情况处理起来会很麻烦；智能体的决策只依赖当前环境的状态，所以如果状态之间存在时序关联那么学习的效果就不佳。[16]
 
-## 代码
+### 代码
+
+TODO
+
+
 
 需要注意的是，打印出来的回报是行为策略在环境中交互得到的，而不是 Q-learning 算法在学习的目标策略的真实回报。我们把目标策略的行为打印出来后，发现其更偏向于走在悬崖边上，这与 SARSA 算法得到的比较保守的策略相比是更优的。 但是仔细观察 SARSA 和 Q-learning 在训练过程中的回报曲线图，我们可以发现，在一个序列中 SARSA 获得的期望回报是高于 Q-learning 的。这是因为在训练过程中智能体采取基于当前函数的 $\epsilon$ -贪婪策略来平衡探索与利用，Q-learning 算法由于沿着悬崖边走，会以一定概率探索“掉入悬崖”这一动作，而 SARSA 相对保守的路线使智能体几乎不可能掉入悬崖。
+
+### 缺点
+
+Q学习具有以下缺点：
+
+- 复杂性：
+  - 可以模拟行动空间离散且较小的场景
+  - 但无法处理连续的行动空间
+- 灵活性：
+  - 策略是通过从Q函数最大化回报，确定地计算出来的
+  - 无法学习随机策略
 
 ### Double Q-learning
 

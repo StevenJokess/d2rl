@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-19 23:32:35
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 00:03:26
+ * @LastEditTime: 2023-05-18 00:04:18
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -56,6 +56,10 @@ $M_{v,π}$ 通常用来表示一个包含状态值函数和策略的模型。
 
 ### 基于模型的学习
 
+通常情况, 根据环境四元组 $E=<S, A, P, R>$ 是否完全已知, 强化学习可以分为基于模型学习和免模型学习。
+
+基于模型学习模型学习表示四元组 $E=<S, A, P, R>$ 已知, 即机器可以对环境进行完整建模, 能在机器内部模 拟出与环境相同或近似的状况, 可以通过模拟推算 计算出来不同策略带来的价值回报, 通过不断的模 拟计算, 总能找出一个 (可能存在多个最优策略) 最优的策略来得到最大的回报, 因此在模型已知时 强化学习任务能够归结为基于动态规划的寻优问题。
+
 ![基于模型的学习](../img/model_learning.png)
 
 循环：
@@ -100,7 +104,7 @@ model-based learning:
 
 [1]: https://www.bilibili.com/video/BV1HT411C78A?p=42&vd_source=bca0a3605754a98491958094024e5fe3
 [2]: https://zhuanlan.zhihu.com/p/37898383
-
+[3]: https://github.com/borninfreedom/DeepLearning/blob/master/Papers/AlphaZero%E5%8E%9F%E7%90%86%E4%B8%8E%E5%90%AF%E7%A4%BA.pdf
 > https://chat.openai.com; M_v,π是啥意思；"M_v,π" 通常用来表示一个包含状态值函数和策略的模型。 不应该是 M_{v,π}
 
 

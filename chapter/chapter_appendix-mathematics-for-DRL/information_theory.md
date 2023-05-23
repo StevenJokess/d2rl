@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-13 23:23:58
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-14 23:29:26
+ * @LastEditTime: 2023-05-16 22:32:43
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -142,7 +142,7 @@ $$
 2. 对于连续概率分布p 和q，从q到p的KL散度定义为：
 
 $$
-\mathrm{KL}(p, q)=H(p, q)-H(p) \quad=\int P(x)\log \frac{p(x)}{q(x)}
+\mathrm{KL}(p, q)=H(p, q)-H(p) \quad=\int P(x)\log \frac{p(x)}{q(x)}dx
 $$
 
 其中，为了保证连续性，定义：
@@ -151,7 +151,7 @@ $$
 0 \log \frac{0}{0}=0,0 \log \frac{0}{q}=0
 $$
 
-KL 散度的一个重要性质是非负性。
+KL 散度的一个重要性质是非负性。当两个分布完全相同，对于任意x，有p(x)＝q(x)，此时log(p(x)/q(x))为0，KL散度为0。当两个分布不完全相同，根据吉布斯不等式（Gibbs' Inequality）可证明KL散度为正数。[6]
 
 $KL(p,q)≥0$ ，可以衡量两个概率分布之间的距离。
 
@@ -243,6 +243,6 @@ $$
 [3]: https://zhuanlan.zhihu.com/p/165139520
 [4]: https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/
 [5]: https://mp.weixin.qq.com/s/fg5GxW83Ui_joJKrsNQdBg
-
+[6]: https://finance.sina.com.cn/stock/stockzmt/2020-05-09/doc-iirczymk0646869.shtml
 
 TODO:https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#information

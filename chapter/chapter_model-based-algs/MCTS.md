@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-14 01:29:29
+ * @LastEditTime: 2023-05-18 00:00:11
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -303,8 +303,9 @@ class MCTS(object):
 
 优点：
 
-1. 可以达到业余4、5段的水平，将计算机围棋引向了正确的发展方向。
+1. 推动了计算机围棋的发展，对战规模从九路(9×9的棋盘)围棋发展到19路(19×19的全尺寸棋盘)围棋，棋力从普通段位水平发展到业余六七段的实力，但是业界依然认为计算机围棋需要数十年的时间才能达到职业水准。[12]
 1. 蒙特卡洛树搜索可以应用于没有任何经验可以用来定义评价函数的全新博弈。只要我们知道博弈规则，蒙特卡罗搜索不需要任何附加信息。选择和模拟策略可以充分利用人工制定的专家知识，也可以通过仅仅使用自我对弈训练得到的神经网络来学习好的策略。
+
 
 
 缺点：
@@ -536,6 +537,7 @@ print("Best action:", best_action)
 [9]: https://weread.qq.com/web/reader/fc332020813ab7942g0102adk70e32fb021170efdf2eca12
 [10]: https://blog.csdn.net/oyd/article/details/3300852
 [11]: https://www.bilibili.com/video/BV1WY411n7Zf/?spm_id_from=333.880.my_history.page.click&vd_source=bca0a3605754a98491958094024e5fe3
+[12]: https://github.com/borninfreedom/DeepLearning/blob/master/Papers/AlphaZero%E5%8E%9F%E7%90%86%E4%B8%8E%E5%90%AF%E7%A4%BA.pdf
 
 
 ## 更多参考

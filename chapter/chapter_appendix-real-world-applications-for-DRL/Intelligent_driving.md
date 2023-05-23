@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-23 23:05:23
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-13 00:27:01
+ * @LastEditTime: 2023-05-17 00:25:48
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -55,9 +55,38 @@
 
 自动驾驶（本图截取自仿真平台AirSimNH）
 
+
 ## 深度强化学习
 
 传感器技术的进步使得智能驾驶得到了快速发展。目前, 国内外众多研究团队已经将智能驾驶作为重要研究方向并取得了初步的研究成果. 然而类似激光雷达这类传感器的使用大大增加了智能车成本, 极大地阻碍了智能车的普及. 近年来, 基于摄像头的先进驾驶员辅助系统(advanced driver assistance systems, ADAS)逐渐成为智能驾驶的关键技术之一. 该技术基于摄像头获取图像信息, 通过深度学习实时提取路况特征, 设计相应的智能控制算法, 实现稳定可靠的智能驾驶. 深度强化学习作为一类自学习智能控制算法, 可用来解决车辆的复杂非线性系统控制问题. 根据现有深度强化学习在TORCS赛车平台的研究可以预测, 深度强化学习将在智能驾驶领域发挥巨大的作用, 成为降低智能车成本的一个可行方案。[1]
+
+### 案例:策略梯度方法去自动驾驶
+
+代理向环境发出动作 $a_t$ ，环境向代理反馈观测（包括状态变化 $S_{t+1}$ 和回报 $r_t$ ）形成了一 个闭环。在自动驾驶的例子中，设定概念:
+
+- 代理: 车
+- 状态：照相机、雷达等
+- 行动: 方向盘转角
+- 回报：驾驶距离
+
+训练算法如下:
+
+1. 代理初始化
+2. 运行策略直到终止
+3. 记录所有的状态、行动、回报
+4. 减少导致低回报的行为的概率
+5. 增加获得高回报的行为的概率
+
+策略梯度的损失函数为 $-\log P\left(a_t \mid s_t\right) R_t$ ，而梯度下降法更新可以表达为:
+
+$$
+\begin{aligned}
+& w^{\prime}=w-\nabla \operatorname{loss} \\
+& w^{\prime}=w+\nabla \log P\left(a_t \mid s_t\right) R_t
+\end{aligned}
+$$
+
+其中， $\nabla \log P\left(a_t \mid s_t\right) R_t$ 就是策略梯度。
 
 
 TODO:https://github.com/apachecn/apachecn-dl-zh/blob/master/docs/rl-tf/09.md
@@ -65,7 +94,7 @@ TODO:https://github.com/apachecn/apachecn-dl-zh/blob/master/docs/rl-tf/09.md
 [2]: https://developer.aliyun.com/article/718967
 [3]: https://pdf-1307664364.cos.ap-chengdu.myqcloud.com/%E6%95%99%E6%9D%90/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E3%80%8A%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%B8%A6%E4%BD%A0%E5%8E%BB%E9%9D%A2%E8%AF%95%E3%80%8B%E4%B8%AD%E6%96%87PDF.pdf
 [4]: http://www.dzkbw.com/books/zjb/xinxijishu/gzxzxbx4/020.htm
-
+[5]: https://www.zhihu.com/column/c_1364693795540553728
 https://www.bilibili.com/video/BV1Y34y1i7vC/?spm_id_from=333.999.0.0
 
 TODO:
