@@ -1,5 +1,5 @@
-# Card Game Applications for DRL
-:label:`chap_card_game_app_drl`
+# app-card_game
+:label:`chap_app-card_game`
 
 ```toc
 :maxdepth: 2
