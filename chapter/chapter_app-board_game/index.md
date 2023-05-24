@@ -28,9 +28,5 @@ AlphaGo
 AlphaGo_Zero
 Alpha_Zero
 Muzero
-
-
-
-
 ```
 
