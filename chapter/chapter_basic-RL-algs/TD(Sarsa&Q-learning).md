@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-25 00:34:21
+ * @LastEditTime: 2023-05-25 01:48:26
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -37,14 +37,23 @@
 
 ### TD(0)
 
+#### 蒙特卡洛方法的启示与不足
+
 回顾一下蒙特卡洛方法对价值函数的**增量更新方式**：
 
+$V\left(S_t\right) \leftarrow V\left(S_t\right)+\frac{1}{N\left(S_t\right)}\left(G\left(S_t\right)-V\left(S_t\right)\right)$
+
+通常，对于海量样本的分布式迭代， $N\left(S_t\right)$ 无法准确计算，所以我们将原来的 $\frac{1}{N(s)}$ 替换成了 $\alpha$ ，表示对价值估计**更新的步长**。而依据倒数函数 $\frac{1}{N\left(S_t\right)}$ 的曲线，得 $\alpha$ 的取值范围在 $[0,1]$，即：
+
 $$
-V\left(s_t\right) \leftarrow V\left(s_t\right)+\alpha\left[G_t-V\left(s_t\right)\right]   其中，α∈[0,1]
+V\left(s_t\right) \leftarrow V\left(s_t\right)+\alpha\left[G_t-V\left(s_t\right)\right] 其中，α∈[0,1]
 $$
 
-这里我们将 $3.5$ 节的 $\frac{1}{N(s)}$ 替换成了 $\alpha$ ，表示对价值估计**更新的步长**。可以将 $\alpha$ 取为一个常数，此时更新方式不再像蒙特卡洛方法那样严格地取期望。蒙特卡洛方法必须要等整个序列结束之后才能计算得到这一次的回报 $G_t$ ，而时序差分方法只需要**当前步结束**即可进行更新的计算。
-TD（0）用当前获得的奖励加上下一个状态的价值估计的折现，具体来说是， $r_t+\gamma V\left(s_{t+1}\right)$，来作为在当前状态获得的回报。因该方法只考虑下一个状态，故称为单步TD。
+我们可以将 $\alpha$ 取为一个常数，此时更新方式不再像蒙特卡洛方法那样严格地取期望。
+
+蒙特卡洛方法的不足是，必须要等整个序列结束之后才能计算得到这一次的回报 $G_t$ ，而时序差分方法只需要**当前步结束**即可进行更新的计算。
+
+其中，TD（0）用当前获得的奖励加上下一个状态的价值估计的折现，具体来说是， $r_t+\gamma V\left(s_{t+1}\right)$，来作为在当前状态获得的回报。因该方法只考虑下一个状态，故称为单步TD。
 
 TD（0）更新公式为：
 
@@ -67,16 +76,20 @@ $$
 
 对于非回合制任务，我们可以自行将某些时段抽出来当作多个回合，也可以不划分回合当作只有一个回合进行更新。
 
+#### 用动作价值函数表示的TD(0)：
 
+不同于DP算法，对于无法获知环境模型的情况，单靠状态价值函数就不足以确定一个策略，我们必须通过显式地确定每个动作的价值函数来确实一个策略，动作价值函数的迭代同上：
 
-#### 动作价值函数的TD(0)：
+$$
+Q\left(S_t, A_t\right) \leftarrow Q\left(S_t, A_t\right)+\alpha\left(G\left(S_t\right)-Q\left(S_t, A_t\right)\right)
+$$
 
+> 类比车时：
 >![举例：原来要整个路径[13]](../../img/TD_eg0.png)
 >![TD中有真实观测，也有估计](../../img/TD_eg1.png)
-> 动作价值函数的TD(0)：
 >![例子，车时迁移到强化学习](../../img/TD_eg2.png)
 
-#### TD(0)的伪算法：[13]
+##### 而用动作价值函数表示的TD(0)的伪算法：[13]
 
 1. Observe state $S_t=s_t$ and action $A_t=a_t$.
 2. Predict the value: $q_t=Q\left(s_t, a_t ; \mathbf{w}_t\right)$.
@@ -99,9 +112,9 @@ $G_t^{(n)} = R_{t}+\gamma R_{t+1}+\cdots+\gamma^{n-1} R_{t+n-1}+\gamma^n V\left(
 
 ![从单步 TD 到多步 TD，再到没有自举](../../img/TD(0)_TD(n).png)
 
-### 动态规划 DP、蒙特卡洛 MC和时序差分 TD(0)的异同点
+### 动态规划DP、蒙特卡洛MC和时序差分TD的异同点：
 
-#### 采样（Sampling）经历和自举（Bootstrapping）角度：
+#### 从采样（Sampling）经历和自举（Bootstrapping）角度：
 
 - 动态规划没有采样，因为它是根据完整的模型，最主要的特点是转移概率已知，因此可根据贝尔曼方程来进行状态更新，相当于开了“上帝视角”，不适用于实际问题。不自举。![动态规划 DP](../../img/DP.png)
 - 蒙特卡洛需要采样，必须是完整经历，只适用于回合。其主要思想是通过大量的采样来逼近状态的真实价值，因为我们用样本回报代替了实际的期望回报。该方法的起始点是任意选取的，一直到终止状态才进行一次更新，因此当动作序列很长时或者出现循环，该方法便不适用。不自举。![蒙特卡洛 MC](../../img/MC.png)

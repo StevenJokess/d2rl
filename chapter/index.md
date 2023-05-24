@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-14 01:48:04
+ * @LastEditTime: 2023-05-25 02:46:55
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -25,20 +25,15 @@
 
 chapter_book_intro/index
 chapter_installation/index
-chapter_notation/index
-chapter_introduction/index
-chapter_preliminaries/index
-chapter_Bandits/index
-chapter_MDP/index
-chapter_MC-algs/index
-chapter_TD-algs/index
-
-chapter_DQN-algs/index
-chapter_Policy-based-algs/index
+chapter_basic-RL/index
+chapter_basic-RL-algs/index
 chapter_actor-critic-algs/index
+chapter_model-based-algs/index
+
+chapter_basic-DRL&algs/index
 chapter_off-policy/index
 chapter_policy_optimization/index
-chapter_model-based-algs/index
+
 
 chapter_Incomplete_observations/index
 chapter_Sparse_Reward/index

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-20 00:32:21
+ * @LastEditTime: 2023-05-25 01:32:44
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -45,8 +45,7 @@ code
 - 第二步 策略提升 (Policy Improvement)
 - 不停的重复策略评估和策略提升，直到策略不再变化为止
 
-![策略迭代（Policy Iteration）](../img/Policy_Iteration.png)
-
+![策略迭代（Policy Iteration）](../../img/Policy_Iteration.png)
 
 ### 策略评估（policy evaluation）
 
@@ -230,23 +229,20 @@ code
 
 借用Stackoverflow的一张图，我们把价值迭代和策略迭代放在一起看：[6]
 
-![价值迭代 v.s. 策略迭代](../img/value_iteration_vs_policy_iteration.png)
+![价值迭代 v.s. 策略迭代](../../img/value_iteration_vs_policy_iteration.png)
 
-不同点：
+在策略迭代（Policy Iteration）中
 
-在Policy Iteration中
+- 第一步 Policy Eval：一直迭代至收敛，获得准确的V(s)；第二步 Policy Improvement：根据准确的V(s)，求解最好的Action；即价值函数和策略函数的收敛是**串行的**；是不断优化策略以求最优策略：根据贝尔曼方程来更新值函数，并根据当前的值函数来改进策略。
+- 每次迭代的时间复杂度最大为 $O(|S|^3|A|^3)$，最大迭代次数为 $|A|^{|S|}$；即策略迭代的收敛速度相对较快，适用于状态空间较少的场景。
 
-- 第一步 Policy Eval：一直迭代至收敛，获得准确的V(s)。
-- 第二步 Policy Improvement：根据准确的V(s)，求解最好的Action。
-- 不断优化策略以求最优策略：根据贝尔曼方程来更新值函数，并根据当前的值函数来改进策略。
-- 每次迭代的时间复杂度最大为 $O(|S|^3|A|^3)$，最大迭代次数为 $|A|^{|S|}$。
+对比之下，在价值迭代（Value Iteration）中
 
-对比之下，在Value Iteration中
+- 第一步 Policy Eval：迭代只做一步，获得不太准确的V(s)；第二步 Policy Improvement：根据不太准确的V(s)，求解最好的Action；即价值函数和策略函数的收敛是**并行的**；是通过求最优的值函数去求最优策略：直接使用贝尔曼最优方程 $
+v_{k+1}(s)=\max _{a \in A}\left(R_s^a+\gamma \sum_{s^{\prime} \in S} P_{s s^{\prime}}^a v_k\left(s^{\prime}\right)\right)$ 来更新值函数，收敛时的值函数就是最优的值函数，此时即最优策略。
+- 每次迭代的时间复杂度最大为 $O(|S|^{2}|A|)$，但迭代次数要比策略迭代算法更多；即价值迭代适用于状态空间相对偏大的环境，因为其计算量相对更小。
 
-- 第一步 Policy Eval：迭代只做一步，获得不太准确的V(s)。
-- 第二步 Policy Improvement：根据不太准确的V(s)，求解最好的Action。
-- 通过求最优的值函数去求最优策略：直接使用贝尔曼最优方程来更新值函数，收敛时的值函数就是最优的值函数，此时即最优策略。
-- 每次迭代的时间复杂度最大为 $O(|S|^{2}|A|)$，但迭代次数要比策略迭代算法更多。
+![关于收敛过程：策略迭代 v.s. 价值迭代 ](../../img/Policy_Iteration_VS_Value_Iteration.png)
 
 相同点：
 
@@ -255,7 +251,9 @@ code
 
 ## 小结
 
-本章讲解了强化学习中两个经典的动态规划算法：策略迭代算法和价值迭代算法，它们都能用于求解最优价值和最优策略。动态规划的主要思想是利用贝尔曼方程对所有状态进行更新。需要注意的是，在利用贝尔曼方程进行状态更新时，我们会用到马尔可夫决策过程中的奖励函数和状态转移函数。如果智能体无法事先得知奖励函数和状态转移函数，就只能通过和环境进行交互来采样（状态-动作-奖励-下一状态）这样的数据，我们将在之后的章节中讲解如何求解这种情况下的最优策略，即Model-free方法。
+本章讲解了强化学习中两个经典的动态规划算法：策略迭代算法和价值迭代算法，它们都能用于求解最优价值和最优策略。动态规划的主要思想是利用贝尔曼方程对所有状态进行更新。需要注意的是，在利用贝尔曼方程进行状态更新时，我们会用到马尔可夫决策过程中的奖励函数和状态转移函数。
+
+如果智能体无法事先得知奖励函数和状态转移函数，就只能通过和环境进行交互来采样（状态-动作-奖励-下一状态）这样的数据，我们将在之后的章节中讲解如何求解这种情况下的最优策略，即Model-free方法。
 
 ## 相关例子
 
@@ -265,7 +263,7 @@ code
 - 有一个单元格是宝藏，超级玛丽找到宝藏则游戏结束，目标是让超级玛丽以最快的速度找到宝藏
 - 假设游戏开始时，宝藏的位置一定是(1, 2)
 
-![超级玛丽](../img/supermary.jpg)
+![超级玛丽](../../img/supermary.jpg)
 
 ### MDP吗？
 

@@ -25,17 +25,17 @@ $$
 
 在一次序列中，可能没有出现过这个状态，可能只出现过一次这个状态，也可能出现过很多次这个状态。我们下面介绍的蒙特卡洛价值估计方法，是**每访蒙特卡洛法**，它会在该状态每一次出现时计算它的回报。还有一种选择，叫**初访蒙特卡洛法**[5]，是一条序列只计算一次回报，也就是这条序列第一次出现该状态时计算后面的累积奖励，而后面再次出现该状态时，该状态就被忽略了。
 
-#### 每访蒙特卡洛法
+#### 每访（every visit）蒙特卡洛法
 
 假设我们现在用策略从状态开始采样序列，据此来计算状态价值。我们为每一个状态维护一个计数器和总回报，计算状态价值的具体过程如下所示。
 
-##### (1)探索性初始化：
+##### (1) 探索性初始化：
 
 无模型的方法充分评估策略值函数的前提是每个状态都能被访问到。探索性初始化是指每个状态都有一定的几率作为初始状态。
 
 $ s \in S, a \in A(s), Q(s, a) \leftarrow  arbitrary, $
 
-$ \pi(s) \leftarrow arbitrary, \operatorname{Re} turns (s, a) \leftarrow emptylist $
+$ \pi(s) \leftarrow arbitrary, \operatorname{Returns} (s, a) \leftarrow emptylist $
 
 ##### (2) 使用策略采样若干条序列：
 
@@ -43,23 +43,19 @@ $$
 s_0^{(i)} \stackrel{a_0^{(i)}}{\longrightarrow} r_0^{(i)}, s_1^{(i)} \stackrel{a_1^{(i)}}{\longrightarrow} r_1^{(i)}, s_2^{(i)} \stackrel{a_2^{(i)}}{\longrightarrow} \cdots \stackrel{a_{T-1}^{(i)}}{\longrightarrow} r_{T-1}^{(i)}, s_T^{(i)}
 $$
 
-##### (3) 对每一条序列中的每一时间步 $t$ 的状态进行以下操作：
+##### (3) 对所有序列中的每一个状态进行策略评估，即计算其平均价值：
 
+![假设，采样到了5条episode](../../img/MC_r.png)
+
+- 以状态 $s$ （已红色标注）为例，上图中5条episode，其中4条有状态 $s$ ，那么在计算 $s$ 的价值时，就只以这4条episode中的 $G(s)$ 来计算状态 $s$ 的平均价值。
+- 每访(every visit)是使用所有访问到的状态 $s$ 的回报，那么 $v(s)$ 为： $
+v(s)=\frac{G_{11}+G_{12}+G_{21}+\ldots}{N(s)}$ ，其中 $N(s)$ 表示状态 $s$ 出现的次数。
+  > -而首访(first visit)是只使用每条episode中第一次访问到的状态 $s$ 的回报，上例中的 $v(s)$ 计算为: $v(s)=\frac{G_{11}+G_{21}+\ldots}{N(s)}$
 - 更新状态 $s$ 的计数器 $N(s) \leftarrow N(s) + 1$；
-- 更新状态 $s$ 的总回报 $M(s) \leftarrow M(s) + (G-V(S))$；
-
-##### (4) 每一个状态的价值被估计为回报的平均值 $V(s)=M(s) / N(s)$ 。
-
-根据大数定律，当 $N(s) \rightarrow \infty$ ，有 $V(s) \rightarrow V^\pi(s)$ 。计算回报的期望时，除了 可以把所有的回报加起来除以次数，还有一种增量更新的方法。对于每个状态 $s$ 和对应回报 $G$ ，进行如下计算:
-
-$$
-\begin{aligned}
-& N(s) \leftarrow N(s)+1 \\
-& V(s) \leftarrow V(s)+\frac{1}{N(s)}(G-V(S))
-\end{aligned}
-$$
-
-这种增量式更新（或累进更新）期望的方法已经在第 2 章中展示过。
+- 状态 $s$ 的回报的平均值的计算，方法有两种：
+  1. 先更新状态 $s$ 的总回报 $M(s) \leftarrow M(s) + (G-V(s))$；然后，每一个状态的价值可被估计为回报的平均值 $V(s)=M(s) / N(s)$。
+  2. 用之前展示过的增量式更新（或累进更新）的方法，去计算状态 $s$ 的期望回报 $V(s) \leftarrow V(s)+\frac{1}{N(s)}(G(s)-V(s))$。
+- 然后，根据大数定律，当 $N(s) \rightarrow \infty$ ，有 $V(s) \rightarrow V^\pi(s)$ 。
 
 #### 代码
 
@@ -139,7 +135,7 @@ TODO:
 
 优点：
 
-1. 不需对模型有了解。
+1. 不需对模型有了解，不需要知道状态转移概率。
 2. MC估计是无偏。
 
 > 蒙特卡洛抽样：
@@ -152,10 +148,11 @@ TODO:
 
 缺点：
 
-1. 每一次游戏，都需要先从头走到尾，再进行回溯更新。
+1. 每一次游戏，都需要先从头走到尾，再进行回溯更新；而其实对于相对复杂的问题，往往在限定的步数内无法探索到最终奖励。
 2. 由于MC是通过采样的方式估计值函数，难点在保证充分的探索。  为解决MC保证有充分的探索，一个简单的方法就是使用exploring starts，让每个episode从不同的状态开始，从而使得所有状态都能探索到。当然这个假设有时候不切实际，因此我们引入离策略机制。让行为策略是一个随机策略以保证探索，而待优化的目标策略是确定性策略。具体可见 [异策略MC](../chapter_off-policy/off-policy_MC.md)
 
 
 [1]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
 [2]: https://what-is-pi.onlyahuman.repl.co/
 [3]: https://zhuanlan.zhihu.com/p/437626120#3.3%20GAE
+[4]: https://zhuanlan.zhihu.com/p/475800586
