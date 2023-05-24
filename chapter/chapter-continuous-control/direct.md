@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-23 21:55:25
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-23 22:13:47
+ * @LastEditTime: 2023-05-25 03:03:55
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -16,7 +16,8 @@
 ## 确定性策略
 
 要想完全理解本章的内容需要熟练掌握前8章的要点，并且假设读者对DQN网络很熟悉。
-我们先从图9.1策略搜索方法的分类开始。从图中我们可以看到，无模型的策略搜索方法可以分为随机策略搜索方法和确定性策略搜索方法。其中随机策略搜索方法又发展出了很多算法。可以说，2014年以前，学者们都在发展随机策略搜索的方法，因为大家都认为确定性策略梯度是不存在的。直到2014年，☑强化学习算法大神Silver在论文DeterministicPolicyGradient Algorithms中提出了确定性策略理论，策略搜索方法中提出确定性策略的方法。2015年，DeepMind的大神们又将该理论与DQN的成功经验结合，在论文Continuous Control with Deep Reinforcement Learning中提出了DDPG算法。本章以这两篇论文为素材，向大家介绍确定性策略。[2]
+
+我们先从图9.1策略搜索方法的分类开始。从图中我们可以看到，无模型的策略搜索方法可以分为随机策略搜索方法和确定性策略搜索方法。其中随机策略搜索方法又发展出了很多算法。可以说，2014年以前，学者们都在发展随机策略搜索的方法，因为大家都认为确定性策略梯度是不存在的。直到2014年，强化学习算法大神Silver在论文Deterministic Policy Gradient  Algorithms中提出了确定性策略理论，策略搜索方法中提出确定性策略的方法。2015年，DeepMind的大神们又将该理论与DQN的成功经验结合，在论文Continuous Control with Deep Reinforcement Learning中提出了DDPG算法。本章以这两篇论文为素材，向大家介绍确定性策略。[2]
 
 ## 直接策略搜索方法
 
