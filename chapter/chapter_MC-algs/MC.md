@@ -140,11 +140,22 @@ TODO:
 优点：
 
 1. 不需对模型有了解。
+2. MC估计是无偏。
+
+> 蒙特卡洛抽样：
+> 假设一组随机变量 $x$,它的均值为 $\mu$，方差为 $\sigma$,即 $$
+> E\left(X_i\right)=\mu \quad D\left(X_i\right)=\sigma^2=E(X-E(x))^2
+> $$
+> 样本均值： $\frac{1}{n} \sum_{i=1}^n x_i$
+> 样本均值的期望：$$ E(a)=\frac{1}{n} E\left(\sum_{i=1}^n x_i\right)=\frac{1}{n} \sum_{i=1}^n E\left(x_i\right)=\frac{1}{n} \sum_{i=1}^n \mu=\mu$$
+> 即样本均值的期望等于该组随机变量的均值。
 
 缺点：
 
 1. 每一次游戏，都需要先从头走到尾，再进行回溯更新。
 2. 由于MC是通过采样的方式估计值函数，难点在保证充分的探索。  为解决MC保证有充分的探索，一个简单的方法就是使用exploring starts，让每个episode从不同的状态开始，从而使得所有状态都能探索到。当然这个假设有时候不切实际，因此我们引入离策略机制。让行为策略是一个随机策略以保证探索，而待优化的目标策略是确定性策略。具体可见 [异策略MC](../chapter_off-policy/off-policy_MC.md)
 
+
 [1]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
 [2]: https://what-is-pi.onlyahuman.repl.co/
+[3]: https://zhuanlan.zhihu.com/p/437626120#3.3%20GAE

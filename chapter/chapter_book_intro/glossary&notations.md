@@ -40,16 +40,15 @@
 | $\zeta$                  | 总共的超参数（All hyperparameters） |
 | $\eta$                   | 一个可微分超参数的子集（Subset of hyperparameters that are differentiable） |
 
-## 术语定义（Glossary）
+## 术语定义（Glossary）和中英术语对照（Terminology）
 
 TODO:
 
-## 中英术语对照（Terminology）
-
-TODO:
+自举（Bootstrapping）：“拔自己的鞋带，把自己举起来”（To lift oneself up by his bootstraps.）在强化学习里，用一个估算去更新同类的估算（In RL,bootstrapping means "using an estimated value in theupdate step for the same kind of estimated value".）[3]
 
 
 
 
 [1]: https://zhiqingxiao.github.io/rl-book/zh2019/notation/zh2019notation.html
 [2]: https://zhuanlan.zhihu.com/p/510965690
+[3]: https://www.youtube.com/watch?v=X2-56QN79zc

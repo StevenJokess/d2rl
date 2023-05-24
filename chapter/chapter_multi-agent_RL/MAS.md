@@ -1,3 +1,16 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-03-21 20:58:30
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-05-24 01:00:29
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # 多智能体系统
 
 之前章节的设定都是单个智能体与环境的交互，即单智能体系统(Single-Agent System，缩写SAS)。
@@ -10,9 +23,21 @@
 
 能体A（例如出租车司机）是否必须将对象B（另一辆车）视为智能体，还是可以仅将其视为根据物理定律运行的对象，类似于海滩上的波浪或随风飘动的树叶？关键的区别在于B 的行为是否被最佳地描述为一个性能度量的最大化，而这一性能度量的值取决于智能体A的行为。[4]
 
+## 举例：
+
+在现实问题中，我们不免会面对各种资源和条件的限制，使得用一个中心化的agent来解决问题变得困难重重，甚至不可行，同时有些现实问题从形式上来说形式化成多个single agent交互是一种合理与直观想法。
+
+比如：在你上网的时候，你输入Github，此时你的电脑向外发送请求，这个访问的请求通过不同的路由器逐步地向Github的服务器请求资源，然后返回给你电脑，让你能够获得相应的信息。在你的电脑与Github服务器间可能存在动态的不同路径来建立连接，那么怎么获得一条最优的链接呢？
+
+一种方法是你能够获得整个互联网的拓扑结构与此时的负载，通过拓扑结构与负载来全局计算出一条最优的连接路径。但是在现实中，你并不能获得整个互联网的网络拓扑结构，一者是路由器可能动态地新增或者减少，另外一者是有的组织并不愿意将自己的内部的路由拓扑告诉你，此外哪怕你能拿到全局的拓扑结构，在实际计算中其实并不需要全部的结构，我们可能需要关注一些局部的路由器即可。所以一个中心化的agent来解决这个问题看上去并不可行。
+
+那么另外一种直观的做法是将每个路由器看作一个agent，由每个路由器来与自己互连的路由器进行交互，**每个agent自己动态地优化当前时刻的转发表，通过自己维护的局部的信息**来帮助用户获得整个互联网的服务。这就是典型的MAS的做法，也是现实中互联网采用的做法。[7]
+
 ## 研究历史
 
-多智能体、多机器人、群智能算法、群体智能的比较
+在最开始的1980年，MIT组织过一个distributed AI的workshop，点燃了MAS研究的星星之火，并在90年代诞生一些多智能体的研究协会与相应的比赛，比如IFAAMAS，比如大部分人都听说过的RoboCup等等，在2000年以来MAS与game theory，社会学，分布式优化，分布式求解等等领域与方法相结合成为了AI领域中一个炙手可热的研究领域，比如在AAAI与IJCAI中收录文章最多的领域就是MAS。[7]
+
+## 多智能体、多机器人、群智能算法、群体智能的比较：
 
 1. 生物的群体智能：人们首先注意到生物群体的活动，尤其是生物群体产生了超越个体的能力，这引起了人们的研究兴趣。
 2. 物理的群体动力学：物理学家首先做了一些研究，关于群体动力学，如观念传播模型。
@@ -70,4 +95,4 @@ $$
 [4]: https://ticket-assets.baai.ac.cn/uploads/%E3%80%8A%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%9A%E7%8E%B0%E4%BB%A3%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89%E3%80%8B%E6%A0%B7%E7%AB%A0.pdf
 [5]: https://zhuanlan.zhihu.com/p/343976644
 [6]: https://huggingface.co/learn/deep-rl-course/unit7/introduction-to-marl?fw=pt
-[7]:
+[7]: https://zhuanlan.zhihu.com/sharerl

@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-17 00:19:29
+ * @LastEditTime: 2023-05-25 00:44:40
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -312,7 +312,7 @@ $s, a$ ：可以称之为一步。智能体的行为可以描述为一系列步�
 - 在实际问题中，智能体可能会面临如下的困境：选择一些立即的奖励可能会影响未来获得的奖励，而放弃即时回报可能会带来更多的长期奖励。所以通常存在着即时奖励和远期奖励之间的权衡。使用折扣因子能去平衡即时奖励和远期奖励，具体见下。
 - 折扣累积奖励是指在一次行动轨迹中所有奖励值按时间折扣的总和。
    - 折扣因子（Discount Factor）是一个用来平衡未来奖励的价值衰减因子，表示在未来的每个时刻，奖励会以一定的比例进行衰减。使用时间折扣是为了使强化学习智能体更好地处理长期决策问题，同时能够适应不同的环境和任务。
-   - 折扣因子通常表示为 $\gamma$ ，其中 $0 \leq \gamma \leq 1$ 。由于 $\gamma \leq 1$ ，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计奖励公式，越远视；越接近0，越短视。
+   - 折扣因子通常表示为 $\gamma$ ，其中 $0 \leq \gamma \leq 1$ 。由于 $\gamma \leq 1$ ，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计奖励公式，越远视，即未来奖励对当前选择动作的影响越大，一般选择0.99或者0.995[49]；越接近0，越短视。
    - 从当前时间步$t$开始到未来有限视野 $T$的所有时间步的累积奖励可以表示为：$$G_t = r_{t} + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{T} \gamma^k r_{t+k}$$
    - 而无限视野(Infinite Horizon) 时，则是$$G_t = r_{t} + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{\infty} \gamma^k r_{t+k}$$
    - 其中，$r_t$ 表示在时间步 $t$ 时获得的奖励，$\gamma$ 是时间折扣因子，$G_t$ 表示从时间步 $t$ 开始的累积奖励。[12]
@@ -550,6 +550,7 @@ $$
 [46]: https://picture.iczhiku.com/weixin/message1600948045742.html
 [47]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2017/10/20/bff2daa6-042b-41f8-837c-4b8575431726.pdf
 [48]: https://www.youtube.com/watch?v=d0p6MyB86Os
+[49]: https://zhuanlan.zhihu.com/p/474672251
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 

@@ -5,23 +5,71 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-20 00:47:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-28 21:40:42
+ * @LastEditTime: 2023-05-25 01:14:56
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
+# 离轨策略的蒙特卡洛
 
-# 异策略（off-policy）&同策略（on-policy）
+蒙特卡洛控制问题，基本思想是广义策略迭代（GPI），同时维护一个近似的策略和近似的价值函数，价值函数会不断迭代使其更加精确地近似对应当前策略的真实价值函数，而当前的策略也会根据当前的价值函数不断调优。两个过程相互影响，他们互相为对方确定一个变化的优化目标，并最终都趋向最优解。
 
-为解决MC保证有充分的探索，一个简单的方法就是使用exploring starts，让每个episode从不同的状态开始，从而使得所有状态都能探索到。当然这个假设有时候不切实际，因此我们引入离策略机制。让行为策略是一个随机策略以保证探索，而待优化的目标策略是确定性策略。
+蒙特卡洛控制为了让智能体持续不断地选择所有可能的动作，提出两种方案，分别是同轨策略和离轨策略。同轨策略中，用于生成采样数据的策略和待优化的策略是相同的；而在离轨策略中则是不同的。
 
-> - 同策略（On-policy：在蒙特卡罗方法中，如果采样策略是 $π^ϵ(s)$ ，不断改进策略也是 $π^ϵ(s)$而不是目标策略 $π^ϵ(s)$。这种采样与改进策略相同（即都是 $π^ϵ(s)$）的强化学习方法叫做同策略（on policy）方法。
-> - 异策略（Off-policy）：如果采样策略是 $π^ϵ(s)$，而优化目标是策略π，可以通过重要性采样，引入重要性权重来实现对目标策略π 的优化。这种采样与改进分别使用不同策略的强化学习方法叫做异策略（off policy）方法。
+首先回顾一种同轨策略——贪心策略，在绝大多数时候贪心地选择最大价值的动作，但同时以一个比较小的概率 随机选择一个动作。即对所有的非最大价值的动作，都有 $\frac{\epsilon}{|A(s)|}$ 的概率被 选中，那么对于最大价值的动作，以 $1-\epsilon+\frac{\epsilon}{|A(s)|}$ 概率被选中。
 
-为了弥补由于离策略引入的偏差，介绍重要性采样技术。
+为解决MC保证有充分的探索，即确保找到能最优动作，一个简单的方法就是使用探索性开头（exploring starts），让每个回合（episode）从不同的状态开始，从而使得所有状态都能探索到。
+
+当然这个假设有时候不切实际，因此我们引入离轨策略机制。
+
+# 离轨策略（off-policy）& 同轨策略（on-policy）
+
+离轨策略（off-policy）共有两个策略：一个是行为策略，其是随机策略，去采取非最优行动，生成探索性的样本，以保证探索到最优行动；而另一个是待优化的，称为目标策略，是确定性策略。
+
+离轨策略（off-policy）是有偏差的，因为目标策略的评估需要期望回报，但是我们只有行动策略的回报，这样计算出来的价值函数是不准确的，所以就需要重要度采样来弥补，几乎所有的离轨策略都采用了重要度采样。下面具体介绍重要度采样。
 
 ## 重要性采样（Importance Sampling）
+
+目标策略和行动策略同轨迹下的相对概率，就是重要度采样。
+
+### 离散变量的重要性采样：
+
+$$
+\rho_{t: T-1}=\frac{\prod_{k=t}^{t-1} \pi\left(A_k \mid S_k\right) p\left(S_{k+1} \mid S_k, A_k\right)}{\prod_{k=t}^{t-1} b\left(A_k \mid S_k\right) p\left(S_{k+1} \mid S_k, A_k\right)}=\prod_{k=t}^{t-1} \frac{\pi\left(A_k \mid S_k\right)}{b\left(A_k \mid S_k\right)}
+$$
+
+那么在目标策略的评估中，价值函数的计算就可以利用行动策略的回报与重要度采样之积，求得:
+
+$$
+v_\pi=\mathbb{E}\left(\rho_{t: T-1} G_t \mid S_t=s\right)
+$$
+
+### Off-policy MC 伪代码
+
+- Off-policy MC control, for estimating $\pi \approx \pi_*$
+- Initialize, for all $s \in \mathcal{S}, a \in \mathcal{A}(s)$ :
+
+  - $Q(s, a) \leftarrow \text { arbitrary } $
+  - $C(s, a) \leftarrow 0 $
+  - $\pi(s) \leftarrow \argmax _a Q\left(S_t, a\right) $ (with ties broken consistently)
+- Repeat forever:
+  - $b \leftarrow \text { any soft policy }$
+  - Generate an episode using  b:
+    - $\quad S_0, A_0, R_1, \ldots, S_{T-1}, A_{T-1}, R_T, S_T $
+  - $G \leftarrow 0$
+  - $W \leftarrow 1$
+  - $\text { For } t=T-1, T-2, \ldots \text { down to } 0:$
+    - $\quad G \leftarrow \gamma G+R_{t+1}$
+    - $C\left(S_t, A_t\right) \leftarrow C\left(S_t, A_t\right)+W$
+    - $Q\left(S_t, A_t\right) \leftarrow Q\left(S_t, A_t\right)+\frac{W}{C\left(S_t, A_t\right)}\left[G-Q\left(S_t, A_t\right)\right] $
+    - $\pi\left(S_t\right) \leftarrow \operatorname{argmax} \max _a   Q\left(S_t, a\right) $(with ties broken consistently)
+    - $\quad \text { If } A_t \neq \pi\left(S_t\right) \text { then   exit For loop }$
+    - $\quad W \leftarrow W \frac{1}{b\left(A_t \mid S_t\right)}$
+
+
+
+### 连续变量的重要性采样：
 
 考虑一个场景，假如正在尝试计算函数 $f(x)$ 的期望值，其中 $x \sim p(x)$ 服从某种分布。则对 $E(f(x))$ 有以下估计:
 
@@ -127,6 +175,12 @@ $\rho_N = \rho_{N-1}\frac{1}{\mu(a_N|s_N)}$
     - $q\left(s_t, a_t\right) \leftarrow q\left(s_t, a_t\right)+\frac{\rho}{C\left(s_t, a_t\right)}\left[g\left(s_t, a_t\right)-q\left(s_t, a_t\right)\right]$ 对应公式 (8)
     - $\rho \leftarrow \rho \frac{1}{\mu\left(a_t \mid s_t\right)}$
     - $\pi\left(s_t\right) \leftarrow \operatorname{argmax}_a q\left(s_t, a_t\right)$ ，由于序列已经采样好，所以策略在for循环内更新更 在for循环外再加一层for更新策略没有区别
+
+## 总结
+
+- 同轨策略（On-policy：在蒙特卡罗方法中，如果采样策略是 $π^ϵ(s)$ ，不断改进策略也是 $π^ϵ(s)$而不是目标策略 $π^ϵ(s)$。这种采样与改进策略相同（即都是 $π^ϵ(s)$）的强化学习方法叫做同策略（on policy）方法。
+- 异轨策略（Off-policy）：如果采样策略是 $π^ϵ(s)$，而优化目标是策略π，可以通过重要性采样，引入重要性权重来实现对目标策略π的优化。这种采样与改进分别使用不同策略的强化学习方法叫做异策略（off policy）方法。
+
 
 [1]: https://zhuanlan.zhihu.com/p/360265418
 

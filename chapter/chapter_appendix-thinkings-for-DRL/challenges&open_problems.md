@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-26 00:52:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-26 11:49:59
+ * @LastEditTime: 2023-05-23 23:34:33
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -162,7 +162,7 @@ Task 4: clean up spill from cup...
 Gupta, Yu, Zhao, Kumar, Rovinsky, Xu, Devlin, Levine. Reset-Free Reinforcement Learning via Multi-
 Task Learning: Learning Dexterous Manipulation Behaviors without Human Int
 
-### 如何从经验启动（bootstrap）探索？
+### 如何从自举（bootstrap）探索？
 
 > 行为先验（behavioral prior）是指一个智能体在与环境交互之前已经具备的行为知识和经验。这些行为知识和经验通常是从历史数据或以前的交互中获得的，并可以用来指导智能体在新环境中的行为决策。在强化学习中，行为先验通常用于探索和加速学习过程，以更快地学习到有效策略。
 
