@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-02 18:38:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-04 18:34:04
+ * @LastEditTime: 2023-05-25 04:33:39
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -22,8 +22,9 @@
 深度强化学习结合了深度学习（Deep Learning，DL）的特征提取能力和强化学习（Reinforcement Learning，RL）的决策能力，可以直接根据输入的多维数据做出最优决策输出，是一种端对端（end-to-end）的决策控制系统，广泛应用于动态决策、实时预测、仿真模拟、游戏博弈等领域，其通过与环境不断地进行实时交互，将环境信息作为输入来获取失败或成功的经验来更新决策网络的参数，从而学习到最优决策。深度强化学习框架如下：
 
 ![深度强化学习框架](../../img/DRL_frame.png)
-
 ![DRL = DL + RL](../../img/DRL_DL_RL.png)
+![DRL原理图](../../img/DRL_schematic_diagram.png)
+
 
 
 TODO:

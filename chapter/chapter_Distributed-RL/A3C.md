@@ -1,3 +1,16 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-04-29 01:01:56
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-05-25 04:19:54
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # A3C 算法
 
 ## A3C的引入
@@ -24,6 +37,9 @@ A3C的思路也是如此，它利用多线程的方法，同时在多个线程�
 A3C可根据critic所采用的算法进行同步/异步训练, 能适用于同步策略、异步策略。
 
 使用在线Critic整合策略梯度, 降低训练样本的相关性, 在保证稳定性和无偏估计的前提下, 提升了采样效率和训练速度.[3]
+
+A3C (Asynchronous advantage actor-critic) 算法[38]. 该算法包括一个全局执行器–评价器网络和多个对应于每个线程的执行器–评价器网络. 两种网络结构相同, 均为双输出的神经网络结构, 网络的一个输出表示状态值函数. 全局策略和值函数分别表示 为 $\pi(s \mid \theta)$ 和 $V(s \mid \phi)$, 每个线程的策略和值函数分别 表示为 $\pi\left(s \mid \theta^{\prime}\right)$ 和 $V\left(s \mid \phi^{\prime}\right)$, 其中 $\theta, \theta^{\prime}, \phi$ 和 $\phi^{\prime}$ 为网络的参数. 每执行 步或者达到某个终止状态时进行一次网络更新, 首先计算每个线程的值函数梯度和策略梯度, 然后将它们分别相加, 对全局的网络参数
+进行更新, 随后再复制给每个线程的网络.
 
 ## 算法大纲：
 

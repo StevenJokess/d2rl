@@ -5,14 +5,14 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 10:57:56
+ * @LastEditTime: 2023-05-26 21:21:02
  * @Description:
  * @TODO::
  * @Reference:
 -->
 # 多臂老虎机（multi-armed bandit，MAB）环境
 
-下面考虑这样一个**非关联性**的简化环境，智能体不涉及学习如何在多种状态下行动，而只涉及一个状态，从而避免了完整强化学习问题的大部分复杂性，多臂老虎机问题可被视为序列决策问题的一种特殊情况，只是为了帮助我们更好地理解强化学习的基本概念和方法。有一个拥有 $K$ 根拉杆的老虎机，拉动每一根拉杆都对应一个关于奖励 $R$ 的概率分布。我们每次拉动其中一根拉杆，就可以从该拉杆对应的奖励概率分布中获得一个奖励 $r$。我们在各根拉杆的奖励概率分布未知的情况下，从头开始尝试，目标是在操作 $T$ 次拉杆后获得尽可能高的累积奖励。由于奖励的概率分布是未知的，因此我们需要在“探索拉杆的获奖概率”和“根据经验选择获奖最多的拉杆”中进行权衡。
+下面考虑这样一个**非关联性**的简化环境，智能体与环境的交互不会改变环境的状态，可看作无状态的强化学习（stateless reinforcement learning）[11]，从而避免了完整强化学习问题的大部分复杂性，多臂老虎机问题可被视为序列决策问题的一种特殊情况，只是为了帮助我们更好地理解强化学习的基本概念和方法。有一个拥有 $K$ 根拉杆的老虎机，拉动每一根拉杆都对应一个关于奖励 $R$ 的概率分布。我们每次拉动其中一根拉杆，就可以从该拉杆对应的奖励概率分布中获得一个奖励 $r$。我们在各根拉杆的奖励概率分布未知的情况下，从头开始尝试，目标是在操作 $T$ 次拉杆后获得尽可能高的累积奖励。由于奖励的概率分布是未知的，因此我们需要在“探索拉杆的获奖概率”和“根据经验选择获奖最多的拉杆”中进行权衡。
 
 ## 形式化描述
 
@@ -274,7 +274,8 @@ $\pi_{\theta}=\mu_{\theta}+\varepsilon ,\varepsilon \sim N\left(0,\sigma^2\right
 [7]: https://stats.stackexchange.com/questions/498158/is-there-any-difference-between-ucbupper-bound-confidence-and-ucb1upper-bound
 [8]: https://arxiv.org/pdf/1707.02038.pdf
 [9]: https://zhuanlan.zhihu.com/p/54159132
-[10]: https://www.bilibili.com/video/BV1Hk4y1m7xQ/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
+[10]: https://www.bilibili.com/video/BV1Hk4y1m7xQ/
+[11]: https://www.bilibili.com/video/BV1DK411y7Dv/
 
 更多资料：
 

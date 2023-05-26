@@ -19,6 +19,7 @@ chapter_book_intro/index
 chapter_installation/index
 chapter_basic-RL/index
 chapter_basic-RL-algs/index
+chapter_Eligibility_Trace/index
 
 chapter_actor-critic-algs/index
 chapter_basic-DRL&DQN-algs/index
@@ -29,6 +30,8 @@ chapter_model-based-algs/index
 chapter_Incomplete_observations/index
 chapter_Sparse_Reward/index
 chapter_Define_Reward_difficulty/index
+
+chapter_goal-dont/index
 chapter_goal-oriented_RL/index
 
 chapter_multi_goals/index
