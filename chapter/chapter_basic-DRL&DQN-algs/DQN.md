@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 23:43:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-26 21:47:06
+ * @LastEditTime: 2023-05-26 22:18:59
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO:: 伪代码和Code,
@@ -55,9 +55,11 @@ $$
 \omega^*=\arg \min _\omega \frac{1}{2 N} \sum_{i=1}^N\left[Q_\omega\left(s_i, a_i\right)-\left(r_i+\gamma \max _{a^{\prime}} Q_\omega\left(s_i^{\prime}, a^{\prime}\right)\right)\right]^2
 $$
 
-至此，我们就可以将 Q-learning 扩展到神经网络形式——**深度 Q 网络**（deep Q network，DQN）算法。由于 DQN 是离线策略算法，因此我们在收集数据的时候可以使用一个 $\epsilon$ -贪婪策略来平衡探索与利用，将收集到的数据存储起来，在后续的训练中使用。DQN 中还有两个非常重要的模块——**经验回放**和**目标网络**，它们能够帮助 DQN 取得稳定、出色的性能。
+至此，我们就可以将 Q-learning 扩展到神经网络形式——**深度 Q 网络**（deep Q network，DQN）算法。由于 DQN 是离线策略算法，因此我们在收集数据的时候可以使用一个 $\epsilon$ -贪婪策略来平衡探索与利用，将收集到的数据存储起来，在后续的训练中使用。DQN 中还有两个非常重要的技巧——**经验回放**和**目标网络**，它们能够帮助 DQN 取得稳定、出色的性能。
 
-## 经验回放（experience replay）
+
+
+### 经验回放（experience replay）
 
 在一般的有监督学习中，假设训练数据是独立同分布的，我们每次训练神经网络的时候从训练数据中随机采样一个或若干个数据来进行梯度下降，随着学习的不断进行，每一个训练数据会被使用多次。在原来的 Q-learning 算法中，每一个数据只会用来更新一次 $Q$ 值。为了更好地将 Q-learning 和深度神经网络结合，DQN 算法采用了经验回放（experience replay）方法，具体做法为维护一个**回放缓冲区（replay buffer）**，如图 6.12 所示，回放缓冲区又被称为**回放内存（replay memory）**。
 
@@ -83,17 +85,19 @@ Q：我们观察缓存区的 $(s, a)$ ，发现里面混杂了一些不符合 $\
 
 A：没关系。这并不是因为过去的策略与现在的策略很像，就算过去的策略与现在的策略不是很像，也是没有关系的。主要的原因是我们并不是去采样一个轨迹，我们只采样了一笔经验，所以与是不是异策略这件事是没有关系的。就算是异策略，就算是这些经验不是来自于 $\pi$ ，我们还是可以用这些经验来估测 $Q_\pi(s,a)$。
 
-## 目标网络
+### 目标网络（Target network）
 
 DQN 算法最终更新的目标是让$Q_\omega(s, a)$逼近$r+\gamma \max _{a^{\prime}} Q_\omega\left(s^{\prime}, a^{\prime}\right).$
 
-由于 TD 误差目标本身就包含神经网络的输出，因此在更新网络参数的同时目标也在不断地改变，这非常容易造成*神经网络训练的不稳定性*。为了解决这一问题，DQN 便使用了目标网络（target network）的思想：既然训练过程中 Q 网络的不断更新会导致目标不断发生改变，不如暂时先将 TD 目标中的 Q 网络固定住，这样就能让 Q 估计网络有足够的时间去拟合目标网络[6]。
+由于 TD 误差目标本身就包含神经网络的输出，因此在更新网络参数的同时目标也在不断地改变，甚至难以收敛（non-convergence or even divergence），这非常容易造成*神经网络训练的不稳定性*。为了解决这一问题，DQN 便使用了目标网络（target network）的思想：既然训练过程中 Q 网络的不断更新会导致目标不断发生改变，不如暂时先将 TD 目标中的 Q 网络固定住，这样就能让 Q 估计网络有足够的时间去拟合目标网络[6]。
 
 为了实现这一思想，我们需要利用两套 Q 网络，一个是Q网络，而再复制一个和原来Q网络结构一样的Target Q网络，用于计算Q目标值。[5]
 
 (1) 原来的训练网络 $Q_\omega(s, a)$ ，用于计算原来的损失函数 $\frac{1}{2}\left[Q_\omega(s, a)-\left(r+\gamma \max _{a^{\prime}} Q_{\omega^{-}}\left(s^{\prime}, a^{\prime}\right)\right)\right]^2$ 中的 $Q_\omega(s, a)$ 项，并且使用正常梯度下降方法来进行更新。
 
 (2) 目标网络 $Q_{\omega^{-}}(s, a)$ ，用于计算原先损失函数 $\frac{1}{2}\left[Q_\omega(s, a)-\left(r+\gamma \max _{a^{\prime}} Q_{\omega^{-}}\left(s^{\prime}, a^{\prime}\right)\right)\right]^2$ 中的 $\left(r+\gamma \max _{a^{\prime}} Q_{\omega^{-}}\left(s^{\prime}, a^{\prime}\right)\right)$ 项，其中 $\omega^{-}$ 表示目标网络中的参数。如果两套网络的参数随时保持一致，则仍 为原先不够稳定的算法。为了让更新目标更稳定，目标网络并不会每一步都更 新。具体而言，目标网络使用训练网络的一套较旧的参数，训练网络 $Q_\omega(s, a)$ 在 训练中的每一步都会更新，而目标网络的参数每隔 $C$ 步才会与训练网络同步一 次，即 $\omega^{-} \leftarrow \omega$ 。这样做使得目标网络相对于训练网络更加稳定。
+
+## 伪代码（Pseudocode）
 
 综上所述，DQN 算法的具体流程如下：
 
@@ -104,13 +108,13 @@ DQN 算法最终更新的目标是让$Q_\omega(s, a)$逼近$r+\gamma \max _{a^{\
   - 获取环境初始状态 $s_1$
   - for 时间步 $t=1 \rightarrow T$ do
     - 根据当前网络 $Q_\omega(s, a)$ 以 $\epsilon$-贪婪策略选择动作 $a_t$
-    - 执行动作 $a_t$ ，获得回报 $r_t$ ，环境状态变为 $s_{t+1}$
-    - 将 $\left(s_t, a_t, r_t, s_{t+1}\right)$ 存储进回放池 $R$ 中
-    - 若 $R$ 中数据足够，从 $R$ 中采样 $N$ 个数据 $$\left\{\left(s_i, a_i, r_i, s_{i+1}\right)\right\}_{i=1, \ldots, N}$$
-    - 对每个数据，用目标网络计算目标值 $$ y_i=r_i+\gamma \max _a \hat{Q}_{\omega^{-}}\left(s_{i+1}, a\right)$$
+    - 执行动作 $a_t$ ，获得回报 $r_{t+1}$ ，环境状态变为 $s_{t+1}$
+    - 将 $\left(s_t, a_t, r_{t+1}, s_{t+1}\right)$ 存储进回放池 $R$ 中
+    - 若 $R$ 中数据足够，从 $R$ 中采样 $N$ 个数据 $$\left\{\left(s_i, a_i, r_{i+1}, s_{i+1}\right)\right\}_{i=1, \ldots, N}$$
+    - 对每个数据，用目标网络计算目标值 $$ y_i=r_i+\gamma \max _a \hat{Q}_{\omega^{-}}\left(s_{i+1}, a_{i}\right)$$
     - 最小化目标损失 $L=\frac{1}{N} \sum_i\left(y_i-Q_\omega\left(s_i, a_i\right)\right)^2$ ，
-    - 根据梯度0L(0)/∂0更新参数0更新当前网络 $Q_\omega$
-    - 每C次更新目重置目标网络$\hat{Q}=Q$。
+    - 根据梯度 $∂L(\omega)/∂(\omega)$ 来更新参数更新当前网络 $Q_\omega$ [12]
+    - 每C次更新，就重置目标网络$\hat{Q}=Q$。
   - **end for**
 - **end for**
 
@@ -175,3 +179,4 @@ DQN算法演化出众多变体, 如：
 [9]: https://www.youtube.com/watch?v=GWN3inj682I&t=61s
 [10]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
 [11]: https://www.bilibili.com/video/BV1q4411X7A4
+[12]: https://blog.csdn.net/shengzimao/article/details/126323311

@@ -21,6 +21,11 @@
 
 田渊栋
 
+## 其他代码
+
+开源代码：
+https://github.com/hijkzzz/alpha-zero-gomoku
+
 
 
 [1]: https://www.bilibili.com/video/BV147411i7tM/?spm_id_from=333.337.search-card.all.click

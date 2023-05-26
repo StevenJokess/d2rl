@@ -5,13 +5,26 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:04:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-08 21:50:33
+ * @LastEditTime: 2023-05-26 23:42:35
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 模仿学习
+# 模仿学习（Imitation Learning）
+
+模仿学习（Imitation Learning），也被称为通过演示（demostration）学习、学徒学习（apprenticeship learning）。
+
+专家展示了如何解决问题：
+- 机器也跟环境交互，但没能获得显式明确的回报。
+- 很难确定某些问题的回报
+- 手动的回报函数的设计，可能会导致不可控的行为。
+
+例如：
+
+- 自动驾驶撞人很难定义奖励，收集人类司机数据。[3]
+- 现在去教机器倒水，由于机械臂的活动空间非常大，那么制定规则很难，这时，我们可以先手动指导机器倒水，然后让机器去模仿就可以了。
+
 
 ## 简介
 
@@ -43,7 +56,32 @@ BC 也存在很大的局限性，该局限在数据量比较小的时候犹为�
 
 第 3 章介绍过一个策略和给定 MDP 交互的占用度量呈一一对应的关系。因此，模仿学习的本质就是通过更新策略使其占用度量尽量靠近专家的占用度量，而这正是 GAIL 的训练目标。由于一旦策略改变，其占用度量就会改变，因此为了训练好最新的判别器，策略需要不断和环境做交互，采样出最新的状态动作对样本。
 
-### 代码实践
+
+### 问题
+
+#### 只拟合少量数据
+
+- 只局限于几个专家样例
+- 开车撞墙不知道怎么处理了
+- 收集更多极端数据
+- 即Dataset Aggregation：
+  - Get actor $\pi_1$ by behavior cloning
+  - Using $\pi_1$ to interact with the environment
+  - Ask the expert to label the observation of $\pi_1$
+  - Using new data to $\operatorname{train} \pi_2$
+- 极端数据收集很难，比如开车撞墙会死人。
+
+
+
+
+#### Mismatch问题
+
+- 如果复制所有行为，也包括不相干的动作。
+- 如果机器有限容量可能挑到错误行为去复制了。
+- 例如：老师的语言与手势里，只有语言是需要复制的。
+- 需要分辨出来：哪些行为需要复制，哪些行为需要被忽略。[3]
+
+
 
 ### 生成专家数据
 
@@ -83,3 +121,4 @@ code
 
 [1]: https://hrl.boyuai.com/chapter/3/%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0
 [2]: https://www.zhihu.com/column/c_1159880158273544192
+[3]: https://www.bilibili.com/video/BV124411S7au

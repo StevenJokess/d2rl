@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 02:19:30
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-12 02:14:51
+ * @LastEditTime: 2023-05-26 22:37:06
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -26,9 +26,11 @@
 :maxdepth: 2
 
 frameworks
+game_frameworks
 universe
 argparse
 seaborn
 mujoco
+Latex
 summary
 ```

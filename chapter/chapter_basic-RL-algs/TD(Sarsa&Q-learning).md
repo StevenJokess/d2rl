@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-26 22:08:44
+ * @LastEditTime: 2023-05-26 22:27:25
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -248,7 +248,7 @@ code
 
 ---
 
-SARSA可算是Q-learning的*改进* (这句话出自「神经网络与深度学习」的第 342 页) (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，它和Q-learning的区别是它采取的是策略所选择的动作，而非最高Q值的动作。[5]
+
 
 ## Q-learning 算法
 
@@ -263,12 +263,20 @@ $$
 其是off-policy的，由于我们只关心哪个动作使得下一个时刻更新的Q，即$Q\left(s_{t+1}, a\right)$ 取得最大值，而实际到底采取了哪个动作(行为策略)，Q-learning并不关心，故采用的是待评估策略产生的下一个状态动作二元组的Q价值。[7]这表明优化策略并没有用到行为策略的数据，所以说它是off-policy的。[2]与SARSA相比，异策略Q学习需要更短的训练时间，跳出局部最优解的概率更大。然而，如果智能体根据Q值的概率模型而不是贪婪选择对动作进行采样，则采用异策略技术的Q值估计误差将增大。[3]
 
 - 训练开始时，随机 Q 表，初始化状态
-- 值得注意的是，只有最后一步得到奖励时（假如我们只有终点一个奖励），现实才真的是现实的奖励，否则还是用 Q 表估计的。
+- 值得注意的是，只有最后一步得到奖励时（假如我们只有终点一个奖励），这个奖励才真的是现实的奖励，否则还是用 Q 表估计的。
 - 这里 Q 表的更新只与未来的状态和动作有关，在最开始，应该除了真正有奖励的最后一步，其余步骤的更新都是不确定的（因为现实也是用 Q 表估计的，只有最后一步现实才是现实），但第一次迭代之后最后一步的价值更新是确定的（在宝藏边上还是知道怎么走向宝藏），且与 LSTM 那种时间序列不同，它不是从最后一个时间步往前 BPTT，而是更新了一个状态的转移价值（取哪个动作好），这个状态可能出现在每一次迭代的多个时间步上（或者说和时间步无关），接下来与该状态相邻的状态更新时，用 Q 表估计的现实就会准确一些，慢慢的整个算法达到收敛。
 
+### 收敛性（Convergence）
+
+- Q will converge to Q* if every (s,a)appears infinitely often in D
+- Requires sufficient exploration
+  - Exploration of under-represented state-actions to enable learning
+- Popular rules:e-greedy,softmax,exploration bonus,optimistic initialization,...[18]
 
 
-## 伪代码
+### 伪代码（Pseudocode）
+
+$\epsilon-greedy$的Q-learning的伪代码：
 
 - Input: $\epsilon,\left\{\alpha_t\right\}$
 - Initialize $Q \leftarrow 0$ for all $(s, a)$
@@ -296,7 +304,7 @@ TODO
 
 ### 缺点及后续的改进
 
-Q学习具有以下缺点：
+Q-learning具有以下缺点：
 
 1. 难以应对复杂性环境：可以模拟行动空间离散且较小的场景，但难以处理复杂情况，无法处理连续的行动空间和状态空间。之后的DQN能处理连续的状态空间。
   > -  只能解决有限大小的状态和动作，当状态数为n，动作数为m时。（Only for finite-sized problems with $n$ states and $m$ actions（
@@ -305,6 +313,10 @@ Q学习具有以下缺点：
 3. 难以应对时序关联的环境：**可以模拟行动空间离散且较小的场景，但难以处理复杂情况，无法处理连续的行动空间。**[16]
 4. 难以学习随机策略：策略是通过从Q函数最大化回报，确定地计算出来的，所以无法学习随机策略。
 
+### SARSA与Q-learning的关系
+
+- 我不认可：SARSA可算是Q-learning的*改进* 这句话（出自「神经网络与深度学习」的第 342 页）我不认可 (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，
+- Sarsa和Q-learning的区别是Sarsa采取的是策略所选择的动作，而Q-learning是取最高Q值的动作。[5]
 
 
 
