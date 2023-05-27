@@ -19,7 +19,12 @@ AlphaStar for mulitiplayer online games
 
 相比于之前的深蓝和AlphaGo，对于《星际争霸Ⅱ》等策略对战型游戏，使用AI与人类对战的难度更大。比如在《星际争霸Ⅱ》中，要想在玩家对战玩家的模式中击败对方，就要学会各种战术，各种微操和掌握时机。在游戏中玩家还需要对对方阵容的更新实时地做出正确判断以及行动，甚至要欺骗对方以达到战术目的。总而言之，想要让AI上手这款游戏是非常困难的。但是DeepMind做到了。
 
-AlphaStar是DeepMind与暴雪使用深度强化学习技术实现的计算机与《星际争霸Ⅱ》人类玩家对战的产品，其因为近些年在《星际争霸Ⅱ》比赛中打败了职业选手以及99.8%的欧服玩家而被人所熟知。北京时间2019年1月25日凌晨2点，暴雪公司与DeepMind合作研发的AlphaStar正式通过直播亮相。按照直播安排，AlphaStar与两位《星际争霸Ⅱ》人类职业选手进行了5场比赛对决演示。加上并未在直播中演示的对决，在人类对阵AlphaStar的共计11场比赛中，人类仅取得了1场胜利。DeepMind也将研究工作发表在了2019年10月的 Nature 杂志上。本章将对这篇论文进行深入的分析，有兴趣的读者可以阅读原文。
+AlphaStar是DeepMind与暴雪使用深度强化学习技术实现的计算机与《星际争霸Ⅱ》人类玩家对战的产品，其因为近些年在《星际争霸Ⅱ》比赛中打败了职业选手以及99.8%的欧服玩家而被人所熟知。北京时间2019年1月25日凌晨2点，暴雪公司与DeepMind合作研发的AlphaStar正式通过直播亮相。按照直播安排，AlphaStar与两位《星际争霸Ⅱ》人类职业选手进行了5场比赛对决演示。加上并未在直播中演示的对决，在人类对阵AlphaStar的共计11场比赛中，人类仅取得了1场胜利。
+
+且最终在天梯榜上达到了Grandmaster 层级，超过了99.8%
+的人类选手。[3]
+
+DeepMind也将研究工作发表在了2019年10月的 Nature 杂志上。本章将对这篇论文进行深入的分析，有兴趣的读者可以阅读原文。
 
 AlphaStar是DeepMind在解决了围棋问题之后，在RTS游戏领域的尝试。
 
@@ -60,3 +65,5 @@ AlphaStar 所参考的算法就是 Double Oracle Algorithm（DO Algo），这个
 
 [1]: https://aistudio.baidu.com/aistudio/projectdetail/4565322?channelType=0&channel=0
 [2]: https://developer.aliyun.com/article/818419?spm=a2c6h.12873639.article-detail.55.7fa137a8RUrUg3
+
+[3]: https://personal.ntu.edu.sg/boan/Chinese/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AE%80%E4%BB%8B.pdf

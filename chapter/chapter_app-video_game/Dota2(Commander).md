@@ -90,11 +90,16 @@ OpenAI Five 与人类一起玩耍的能力为人类与人工智能交互的未�
 
 Arena 将于 4 月 18 日星期四太平洋标准时间下午 6 点开放，并将于 4 月 21 日星期日太平洋标准时间晚上 11:59 关闭。请注册，以便我们确保您所在地区有足够的服务器容量！所有游戏的结果将自动报告给竞技场公共排行榜。
 
+## 缺点
+
+但是其一大缺点是只支持17 个英雄，而Dota 2 中共有117 个英雄，这极大地降低了问题的难度以及可玩性。[7]
+
 [1]: https://openai.com/blog/openai-five/
 [2]: https://youtu.be/eHipy_j29Xw
 [3]: https://www.guyuehome.com/21403
 [4]: https://openai.com/research/dota-2
 [5]: https://openai.com/the-international
 [6]: https://openai.com/research/openai-five-defeats-dota-2-world-champions
+[7]: https://personal.ntu.edu.sg/boan/Chinese/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AE%80%E4%BB%8B.pdf
 
 TODO:https://en.wikipedia.org/wiki/OpenAI_Five

@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-25 00:44:40
+ * @LastEditTime: 2023-05-28 02:21:05
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -302,20 +302,25 @@ $s, a$ ：可以称之为一步。智能体的行为可以描述为一系列步�
 
 计算回报公式(formulations of return):
 
-- 即时奖励（immediate / instantaneous [28] reward），即当前 $t$ 时刻的奖励 $r_t$ 或$r(s_t,a_t)$。注意：有的资料的 $r$ 用下标可能是 $t+1$ 代表发生$a_t$后的奖励，但本项目一律采用 $t$ 代表发生$a_t$后的奖励。
+- 即时奖励（immediate / instantaneous [28] reward），即当前 $t$ 时刻发生$a_t$后的奖励 $r_{t+1}$ 或$r(s_t,a_t)$。注意：有的资料的 $r$ 用下标可能是 $t$ 代表发生$a_t$后的奖励，但本项目一律采用 $t+1$ 代表发生$a_t$后的奖励。
 - 远期奖励（long-term reward），又叫延迟奖励（delayed reward），是指在一次行动后在一定时间$k$后（或者是一系列动作后）才获得回报。这种回报可能是一次, 也可能是多次。单个时间步的奖励 $r_{t+k}$ 或 $r(s_{t+k}, a_{t+k})$ 可用奖励函数 $R(s_{t+k}, a_{t+k})$算得。
 - 注：实际奖励用 $r$ ，而后面的奖励函数用 $R$ 。
 
 不同的回报公式可以用来计算在不同任务环境中的回报值:
 
-- 累积奖励是指在一次行动轨迹中所有奖励值的总和。公式是 $G(\tau) = \sum_{t=0}^T r_t$
+- 累积奖励是指在一次行动轨迹中所有奖励值的总和。公式是 $G(\tau) = \sum_{t=0}^T r_{t+1}$
 - 在实际问题中，智能体可能会面临如下的困境：选择一些立即的奖励可能会影响未来获得的奖励，而放弃即时回报可能会带来更多的长期奖励。所以通常存在着即时奖励和远期奖励之间的权衡。使用折扣因子能去平衡即时奖励和远期奖励，具体见下。
 - 折扣累积奖励是指在一次行动轨迹中所有奖励值按时间折扣的总和。
    - 折扣因子（Discount Factor）是一个用来平衡未来奖励的价值衰减因子，表示在未来的每个时刻，奖励会以一定的比例进行衰减。使用时间折扣是为了使强化学习智能体更好地处理长期决策问题，同时能够适应不同的环境和任务。
-   - 折扣因子通常表示为 $\gamma$ ，其中 $0 \leq \gamma \leq 1$ 。由于 $\gamma \leq 1$ ，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计奖励公式，越远视，即未来奖励对当前选择动作的影响越大，一般选择0.99或者0.995[49]；越接近0，越短视。
-   - 从当前时间步$t$开始到未来有限视野 $T$的所有时间步的累积奖励可以表示为：$$G_t = r_{t} + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{T} \gamma^k r_{t+k}$$
-   - 而无限视野(Infinite Horizon) 时，则是$$G_t = r_{t} + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{\infty} \gamma^k r_{t+k}$$
-   - 其中，$r_t$ 表示在时间步 $t$ 时获得的奖励，$\gamma$ 是时间折扣因子，$G_t$ 表示从时间步 $t$ 开始的累积奖励。[12]
+   - 折扣因子通常表示为 $\gamma$ ，其中 $0 \leq \gamma \leq 1$ 。
+   - 如果每个智能体的行为都碰巧只影响当前收益，而不是未来的回报，那么目光短浅的智能体可以通过单独最大化每个当前收益来最大化累计回报。但一般来说，最大化当前收益会减少未来的收益，以至于实际上的收益变少了。
+   - 由于 $\gamma \leq 1$ ，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计奖励公式，越远视，即未来奖励对当前选择动作的影响越大，一般选择0.99或者0.995[49]；越接近0，越短视。
+   - 分幕式任务——从当前时间步$t$开始到未来有限视野 $T$的所有时间步的累积奖励可以表示为：$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{T} \gamma^k r_{t+1+k}$$
+   - 持续性任务——无限视野(Infinite Horizon) 时，则是$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k r_{t+1+k}$$
+     - 其中，$r_{t+1}$ 表示在时间步 $t$ 发生$a_t$后获得的奖励，$\gamma$ 是时间折扣因子，$G_t$ 表示从时间步 $t$ 开始的累积奖励。[12]
+   - **试图统一分幕式任务和持续性任务**，即把幕的终止当作一个特殊的吸收状态的入口，它只会转移到自己并且只产生零收益。例如，考虑状态转移图：![状态转移图](../../img/limit&limitless_state_transitation.png)
+     - 可得综合写法：$$G_t=\sum_{k=t+1}^T \gamma^{k-t-1} r_k$$ 其包括 $\mathrm{T}=\infty$ 或 $\gamma=1$ (但不是二者同时) 的可能性。[50]
+
 
 ### 细说智能体
 
@@ -356,8 +361,8 @@ $s, a$ ：可以称之为一步。智能体的行为可以描述为一系列步�
 价值函数通常有两种形式：
 
 - **状态价值函数 $V$**（state value function）表示在某个状态下之后每一步行动都按照策略 $\pi$ 执行后每个状态的价值函数。下面公式，只由一个状态s确定V，是由于此时是[马尔可夫决策过程 MDP](MDP.md)。
-  $$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = r_0 + \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$
-  其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ （具体介绍见后）执行后的预期累积奖励，$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野 $\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}\pi$ 是在策略 $\pi$ 下的期望。
+  $$V_{\pi}(s) = \mathbb{E}_{\pi} \left[ G_t | S_t = s \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_{t}=s\right]$$
+  其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ （具体介绍见后）执行后的预期累积奖励，$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野 $\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}_\pi$ 是在策略 $\pi$ 下的期望。
 > 预测下一个即时的奖励: $\mathbf{R}_{}= \mathbb{E}_{\pi}\left[R_{t+1} \mid S_{t}=s, A_{t}=a\right]_{\circ}$
 - **动作-状态价值函数**（state-action value function），简称**动作价值函数**（action value function）表示从某个状态开始，先随便执行一个行动 $a$ (有可能不是按照策略走的），之后每一步都按照固定的策略 $\pi$ 执行后的每个状态-行为对下的价值函数，又叫Q函数。[11]下面公式，只由一个状态s和一个动作a确定V，是由于此时是[马尔可夫决策过程 MDP](../chapter_MDP/MDP.md)。
 $$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积奖励。$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野 $\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$ ） 是在策略 $\pi$ 下的期望。注意，动作价值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
@@ -551,6 +556,7 @@ $$
 [47]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2017/10/20/bff2daa6-042b-41f8-837c-4b8575431726.pdf
 [48]: https://www.youtube.com/watch?v=d0p6MyB86Os
 [49]: https://zhuanlan.zhihu.com/p/474672251
+[50]: https://www.cs.sjtu.edu.cn/~linghe.kong/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AE%B2%E4%B9%89%E5%86%AF%E7%BF%94.pdf
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 

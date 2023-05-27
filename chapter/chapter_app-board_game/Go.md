@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-29 20:42:36
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-14 02:23:57
+ * @LastEditTime: 2023-05-27 21:05:33
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -103,21 +103,35 @@ Exploration vs. Exploitation
 
 例子：AlphaGo带来新定式、骚操作，尖顶。
 
-## 穷举不可行
+## 可穷举，但计算上不可行
+
+### 策梅洛定理
+
+Ernst Zermelo定理：在二人的有限游戏中，如果双方皆拥有完全的信息，并且运气因素并不牵涉在游戏中，那先行或后行者当中必有一方有必胜/必不败的策略。[13]
+
+
+### 纳什定理
+
+纳什定理只要参与博弈的几方策略都是有限的那么就一定存在一种平衡状态（即，纳什定理，大家都会采用这种平衡策略，而没有单方面改变策略的动力
+
+策梅洛定理是纳什定理的一个例子。
+
 
 ### 复杂性
 
 - 状态空间复杂度（State-space Complexity）：$3^361 ≈ 10^172$；对比，Tic-Tac-Toe：$10^4$，Chess：$10^43$
 - 游戏-树尺寸（Game-tree Size）：$361! ≈ 10^768$
-- 排除规则中不可能的，游戏-树复杂度（Game-tree Size）Complexity）：$250^150 ≈ 10^360$；对比，Tic-Tac-Toe：$10^5$，Chess：$10^123$，用质子去填满全宇宙，需要：$10^122$个
+- 排除规则中不可能的，游戏-树复杂度（Game-tree Size）Complexity）：$250^150 ≈ 10^360$；对比，Tic-Tac-Toe：$10^5$，Chess：$10^123$，用质子去填满全宇宙，需要：$10^122$个[14]
+
 
 ### 与计算性能对比
 
-第二代谷歌 TPU 计算能力是的 45 TFLOPS（每秒 45*10^12 浮点数运算），与围棋的可能性数量级相差甚远。[12]
+- 第二代谷歌 TPU 计算能力是的 45 TFLOPS（每秒 45*10^12 浮点数运算），与围棋的可能性数量级相差甚远。[12]
+- 就算用世界上最快的计算机富岳，每秒计算量10^19次，假设一次就能算完一个路径，就需要10^342秒，但宇宙年龄只有128亿年=10^17秒。
 
 ## 下棋
 
-- 作弊：悔棋，
+- 作弊：悔棋
 - 计划：在头脑里预演，来提前放弃不好的动作。
 
 
@@ -180,3 +194,6 @@ $L(w)=-t_a \log \left(p_a\right)$ 其中，s为当前棋局为，a是在自我�
 [10]: https://www.bilibili.com/read/cv16184436
 [11]: https://www.bilibili.com/video/BV1eL4y1L7Mx/
 [12]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2017/10/20/bff2daa6-042b-41f8-837c-4b8575431726.pdf
+[13]: https://zh.wikipedia.org/zh-sg/%E7%AD%96%E6%A2%85%E6%B4%9B%E5%AE%9A%E7%90%86_(%E5%8D%9A%E5%BC%88%E8%AB%96)#:~:text=%E7%AD%96%E6%A2%85%E6%B4%9B%E5%AE%9A%E7%90%86%EF%BC%88%E8%8B%B1%E8%AF%AD,%E5%BF%85%E4%B8%8D%E8%B4%A5%E7%9A%84%E7%AD%96%E7%95%A5%E3%80%82
+[14]: https://www.youtube.com/watch?v=ETes6EJtSkA
+[15]: https://www.bilibili.com/video/BV1mV4y1u7mJ/

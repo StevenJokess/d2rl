@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-28 21:20:34
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-14 23:44:35
+ * @LastEditTime: 2023-05-28 01:37:39
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,7 +15,9 @@
 
 ## hold'em（HUNL）
 
-德州扑克与围棋的区别在于德州扑克属于非完备信息博弈问题，是计算机博弈的另一分支。非完备信息机器博弈问题已被证明是一个NP 难问题[153]，一对一有限注德州扑克的状态复杂度约为3.16×10^17,包含其中的状态大多是无法确认的，有极大的随机性和不确定性，因此，德州扑克也是人工智能领域非常具有挑战性和代表性的博弈课题。图7-1 展示了德州扑克的牌局实例。
+德州扑克与围棋的区别在于德州扑克属于非完备信息博弈问题，是计算机博弈的另一分支。非完备信息机器博弈（不完全信息博弈）问题已被证明是一个NP 难问题[153]，一对一有限注德州扑克的状态复杂度约为3.16×10^17,包含其中的状态大多是无法确认的，有极大的随机性和不确定性，因此，德州扑克也是人工智能领域非常具有挑战性和代表性的博弈课题。图7-1 展示了德州扑克的牌局实例。
+
+对于2 人有限下注的德州扑克，可能出现的不同牌面状态是10^14[4]
 
 ## 历史
 
@@ -89,3 +91,4 @@ DeepStack 算法由三个部分组成：针对当前公共状态的本地策略�
 [1]: https://zhuanlan.zhihu.com/p/73268685
 [2]: https://www.ambchina.com/data/upload/image/20220226/2017%E4%B8%AD%E5%9B%BD%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E5%88%97%E7%99%BD%E7%9A%AE%E4%B9%A6--%E6%99%BA%E8%83%BD%E5%8D%9A%E5%BC%88-2017.pdf
 [3]: https://www.ambchina.com/data/upload/image/20220226/2017%E4%B8%AD%E5%9B%BD%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E5%88%97%E7%99%BD%E7%9A%AE%E4%B9%A6--%E6%99%BA%E8%83%BD%E5%8D%9A%E5%BC%88-2017.pdf
+[4]: https://personal.ntu.edu.sg/boan/Chinese/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AE%80%E4%BB%8B.pdf

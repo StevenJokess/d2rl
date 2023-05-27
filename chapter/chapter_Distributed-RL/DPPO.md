@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-12 23:24:11
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-12 23:24:30
+ * @LastEditTime: 2023-05-27 20:33:48
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,7 +13,7 @@
 -->
 # DPPO
 
-谷歌的科学家在了解PPO后，认可了PPO确实是一个优秀的算法，他们结合自身强大的并行计算能力推出了分布式近端策略优化（DPPO），也就是分布式PPO算法。由它的名字可知，它是对PPO算法的改进。这个算法讨论的一个重点就是如何只利用简单的回报函数，通过丰富多变的环境来学习到稳定的行为
+谷歌的科学家在了解PPO后，认可了PPO确实是一个优秀的算法，他们结合自身强大的并行计算能力推出了分布式近端策略优化（DPPO， Distributed PPO[2]），也就是分布式PPO算法。由它的名字可知，它是对PPO算法的改进。这个算法讨论的一个重点就是如何只利用简单的回报函数，通过丰富多变的环境来学习到稳定的行为
 
 原始的PPO算法通过完整的回报和估计策略优势，而为了便于使用分步更新的神经网络，DPPO使用了K阶回报的思想来估计策略优势。在DPPO算法中，数据的收集和梯度的计算被分布到多个任务对象中，思想类似于A3C算法。
 
@@ -32,4 +32,9 @@ Actor就是在旧策略的基础上根据优势函数修改出新策略，优势
 
 有实验将DPPO算法与TRPO和A3C算法在几个控制任务中的性能作了对比，显示DPPO比后两者有更好的表现，同时它还有很好的伸缩性。在所有情况下，DPPO都实现了与TRPO相同的性能，并且能够很好地适应不同数量的“工作者”，且它可以用于递归网络。
 
+TODO:
+
+代码：https://mofanpy.com/tutorials/machine-learning/reinforcement-learning/DPPO#%E7%AE%80%E5%8D%95%20PPO%20%E7%9A%84%E4%B8%BB%E7%BB%93%E6%9E%84
+
 [1]: https://weread.qq.com/web/reader/62332d007190b92f62371ae?
+[2]: https://mofanpy.com/tutorials/machine-learning/reinforcement-learning/DPPO#%E7%AE%80%E5%8D%95%20PPO%20%E7%9A%84%E4%B8%BB%E7%BB%93%E6%9E%84

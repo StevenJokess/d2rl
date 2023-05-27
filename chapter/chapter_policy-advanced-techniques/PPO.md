@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:21:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-27 00:49:01
+ * @LastEditTime: 2023-05-27 20:43:33
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -65,7 +65,7 @@ $J^{CLIP}(\theta)=\hat{\mathbb{E}}_t\left[\min \left(r_t(\theta) \hat{A}_t, \ope
 - $\theta$ 是策略参数
 - $\hat{E}_t$ 表示时间步后的经验期望（empirical expectation）
 - $r_t$ 是新旧策略的值的相对比例，即 $\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}$
-- $\hat{A}_t$ 是$t$时刻的估计的优势（estimated advantage）
+- $\hat{A}_t$ 是$t$时刻的估计的优势（estimated advantage），更准确地说是旧策略的估计优势 $A^{\pi_{\theta_\text {old}}}(s, a)$ 。
 - $\operatorname{clip}(x, l, r):=\max (\min (x, r), l)$，把 $clip()$ 后的值能有效地限制在 $[l, r]$ 内，在上式即 $[1 - \varepsilon, 1 + \varepsilon]$，
   - 举例来说：
   - 如果 $\hat{A}_t>0$ ，说明这个动作的价值高于平均，$\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}$ 这个式子会大于1，但如果商过大，说明两分布的差异过大，则该奖励的置信度降低，所以设定一个上限防止更新的step太大[8]，这个上限不能离1太远，故取 $1+\epsilon$。
@@ -82,21 +82,27 @@ $$
 
 如图 12-1 所示。
 
+
+
 ## 二、PPO-惩罚
 
 PPO-惩罚（PPO-Penalty）用拉格朗日乘数法直接将 KL 散度的限制放进了目标函数中，这就变成了一个“有”约束的优化问题，在迭代的过程中不断更新 KL 散度前的系数。即：
 
 $$
-\underset{\theta}{\arg \max } \mathbb{E}_{s \sim \nu}{ }^{\pi_{\theta_\text {old}}} \mathbb{E}_{a \sim \pi_{\theta_\text {old}}(\cdot \mid s)}\left[\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)} A^{\pi_{\theta_\text {old}}}(s, a)-\beta D_{K L}\left[\pi_{\theta_\text {old}}(\cdot \mid s), \pi_\theta(\cdot \mid s)\right]\right]
+\underset{\theta}{\arg \max} \mathbb{E}_{s \sim \nu}{ }^{\pi_{\theta_\text {old}}} \mathbb{E}_{a \sim \pi_{\theta_\text {old}}(\cdot \mid s)}\left[\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)} A^{\pi_{\theta_\text {old}}}(s, a)-\beta D_{K L}\left[\pi_{\theta_\text {old}}(\cdot \mid s), \pi_\theta(\cdot \mid s)\right]\right]
 $$
 
-除了第 3 节所说的截断代理目标函数的方法，本文还提出利用一个对 $K L$ 的自适应惩罚项系数来构建代理目标，将新旧策略的 KL 散度值限定在一个目标 KL 散度值 $d_{\text {targ}}$ 附近。文中说这种方法的效果不如截断代理目标函数的方法好，不过可以作为补充和 baseline。
+除了第 3 节所说的截断代理目标函数的方法，本文还提出利用一个对 $KL$ 的自适应惩罚项系数来构建代理目标（surrogate objective），将新旧策略的 KL 散度值限定在一个目标 KL 散度值 $d_{\text {targ}}$ 附近。
+
+文中说这种方法的效果不如截断代理目标函数的方法好，不过可以作为补充和 baseline。
+
+![PPO伪代码[9]](../../img/PPO_algs.png)
 
 实现过程如下:
 
-- 首先利用 SGD 对带有惩罚项的代理目标函数 (等式 (2.5)） 进行几个 epochs 的优化:
+- 首先利用 SGD 对带有惩罚项的代理目标函数 （等式 (2.5)） 进行几个 epochs 的优化:
 $$
-L^{K L P E N}=\hat{\mathbb{E}}_t\left[\frac{\pi_\theta\left(a_t \mid s_t\right)}{\pi_{\theta_{\text {old }}}\left(a_t \mid s_t\right)} \hat{A}_t-\beta K L\left[\pi_{\theta_{\text {old }}}\left(\cdot \mid s_t\right), \pi_\theta\left(\cdot \mid s_t\right)\right]\right]
+L^{K L P E N}=\hat{\mathbb{E}}_t\left[\frac{\pi_\theta\left(a_t \mid s_t\right)}{\pi_{\theta_{\text {old }}}\left(a_t \mid s_t\right)} \hat{A}_t-\beta K L\left[\pi_{\theta_{\text {old}}}\left(\cdot \mid s_t\right), \pi_\theta\left(\cdot \mid s_t\right)\right]\right]
 $$
 - 计算当前新旧策略的 $\mathrm{KL}$ 散度值: $\left.d=\hat{\mathbb{E}}_t K L\left[\pi_{\theta_{o l d}}\left(\cdot \mid s_t\right), \pi_\theta\left(\cdot \mid s_t\right)\right]\right]$
 
@@ -154,5 +160,6 @@ PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士�
 [6]: https://chat.openai.com/chat/
 [7]: https://hjp-muser.github.io/2019/11/15/TRPO-PPO-%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%8B%EF%BC%89/
 [8]: https://blog.csdn.net/weixin_43522964/article/details/104239921
+[9]: https://mofanpy.com/tutorials/machine-learning/reinforcement-learning/DPPO
 
 TODO:https://www.huaxiaozhuan.com/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/chapters/19_Deep_RL.html

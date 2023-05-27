@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-16 02:26:31
+ * @LastEditTime: 2023-05-28 01:17:15
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -346,6 +346,18 @@ TODO
 
 到了2007年的时候，一种新的树搜索方法被发明和应用到游戏中：[蒙特卡洛树搜索Monte Carlo Tree Search(MCTS)](../chapter_model-based-algs/MCTS.md)，并取得了极大的成功。
 
+### Alpha-Beta剪枝的改进
+
+- 渴望搜索是在 Alpha-Beta 搜索算法基础上，缩小搜索范围的改进算法。渴望搜索从一开始就使用小
+的窗口，从而在搜索之初，就可以进行大量的剪枝。通常，渴望搜索与遍历深化技术结合使用，以提高搜
+索性能。
+- MTD(f)搜索[58] MTD(f)算法实际上就是不断应用零窗口的 Alpha-Beta 搜索，缩小上界和下界，并移
+动初始值使其接近最优着法。MTD(f)算法简单高效，在国际象棋、国际跳棋等博弈程序里，MTD(f)算法平
+均表现出色。
+此外，还有各种在 Alpha-Beta 搜索基础上优化的算法，例如，有学者提出在博弈树同层结点中，用广
+度优先搜索，接力式空窗探测，平均搜索效率高于 MTD  (f)搜索。通常，裁剪算法需要与置换表技术相结
+合，以减少博弈树的规模，提高搜索效率。[24]
+
 ## 总结
 
 - 前向 Forward：起始状态（根节点）一直搜索状态到最终状态（叶节点）
@@ -396,7 +408,8 @@ Del [4]: https://jwc.gdufe.edu.cn/_upload/article/files/68/96/872c060340f68ed6f5
 [21]: https://www.bilibili.com/video/BV1bT4y1C7P5/?spm_id_from=333.337.search-card.all.click&vd_source=bca0a3605754a98491958094024e5fe3
 [22]: https://www.yiibai.com/artificial-intelligence-tutorial/mini-max-algorithm-in-ai.html#article-start
 [23]: https://www.yiibai.com/artificial-intelligence-tutorial/ai-adversarial-search.html
-TODO:Del [24]: https://ticket-assets.baai.ac.cn/uploads/%E3%80%8A%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%9A%E7%8E%B0%E4%BB%A3%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89%E3%80%8B%E6%A0%B7%E7%AB%A0.pdf
+[24]: https://www.cs.sjtu.edu.cn/~linghe.kong/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AE%B2%E4%B9%89%E5%86%AF%E7%BF%94.pdf
+
 TODO:Del [25]: https://zhuanlan.zhihu.com/p/58472297
 TODO:Del [26]: https://zhuanlan.zhihu.com/p/427303297
 
