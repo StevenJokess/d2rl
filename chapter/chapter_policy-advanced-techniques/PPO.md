@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:21:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-08 22:33:59
+ * @LastEditTime: 2023-05-27 00:49:01
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -31,7 +31,7 @@
 
 - TRPO通过添加新旧策略的KL约束项。
   - 回忆一下 TRPO：
-    - 损失函数 [7]：$L^{C P I}(\theta)=\hat{\mathbb{E}}_t\left[\frac{\pi_\theta\left(a_t \mid s_t\right)}{\pi_{\theta_{\text {old}}}\left(a_t \mid s_t\right)} \hat{A}_t\right]=\hat{\mathbb{E}}_t\left[r_t(\theta) \hat{A}_t\right]$。上标 CPI 表示 conservative policy iteration，是一篇著名文章中提出来的策略迭代方法 ，以上的目标函数就是这篇文章所提出来的。注意，此时目标函数没有加上约束，可能会导致很大的梯度更新，导致策略梯度失去意义。
+    - 目标函数 [7]：$J^{CPI}(\theta)=\hat{\mathbb{E}}_t\left[\frac{\pi_\theta\left(a_t \mid s_t\right)}{\pi_{\theta_{\text {old}}}\left(a_t \mid s_t\right)} \hat{A}_t\right]=\hat{\mathbb{E}}_t\left[r_t(\theta) \hat{A}_t\right]$。上标 CPI 表示 conservative policy iteration，是一篇著名文章中提出来的策略迭代方法 ，以上的目标函数就是这篇文章所提出来的。注意，此时目标函数没有加上约束，可能会导致很大的梯度更新，导致策略梯度失去意义。
     - 代理目标函数 [3]：
 $$
 \begin{aligned}
@@ -52,9 +52,13 @@ $$
 
 PPO 的第一种形式 PPO-截断（PPO-Clip）更加直接，它在目标函数中进行限制，以保证新的参数和旧的参数的差距不会太大。
 
-其损失函数[5]：
+其目标函数[5]：
 
-$L^{C L I P}(\theta)=\hat{\mathbb{E}}_t\left[\min \left(r_t(\theta) \hat{A}_t, \operatorname{clip}\left(r_t(\theta), 1-\epsilon, 1+\epsilon\right) \hat{A}_t\right)\right]$
+$J^{CLIP}(\theta)=\hat{\mathbb{E}}_t\left[\min \left(r_t(\theta) \hat{A}_t, \operatorname{clip}\left(r_t(\theta), 1-\epsilon, 1+\epsilon\right) \hat{A}_t\right)\right]$
+
+下面两张图横坐标为两个概率的比值，绿色为原曲线即min函数第一项，蓝色为修剪之后的曲线，即min第二项。在绿线和蓝线中选一个较小者。归根结底是调整权重值。
+
+![PPO-Clip](../../img/PPO2.png)
 
 其中：
 
@@ -64,31 +68,29 @@ $L^{C L I P}(\theta)=\hat{\mathbb{E}}_t\left[\min \left(r_t(\theta) \hat{A}_t, \
 - $\hat{A}_t$ 是$t$时刻的估计的优势（estimated advantage）
 - $\operatorname{clip}(x, l, r):=\max (\min (x, r), l)$，把 $clip()$ 后的值能有效地限制在 $[l, r]$ 内，在上式即 $[1 - \varepsilon, 1 + \varepsilon]$，
   - 举例来说：
-  - 如果 $A^{\pi_{\theta_\text {old}}}(s, a)>0$ ，说明这个动作的价值高于平均，$\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}$ 这个式子会增大  ，但不会让其超过 $1+\epsilon_{\circ}$
-  - 反之，如果 $A^{\pi_{\theta_\text {old}}}(s, a)<0$ ，$\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}$这个式子会减小  ，但不会让其超过 $1-\epsilon$ 。
+  - 如果 $\hat{A}_t>0$ ，说明这个动作的价值高于平均，$\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}$ 这个式子会大于1，但如果商过大，说明两分布的差异过大，则该奖励的置信度降低，所以设定一个上限防止更新的step太大[8]，这个上限不能离1太远，故取 $1+\epsilon$。
+  - 反之，如果 $\hat{A}_t<0$ ，$\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}$ 这个式子会小于1；但如果商过小，说明两分布的差异过大，则该奖励的置信度降低，所以设定一个下限防止更新的step太大[8]，这个下限不能离1太远，故取 $1-\epsilon$ 。
 - $\varepsilon$ 是个超参数，通常是 0.1 或 0.2，它表示进行截断 (clip) 的范围。
 
-可以发现 $\min$ 函数中的第一项就是 $L^{C P I}$ ，第二项对 $r_t(\theta)$ 进行裁剪，超出 $[1-\epsilon, 1+\epsilon]$ 的部分直接抺去，最后对两项取最小值，确保 $L^{C L I P}$ 取得结果是 $L^{C P I}$ 的下界。
+可以发现 $\min$ 函数中的第一项就是 $J^{CPI}$ ，第二项对 $r_t(\theta)$ 进行裁剪，超出 $[1-\epsilon, 1+\epsilon]$ 的部分直接抺去，最后对两项取最小值，确保 $J^{CLIP}$ 取得结果是 $J^{CPI}$ 的下界。
 
 从而得到最优的策略参数：
 
 $$
-\underset{\theta}{\arg \max } \mathbb{E}_{s \sim \nu^{\pi_{\theta_\text {old}}}} \mathbb{E}_{a \sim \pi_{\theta_\text {old}}(\cdot \mid s)}\left[\min \left(\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)} A^{\pi_{\theta_\text {old}}}(s, a), \operatorname{clip}\left(\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}, 1-\epsilon, 1+\epsilon\right) A^{\pi_{\theta_\text {old}}}(s, a)\right)\right]
+\underset{\theta}{\arg \max } \mathbb{E}_{s \sim \nu^{\pi_{\theta_\text {old}}}} \mathbb{E}_{a \sim \pi_{\theta_\text {old}}(\cdot \mid s)}\left[\min \left(\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)} \hat{A}_t, \operatorname{clip}\left(\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}, 1-\epsilon, 1+\epsilon\right) \hat{A}_t\right)\right]
 $$
-
 
 如图 12-1 所示。
 
 ## 二、PPO-惩罚
 
-PPO-惩罚（PPO-Penalty）用拉格朗日乘数法直接将 KL 散度的限制放进了目标函数中，这就变成了一个无约束的优化问题，在迭代的过程中不断更新 KL 散度前的系数。即：
+PPO-惩罚（PPO-Penalty）用拉格朗日乘数法直接将 KL 散度的限制放进了目标函数中，这就变成了一个“有”约束的优化问题，在迭代的过程中不断更新 KL 散度前的系数。即：
 
 $$
 \underset{\theta}{\arg \max } \mathbb{E}_{s \sim \nu}{ }^{\pi_{\theta_\text {old}}} \mathbb{E}_{a \sim \pi_{\theta_\text {old}}(\cdot \mid s)}\left[\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)} A^{\pi_{\theta_\text {old}}}(s, a)-\beta D_{K L}\left[\pi_{\theta_\text {old}}(\cdot \mid s), \pi_\theta(\cdot \mid s)\right]\right]
 $$
 
-
-除了第 3 节所说的截断代理目标函数的方法，本文还提出利用一个对 $K L$ 的自适应惩罚项系数来构建代理目 标，将新旧策略的 KL 散度值限定在一个目标 KL 散度值 $d_{\text {targ }}$ 附近。文中说这种方法的效果不如截断代理目标 函数的方法好，不过可以作为补充和 baseline。
+除了第 3 节所说的截断代理目标函数的方法，本文还提出利用一个对 $K L$ 的自适应惩罚项系数来构建代理目标，将新旧策略的 KL 散度值限定在一个目标 KL 散度值 $d_{\text {targ}}$ 附近。文中说这种方法的效果不如截断代理目标函数的方法好，不过可以作为补充和 baseline。
 
 实现过程如下:
 
@@ -100,11 +102,12 @@ $$
 
 令 $d_\text {old}=D_{K L}^{\nu^{\pi_\text {old}}}\left(\pi_{\theta_\text {old}}, \pi_\theta\right) ， \beta$ 的更新规则如下:
 
-1. 如果 $d_\text {old}<d_{\text {targ }} / 1.5$ ，那么 $\beta_{k+1} = \beta_\text {old} / 2$
-2. 如果 $d_\text {old}>d_{\text {targ }} \times 1.5$ ，那么 $\beta_{k+1} = \beta_\text {old} \times 2$
+1. 如果 $d_\text {old}<d_{\text {targ }} / 1.5$ ，那么 $\beta_{k+1} = \beta_\text {old} / 2$ (If $K L\left(\theta, \theta^k\right)<K L_{\min }$, decrease $\beta$；分布差异很小时，降低罚项防止，对学习过程造成不好的影响；含义就是现在两个agent差别太大，奖励值不具有参考性，由此带来的update幅度就会降低。)
+2. 如果 $d_\text {old}>d_{\text {targ }} \times 1.5$ ，那么 $\beta_{k+1} = \beta_\text {old} \times 2$ (If $K L\left(\theta, \theta^k\right)>K L_{\max }$, increase $\beta$；当差异太大时，加大罚项以削弱旧数据的影响。)
 3. 否则 $\beta_{k+1} = \beta_\text {old}$
 
-其中
+
+其中：
 
 - $d_{\text {targ }}$ 是一个超参数，用于限制学习策略和之前一轮策略的差距。
 - 1.5 和 2 都是一个启发值，可以自己设定。文中说算法对这两个启发值不是很敏感。初始的 $\beta$ 也是一个超参数，但是不敏感，会随着算法持续自适应更新。
@@ -143,10 +146,6 @@ PPO 是 TRPO 的一种改进算法，它在实现上简化了 TRPO 中的**复�
 PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士毕业后在 OpenAI 公司研究出来的。通过对 TRPO 计算方式的改进，PPO 成为了最受关注的深度强化学习算法之一，并且其论文的引用量也超越了 TRPO。
 
 
-
-
-
-
 [1]: https://hrl.boyuai.com/chapter/2/ppo%E7%AE%97%E6%B3%95
 [2]: https://www.cnblogs.com/kailugaji/p/15401383.html#_lab2_0_1
 [3]: https://www.cnblogs.com/kailugaji/p/15396437.html
@@ -154,5 +153,6 @@ PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士�
 [5]: https://openai.com/research/openai-baselines-ppo
 [6]: https://chat.openai.com/chat/
 [7]: https://hjp-muser.github.io/2019/11/15/TRPO-PPO-%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%8B%EF%BC%89/
+[8]: https://blog.csdn.net/weixin_43522964/article/details/104239921
 
 TODO:https://www.huaxiaozhuan.com/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/chapters/19_Deep_RL.html

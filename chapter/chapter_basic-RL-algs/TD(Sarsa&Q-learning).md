@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-26 22:27:25
+ * @LastEditTime: 2023-05-27 00:58:01
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -272,7 +272,6 @@ $$
 - Requires sufficient exploration
   - Exploration of under-represented state-actions to enable learning
 - Popular rules:e-greedy,softmax,exploration bonus,optimistic initialization,...[18]
-
 
 ### 伪代码（Pseudocode）
 

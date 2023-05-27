@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 20:58:30
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-24 01:00:29
+ * @LastEditTime: 2023-05-27 20:16:58
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -32,6 +32,11 @@
 一种方法是你能够获得整个互联网的拓扑结构与此时的负载，通过拓扑结构与负载来全局计算出一条最优的连接路径。但是在现实中，你并不能获得整个互联网的网络拓扑结构，一者是路由器可能动态地新增或者减少，另外一者是有的组织并不愿意将自己的内部的路由拓扑告诉你，此外哪怕你能拿到全局的拓扑结构，在实际计算中其实并不需要全部的结构，我们可能需要关注一些局部的路由器即可。所以一个中心化的agent来解决这个问题看上去并不可行。
 
 那么另外一种直观的做法是将每个路由器看作一个agent，由每个路由器来与自己互连的路由器进行交互，**每个agent自己动态地优化当前时刻的转发表，通过自己维护的局部的信息**来帮助用户获得整个互联网的服务。这就是典型的MAS的做法，也是现实中互联网采用的做法。[7]
+
+## 多智能体 VS 分布式强化学习
+
+四个小孩子下飞行棋，每个小孩子是一个智能体，利用多智能体强化学习求解。一台电脑解决这个问题需要跑好久，利用多台电脑解决，分布式强化学习。[8]
+
 
 ## 研究历史
 
@@ -96,3 +101,4 @@ $$
 [5]: https://zhuanlan.zhihu.com/p/343976644
 [6]: https://huggingface.co/learn/deep-rl-course/unit7/introduction-to-marl?fw=pt
 [7]: https://zhuanlan.zhihu.com/sharerl
+[8]: https://www.zhihu.com/question/433150195/answer/1610535364
