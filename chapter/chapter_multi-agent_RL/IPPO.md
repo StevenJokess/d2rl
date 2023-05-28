@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:14:03
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-18 01:03:35
+ * @LastEditTime: 2023-05-28 21:16:02
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -22,7 +22,6 @@
 - 由于多个智能体在环境中进行实时动态交互，并且每个智能体在不断学习并更新自身策略，因此在每个智能体的视角下，环境是**非稳态的**（non-stationary），即对于一个智能体而言，即使在相同的状态下采取相同的动作，得到的状态转移和奖励信号的分布可能在不断改变；
 - 多个智能体的训练可能是多目标的，不同智能体需要最大化自己的利益；
 - 训练评估的复杂度会增加，可能需要大规模分布式训练来提高效率。
-
 
 ## 问题建模
 

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-26 23:48:13
+ * @LastEditTime: 2023-05-28 21:22:47
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -49,10 +49,12 @@ chapter_goal-oriented_RL/index
 
 chapter_multitask-RL/index
 chapter_multimodal-RL/index
+
+chapter_Distributed-RL/index
 chapter_multi-agent_RL/index
 chapter_multi-agent_DRL/index
 
-chapter_Distributed-RL/index
+
 chapter_offline_RL/index
 chapter_unsupervised_RL/index
 chapter_meta_RL/index
