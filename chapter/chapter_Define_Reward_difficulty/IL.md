@@ -15,6 +15,7 @@
 
 模仿学习（Imitation Learning），也被称为通过演示（demostration）学习、学徒学习（apprenticeship learning）。
 
+
 专家展示了如何解决问题：
 - 机器也跟环境交互，但没能获得显式明确的回报。
 - 很难确定某些问题的回报
@@ -24,6 +25,12 @@
 
 - 自动驾驶撞人很难定义奖励，收集人类司机数据。[3]
 - 现在去教机器倒水，由于机械臂的活动空间非常大，那么制定规则很难，这时，我们可以先手动指导机器倒水，然后让机器去模仿就可以了。
+
+这样的好处：
+
+- 利用一些已经成熟的用于监督学习的好的工具
+- 避免了探索的问题
+- 拥有决策结果的大数据[5]
 
 
 ## 简介
@@ -69,7 +76,7 @@ BC 也存在很大的局限性，该局限在数据量比较小的时候犹为�
   - Using $\pi_1$ to interact with the environment
   - Ask the expert to label the observation of $\pi_1$
   - Using new data to $\operatorname{train} \pi_2$
-- 极端数据收集很难，比如开车撞墙会死人。
+- 实现起来可能代价很高[4]，极端数据收集很难，比如开车撞墙会死人。
 
 
 
@@ -122,3 +129,5 @@ code
 [1]: https://hrl.boyuai.com/chapter/3/%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0
 [2]: https://www.zhihu.com/column/c_1159880158273544192
 [3]: https://www.bilibili.com/video/BV124411S7au
+[4]: https://blog.csdn.net/Solo95/article/details/100133088
+[5]: https://blog.csdn.net/Solo95/article/details/100133088

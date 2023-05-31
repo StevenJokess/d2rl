@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-23 21:55:25
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-25 03:03:55
+ * @LastEditTime: 2023-06-01 01:12:28
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,11 +13,28 @@
 -->
 # 策略搜索
 
-## 确定性策略
+## 确定性策略（Deterministic Policy）
 
 要想完全理解本章的内容需要熟练掌握前8章的要点，并且假设读者对DQN网络很熟悉。
 
-我们先从图9.1策略搜索方法的分类开始。从图中我们可以看到，无模型的策略搜索方法可以分为随机策略搜索方法和确定性策略搜索方法。其中随机策略搜索方法又发展出了很多算法。可以说，2014年以前，学者们都在发展随机策略搜索的方法，因为大家都认为确定性策略梯度是不存在的。直到2014年，强化学习算法大神Silver在论文Deterministic Policy Gradient  Algorithms中提出了确定性策略理论，策略搜索方法中提出确定性策略的方法。2015年，DeepMind的大神们又将该理论与DQN的成功经验结合，在论文Continuous Control with Deep Reinforcement Learning中提出了DDPG算法。本章以这两篇论文为素材，向大家介绍确定性策略。[2]
+我们先从图9.1策略搜索方法的分类开始。从图中我们可以看到，无模型的策略搜索方法可以分为随机策略搜索方法和确定性策略搜索方法。
+
+确定性策略, 是使用确定性函数 (Deterministic Function) 建模的策略。
+
+> 即 $a=\pi(s), \pi: S \rightarrow A$
+> 上式中, $\pi$ 为确定性策略的函数，其为状态空间 $S$ 到动作空间 $A$ 的映射。[3]
+
+随机性策略, 是使用关于各个状态的动作概率分布函数来建模的策略。
+
+> 即 $a \sim \pi(\cdot \mid s) ， \pi: \mathcal{A} \times S \rightarrow[0,1]$
+> 假如把动作空间 $A$ 的事件集合记为 $\mathcal{A}$
+> 上式中, $\pi$ 为随机性策略的函数, 是动作空间的事件集合 $\mathcal{A}$ 与状态空间 $S$ 的直和, 到 $[0,1]$ 的映射。
+
+其中随机策略搜索方法又发展出了很多算法。可以说，2014年以前，学者们都在发展随机策略搜索的方法，因为大家都认为确定性策略梯度是不存在的。
+
+## 确定性策略建模的方法
+
+直到2014年，强化学习算法大神Silver在论文Deterministic Policy Gradient  Algorithms中提出了确定性策略理论，策略搜索方法中提出确定性策略的方法。2015年，DeepMind的大神们又将该理论与DQN的成功经验结合，在论文Continuous Control with Deep Reinforcement Learning中提出了DDPG算法。本章以这两篇论文为素材，向大家介绍确定性策略这种。[2]
 
 ## 直接策略搜索方法
 
@@ -83,3 +100,4 @@ $$
 
 [1]: https://zhuanlan.zhihu.com/p/62363784#%E7%9B%B4%E6%8E%A5%E7%AD%96%E7%95%A5%E6%90%9C%E7%B4%A2%E6%96%B9%E6%B3%95
 [2]: https://www.zhihu.com/column/p/26441204
+[3]: https://github.com/opendilab/PPOxFamily/blob/main/chapter5_time/chapter5_supp_sto_det.pdf

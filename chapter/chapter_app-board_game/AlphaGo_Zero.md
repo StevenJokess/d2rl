@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 00:05:23
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-14 01:01:36
+ * @LastEditTime: 2023-05-31 23:53:10
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -240,6 +240,8 @@ $$
   - 对选择次数进行优化
 
 ![AlphaGo_Zero 的强化学习过程](../../img/AlphaGo_Zero_training_process.png)
+
+![AlphaGo Zero的伪代码](../../img/AlphaGo_Zero(pseudocode).png)
 
 ## 训练时长与成绩
 

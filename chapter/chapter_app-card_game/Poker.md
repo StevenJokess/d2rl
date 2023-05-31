@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-28 21:20:34
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-28 01:37:39
+ * @LastEditTime: 2023-06-01 00:39:00
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -30,6 +30,10 @@
 - 2017 年，阿尔伯特大学在Science 发表了关于一对一无限注德州扑克的DeepStack 算法研究[157]，DeepStack 是首个打败职业扑克玩家的计算机程序
 
 纸牌游戏作为典型的不完美信息游戏，长期以来一直是人工智能的挑战。DeepStack 和 Libratus 是在 HUNL 中击败职业扑克玩家的两个典型 AI 系统。
+
+## 神经虚拟自我博弈 (NFSP)
+
+Heinrich 和 Silver (2016) 提出了神经虚拟自我博弈 (NFSP)，将虚拟自我博弈与深度强化学习相结合，以学习不完全信息博弈的近似纳什均衡无需先验领域知识的可扩展端到端方法。 NFSP 在两人游戏中进行了评估零和游戏。在 Leduc poker 中，NFSP 接近纳什均衡，而普通的 RL 方法分歧。在 Limit Texas Hold'em 中，一种真实世界规模的不完全信息游戏，NFSP 执行类似于基于重要领域专业知识的最先进的超人算法。[5]
 
 ## Libratus
 
@@ -92,3 +96,4 @@ DeepStack 算法由三个部分组成：针对当前公共状态的本地策略�
 [2]: https://www.ambchina.com/data/upload/image/20220226/2017%E4%B8%AD%E5%9B%BD%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E5%88%97%E7%99%BD%E7%9A%AE%E4%B9%A6--%E6%99%BA%E8%83%BD%E5%8D%9A%E5%BC%88-2017.pdf
 [3]: https://www.ambchina.com/data/upload/image/20220226/2017%E4%B8%AD%E5%9B%BD%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E5%88%97%E7%99%BD%E7%9A%AE%E4%B9%A6--%E6%99%BA%E8%83%BD%E5%8D%9A%E5%BC%88-2017.pdf
 [4]: https://personal.ntu.edu.sg/boan/Chinese/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AE%80%E4%BB%8B.pdf
+[5]:

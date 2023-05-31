@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-12 21:27:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-18 00:00:11
+ * @LastEditTime: 2023-05-31 23:44:58
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,7 +13,8 @@
 -->
 # 蒙特卡洛树搜索算法（MCTS）
 
-全称 Monte Carlo Tree Search，是一种人工智能问题中做出最优决策的方法，一般是在组合博弈中的行动（move）规划形式。它结合了随机模拟的一般性和树搜索的准确性。
+全称 Monte Carlo Tree Search，是一种人工智能问题中做出最优决策的方法，一般是在组合博弈中的行动（move）规划形式。它结合了随机模拟的一般性和树搜索的准确性。解决了巨大搜索空间（gigantic search space）的问题。[13]
+
 
 将UCB用于强化学习算法中，最成功的例子莫过于蒙特卡洛树搜索算法，该算法在计算机围棋中取得极大成功，如今强化学习技术如此火热也是因为加持了深度神经网络的蒙特卡罗树搜索成功地战胜了人类顶级棋手，晋级为“围棋上帝”。很多学强化学习的人常常会问，蒙特卡罗树搜索跟经典的强化学习算法有什么区别和联系？这一讲，我会从强化学习的视角讲述蒙特卡罗树搜索算法。
 
@@ -538,6 +539,7 @@ print("Best action:", best_action)
 [10]: https://blog.csdn.net/oyd/article/details/3300852
 [11]: https://www.bilibili.com/video/BV1WY411n7Zf/?spm_id_from=333.880.my_history.page.click&vd_source=bca0a3605754a98491958094024e5fe3
 [12]: https://github.com/borninfreedom/DeepLearning/blob/master/Papers/AlphaZero%E5%8E%9F%E7%90%86%E4%B8%8E%E5%90%AF%E7%A4%BA.pdf
+[13]: https://arxiv.org/pdf/1701.07274
 
 
 ## 更多参考

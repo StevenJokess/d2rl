@@ -184,6 +184,9 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 
 ### 问题
 
+### 局限性
+
+2017 年 5 月 AlphaGo 击败柯洁后，Andrej Karpathy 发布了一篇名为“AlphaGo, in context[16]”的博客。他将计算机围棋的特性描述为：完全确定的、完全可观察的、离散的动作空间，易于访问的完美模拟器，相对较短的情节/游戏，清晰快速的评估有利于许多试错，以及巨大的人类游戏数据集，说明 AlphaGo 的局限性。[15]
 
 ## 附录：AlphaGo不同版本
 
@@ -231,4 +234,5 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 [12]: https://www.bilibili.com/video/BV1464y127i7?p=8&vd_source=bca0a3605754a98491958094024e5fe3
 [13]: https://www.bilibili.com/video/BV18v411v794/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
 [14]: https://github.com/borninfreedom/DeepLearning/blob/master/Papers/AlphaZero%E5%8E%9F%E7%90%86%E4%B8%8E%E5%90%AF%E7%A4%BA.pdf
-[15]:
+[15]: https://arxiv.org/abs/1701.07274
+[16]:

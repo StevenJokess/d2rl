@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:21:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-27 20:43:33
+ * @LastEditTime: 2023-05-31 17:48:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -65,7 +65,7 @@ $J^{CLIP}(\theta)=\hat{\mathbb{E}}_t\left[\min \left(r_t(\theta) \hat{A}_t, \ope
 - $\theta$ 是策略参数
 - $\hat{E}_t$ 表示时间步后的经验期望（empirical expectation）
 - $r_t$ 是新旧策略的值的相对比例，即 $\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}$
-- $\hat{A}_t$ 是$t$时刻的估计的优势（estimated advantage），更准确地说是旧策略的估计优势 $A^{\pi_{\theta_\text {old}}}(s, a)$ 。
+- $\hat{A}_t$ 是$t$时刻的估计的优势（estimated advantage），更准确地说是旧策略$\pi_old$的估计优势 $A^{\pi_{\theta_\text {old}}}(s, a)$ 。
 - $\operatorname{clip}(x, l, r):=\max (\min (x, r), l)$，把 $clip()$ 后的值能有效地限制在 $[l, r]$ 内，在上式即 $[1 - \varepsilon, 1 + \varepsilon]$，
   - 举例来说：
   - 如果 $\hat{A}_t>0$ ，说明这个动作的价值高于平均，$\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)}$ 这个式子会大于1，但如果商过大，说明两分布的差异过大，则该奖励的置信度降低，所以设定一个上限防止更新的step太大[8]，这个上限不能离1太远，故取 $1+\epsilon$。

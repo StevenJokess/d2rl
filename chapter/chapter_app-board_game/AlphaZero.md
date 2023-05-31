@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-30 00:50:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-13 22:58:00
+ * @LastEditTime: 2023-05-30 20:00:51
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,6 +15,7 @@
 
 重建输入、输出过程去象棋和将棋，重建自我博弈的算法。
 
+AlphaZero: Shedding new light on the grand games of chess, shogi and Go（英文）：https://www.youtube.com/watch?v=7L2sUGcOgh0
 
 
 ## 附录： ELF OpenGo
@@ -24,6 +25,7 @@
 ## 其他代码
 
 开源代码：
+
 https://github.com/hijkzzz/alpha-zero-gomoku
 
 

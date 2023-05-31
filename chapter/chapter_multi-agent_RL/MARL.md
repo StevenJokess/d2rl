@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-17 18:02:50
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-28 01:42:23
+ * @LastEditTime: 2023-05-28 22:46:11
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -18,6 +18,30 @@
 多智能体学习（Multi­agent Learning，MAL）将机器学习技术引入多智能体系统领域，研究如何设计算法去创建动态环境下的自适应智能体。MAL 领域被广泛研究的技术是强化学习（Reinforcement Learning）。单智能体的强化学习通常在马尔科夫决策过程（Markov Decision Processes，MDP）的框架内就能被较好地描述。一些独立的强化学习算法（如Q­learning）在智能体所处环境满足马氏性且智能体能够尝试足够多行动的前提下会收敛至最优的策略。尽管MDP 为单智能体学习提供了可靠的数学框架，对多智能体学习却并非如此。在多个自适应智能体相互作用的情况下，一个智能体的收益通常依赖于其他个体的行动，学习环境已经不再是静态的了。此时每个智能体面临一个目标不断变化的问题——单个智能体需要学习的内容依赖于其他智能体学到的内容，并随之改变。因此，有必要对原有的MDP 框架作相应的扩展，这其中有马尔科夫博弈和联合行动学习机等[16, 48]。在这些扩展中，学习发生在不同智能体的状态集和行动集的积空间上。因而当智能体、状态或行动的数量太大时，这些扩展面临积空间过大的问题。此外，共享的联合行动空间也未必可用。比如在信息不完全的情况下，智能体未必能观察到其他智能体的行动。如何处理复杂的现实问题，如何高效地处理大量的状态、大量的智能体以及连续的策略空间已经成为目前MAL 研究的首要问题。
 
 随着深度强化学习的兴起，上述问题的解决迎来了新的转机，多智能体强化学习（Multi­Agent Reinforcement Learning, MARL）乘势兴起。多智能体强化学习中，每个智能体都采用强化学习对自己的策略进行训练，其中智能体的策略利用深度网络来表示。[4]
+
+
+## 多智能体强化学习的环境
+
+首先, MARL的环境是以马尔可夫决策过程为基础的随机博弈框架, 它是这样一个元组 $\left\langle S, A_1, \cdots, A_n, R_1, \cdots, R_n\right.$, $P\rangle$ 。其中, $n$ 指多智能体的数量; $A$ 是所有智能体的联合动作 空间集, $A=A_1 \times \cdots \times A_n ; R_i$ 是每个智能体的奖励函数, $R_i$ : $S \times A \times S \rightarrow R ; P$ 是状态转移函数, $P: S \times A \times S \rightarrow[0,1]$ 。我 们假设奖励函数是有界的。
+
+![马尔可夫博弈](../../img/Markov_game.jpg)
+
+在多智能体情况下, 状态转换是所有智能体共同行动的 结果, 因此智能体的奖励也取决于联合策略。定义策略 $H$ 是智能体的联合策略 $H_i: S \times A \rightarrow H$, 相应地, 每个智能体的奖励为：
+
+$$
+R_i^H=E\left[R_{t+1} \mid S_t=s, A_{t, i}=a, H\right]
+$$
+
+其贝尔曼方程为：
+
+$$
+\begin{aligned}
+& v_i^H(s)=E_i^H\left[R_{t+1}+\gamma V_i^H\left(S_{t+1}\right) \mid S_t=s\right] \\
+& Q_i^H(s, a)=E_i^H\left[R_{t+1}+\gamma Q_i^H\left(S_{t+1}, A_{t+1}\right) \mid S_t=s, A_t=a\right]
+\end{aligned}
+$$
+
+
 
 ## 算法分类
 

@@ -21,5 +21,11 @@ Roboschool：Roboschool 提供开源软件以通过强化学习构建并训练�
 
 Coach：英特尔公司的开源强化学习框架，可以对游戏、机器人以及其它基于代理的智能应用进行智能代理的建模、训练与评估。Coach 提供一套模块化沙箱、可复用组件以及用于组合新强化学习算法并在多种应用领域内训练新智能应用的Python API。该框架利用OpenAI Gym作为主工具，负责与不同强化学习环境进行交换。其还支持其它外部扩展，具体包括Roboschool、gym-extensions、PyBullet以及ViZDoom。Coach的环境打包器允许用户向其中添加自定义强化学习环境，从而解决其它学习问题。该框架能够在桌面计算机上高效训练强化学习代理，并利用多核CPU处理相关任务。其能够为一部分强化学习算法提供单线程与多线程实现能力，包括异步优势Actor-Critic、深度确定性策略梯度、近端策略优化、直接未来预测以及规范化优势函数。所有算法皆利用面向英特尔系统作出优化的TensorFLow完成，其中部分算法亦适用于英特尔的Neon深度学习框架。Coach 当中包含多种强化学习代理实现方案，具体包括从单线程实现到多线程实现的转换。其能够开发出支持单与多工作程序（同步或异步）强化学习实现方法的新代理。此外，其还支持连续与离散操作空间，以及视觉观察空间或仅包含原始测量指标的观察空间。
 
+
+---
+
+MARL：
+https://blog.csdn.net/sinat_39620217/article/details/117589067
+
 [1]: https://github.com/scutan90/DeepLearning-500-questions/blob/master/ch10_%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E7%AC%AC%E5%8D%81%E7%AB%A0_%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.md
 [2]: https://www.epubit.com/articleDetails?id=NN8d3150d1-097c-4dc9-8715-adae9f3fd09a

@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-28 02:21:05
+ * @LastEditTime: 2023-05-30 19:45:56
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -12,13 +12,17 @@
 
 # 强化学习
 
+How can an intelligent agent learn to make good sequences of decisions?
+
+## 引入
+
 2018年的围棋AlphaGO战胜李世石使RL（强化学习）大为闻名，证明了这种强化模型能有超人类的表现，故我们才关注它。对于下围棋这一任务，即使是专家也很难给出“正确”的动作，二是获取大量数据的成本往往比较高。对于下棋强化学习我们很难知道每一步的“正确”动作，但是其最后的结果（即赢输）却很容易判断。因此，如果可以通过大量的模拟数据，通过最后的结果（奖励）来倒推每一步棋的好坏，从而学习出“最佳”的下棋策略，这就是强化学习。
 
 这种在复杂、不确定的环境中交互时不断做出选择（sequential decision making）边学习的行为，我们其实早就在进行了。当一个婴儿玩耍，挥动手臂或环顾四周时，他没有明确的老师，但他确实通过直接的感觉与环境联系。他可以通过这种联系获得大量关于因果关系、动作的结果以及如何实现目标的信息。 在我们的生活中，这种交互无疑是环境和自身知识的主要来源。无论我们是学习驾驶汽车还是进行交谈，我们都敏锐地意识到我们的环境如何响应我们的行为，并且我们试图通过我们的行为来影响所发生的事情。
 
 ## 强化学习的概念
 
-**强化学习**（Reinforcement Learning，简称RL），也叫增强学习，是指一类智能体从与环境交互中不断学习以取得最大回报（Return）的问题以及解决这类问题的方法。强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的不断交互，每次交互包括观察（Observate）当前的环境状态（State）、根据这个状态选择某个动作（Action）、并由此获得奖励（Award）或收益（Reward），我们把惩罚（punishment/penalty）处理成负收益形式，通过多次交互，智能体学习到了如何使得总体收益（Return）最大化。其中，强化是增加行为的意思，即当某个行为在从环境中获得正奖励后就会倾向去增加这种行为。[1]
+**强化学习**（Reinforcement Learning，简称RL），也叫增强学习，是指一类**智能体**从与环境交互中不断学习以取得最大回报（Return）的问题以及解决这类问题的方法。强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的不断交互，每次交互包括观察（Observate）当前的环境状态（State）、根据这个状态选择某个动作（Action）、并由此获得奖励（Award）或收益（Reward），我们把惩罚（punishment/penalty）处理成负收益形式，通过多次交互，智能体学习到了如何使得总体收益（Return）最大化。其中，强化是增加行为的意思，即当某个行为在从环境中获得正奖励后就会倾向去增加这种行为。[1]
 
 强化学习的更多相关历史，可见[2]
 
@@ -557,6 +561,7 @@ $$
 [48]: https://www.youtube.com/watch?v=d0p6MyB86Os
 [49]: https://zhuanlan.zhihu.com/p/474672251
 [50]: https://www.cs.sjtu.edu.cn/~linghe.kong/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AE%B2%E4%B9%89%E5%86%AF%E7%BF%94.pdf
+[51]: https://blog.csdn.net/Solo95/article/details/100133088
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 

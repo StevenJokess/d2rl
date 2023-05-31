@@ -5,3 +5,6 @@ https://zhuanlan.zhihu.com/p/496257754
 
 LATEX引用IEEE格式参考文献 - 小金同学的文章 - 知乎
 https://zhuanlan.zhihu.com/p/575067338
+
+latexify_py，它使用 Python 就能生成 LaTeX 数学公式：
+https://layne.blog.csdn.net/article/details/107740429
