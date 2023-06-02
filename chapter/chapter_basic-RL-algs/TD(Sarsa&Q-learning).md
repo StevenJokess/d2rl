@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-27 00:58:01
+ * @LastEditTime: 2023-06-02 20:14:00
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -248,19 +248,22 @@ code
 
 ---
 
-
-
 ## Q-learning 算法
 
-Q-learning通常假设智能体贪婪地选择动作，即只选择 Q 值最大的动作，其他动作的选择概率为0，从而保证了Q学习的收敛性。[3]而Q=learning里的Q指的是Quality。
-
-具体来说，Q-learning是通过计算*最优*动作值函数来求策略的一种时序差分的学习方法，其Q的更新公式为:
+Q-Learning的训练过程是Q表的Q值逐渐调整的过程，其核心是根据已经知道的Q值，当前选择的行 动a作用于环境获得的回报R和下一轮 $S_{t+1}$ 对应可以获得的最大利益Q，总共三个量进行加权求和算出新的Q值，来更新Q表:
 
 $$
-Q(s, a) \leftarrow Q(s, a)+\alpha\left[r(s, a)+\gamma \max _{a^{\prime}} Q\left(s^{\prime}, a^{\prime}\right)-Q(s, a)\right]
+\begin{aligned}
+Q\left(S_t, A_t\right) &= Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \max _a Q\left(S_{t+1}, a\right)-Q\left(S_t, A_t\right)\right] \\
+&= (1-\alpha) Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \max _a Q\left(S_{t+1}, a\right)\right]
+\end{aligned}
 $$
 
-其是off-policy的，由于我们只关心哪个动作使得下一个时刻更新的Q，即$Q\left(s_{t+1}, a\right)$ 取得最大值，而实际到底采取了哪个动作(行为策略)，Q-learning并不关心，故采用的是待评估策略产生的下一个状态动作二元组的Q价值。[7]这表明优化策略并没有用到行为策略的数据，所以说它是off-policy的。[2]与SARSA相比，异策略Q学习需要更短的训练时间，跳出局部最优解的概率更大。然而，如果智能体根据Q值的概率模型而不是贪婪选择对动作进行采样，则采用异策略技术的Q值估计误差将增大。[3]
+其中 $Q\left(S_{t+1}, a\right)$ 是在 $t+1$ 时刻的状态和采取的行动（并不是实际行动，所以公式采用了所有可 能采取行动的 $\mathrm{Q}$ 的最大值) 对应的 $\mathrm{Q}$ 值， $Q\left(S_t, A_t\right)$ 是当前时刻的状态和实际采取的形同对应的 $\mathrm{Q}$ 值。折扣因子 $\gamma$ 的取值范围是 $[0,1]$ ，其本质是一个衰减值，如果gamma更接近0，agent趋向于只 考虑瞬时奖励值，反之如果更接近1，则agent为延迟奖励赋予更大的权重，更侧重于延迟奖励；奖 励值 $R_{t+1}$ 为 $\mathrm{t}+1$ 时刻得到的奖励值。 $\alpha$ 为是学习率。
+
+这里动作价值 $\mathrm{Q}$ 函数的目标就是逼近最优的 $q * ，q *=R_{t+1}+\gamma \max _a Q\left(S_{t+1}, a\right)$ ，并且轨迹的行 动策略与最终的 $q *$ 是无关的。后面中括号的加和式表示的是 $q *$ 的贝尔曼最优方程近似形式。
+
+其是off-policy的，由于我们只关心哪个动作使得下一个时刻更新的Q，即$Q\left(S_{t+1}, a\right)$ 取得最大值，而实际到底采取了哪个动作(行为策略)，Q-learning并不关心，故采用的是待评估策略产生的下一个状态动作二元组的Q价值。[7]这表明优化策略并没有用到行为策略的数据，所以说它是off-policy的。[2]与SARSA相比，异策略Q学习需要更短的训练时间，跳出局部最优解的概率更大。然而，如果智能体根据Q值的概率模型而不是贪婪选择对动作进行采样，则采用异策略技术的Q值估计误差将增大。[3]
 
 - 训练开始时，随机 Q 表，初始化状态
 - 值得注意的是，只有最后一步得到奖励时（假如我们只有终点一个奖励），这个奖励才真的是现实的奖励，否则还是用 Q 表估计的。

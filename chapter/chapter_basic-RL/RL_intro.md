@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-30 19:45:56
+ * @LastEditTime: 2023-06-02 20:37:39
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -11,8 +11,6 @@
 -->
 
 # 强化学习
-
-How can an intelligent agent learn to make good sequences of decisions?
 
 ## 引入
 
@@ -24,9 +22,15 @@ How can an intelligent agent learn to make good sequences of decisions?
 
 **强化学习**（Reinforcement Learning，简称RL），也叫增强学习，是指一类**智能体**从与环境交互中不断学习以取得最大回报（Return）的问题以及解决这类问题的方法。强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的不断交互，每次交互包括观察（Observate）当前的环境状态（State）、根据这个状态选择某个动作（Action）、并由此获得奖励（Award）或收益（Reward），我们把惩罚（punishment/penalty）处理成负收益形式，通过多次交互，智能体学习到了如何使得总体收益（Return）最大化。其中，强化是增加行为的意思，即当某个行为在从环境中获得正奖励后就会倾向去增加这种行为。[1]
 
-强化学习的更多相关历史，可见[2]
+关于强化学习的更多相关历史，可见[2]
 
 ![强化学习示意](/img/rl.png)
+
+上图形式化的描述了强化学习的框架，智能体 (Agent) 与环境 (Environment) 交互的过程: 在 $t$ 时刻，智能体在当前状态 $S_t$ 采取动作 $A_t$ 。在下一时刻 $t+1$ ，智能体接收到环境反馈的对于动作 $A_t$ 的奖励 $R_{t+1}$ ， 以及该时刻状态 $S_{t+1}$ 。从而，MDP和智能体共同给出一个轨迹：[52]
+
+$$
+S_0, A_0, R_1, S_1, A_1, R_2, S_2, A_2, R_3, S_3, A_3, \ldots
+$$
 
 ## 算法间的比较
 
@@ -562,6 +566,7 @@ $$
 [49]: https://zhuanlan.zhihu.com/p/474672251
 [50]: https://www.cs.sjtu.edu.cn/~linghe.kong/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AE%B2%E4%B9%89%E5%86%AF%E7%BF%94.pdf
 [51]: https://blog.csdn.net/Solo95/article/details/100133088
+[52]: https://paddlepedia.readthedocs.io/en/latest/tutorials/reinforcement_learning/markov_decision_process.html
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 
