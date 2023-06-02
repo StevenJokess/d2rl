@@ -52,3 +52,7 @@ explicit position inference and mapping are used for navigation. This may have t
 the popular SLAM, which usually requires manual processing.
 
 [1]: https://arxiv.org/abs/1701.07274
+
+TODO:
+
+https://wangshub.github.io/posts/reinforcement-learning-for-real-world-robotics/

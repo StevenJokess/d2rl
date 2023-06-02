@@ -33,4 +33,7 @@ See Justesen et al. (2017) for a survey about applying deep (reinforcement) lear
 See Ontan˜on et al. ´ (2013) for a survey about Starcraft. Check AIIDE and CIG Starcraft AI Competitions, and its history at https://www.cs.mun.ca/˜dchurchill/starcraftaicomp/history.shtml. See Lin
 et al. (2017) for StarCraft Dataset.
 
+DRL首先应用于视频游戏领域[23]，主要的原因是 DRL 需要大量的采样和试错训练，而游戏环境能够提供充足的样本，并且避免了试错的成本。从目前的文献来看，研究 DRL 所采用的游戏环境可以分为两类：一类用来提升算法的通用性，如Atari 2600；另一类用来处理复杂的游戏场景，如ViZDoom、StarCraftII等。[2]
+
 [1]: https://arxiv.org/abs/1701.07274
+[2]: http://www.infocomm-journal.com/znkx/article/2020/2096-6652/2096-6652-2-4-00314.shtml

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-28 21:22:47
+ * @LastEditTime: 2023-06-02 23:24:40
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,9 +13,7 @@
 -->
 动手学深度强化学习（Dive into Deep Reinforcement Learning）
 
-- 本书作者：蔡舒起
-- 本文参考：[1]、[2]、[3]
-
+- 胡编乱造出本书的罪魁祸首：蔡舒起
 
 =====================================
 
@@ -25,17 +23,24 @@
 ```
 
 ```toc
+:maxdepth: 1
+
+author_intro
+```
+
+
+```toc
 :maxdepth: 2
 :numbered:
 
 chapter_book_intro/index
 chapter_installation/index
-chapter_basic-RL/index
-chapter_basic-RL-algs/index
+chapter_basics-of-RL/index
+chapter_basics-of-RL-algs/index
 chapter_Eligibility_Trace/index
 chapter_actor-critic-algs/index
 
-chapter_basic-DRL&DQN-algs/index
+chapter_basics-of-DRL&DQN-algs/index
 chapter_continous-control/index
 chapter_policy-advanced-techniques/index
 
@@ -70,6 +75,8 @@ chapter_appendix-mathematics/index
 chapter_appendix-thinkings/index
 chapter_appendix-tools/index
 ```
+
+
 
 [1]: https://github.com/d2l-ai/d2l-en/edit/master/chapter_reinforcement-learning/index.md
 [2]: https://github.com/d2l-ai/d2l-en/edit/master/index.md
