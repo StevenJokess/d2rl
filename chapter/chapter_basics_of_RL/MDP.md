@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-20 03:34:36
+ * @LastEditTime: 2023-06-03 23:45:01
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -358,13 +358,16 @@ $$
 - 最佳价值函数 (optimal value function) $V^*$：$$V^*(s) =  \max_{a \in \mathcal{A}}\left\{r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right\} $$
 - 最佳策略 (optimal policy) $\pi^*$：$$Q^*(s, a) = r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) \max_{a^{\prime} \in \mathcal{A}} Q^*\left(s^{\prime}, a^{\prime}\right)$$
 
+> 你应该知道[13]
+> “贝尔曼备份”（Bellman backup）一词在 RL 文献中经常出现。状态或状态-动作对的 Bellman 备份是 Bellman 等式的右侧：奖励加下一个值（ reward-plus-next-value）。
+
 下图表示了 $V^*$ 和 $\pi^*$ 的 Bellman 最优方程中考虑的未来状态和可选的动作范围[5]：
 
-![$V^*$ 和 $\pi^*$ 的 Bellman 最优方程中考虑的未来状态和可选的动作范围](../img/Bellman_Q&V_optim_pics.png)
+![$V^*$ 和 $\pi^*$ 的 Bellman 最优方程中考虑的未来状态和可选的动作范围](../../img/Bellman_Q&V_optim_pics.png)
 
 > 推导：
-> ![$V^*(s)$](../img/Bellman_V_optim.png)
-> ![$Q^*(s, a)$](../img/Bellman_Q_optim.png)
+> ![$V^*(s)$](../../img/Bellman_V_optim.png)
+> ![$Q^*(s, a)$](../../img/Bellman_Q_optim.png)
 
 目标是最优策略：
 
@@ -407,3 +410,4 @@ $$
 [10]: https://www.bilibili.com/video/BV1UT411a7d6?p=33&vd_source=bca0a3605754a98491958094024e5fe3
 [11]: https://www.zhihu.com/people/guoxiansia/posts?page=3
 [12]: https://zhuanlan.zhihu.com/p/361399817
+[13]: https://spinningup.openai.com/en/latest/spinningup/rl_intro.html#policies
