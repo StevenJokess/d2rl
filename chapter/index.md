@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-02 23:24:40
+ * @LastEditTime: 2023-06-04 20:14:36
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,7 +13,8 @@
 -->
 动手学深度强化学习（Dive into Deep Reinforcement Learning）
 
-- 胡编乱造出本书的罪魁祸首：蔡舒起
+- 胡编乱造出本书的罪魁祸首：蔡舒起。
+- 本书不包就业，因为我就是失业人。
 
 =====================================
 
@@ -36,8 +37,7 @@ author_intro
 chapter_book_intro/index
 chapter_installation/index
 chapter_basics-of-RL/index
-chapter_basics-of-RL-algs/index
-
+chapter_RL_basics_algs/index
 chapter_Eligibility_Trace/index
 chapter_actor-critic-algs/index
 
