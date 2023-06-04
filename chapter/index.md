@@ -37,6 +37,7 @@ chapter_book_intro/index
 chapter_installation/index
 chapter_basics-of-RL/index
 chapter_basics-of-RL-algs/index
+
 chapter_Eligibility_Trace/index
 chapter_actor-critic-algs/index
 
@@ -51,14 +52,12 @@ chapter_Sparse_Reward/index
 chapter_Define_Reward_difficulty/index
 chapter_goal-oriented_RL/index
 
-
 chapter_multitask-RL/index
 chapter_multimodal-RL/index
 
 chapter_Distributed-RL/index
 chapter_multi-agent_RL/index
 chapter_multi-agent_DRL/index
-
 
 chapter_offline_RL/index
 chapter_unsupervised_RL/index

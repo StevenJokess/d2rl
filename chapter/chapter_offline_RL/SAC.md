@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:58:18
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-16 21:56:46
+ * @LastEditTime: 2023-06-04 00:13:13
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -212,11 +212,7 @@ $$
 - 当策略的熵低于目标值 $\mathcal{H}_0$ 时，训练目标 $L(\alpha)$ 会使 $\alpha$ 的值增大，进而在上述最小化损失函数 $L_\pi(\theta)$ 的过程中增加了策略熵对应项的重要性，即关注**增加策略的熵**，以促进更多的探索[2]；
 - 当策略的熵高于目标值 $\mathcal{H}_0$ 时，训练目标 $L(\alpha)$ 会使 $\alpha$ 的值减小，进而使得策略训练时*更专注于价值提升*。
 
-## 伪代码【并与数学算法对照】
-
-![SAC](../../img/SAC.png)
-
-![SAC 中文版，注意，K就是文中提到的 $\mathcal{H}_0$](../../img/SAC_zh.png)
+## 伪代码【括号内是：与数学算法对照】
 
 - 用随机的网络参数 $\omega_1, \omega_2$ 和 $\theta$ 分别初始化 Critic 网络 $Q_{\omega_1}(s, a), Q_{\omega_2}(s, a)$ 和 Actor 网络 $Q_{\theta}(s, a)$
 - 复制相同的参数 $\omega_1^{-} \leftarrow \omega_1 ， \omega_2^{-} \leftarrow \omega_2$ ，分别初始化目标网络 $Q_{\omega_1^{-}}$和 $Q_{\omega_1^{-}}$ ，初始化经验回放池 $R$【数学上，用集合表示：$\mathbb{D} = \emptyset$】
@@ -225,15 +221,15 @@ $$
   - **for** 时间步 $t=0 \rightarrow T$ **do**
     - 根据当前策略选择动作 $a_t \sim \pi_\theta\left(\cdot \mid s_t\right)$
     - 执行动作 $a_t$ ，获得奖励 $r_t$ 或 $r(s_t, a_t)$ ，环境状态变为 $s_{t+1}$
-    - 将 $\left(s_t, a_t, r_t, s_{t+1}\right)$ 存入回放池 $R$ 【数学上，用集合表示：$\mathbb{D} = \mathbb{D} \cup \{s_t, a_t, r_t, s_{t+1}\}$】
+    - 将 $\left(s_t, a_t, r_{t+1}, s_{t+1}\right)$ 存入回放池 $R$ 【数学上，用集合表示：$\mathbb{D} = \mathbb{D} \cup \{s_t, a_t, r_{t+1}, s_{t+1}\}$】
   - **end for**
-  - for 训练轮数 $k=1 \rightarrow K$ do 【进行多步梯度更新，其中超参数：步长 $\lambda_Q, \lambda_\pi, \lambda_\alpha$，指数移动平均系数 $\tau$ 。】
-       - 从 $R$ 中采样 $N$ 个元组 $\left\{\left(s_i, a_i, r_i, s_{i+1}\right)\right\}_{i=1, \ldots, N}$
-       - 对每个元组，用目标网络计算 $y_i=r_i+\gamma \min _{j=1,2} Q_{\omega_j^{-}}\left(s_{i+1}, a_{i+1}\right)-\alpha \log \pi_\theta\left(a_{i+1} \mid s_{i+1}\right)$ ，其中 $a_{i+1} \sim \pi_\theta\left(\cdot \mid s_{i+1}\right)$
-      - 用损失函数 $L_Q(\omega_j)$ 去更新两个 Critic 网络: 对 $j=1,2$ ，$\omega_j \leftarrow \omega_j - \nabla L_Q\left(\phi_i\right)$ ， 其中损失函数$L_Q(\omega_j)=\frac{1}{N} \sum_{i=1}^N\left(y_i-Q_{\omega_j}\left(s_i, a_i\right)\right)^2$
-      - 用重参数化技巧采样动作 $\tilde{a}_i$ ，然后用损失函数 $L_\pi(\theta)$ 更新当前 Actor 网络 $\theta$，即 $\theta \leftarrow \theta-\lambda_\pi \nabla_\theta L_\pi(\theta)$，其中损失函数 $L_\pi(\theta)=\frac{1}{N} \sum_{i=1}^N\left(\alpha \log \pi_\theta\left(\tilde{a}_i \mid s_i\right)-\min _{j=1,2} Q_{\omega_j}\left(s_i, \tilde{a}_i\right)\right)$
-      - 用损失函数 $L(\alpha)$ 更新熵正则项的系数 $\alpha$，即$\alpha  \leftarrow  \alpha-\lambda_\alpha \nabla L(\alpha)$，其中损失函数 $L(\alpha) = \mathbb{E}_{s_t \sim R, a_t \sim \pi\left(\cdot \mid s_t\right)}\left[-\alpha \log \pi\left(a_t \mid s_t\right)-\alpha \mathcal{H}_0\right]$，
-      - 更新目标Critic网络： 对 $j=1,2$，$\omega_j^{-} \leftarrow \tau \omega_1+(1-\tau) \omega_j^{-}$ 。
+  - **for** 训练轮数 $k=1 \rightarrow K$ **do** 【进行多步梯度更新，其中超参数：步长 $\lambda_Q, \lambda_\pi, \lambda_\alpha$，指数移动平均系数 $\tau$ 。】
+    - 从 $R$ 中采样 $N$ 个元组 $\left\{\left(s_i, a_i, r_{i+1}, s_{i+1}\right)\right\}_{i=1, \ldots, N}$
+    - 对每个元组，用目标网络计算 $y_i=r_i+\gamma \min _{j=1,2} Q_{\omega_j^{-}}\left(s_{i+1}, a_{i+1}\right)-\alpha \log \pi_\theta\left(a_{i+1} \mid s_{i+1}\right)$ ，其中 $a_{i+1} \sim \pi_\theta\left(\cdot \mid s_{i+1}\right)$
+    - 用损失函数 $L_Q(\omega_j)$ 去更新两个 Critic 网络: 对 $j=1,2$ ，$\omega_j \leftarrow \omega_j - \nabla L_Q\left(\phi_i\right)$ ， 其中损失函数$L_Q(\omega_j)=\frac{1}{N} \sum_{i=1}^N\left(y_i-Q_{\omega_j}\left(s_i, a_i\right)\right)^2$
+    - 用重参数化技巧采样动作 $\tilde{a}_i$ ，然后用损失函数 $L_\pi(\theta)$ 更新当前 Actor 网络 $\theta$，即 $\theta \leftarrow \theta-\lambda_\pi \nabla_\theta L_\pi(\theta)$，其中损失函数 $L_\pi(\theta)=\frac{1}{N} \sum_{i=1}^N\left(\alpha \log \pi_\theta\left(\tilde{a}_i \mid s_i\right)-\min _{j=1,2} Q_{\omega_j}\left(s_i, \tilde{a}_i\right)\right)$
+    - 用损失函数 $L(\alpha)$ 更新熵正则项的系数 $\alpha$，即$\alpha  \leftarrow  \alpha-\lambda_\alpha \nabla L(\alpha)$，其中损失函数 $L(\alpha) = \mathbb{E}_{s_t \sim R, a_t \sim \pi\left(\cdot \mid s_t\right)}\left[-\alpha \log \pi\left(a_t \mid s_t\right)-\alpha \mathcal{H}_0\right]$，
+    - 更新目标Critic网络： 对 $j=1,2$，$\omega_j^{-} \leftarrow \tau \omega_1+(1-\tau) \omega_j^{-}$ 。
   - **end for**
 - **end for**
 - 返回 $\theta, \omega_1^{-}, \omega_2^{-}$，得最优策略 $\pi_\theta$[5]。
@@ -294,6 +290,13 @@ $$
 
  TODO:
 
+## 附录：更多SAC的伪代码：
+
+![SAC](../../img/SAC.png)
+
+![SAC 中文版；注意，K就是文中提到的 $\mathcal{H}_0$](../../img/SAC_zh.png)
+
+![SAC 英文版[7]；注意，d表示是否终止，d=1则终止](../../img/SAC_En.png)
 
 [1]: https://hrl.boyuai.com/chapter/2/sac%E7%AE%97%E6%B3%95
 [2]: https://chat.openai.com/chat
@@ -301,5 +304,6 @@ $$
 [4]: https://zhuanlan.zhihu.com/p/557418338#6%E3%80%81SAC-%E7%A6%BB%E6%95%A3
 [5]: https://github.com/Junfeng-Huang/Soft-Reinforcement-learning
 [6]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf
+[7]: https://spinningup.openai.com/en/latest/algorithms/sac.html
 
 > 1. https://chat.openai.com/chat; 熵多大算大？;比如常见的平衡点
