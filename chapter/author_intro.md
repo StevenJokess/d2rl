@@ -12,5 +12,5 @@
 </center>
 
 > 参考网页
-> [1]: https://gohom.win/2015/06/07/EmbedHtmlPDF/
-> [2]: https://www.itcoder.tech/posts/display-pdf-image-in-markdown/
+> [1]: <https://gohom.win/2015/06/07/EmbedHtmlPDF/>
+> [2]: <https://www.itcoder.tech/posts/display-pdf-image-in-markdown/>

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 23:43:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-04 00:32:50
+ * @LastEditTime: 2023-06-05 16:14:37
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO:: 伪代码和Code,
@@ -23,7 +23,7 @@ Q-learning无法处理以下问题：
 - 连续空间问题：当状态连续【在自动驾驶中，智能体感知到的环境状态是各种传感器数据，一般都是连续的。】或者动作连续【动作是操作方向盘的方向（−90度∼ 90度）和速度控制（0 ∼ 300公里/小时），也是连续的。】的时候，就有无限个状态动作对，我们更加无法使用这种表格形式来记录各个状态动作对的 $Q$ 值。
 - 泛化的需要：假设离某个状态非常接近的另一状态，比如就二者之间的物理位置就相隔了一毫米，没有必要单独存储其价值，因此，需要泛化，泛化到未知的状态中去。[10]
 
-对于这种情况，我们需要用函数拟合的方法来估计 $Q$ 值，即将这个复杂的 $Q$ 值表格视作数据，使用一个参数化（parametrize）的函数 $Q_\theta$ 来拟合这些数据。很显然，这种函数拟合的方法存在一定的精度损失，因此被称为近似方法，但由于神经网络的逼近能力，能使得估计较为准确，这种近似简称为价值函数近似（value function approximation）。我们今天要介绍的深度强化学习（即，用强化学习来定义问题和优化目标，用深度学习来解决策略和值函数的建模问题，然后使用误差反向传播算法来优化目标函数。）下的 DQN 算法（Deep Q-Network），也叫深度Q网络，便可以用来解决**连续状态**下**离散动作**的问题，Mnih et al, Nature 2015[13]这篇论文解决了[Atari 2600](../chapter_app_video_game/Atari_2600(Agent57))游戏。
+对于这种情况，我们需要用函数拟合的方法来估计 $Q$ 值，即将这个复杂的 $Q$ 值表格视作数据，使用一个参数化（parametrize）的函数 $Q_\theta$ 来拟合这些数据。很显然，这种函数拟合的方法存在一定的精度损失，因此被称为近似方法，但由于神经网络的逼近能力，能使得估计较为准确，这种近似简称为价值函数近似（value function approximation）。我们今天要介绍的深度强化学习（即，用强化学习来定义问题和优化目标，用深度学习来解决策略和值函数的建模问题，然后使用误差反向传播算法来优化目标函数。）下的 DQN 算法（Deep Q-Network）【2013 NIPS 论文：https://arxiv.org/abs/1312.5602】，也叫深度Q网络，便可以用来解决**连续状态**下**离散动作**的问题，Mnih et al, Nature 2015[13]这篇论文解决了[Atari 2600](../chapter_app_video_game/Atari_2600(Agent57))游戏。
 
 ## CartPolo 环境
 

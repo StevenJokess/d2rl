@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-04 20:14:36
+ * @LastEditTime: 2023-06-05 16:23:43
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -52,10 +52,12 @@ chapter_Sparse_Reward/index
 chapter_Define_Reward_difficulty/index
 chapter_goal-oriented_RL/index
 
+chapter_Distributed_RL/index
+
 chapter_multitask-RL/index
 chapter_multimodal-RL/index
 
-chapter_Distributed-RL/index
+chapter_game_theory/index
 chapter_multi-agent_RL/index
 chapter_multi-agent_DRL/index
 

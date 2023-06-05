@@ -94,3 +94,12 @@ My email: a867907127@gmail.com
 - [To be AI PM 成为AI产品经理](https://stevenjokess.github.io/2bPM/)
 - [d2l notes《动手学深度学习》读书笔记](https://github.com/StevenJokess/d2l-en-read)
 
+## Citing the repo
+
+To cite this repo, please use this bibtex entry:
+@repo{d2rl2023,
+    title={Dive into Deep Reinforcement Learning},
+    author={StevenJokess（蔡舒起，原StevenJokes）},
+    website={\url{https://github.com/StevenJokess/d2rl}},
+    year={2023}
+}

@@ -3,33 +3,14 @@
 <!--
  * @version:
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-05-06 18:56:31
+ * @Date: 2023-06-04 20:48:28
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-04 21:05:05
+ * @LastEditTime: 2023-06-04 20:59:06
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 该书的介绍
-
-本章介绍这本书，包括：
-
-- flyleft&copyLeft 衬页和声明
-- preface 序言
-- prologue 前言
-- thanks&support 致谢和赞助
-- glossary&notations术语表和符号
+# 算法和论文总结
 
 
-```toc
-:maxdepth: 2
-
-flyleaf&copyleft
-preface
-prologue
-thanks&support
-glossary&notations
-algs&papers
-appendix-cost&benefits
-```

@@ -5,13 +5,15 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-09 20:32:52
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-23 22:13:34
+ * @LastEditTime: 2023-06-04 20:32:53
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 字母表
+# 字母表和中英术语对照
+
+## 字母表
 
 这里只列出常用字母。部分小节会局部定义的字母，以该局部定义为准。
 

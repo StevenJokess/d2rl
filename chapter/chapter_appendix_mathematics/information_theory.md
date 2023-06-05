@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-13 23:23:58
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-16 22:32:43
+ * @LastEditTime: 2023-06-04 22:28:13
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,29 +15,46 @@
 
 信息论是应用数学的一个分支，主要研究的是对一个信号包含信息的多少进行量化。 它最初被发明是用来研究在一个含有噪声的信道上用离散的字母表来发送消息，例如通过无线电传输来通信。 在这种情况下，信息论告诉我们如何对消息设计最优编码以及计算消息的期望长度，这些消息是使用多种不同编码机制、从特定的概率分布上采样得到的。 在机器学习中，我们也可以把信息论应用于连续型变量，此时某些消息长度的解释不再适用。 信息论是电子工程和计算机科学中许多领域的基础。[4]
 
+引入相关包：
+
+```py
+import numpy as np
+import scipy.stats
+```
+
 ## 信息
 
-信息一般可以被表述为不确定性的程度，有如下特性：
+信息论奠基人香农(Shannon)认为，信息就是用来消除不确定性的东西。
+
+故应有如下特性：
 
 - 很有可能发生的事件几乎没有信息；甚至一定发生的事件没有信息。（即，当概率x等于1时，信息量为0）
 - 随机事件拥有更多的信息（由上面得，f(x)应当是递减函数）；甚至一定不发生的事件充满信息。（即，当事件概率x等于0时，信息量为正无穷）
-- 独立事件可以增加信息——抛两次正面的骰子的信息量大于抛一次正面骰子的信息量。[3]（信息量是可加的，两个独立事件同时发生的信息量应当等于它们分别发生的信息量之和。 $f(m*n)=f(m)+f(n)$ ）
+- 独立事件可以增加信息——抛两次正面的骰子的信息量大于抛一次正面骰子的信息量。[3]
+- 信息量是可加的，两个独立事件同时发生的信息量应当等于它们分别发生的信息量之和。 即$f(m*n)=f(m)+f(n)$
 
-为了满足上述三个性质，定义一个事件的自信息(信息量，信息的度量）为：
+## 自信息/信息量
+
+为了满足上述三个性质，定义一个事件的自信息（或 信息量，信息的度量）为：
 
 $I(x)=-\log _a(P(x))$
 
 其中，a>1，0<x<=1
 
-- 当a=e时，I(x)单位是奈特(nat)。
+- 当a=e时，I(x)单位是奈特(nat)；
 - 当a=2时，I(x)单位是比特(bit)或者香农；
-- 当a=10时，I(x)单位是哈特(hart)；
+- 当a=10时，I(x)单位是哈特(hart)。
 
 换算关系：
 
 - $1奈特=\log _2 e比特≈1.443比特$
 - $1哈特=\log _2 10比特≈3.322比特$
 
+TODO：·```py
+
+self_info = -np.log2(p)
+print(self_info)
+```
 
 
 ## 熵(Entropy)
@@ -114,12 +131,27 @@ D(p||q) = \sum P(x)\log \frac{p(x)}{q(x)}
 =-H(p(x)) -\sum p(x)\log _2 q(x)
 $$
 
+```py
+
+def cross_entropy(p, q):
+    p = np.float_(p)
+    q = np.float_(q)
+    return -sum([p[i]*np.log2(q[i]) for i in range(len(p))])
+
+p = np.asarray([0.65, 0.25, 0.07, 0.03])
+q = np.array([0.6, 0.25, 0.1, 0.05])
+print(cross_entropy(p, q))  # 1.3412204456967705
+print(cross_entropy(q, p))  # 1.5094878372721525
+```
+
 ## 互信息(mutual information)
 
 
 $$
 I(X;Y) = H(X)+H(Y)-H(X,Y)
 $$
+
+
 
 <img src="../../img/mutual_information.png" alt="2.5" style="zoom:50%;" />
 
@@ -188,6 +220,18 @@ $$ \hat{q}=\operatorname{argmin}_{q} \int{x} q(x) \log \frac{q(x)}{p(x)} d x $$
 
 对于反向KL散度来说，q(x)的分布图像更符合第一行。反向KL散度更在意中p(x)的罕见事件，也就是首先要保证p(x)低谷附件的x，在q(x)中的概率密度值也较小。当 $p$ 具有多个峰并且这些峰间隔很宽时，如该图所示，最小化 KL 散度会选择单个峰，以避免将概率密度放置在 $p$ 的多个峰之间的低概率区域中。
 
+```py
+
+def KL_divergence(p,q):
+    return scipy.stats.entropy(p, q)
+
+p=np.asarray([0.65,0.25,0.07,0.03])
+q=np.array([0.6,0.25,0.1,0.05])
+print(KL_divergence(p, q)) # 0.011735745199107783
+print(KL_divergence(q, p)) # 0.013183150978050884
+print(KL_divergence(p, p)) # 0
+```
+
 ## JS散度
 
 JS 散度（Jensen-Shannon Divergence）是一种对称的衡量两个分布相似度的度量方式，定义为：
@@ -199,6 +243,22 @@ $$
 其中 $m=\frac{1}{2}(p+q)$ 。
 
 JS 散度是 KL 散度一种改进。但两种散度都存在一个问题，即如果两个分布p, q没有重叠或者重叠非常少时，KL散度和JS散度都很难衡量两个分布的距离。
+
+```py
+import numpy as np
+import scipy.stats
+def JS_divergence(p,q):
+    M=(p+q)/2
+    return 0.5*scipy.stats.entropy(p,M)+0.5*scipy.stats.entropy(q, M)
+
+p=np.asarray([0.65,0.25,0.07,0.03])
+q=np.array([0.6,0.25,0.1,0.05])
+q2=np.array([0.1,0.2,0.3,0.4])
+
+print(JS_divergence(p, q))  # 0.003093977084273652
+print(JS_divergence(p, q2)) # 0.24719159952098618
+print(JS_divergence(p, p)) # 0.0
+```
 
 ## Wasserstein距离
 
@@ -244,5 +304,7 @@ $$
 [4]: https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/
 [5]: https://mp.weixin.qq.com/s/fg5GxW83Ui_joJKrsNQdBg
 [6]: https://finance.sina.com.cn/stock/stockzmt/2020-05-09/doc-iirczymk0646869.shtml
+[7]: https://zhuanlan.zhihu.com/p/143105854#5.1%20%E7%A6%BB%E6%95%A3%E5%88%86%E5%B8%83%E7%9A%84JS%E6%95%A3%E5%BA%A6python%E5%AE%9E%E7%8E%B0
+[8]: https://chenjunren.gitbook.io/read-the-beauty-of-mathematics/di-6-zhang-xin-xi-de-du-liang-he-zuo-yong
 
 TODO:https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#information

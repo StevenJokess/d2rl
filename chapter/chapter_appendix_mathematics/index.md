@@ -29,11 +29,7 @@ applied_stochastic_process
 numerical_analysis
 graph_theory
 probabilistic_graphical_model
-game_theory
-machine_game(perfect_information)
-game_theory2
-machine_game(imperfect_information)
-game_theory4
+
 optimization_theory
 control_theory
 optimal_control_theory
