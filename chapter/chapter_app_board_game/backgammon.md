@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-05-12 02:15:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-01 00:37:33
+ * @LastEditTime: 2023-06-07 13:33:46
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -16,6 +16,7 @@
 1992年，杰拉尔德·特索罗开发的名叫TD-Gammon的程序，运用了神经网络和时间差分学习方法，达到了顶尖人类玩家的水准[1]。
 
 Tesauro (1994) approached Backgammon by using neural networks to approximate value function learned with TD learning, and achieved human level performance.[2]
+
 
 按下为准？
 

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-28 01:17:15
+ * @LastEditTime: 2023-06-07 13:30:42
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -213,6 +213,7 @@ def negative_max(node):
 - 剪枝的关键：什么枝该剪、在什么地方减。
 - 剪枝分为BFS剪枝和DFS剪枝。[18]
 
+
 ### Alpha-Beta 剪枝
 
 Alpha-Beta 剪枝，是DFS剪枝的一种形式，用于排除等效冗余的搜索，从而提高搜索算法的效率。（自己想的，经ChatGPT确认）
@@ -224,6 +225,11 @@ Alpha-Beta 剪枝通过省去探索没必要的节点，来提高搜索效率。
 1. Alpha-Beta剪枝通过维护两个值，即Alpha和Beta，来对搜索进行剪枝。其中，Alpha表示MAX节点在搜索路径上已找到的最好（最大）值，Beta表示MIN节点在搜索路径上已找到的最好（最小）值。
 1. 即如果出现了某个节点的值 Beta_new <= Alpha 或 Alpha_new >= Beta 的情况，则不用搜索该节点的其他子树了，未搜索的部分子树将被忽略，即被剪枝。[19]
 1. 这样就避免了对等效的搜索节点进行重复搜索，减少了搜索的计算量，提高了搜索效率。
+
+
+### 应用
+
+1958 年，Newell，Shaw 和 Simon 第一次在国际象棋程序中使用 Alpha-Beta 剪枝搜索算法.Alpha-beta 剪枝算法是min-max 搜索算法的改进，通过剪掉明显次优的子树分支，该算法极大地降低了搜索空间.  该算法最初由McCarthy 在1956 年提出。[25]
 
 #### 例子
 
@@ -263,6 +269,8 @@ Alpha-Beta 剪枝通过省去探索没必要的节点，来提高搜索效率。
 ## 最好情况的复杂度
 
 由例一得，如果我们运气很好（实际中依赖估值函数预先猜几个），直接搜到了最好的情况， Alpha-Beta可以剪去大部分分支。在这种情况下，复杂度可以约化为 $\sqrt{b^d}$ ，也就是 $b^{\frac{d}{2}}$ (证明 略）。这是很有趣的事情：虽然Alpha-Beta剪枝优化的是分支因子 $b$ ，但是在算法的实际运行中，效果反而类似于优化了深度 $d$ 。良好的Alpha-Beta剪枝可以使得算力相同时搜索深度增大一倍，而能看远一倍的对手是非常可怕的。[16]
+
+
 
 #### Alpha-Beta剪枝 Minimax的伪代码[20]
 
@@ -335,6 +343,7 @@ Func ABNegamax(node, alpha, beta):
   return bestV
 ```
 
+
 #### Alpha-Beta剪枝 Negamax的Python代码[19]
 
 TODO
@@ -345,6 +354,7 @@ TODO
 - 并且Minimax搜索也不能应用到一些非完全信息博弈游戏（如扑克，桥牌）和非确定性的游戏（如大富翁，双陆棋）上。
 
 到了2007年的时候，一种新的树搜索方法被发明和应用到游戏中：[蒙特卡洛树搜索Monte Carlo Tree Search(MCTS)](../chapter_model-based-algs/MCTS.md)，并取得了极大的成功。
+
 
 ### Alpha-Beta剪枝的改进
 
@@ -357,6 +367,7 @@ TODO
 此外，还有各种在 Alpha-Beta 搜索基础上优化的算法，例如，有学者提出在博弈树同层结点中，用广
 度优先搜索，接力式空窗探测，平均搜索效率高于 MTD  (f)搜索。通常，裁剪算法需要与置换表技术相结
 合，以减少博弈树的规模，提高搜索效率。[24]
+
 
 ## 总结
 
@@ -409,6 +420,7 @@ Del [4]: https://jwc.gdufe.edu.cn/_upload/article/files/68/96/872c060340f68ed6f5
 [22]: https://www.yiibai.com/artificial-intelligence-tutorial/mini-max-algorithm-in-ai.html#article-start
 [23]: https://www.yiibai.com/artificial-intelligence-tutorial/ai-adversarial-search.html
 [24]: https://www.cs.sjtu.edu.cn/~linghe.kong/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AE%B2%E4%B9%89%E5%86%AF%E7%BF%94.pdf
+[25]: http://cjc.ict.ac.cn/online/onlinepaper/zl-202297212302.pdf
 
 TODO:Del [25]: https://zhuanlan.zhihu.com/p/58472297
 TODO:Del [26]: https://zhuanlan.zhihu.com/p/427303297

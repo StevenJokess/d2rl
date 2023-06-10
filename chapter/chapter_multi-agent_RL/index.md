@@ -19,6 +19,8 @@ multi-agent_DRL_intro
 MCTS
 self-play
 MARL
+MiniMax-Q
+NashQ
 IPPO
 MADDPG
 COMA

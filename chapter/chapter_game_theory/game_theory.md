@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-23 22:55:04
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-27 21:47:33
+ * @LastEditTime: 2023-06-08 13:52:03
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -78,6 +78,10 @@ PAPI（by Eric Rasmusen）：
 > - 对称博弈是每方玩家都有相同的策略、目标和奖励。
 > - 非对称博弈是每方玩家都有不同的策略、目标和奖励。[15]
 
+共同知识（common knowledge）：它是指“所有的参与人知道，所有的参与人知道所有的参与人知道，所有的参与人知道所有的参与人知道所有的参与人知道·····”的知识。
+  - “共同知识”是博弈论中一个非常强的假定，它与“共享知识”（knowledge sharing）不是同一个概念。
+  - 共同享有是说你知道，我也知道，但是我并不一定知道你也知道。也就是说，共同享有的知识，并不一定是共同知识。
+
 ### 综合考虑上面两个角度
 
 综合考虑上面两个角度，可分为正则化博弈、扩展式博弈、贝叶斯博弈、演化博弈：
@@ -125,7 +129,7 @@ PAPI（by Eric Rasmusen）：
 
 ## 策略（Strategies）和收益（Payoffs）
 
-- 策略的定义：在一个博弈中，每个博弈者根据条件做做出的决策称为“策略”。博弈者可以选择的全部策略组成的集合叫做“策略空间”（Strategies Set）
+- 策略的定义：在一个博弈中，每个博弈者根据条件做出的决策称为“策略”。博弈者可以选择的全部策略组成的集合叫做“策略空间”（Strategies Set）
 - 收益的定义：博弈中的收益（Payoffs）是博弈者能够从博弈中获得的利益。这个收益可以有很多类型，比如与收入、利润、时间或者是情绪价值等等。
 
 - “有限的策略”（Finite Strategies）：博弈者的策略可数。该博弈的策略和收益的关系可以用收益矩阵、扩展形等方法表示出来。
@@ -292,6 +296,9 @@ TODO: 差分博弈 Differential games：
 
 严格劣势策略无法达成纳什均衡
 
+## 博弈的求解方法：逆向归纳法（backward  induction）
+
+因为有了共同知识的假定，所以每个参与人都知道博弈树是什么样子的，因此就产生了一个寻找均衡的方法  —  逆向归纳法（backward  induction），就是可以从博弈树的末端往前倒推，从而作出最优策略的选择。[36]
 
 ## 更多
 
@@ -338,7 +345,13 @@ TODO: 差分博弈 Differential games：
 - A知道 => A 100 B0 C0
 - 再加一个M，M知道 => M98 A0 B1 C1
 
-## 博弈的求解方法：
+### 信号博弈
+
+信号博弈：是指有两个参与人，信号发送者发出私人信息，信号接收者在接受信息发送者的信息基础上做出决策的博弈。他们先后选择一次行为，其中信号接收方(Receiver)具有不完全信息，但他们可以从信号发出方的行为中获得部分信息，信号发出方(sender)的行为对信号接收方来说是一种(以某种方式)反映其有关得益信息的信号。
+
+- 应用：路边摊，即在顾客的眼皮底下炒饭、炒面，货真价实、生意兴隆。[34]
+- 变体：空谈博弈，
+
 
 
 ###
@@ -366,7 +379,6 @@ DeepStack for Texas Hold’em poker
 [11]: https://www.zhihu.com/column/c_1433451782463078400
 [12]: https://zhuanlan.zhihu.com/p/422553441
 [13]: https://zhuanlan.zhihu.com/p/422905899
-
 [14]: https://zhuanlan.zhihu.com/p/423175693
 [15]: https://blog.csdn.net/cf2SudS8x8F0v/article/details/79102339
 [16]: https://baike.baidu.com/item/%E5%90%88%E4%BD%9C%E5%8D%9A%E5%BC%88/554635#:~:text=%E5%90%88%E4%BD%9C%E5%8D%9A%E5%BC%88%E6%98%AF%E6%8C%87%E4%B8%80%E4%BA%9B,%E5%88%A9%E7%9B%8A%E6%9C%89%E6%89%80%E5%A2%9E%E5%8A%A0%E7%9A%84%E3%80%82
@@ -387,3 +399,6 @@ DeepStack for Texas Hold’em poker
 [31]: https://www.youtube.com/watch?v=BUn88WTmcOU
 [32]: https://www.cnblogs.com/Renyi-Fan/p/13324338.html
 [33]: https://www.cnblogs.com/Renyi-Fan/p/13331350.html
+[34]: https://wiki.mbalib.com/wiki/%E4%BF%A1%E5%8F%B7%E5%8D%9A%E5%BC%88
+[35]: https://zhuanlan.zhihu.com/p/479476471
+[36]: https://www.researchgate.net/publication/266990071_Signal_games_and_pragmatic_analysis?enrichId=rgreq-74767e5f7e98b606d4fceb27323c0440-XXX&enrichSource=Y292ZXJQYWdlOzI2Njk5MDA3MTtBUzoxNTMxNzgwMjQ3MTQyNDBAMTQxMzUzMTg5NTMzOQ%3D%3D&el=1_x_3&_esc=publicationCoverPdf

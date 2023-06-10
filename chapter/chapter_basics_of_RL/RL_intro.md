@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-04 19:53:35
+ * @LastEditTime: 2023-06-08 14:01:48
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -335,8 +335,11 @@ $s, a$ ：可以称之为一步。智能体的行为可以描述为一系列步�
 其学习者的常见结构[17]：
 
 - 价值（Value）、价值函数（Value Functions）：描述当前状态到下一个状态过程中的奖励预测值，即期望奖励；优势函数（Advantage Functions）：去描述预测该状态相对其他状态有多好。
-- > 奖励（Reward）、奖励函数（Reward Functions）：描述当前状态到下一个状态过程中的奖励实际值
-- 策略函数（Policy Functions）：其输入是当前状态，输出是将发生的动作；策略分布律函数（离散动作）、策略概率密度函数（连续动作）：其输入是当前状态，输出是将发生的动作概率；注意：二者在很多地方都常简称为策略（Policy），请做好区分。
+- > 对比：奖励（Reward）、奖励函数（Reward Functions）：描述当前状态到下一个状态过程中的奖励实际值
+- 决策（Decision）、决策（Policy）
+  - 策略函数（Policy Functions）：其输入是当前状态，输出是将发生的动作；
+  - 策略分布律函数（离散动作）、策略概率密度函数（连续动作）：其输入是当前状态，输出是将发生的动作概率；
+  - 注意：二者在很多地方都常简称为策略（Policy），请做好区分。
 - 模型（Model）：智能体对环境的表征（representation），动作到状态的状态转移函数、状态转移概率和由状态-动作对为输入的奖励函数，都是已知的。
 
 其决策者选择动作的方式：
@@ -395,14 +398,22 @@ $$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
 
 #### 策略（Policy）
 
+##### 决策（Decison）
+
+所谓决策，就是确定系统过程发展的方案。决策的实质是关于状态的选择，是决策者从给定阶段状态出发对下一阶段状态作出的选择。
+
+用以描述决策变化的量称之决策变量，和状态变量一样，决策变量可以用一个数，一组数或一向量来描述，也可以是状态变量的函数，记以 $u_k=u_k(s_k)$ ,表示于阶段k状态 $s_k$ 时的决策变量决策变量的取值往往也有一定的允许范围，称之允许决策集合。
+
+决策变量u,(S)的允许决策集用U(S)表示， $(S)∈U(S)$ 允许决策集合实际是决策的约束条件。
+
 ##### 策略（Policy）：
 
-策略（Policy）：描述智能体怎么选择动作。它对应于心理学中所谓的一组刺激-反应的规则，即反射（reflex）。策略是强化学习个体的核心，因为它本身就足以确定行为。
+策略（Policy）：也叫决策序列。[55]描述智能体怎么选择动作的过程。它对应于心理学中所谓的一组刺激-反应的规则，即反射（reflex）。策略是强化学习个体的核心，因为它本身就足以确定行为。
 
 - 不利用动作价值函数时：观察（Observation）到 行动（Action）的一个映射   或 全观察情况下的状态（fully observated State) [23] 到 行动（Action） 的一个映射。    。以雅达利的Pong 游戏为例子，策略函数的输入就是游戏的任一帧，它的输出决定智能体向左移动或者向右移动。强化学习通过学习来改进策略来最大化总奖励。
 - 利用动作价值函数时：动作价值函数Q 到 行动（Action）的一个映射。
 
-根据是否选择确定的动作：
+根据是否确定选择动作：
 
 - **确定性策略**（deterministic policy） [21]，是指在给定观察下，直接输出一个确定的动作的策略。输出唯一是动作，所以是策略函数（Policy Functions），常简称为策略，即观察（Observation）到 行动（Action）的一个映射。通常这个动作是最有可能（最大概率）的动作，那此时确定性策略用符号表示为$\mu(s)= a^* =\underset{a}{\arg \max } \pi(a \mid s)$。确定性策略通常用于解决连续动作空间中的问题，以得到平滑的动作轨迹。
 - **随机性策略**（stochastic policy），是指在给定观察下，智能体选择一个从概率分布采样[28]得到的动作，这个输出为特定观察下的行动的概率，离散动作是概率分布率函数，连续动作是概率密度函数（probability density function），统称为策略函数，常简称为策略。用$\pi$表示，$\pi(a \mid s) \equiv p(a \mid s) = P\left[A_{t}=a \mid S_{t}=s\right]$）其中，$\Sigma \pi(a \mid s)=1$ 为使记法没那么复杂（less cumbersome），我们会经常用 $\pi(s)$ 代替 $\pi(a \mid s)$ 。 动作从概率分布去采样：$a\sim \pi\left(a \mid s\right)$
@@ -553,6 +564,7 @@ TODO:[12]
 [52]: https://paddlepedia.readthedocs.io/en/latest/tutorials/reinforcement_learning/markov_decision_process.html
 [53]: https://spinningup.openai.com/en/latest/spinningup/rl_intro.html#policies
 [54]: https://blog.csdn.net/qq_33302004/article/details/115027798
+[55]: https://mooc1.xueyinonline.com/nodedetailcontroller/visitnodedetail?courseId=233015706&knowledgeId=720084467&enc=
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 

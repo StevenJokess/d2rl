@@ -5,7 +5,7 @@
 
 
 game_theory
-game_form
+game_form（normal-form game）
 machine_game(perfect_information)
 game_theory2
 machine_game(imperfect_information)

@@ -1,5 +1,7 @@
 **/.ipynb_checkpoints
 **/__pycache__
+
+
 data/
 *.json
 *.params
@@ -12,3 +14,4 @@ test*.md
 run.sh
 .idea
 env
+debug.log
