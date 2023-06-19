@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:21:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-02 22:57:03
+ * @LastEditTime: 2023-06-17 02:17:23
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -48,7 +48,7 @@ $$
 其中 $\beta$ 可以看作惩罚因子，是一个超参数。实际上这种代理目标函数背后的理论是优化策略 $\pi$ 的下界，让每次策略更新后的新策略都能得到提升。但是 $\beta$ 的取值非常难以确定，即使在很简单的问题上，都没办法简单地找到 $\beta$ 值，甚至在同一个问题中， $\beta$ 的取值随着学习过程而改变。这就导致 TRPO 采用了**硬约束**的方式，而不是惩罚项。
 
 - 所以现在的问题就是，如果我们想在学习过程中找到性能单调递增的策略，光靠简单地选择一个唖罚项系数和 SGD 是不够的，但是使用 TRPO 又太复杂，需要涉及二阶近似，*计算量太大*。这个时候 PPO 就出现了。
-- PPO 用了一些相对简单的方法来求解。PPO是限制两者比率的变化范围。具体来说，PPO 有两种形式，一是 PPO-截断，二是 PPO-惩罚，，我们接下来对这两种形式进行介绍。[2]
+- PPO 用了一些相对简单的方法来求解。PPO是限制两者比率的变化范围，来降低策略更新前后的分布差异性。具体来说，PPO 有两种形式，一是 PPO-截断，二是 PPO-惩罚，，我们接下来对这两种形式进行介绍。[2]
 
 ## 一、PPO-截断
 

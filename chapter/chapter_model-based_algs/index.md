@@ -22,9 +22,9 @@ model-based_intro
 MPC
 Dyna-Q
 Dyna-2
-
 MBPO
 search_algorithm
 MCTS
+summary
 
 ```

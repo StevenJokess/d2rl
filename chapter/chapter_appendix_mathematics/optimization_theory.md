@@ -66,6 +66,9 @@ TODO:[3]
 
 ## 非凸优化
 
+TODO:
+https://www.cnblogs.com/orion-orion/p/15418056.html
+
 [1]: https://www.bilibili.com/video/BV1UV411z7um/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
 [2]: https://flashgene.com/archives/23923.html
 [3]: https://datawhalechina.github.io/unusual-deep-learning/#/08.%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95

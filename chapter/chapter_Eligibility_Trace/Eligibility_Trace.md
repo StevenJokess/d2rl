@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-17 05:15:29
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-25 00:09:44
+ * @LastEditTime: 2023-06-16 22:52:34
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,7 +15,40 @@
 
 https://chengfeng96.com/blog/2020/02/24/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%83%EF%BC%89-%E8%B5%84%E6%A0%BC%E8%BF%B9/
 
+Eligibility Traces are a basic concept of Reinforcement Learning. This technique can be applied to any Reinforcement Learning algorithm in order to increase performance. Eligibility traces handle delayed rewards and thus events like a certain state or choosing a certain action are temporary recorded for learning changes. When updating last events (e.g. the value of the last states) there is also an additional variable associated with each state. This is called an eligibility trace and the notation for state s at time t is et(s)
+
+### 积累痕迹
+
+
+- $\gamma$ 是折扣因子
+- $\lambda$ 是痕量-衰减因子
+
+
+
+For l = 0 only the last visited state has a trace ¹ 0 and thus only this is updated.
+For 0 < l < 1 past states are updated according to their trace value. The update is smaller if the state has been visited a long time ago. They are given less credit for temporal difference error.
+For l = 1 only g has influence on the trace.
+For g = 1 there is no decay in the trace.
+For state-action pairs the notation is like following
+
+et(s, a): Trace for state-action pair s, a
+
+对于状态-动作对，符号如下
+
+
+
+## 替换轨迹
+
+在轨迹值衰减为零之前访问状态时，状态的轨迹可能会超过 1。在为其替换迹线时，该值被设置为一。
+
+$e_t(s, a)=\left\{\begin{array}{l}y^* \lambda^* e_{t-1}(s, a), s=s_t, a=a_t \\ 1, \text { otherwise }\end{array}\right.$
+
+或因此，多次访问不良状态或选择不良行为可防止不成比例地增加其踪迹。[4]
+
+$e_t(s, a)=\left\{\begin{array}{l}1+y^* \lambda^* e_{t-1}(s, a), s=s_t, a=a_t \\ 0, s=s_t, a \neq a_t \\ y^* \lambda^* e_{t-1}(s, a), s \neq s_t\end{array}\right.$
+
 ### $TD(\lambda)$
+
 
 $TD(\lambda)$ 是用于解决在n步TD方法中选择n值的问题，同时在不增加计算复杂度的情况下综合考虑所有步数的预测。
 
@@ -55,4 +88,5 @@ SARSA($\lambda$)算法是在SARSA算法的基础上引入了「资格迹（eligi
 
 [2]: https://yuancl.github.io/2019/01/28/rl/%E4%B8%8D%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%A2%84%E6%B5%8B/
 [3]: https://www.zhihu.com/question/480946038/answer/2374280417
-[4]:
+[4]: https://web.fe.up.pt/~eol/schaefer/diplom/ReinforcementLearning.htm
+[5]: http://www.incompleteideas.net/book/ebook/node72.html

@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-22 16:07:02
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-05 02:50:06
+ * @LastEditTime: 2023-06-16 21:47:29
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -94,12 +94,14 @@ My email: a867907127@gmail.com
 - [To be AI PM 成为AI产品经理](https://stevenjokess.github.io/2bPM/)
 - [d2l notes《动手学深度学习》读书笔记](https://github.com/StevenJokess/d2l-en-read)
 
-## Citing the repo
+## Citing the repo 引用项目：
 
-To cite this repo, please use this bibtex entry:
-@repo{d2rl2023,
-    title={Dive into Deep Reinforcement Learning},
-    author={StevenJokess（蔡舒起，原StevenJokes）},
-    website={\url{https://github.com/StevenJokess/d2rl}},
-    year={2023}
+To cite this repo in publications:, please use this bibtex entry:
+@misc{d2rl2023,
+    author = {StevenJokess（蔡舒起，原StevenJokes）},
+    title = {Dive into Deep Reinforcement Learning},
+    publisher = {GitHub},
+    journal = {GitHub repository},
+    howpublished = {\url{https://github.com/StevenJokess/d2rl}},
+    year = {2023}
 }

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-08 14:08:42
+ * @LastEditTime: 2023-06-11 16:59:55
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -59,6 +59,7 @@ code
 - 第一步 策略评估 (Policy Evaluation)
 - 第二步 策略提升 (Policy Improvement)
 - 不停的重复策略评估和策略提升，直到策略不再变化为止
+- 此时收敛，V函数与Policy达到最优。[10]
 
 ![策略迭代（Policy Iteration）](../../img/Policy_Iteration.png)
 
@@ -378,3 +379,4 @@ https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_dp.html
 [7]: https://www.zhihu.com/column/c_1359967856373874688
 [8]: https://www.zhihu.com/column/c_1356366236041924609
 [9]: https://mooc1.xueyinonline.com/nodedetailcontroller/visitnodedetail?courseId=233015706&knowledgeId=720084467&enc=
+[10]: https://bigquant.com/wiki/doc/-xoRs2BYj3r

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-08 14:10:29
+ * @LastEditTime: 2023-06-16 21:27:28
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -75,7 +75,7 @@ $$
 
 给定一个马尔可夫过程，我们就可以从某个状态出发，根据它的状态转移矩阵生成一个状态**序列** (episode)，这个步骤也被叫做**采样**（sampling）。例如，从 $s_1$ 出发，可以生成序列 $s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_6$ 或序列 $s_1 \rightarrow s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_4 \rightarrow s_5 \rightarrow s_3 \rightarrow s_6$ 等。生成这些序列的概率和状态转移矩阵有关。
 
-马尔科夫链与Episode：Episode可以翻译为片段、情节、回合等，在强化学习问题中，一个Episode就是一个马尔科夫链，根据状态转移矩阵可以得到许多不同的episode，也就是多个马尔科夫链。
+> 马尔科夫链与Episode：Episode可以翻译为片段、情节、回合等，在强化学习问题中，一个Episode就是一个马尔科夫链，根据状态转移矩阵可以得到许多不同的Episode，也就是多个马尔科夫链。
 
 ### 马尔可夫奖励过程（MRP）
 
@@ -101,7 +101,7 @@ $$
 
 其中， $R_t$ 表示在时刻 $t$ 获得的奖励。在图 3-2 中，我们继续沿用图 3-1 马尔可夫 过程的例子，并在其基础上添加奖励函数，构建成一个马尔可夫奖励过程。例如，进入状态 $s_2$ 可以得到奖励 $-2$ ，表明我们不希望进入 $s_2$ ，进入 $s_4$ 可以获得最 高的奖励 10 ，但是进入 $s_6$ 之后奖励为零，并且此时序列也终止了。
 
-![图3-2 马尔可夫奖励过程的一个简单例子](../img/MRP_example.png)
+![图3-2 马尔可夫奖励过程的一个简单例子](../../img/MRP_example.png)
 
 比如选取 $s_1$ 为起始状态，设置 $\gamma=0.5$ ，采样到一条状态序列为  $s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_6$ ，就可以计算 $s_1$ 的回报 $G_1$ ，得到 $G_1=-1+0.5 \times(-2)+0.5^2 \times(-2)=-2.5 $。
 
@@ -129,9 +129,22 @@ $$
 V(s)=r(s)+\gamma \sum_{s^{\prime} \in S} p\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)
 $$
 
-上式就是马尔可夫奖励过程中非常有名的贝尔曼方程 (Bellman equation)，对每一个状态都成立。若一个马尔可夫奖励过程一共有 $|S| = n$ 个状态，即 $\mathcal{S}=\left\{s_1, s_2, \ldots, s_n\right\}$ 。
+上式就是马尔可夫奖励过程中非常有名的贝尔曼方程 (Bellman equation)，对每一个状态都成立。
 
-并将所有状态的价值表示成一个列向量 $\mathcal{V}=\left[V\left(s_1\right), V\left(s_2\right), \ldots, V\left(s_n\right)\right]^T$ ，同理，将奖励函数写成一个列向量 $\mathcal{R} = \left[r\left(s_1\right), r\left(s_2\right), \ldots, r\left(s_n\right)\right]^T$ 。
+> 状态价值函数的贝尔曼方程的具体推导[14]：
+>
+> $\begin{aligned} V(s) & =\mathbb{E}\left[G_t \mid S_t=s\right] \\ & =\mathbb{E}\left[R_{t+1}+\gamma R_{t+2}+\cdots \mid S_t=s\right] \\
+> & =\mathbb{E}\left[R_{t+1} \mid S_t=s\right]+\gamma \mathbb{E}\left[R_{t+2}+\gamma R_{t+3}+\cdots \mid S_t=s\right] \\ & =\mathcal{R}_s+\gamma \mathbb{E}\left[G_{t+1} \mid S_t=s\right] \\ & =\mathcal{R}_s+\gamma \int g_{t+1} p\left(G_{t+1}=g_{t+1} \mid S_t=s\right) \mathrm{d} g_{t+1} \\
+> & =r(s)+\gamma \int g_{t+1}\left(\int p\left(G_{t+1}=g_{t+1} \mid S_{t+1}=s^{\prime}, S_t=s\right) P\left(S_{t+1}=s^{\prime} \mid S_t=s\right) \mathrm{d} s^{\prime}\right) \mathrm{d} g_{t+1} \\
+> & =r(s)+\gamma \int g_{t+1}\left(\int p\left(G_{t+1}=g_{t+1} \mid S_{t+1}=s^{\prime}\right) P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime}\right) \mathrm{d} g_{t+1} \\
+> & =r(s)+\gamma \int\left(\int g_{t+1} p\left(G_{t+1}=g_{t+1} \mid S_{t+1}=s^{\prime}\right) \mathrm{d} g_{t+1}\right) P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime} \\
+> & =r(s)+\gamma \int \mathbb{E}\left[G_{t+1} \mid S_{t+1}=s^{\prime}\right] P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime} \\
+> & =r(s)+\gamma \int V\left(s^{\prime}\right) P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime} \\
+> & =r(s)+\gamma \sum_{s^{\prime} \in \mathcal{S}} V\left(s^{\prime}\right) P\left(s^{\prime} \mid s, a\right) .
+> \end{aligned}$
+>
+
+若一个马尔可夫奖励过程一共有 $|S| = n$ 个状态，即 $\mathcal{S}=\left\{s_1, s_2, \ldots, s_n\right\}$ 。并将所有状态的价值表示成一个列向量 $\mathcal{V}=\left[V\left(s_1\right), V\left(s_2\right), \ldots, V\left(s_n\right)\right]^T$ ，同理，将奖励函数写成一个列向量 $\mathcal{R} = \left[r\left(s_1\right), r\left(s_2\right), \ldots, r\left(s_n\right)\right]^T$ 。
 
 于是我们可以将贝尔曼方程写成矩阵的形式:
 
@@ -220,7 +233,13 @@ $$
 - $\gamma$ 是折扣因子 (discount factor)， $\gamma$ 的取值范围为 $[0,1)$ 。引入折扣因子的理由因为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励。
 > 有的没有$\gamma$，而是$\rho_0$，它是开始状态的分布。[6]
 
-![MRP VS MDP](../img/MRP_MDP.png)
+### MRP VS MDP
+
+![MRP VS MDP](../../img/MRP_MDP.png)
+
+### MDP的几个例子
+
+![MDP的几个例子](../../img/MDP_sardrp.png)
 
 >更多分类：[3]
 >
@@ -233,7 +252,7 @@ $$
 
 不同于马尔可夫奖励过程，在马尔可夫决策过程中，通常存在一个智能体来执行动作。例如，一艘小船在大海中随着水流自由飘荡的过程就是一个马尔可夫奖励过程，它如果凭借运气漂到了一个目的地，就能获得比较大的奖励；如果有个水手在控制着这条船往哪个方向前进，就可以主动选择前往目的地获得比较大的奖励。马尔可夫决策过程是一个与时间相关的不断进行的过程，在智能体和环境 MDP 之间存在一个不断交互的过程。一般而言，它们之间的交互是如图 3-3 循环过程：智能体根据当前状态选择动作；对于状态和动作，MDP 根据奖励函数和状态转移函数得到和并反馈给智能体。智能体的目标是最大化得到的累计奖励。智能体根据当前状态从动作的集合中选择一个动作的函数，被称为**策略**。
 
-![图3-3 智能体与环境MDP的交互示意图](../img/MDP.png)
+![图3-3 智能体与环境MDP的交互示意图](../../img/MDP.png)
 
 ### 策略
 
@@ -270,7 +289,7 @@ Q_\pi(s, a)=\sum_{s^{\prime} \in S} \operatorname{P}\left(s^{\prime} \mid s, a\r
 
 下面以状态$s_1$的计算为例 [8]：
 
-![价值函数与动作-价值函数的关系](../img/价值函数与动作-价值函数的关系.png)
+![价值函数与动作-价值函数的关系](../../img/价值函数与动作-价值函数的关系.png)
 
 ### 贝尔曼期望方程
 
@@ -412,3 +431,4 @@ $$
 [11]: https://www.zhihu.com/people/guoxiansia/posts?page=3
 [12]: https://zhuanlan.zhihu.com/p/361399817
 [13]: https://spinningup.openai.com/en/latest/spinningup/rl_intro.html#policies
+[14]: https://www.tuananhle.co.uk/notes/bellman.html

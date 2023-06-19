@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-23 22:55:04
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-08 13:52:03
+ * @LastEditTime: 2023-06-17 21:21:43
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -106,8 +106,9 @@ PAPI（by Eric Rasmusen）：
 #### 绝对不合作/严格竞争
 
 - 常和博弈（Constant-Sum Game）：博弈各方的收益和总为一个常数c。
-- 零和博弈（Zero-sum Game）：是最常见的“损人利己”情况，自己的收益等于对手的损失，即c为零。
-  - 例如：猜硬币、剪刀石头布[13]
+- 二人零和博弈（Zero-sum Game）：是最常见的“损人利己”情况，自己的收益等于另一方的损失，即c为零。故称另一方为对手和敌方。[37]
+  - 非偶然是指博弈双方都可根据得失大小进行分析，选取我方赢得最大，敌方赢得最小的对策（即MiniMax算法，见[完美信息博弈的机器博弈之MiniMax算法](../../img/machine_game(perfect_information).md），而不是偶然的随机对策。[37]例如：井字棋、象棋、围棋。
+  - 反之，则是偶然，例如：猜硬币、剪刀石头布[13]
 - 重要象征意义：胜利者的光荣后往往隐藏着失败者的辛酸和苦涩。一方物质财富的增加意味着对其他的掠夺。[17]
 
 #### 合作不确定
@@ -141,6 +142,8 @@ TODO: 差分博弈 Differential games：
 - 使用Bellman动态规划方法 Bellman’s Dynamic Programming 发现闭环策略。
 
 ## 博弈均衡与求解
+
+
 
 ### 博弈解决方案的推理（Game Solution Reasoning）
 
@@ -402,3 +405,4 @@ DeepStack for Texas Hold’em poker
 [34]: https://wiki.mbalib.com/wiki/%E4%BF%A1%E5%8F%B7%E5%8D%9A%E5%BC%88
 [35]: https://zhuanlan.zhihu.com/p/479476471
 [36]: https://www.researchgate.net/publication/266990071_Signal_games_and_pragmatic_analysis?enrichId=rgreq-74767e5f7e98b606d4fceb27323c0440-XXX&enrichSource=Y292ZXJQYWdlOzI2Njk5MDA3MTtBUzoxNTMxNzgwMjQ3MTQyNDBAMTQxMzUzMTg5NTMzOQ%3D%3D&el=1_x_3&_esc=publicationCoverPdf
+[37]: https://www.bilibili.com/video/BV16T4y1w7gY
