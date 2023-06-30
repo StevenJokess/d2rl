@@ -1,6 +1,6 @@
 # Sarsa(λ)
 
-对于控制问题，我们只需要将 $\mathrm{G}_{\mathrm{t}}$ 的定义改成状态-动作版本就行了，剩余的方法跟预测类方法是一样的。 根据之前的定义，我们有 $\mathrm{n}$ 步回报的动作价值函数形式:：
+对于控制问题，我们只需要将 $\mathrm{G}_{\mathrm{t}}$ 的定义改成状态-动作版本就行了，剩余的方法跟预测类方法是一样的。 根据之前的定义，我们有 $\mathrm{n}$ 步回报的动作价值函数形式：
 
 $$
 \begin{aligned}
@@ -66,7 +66,9 @@ $$
 
 ![Sarsa(λ)伪代码](../../img/Sarsa(lambda).png)
 
-$Sarsa(\lambda)$ 算法比 Sarsa 算法中多了一个矩阵E (eligibility trace)，它用来保存在路径中所经历的每一步，并其值会不断地衰减。该矩阵的所有元素在每个回 合的开始会初始化为 0 ，如果状态 $\mathrm{s}$ 和动作 $a$ 对应的 $\mathrm{E}(\mathrm{s}, \mathrm{a})$ 值被访问过，则会其值加一。并且矩阵 $\mathrm{E}$ 中所有元素的值在每步后都会进行衰减，这保证了离获得当 前奖励越近的步骤越重要，并且如果前期智能体在原地打转时，经过多次衰减后其 $\mathrm{E}$ 值就接近于 0 了，对应的 $\mathrm{Q}$ 值几乎没有更新。
+其中 $E(S, A)$ 是一个矩阵，用来保存其经历过的所有状态的信息。参数 $\lambda$ 是一个值为 $[0,1]$ 的衰 减值，
+
+$Sarsa(\lambda)$ 算法比 Sarsa 算法中多了一个矩阵E (eligibility trace)，$E(S, A)$ 它用来保存在路径中所经历的每一步，并其值会随时间不断地衰减；其是通过 $\lambda in [0,1]$ 对矩阵 $E(S, A)$ 进行更新，来增强离当前状态比较近的记忆，疏远那些太久之前的记忆。[5]该矩阵的所有元素在每个回 合的开始会初始化为 0 ，如果状态 $\mathrm{s}$ 和动作 $a$ 对应的 $\mathrm{E}(\mathrm{s}, \mathrm{a})$ 值被访问过，则会其值加一。并且矩阵 $\mathrm{E}$ 中所有元素的值在每步后都会进行衰减，这保证了离获得当 前奖励越近的步骤越重要，并且如果前期智能体在原地打转时，经过多次衰减后其 $\mathrm{E}$ 值就接近于 0 了，对应的 $\mathrm{Q}$ 值几乎没有更新。
 
 值得注意的是，在更新 $\mathrm{Q}(\mathrm{s}, \mathrm{a})$ 和 $\mathrm{E}(\mathrm{s}, \mathrm{a})$ 时，是对“整个表”做更新，但是因为矩阵 $\mathrm{E}$ 的初始值是 0 ，只有智能体走过的位置才有值，所以并不是真正的对“整个表” 做更新，而是更新获得奖励值之前经过的所有步骤。而那些没有经过的步骤因为对应的 $\mathrm{E}(\mathrm{s}, \mathrm{a})$ 值为 0 ，所以 $Q(s, a)=Q(s, a)+\alpha \cdot \delta \cdot E(s, a)=Q(s, a)$ ， 会保持原值不变。
 
@@ -110,5 +112,6 @@ class SARSALambdaAgent(SARSAAgent):
 [2]: http://zuzhiang.cn/2019/10/10/sarsa/
 [3]: https://zhuanlan.zhihu.com/p/262019592
 [4]: https://www.guyuehome.com/33225
+[5]: https://www.jianshu.com/p/de8b3fded19c
 
 TODO:http://mapdic.com/archives/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%85%AD--%E8%B5%84%E6%A0%BC%E8%BF%B9

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-05-28 21:34:40
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-03 23:18:56
+ * @LastEditTime: 2023-06-21 21:46:41
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -54,7 +54,16 @@
 
 ### 理性（rational）智能体
 
-对于每个可能的感知序列，给定感知序列提供的证据和智能体所拥有的任何先验知识，理性智能体应该选择一个期望最大化其**性能度量**的动作。
+对于每个可能的感知序列，给定感知序列提供的证据和智能体所拥有的任何先验知识，理性智能体应该选择一个期望最大化其自身的**性能度量**的动作。
+
+### VS 非理性（unrational）
+
+如愤怒天使（indignant angels）：会考虑对手[3]
+
+特点：
+- 会由于对方失败而愧疚
+- 会由于对方比我优秀而愤怒
+- 收益=这部分情感所折算的分+实际收益
 
 #### VS 全知（omniscience）智能体
 
@@ -88,3 +97,4 @@
 
 [1]: https://qikan.cqvip.com/Qikan/Article/ReadIndex?id=9263932&info=YWx%2bJyno%2b%2bPTetRtIPlH9l4XNXz2Rva3WF3TPrtaofo%3d
 [2]: https://livebook.manning.com/book/grokking-deep-reinforcement-learning/chapter-1/7
+[3]: https://www.jianshu.com/p/ea6fb6d2694e

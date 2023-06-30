@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-17 00:46:28
+ * @LastEditTime: 2023-06-21 22:11:50
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -342,7 +342,7 @@ $s, a$ ：可以称之为一步。智能体的行为可以描述为一系列步�
    - 折扣因子通常表示为 $\gamma$ ，其中 $0 \leq \gamma \leq 1$ 。
    - 如果每个智能体的行为都碰巧只影响当前收益，而不是未来的回报，那么目光短浅的智能体可以通过单独最大化每个当前收益来最大化累计回报。但一般来说，最大化当前收益会减少未来的收益，以至于实际上的收益变少了。
    - 由于 $\gamma \leq 1$ ，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计奖励公式，越远视，即未来奖励对当前选择动作的影响越大，一般选择0.99或者0.995[49]；越接近0，越短视。
-   - 分幕式任务——从当前时间步$t$开始到未来有限视野 $T$的所有时间步的累积奖励可以表示为：$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{T} \gamma^k r_{t+1+k}$$
+   - 分幕式任务——从当前时间步$t$开始到未来有限视野 $T$ 的所有时间步的累积奖励可以表示为：$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{T} \gamma^k r_{t+1+k}$$
    - 持续性任务——无限视野(Infinite Horizon) 时，则是$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k r_{t+1+k}$$
      - 其中，$r_{t+1}$ 表示在时间步 $t$ 发生$a_t$后获得的奖励，$\gamma$ 是时间折扣因子，$G_t$ 表示从时间步 $t$ 开始的累积奖励。[12]
    - **试图统一分幕式任务和持续性任务**，即把幕的终止当作一个特殊的吸收状态的入口，它只会转移到自己并且只产生零收益。例如，考虑状态转移图：![状态转移图](../../img/limit&limitless_state_transitation.png)

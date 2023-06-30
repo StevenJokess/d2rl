@@ -13,4 +13,4 @@
 -->
 # 算法和论文总结
 
-
+- AlphaGo Zero： （Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm: https://arxiv.org/abs/1712.01815）
