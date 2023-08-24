@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-02 20:14:00
+ * @LastEditTime: 2023-08-25 00:03:11
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -35,7 +35,7 @@
 > 平衡预期与回报之间的差距正是时间差分学习（Temporal Difference Learning）的目标：根据现实回报和预期的差值来调整价值函数的值，这与大脑分泌多巴胺的机制异曲同工。
 > 多巴胺的释放是由奖励预测误差所驱动的，即如果获得的奖励与预期的奖励相符，则多巴胺不会释放。[15]
 
-### TD(0)
+### TD(0),或一步TD
 
 #### 蒙特卡洛方法的启示与不足
 
@@ -61,7 +61,9 @@ $$
 V\left(s_t\right) \leftarrow V\left(s_t\right)+\alpha\left[r_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)\right]  其中，α∈[0,1]
 $$
 
-其中 $r_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)$ 通常被称为**时序差分 (temporal difference，TD) 误差 (error)**$\delta_t$，时序差分算法将其与步长的乘积作为状态价值的**更新**量。这用TD目标值 $r_t+\gamma V\left(s_{t+1}\right)$ 来代替 $G_t$ 的过程称为**引导**或**自举**（bootstrapping）[6]，而可以的原因是:
+其中 $r_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)$ 通常被称为**时序差分 (temporal difference，TD) 误差 (error)**，用符号$\delta_t$表示。因为TD误差取决于下一个状态和下一个奖励，所以直到一个时间步骤之后它才真正可用，也就是说 $\delta_t$ 在时刻 $t+1$ 才能获取。
+
+时序差分算法将其与步长（学习率） $\alpha$ 的乘积作为状态价值的**更新**量 。其中，用TD目标值 $r_t+\gamma V\left(s_{t+1}\right)$ 来代替 $G_t$ 的过程称为**引导**或**自举**（bootstrapping）[6]，而可以的原因是:
 
 $$
 \begin{aligned}
@@ -75,6 +77,19 @@ $$
 因此蒙特卡洛方法将上式**第一行**作为更新的目标，而时序差分算法将上式**最后一行**作为更新的目标。于是，在用策略和环境交互时，每采样一步，我们就可以用时序差分算法来更新状态价值估计。时序差分算法用到了 $V\left(s_{t+1}\right)$ 的估计值，可以证明它最终收敛到策略的价值函数，我们在此不对此进行展开说明。
 
 对于非回合制任务，我们可以自行将某些时段抽出来当作多个回合，也可以不划分回合当作只有一个回合进行更新。
+
+> 如果整幕中 $\mathrm{V}$ 不改变，则有:
+> $$\begin{aligned}
+G_t-V\left(S_t\right) & =R_{t+1}+\gamma G_{t+1}-V\left(S_t\right)+\gamma V\left(S_{t+1}\right)-\gamma V\left(S_{t+1}\right) \\
+& =\delta_t+\gamma\left(G_{t+1}-V\left(S_{t+1}\right)\right) \\
+& =\delta_t+\gamma \delta_{t+1}+\gamma^2\left(G_{t+2}-V\left(S_{t+2}\right)\right) \\
+& =\delta_t+\gamma \delta_{t+1}+\gamma^2 \delta_{t+2}+\cdots+\gamma^{T-t-1} \delta_{T-1}+\gamma^{T-t}\left(G_T-V\left(S_T\right)\right) \\
+& =\delta_t+\gamma \delta_{t+1}+\gamma^2 \delta_{t+2}+\cdots+\gamma^{T-t-1} \delta_{T-1}+\gamma^{T-t}(0-0) \\
+& =\sum_{k=t}^{T-1} \gamma^{k-t} \delta_k .
+\end{aligned}$$
+>
+> 只有当步长较小时，它才成立。（？为啥，有啥用）
+> ![TD_error的推导过程](../../img/TD_error.png)
 
 #### 用动作价值函数表示的TD(0)：
 
@@ -179,9 +194,11 @@ $Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma Q\left(S_{t+1}, A_{t+
 Policy Improvment时使用的是on-policy：
 - SARSA必须执行两次动作得到 $\left(s, a, r, s^{\prime}, a^{\prime}\right)$ 才可以更新 一次；而且 $a^{\prime}$ 是在特定策略 $\pi$ 的指导下执行的动作，因此估计出来的 $Q(s, a)$ 是在该策略 $\pi$ 之下的 $Q$ 值，样本生成用的 $\pi$ 和估计的 $\pi$ 是同一个，因此是on policy。[2]
 
-*代码*：
+Sarsa算法的收敛性取决于策略对Q的依赖性。[19]
 
-我们仍然在悬崖漫步环境下尝试 SARSA 算法。首先来看一下悬崖漫步环境的代码，这份环境代码和第 4 章中的不一样，因为此时环境不需要提供奖励函数和状态转移函数，而需要提供一个和智能体进行交互的函数`step()`，该函数将智能体的动作作为输入，输出奖励和下一个状态给智能体。
+### *代码*：
+
+我们仍然在悬崖漫步（cliff Walking）环境下尝试 SARSA 算法。首先来看一下悬崖漫步环境的代码，这份环境代码和第 4 章中的不一样，因为此时环境不需要提供奖励函数和状态转移函数，而需要提供一个和智能体进行交互的函数`step()`，该函数将智能体的动作作为输入，输出奖励和下一个状态给智能体。
 
 接下来我们就在悬崖漫步环境中运行 SARSA 算法，一起来看看结果吧！
 
@@ -206,8 +223,6 @@ Q\left(S_t, A_t\right) & \leftarrow Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\
 & \leftarrow Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \sum_a \pi\left(a \mid S_{t+1}\right) Q\left(S_{t+1}, a\right)-Q\left(S_t, A_t\right)\right]
 \end{aligned}
 $$
-
-
 
 
 ### 多步 SARSA 算法
@@ -271,6 +286,13 @@ $$
 
 ### 收敛性（Convergence）
 
+- 学习的动作值函数Q直接近似最优​,这极大地简化了算法的分析，并使早期的收敛证明成为可能。[13]
+  - 如果每个状态动作对（s,a）都无限次出现在数据集 D 中，Q 将收敛于 Q*。
+- 需要足够的探索
+  - 对状态动作组合进行足够的探索，以便实现学习
+- 流行的方法：ε-贪心、Softmax、给探索以奖励、乐观的初始化等等。
+  - 乐观的初始化：如果根据已有的估计值去动作价值，可能导致智能体会陷入局部最优解，从而错过了更高的回报路径。而乐观的初始化，更有可能尝试之前很少或从未尝试过的动作，以便发现可能的高回报路径。（按我个人的理解，更像富二代，有很多钱去投资，不怕损失）
+
 - Q will converge to Q* if every (s,a)appears infinitely often in D
 - Requires sufficient exploration
   - Exploration of under-represented state-actions to enable learning
@@ -320,7 +342,8 @@ Q-learning具有以下缺点：
 - 我不认可：SARSA可算是Q-learning的*改进* 这句话（出自「神经网络与深度学习」的第 342 页）我不认可 (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，
 - Sarsa和Q-learning的区别是Sarsa采取的是策略所选择的动作，而Q-learning是取最高Q值的动作。[5]
 
-
+- Q-learning算法更有可能得到最优策略：Sarsa算法与Q-learning算法选择了两种不同的路线，Q-learning的探索更全面，而且向着**贪婪**方向更新，因此找出了最短路径，而sarsa则更保守。![Sarsa_VS_Q-learning最终收敛策略对比](../../img/Sarsa_VS_Q-learning.png)
+- Sarsa的回报收敛相对早：由于Q-learning需要进行随即动作的探索，偶尔会掉落到悬崖中，因此如果没训练好的回报，可能要相比保守的sarsa差。[17] ![Sarsa_VS_Q-learning最终收敛策略对比](../../img/Sarsa_VS_Q-learning_return.png)
 
 ### Double Q-learning
 
@@ -363,4 +386,5 @@ Double Q-learning 加倍了内存开销，但是却没有增加额外的计算�
 [16]: https://paddlepedia.readthedocs.io/en/latest/tutorials/reinforcement_learning/Q-learning.html#id1
 [17]: https://zhuanlan.zhihu.com/p/478375035
 [18]: https://www.bilibili.com/video/BV1q4411X7A4
+[19]: https://zhuanlan.zhihu.com/p/472610846
 答:

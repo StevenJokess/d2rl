@@ -22,7 +22,7 @@
 basic_RL_algs_intro
 DP(policy&value_iteration)
 value-based(MC+
-TD(Sarsa&Q-learning))
+TD(Sarsa&Q-learning&DQl))
 gradient-based(VPG)
 REINFORCE&REINFORCE(with_baseline)
 off-policy(off-policy_MC&off-policy_policy_gradient)

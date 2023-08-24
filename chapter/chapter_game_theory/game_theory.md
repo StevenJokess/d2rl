@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-23 22:55:04
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-17 21:21:43
+ * @LastEditTime: 2023-07-06 14:55:39
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -103,19 +103,22 @@ PAPI（by Eric Rasmusen）：
 
 ### 从博弈者之间是否有合作关系看
 
-#### 绝对不合作/严格竞争
+#### 绝对不合作/严格竞争（Noncooperative）
 
 - 常和博弈（Constant-Sum Game）：博弈各方的收益和总为一个常数c。
-- 二人零和博弈（Zero-sum Game）：是最常见的“损人利己”情况，自己的收益等于另一方的损失，即c为零。故称另一方为对手和敌方。[37]
-  - 非偶然是指博弈双方都可根据得失大小进行分析，选取我方赢得最大，敌方赢得最小的对策（即MiniMax算法，见[完美信息博弈的机器博弈之MiniMax算法](../../img/machine_game(perfect_information).md），而不是偶然的随机对策。[37]例如：井字棋、象棋、围棋。
-  - 反之，则是偶然，例如：猜硬币、剪刀石头布[13]
+- 零和博弈（Zero-sum Game）：是最常见的“损人利己”情况，自己的收益等于其他所有参与人的利益的损失[38]，即c为零。故称其他方为对手和敌方。[37]
+- 例子有赌博（寻开心）、竞技比赛（更高更快更强）、期货（控制交易风险[38]）、医保（税收转移=》民生保障[39]）、司法（维护社会正义秩序）、选举等。
 - 重要象征意义：胜利者的光荣后往往隐藏着失败者的辛酸和苦涩。一方物质财富的增加意味着对其他的掠夺。[17]
+
+> 对于双方非偶然零和博弈：非偶然是指博弈双方都可根据得失大小进行分析，选取我方赢得最大，敌方赢得最小的对策（即MiniMax算法，见[完美信息博弈的机器博弈之MiniMax算法](../../img/machine_game(perfect_information).md），而不是偶然的随机对策。[37]例如：井字棋、象棋、围棋。
+> 反之，则是偶然，例如：猜硬币、剪刀石头布[13]
 
 #### 合作不确定
 
-- 变和博弈（Variable-Sum Game）：博弈各方的收益之和不总是一个常数。[14]
+- 变和博弈（Variable-Sum Game）：博弈各方的收益之和不总是一个常数[14]，而是不确定的变量。
+- 存在合作的可能性：如果某些策略的选取可以使所有参与人利益之和变大，同时又能使所有参与人的利益得到增加，那么，就可能出现参与人相互合作的局面。[38]
 
-##### 正和博弈/合作博弈
+##### 一定合作
 
 - 合作博弈，亦称为正和博弈，是指博弈双方的利益都有所增加，或者至少是一方的利益增加，而另一方的利益不受损害。[16]
   - 其存在的两个基本条件：
@@ -126,7 +129,7 @@ PAPI（by Eric Rasmusen）：
 特例：
 
 - 收益相同的 —— 绝对合作博弈（Cooperative Game）：在所有结果中，各玩家的收益都是相等的，显然各agent之间是合作关系，所谓“他好我也好”。
-- 策略要求相同的——协同博弈（Coordination Game）：存在多于一个稳定点，例如在一条没有划线的路上，对向来车都在路的中间行驶，这个时候双方要进行避让，两车均靠左或均靠右都是稳定点，呈现出的是两车的协同状态，或许是“一荣俱荣，一损俱损”。在这种情况下通常存在多个纳什均衡。
+- 策略要求相同的 —— 协同博弈（Coordination Game）：存在多于一个稳定点，例如在一条没有划线的路上，对向来车都在路的中间行驶，这个时候双方要进行避让，两车均靠左或均靠右都是稳定点，呈现出的是两车的协同状态，或许是“一荣俱荣，一损俱损”。在这种情况下通常存在多个纳什均衡。
 
 ## 策略（Strategies）和收益（Payoffs）
 
@@ -406,3 +409,5 @@ DeepStack for Texas Hold’em poker
 [35]: https://zhuanlan.zhihu.com/p/479476471
 [36]: https://www.researchgate.net/publication/266990071_Signal_games_and_pragmatic_analysis?enrichId=rgreq-74767e5f7e98b606d4fceb27323c0440-XXX&enrichSource=Y292ZXJQYWdlOzI2Njk5MDA3MTtBUzoxNTMxNzgwMjQ3MTQyNDBAMTQxMzUzMTg5NTMzOQ%3D%3D&el=1_x_3&_esc=publicationCoverPdf
 [37]: https://www.bilibili.com/video/BV16T4y1w7gY
+[38]: https://www.zgbk.com/ecph/words?SiteID=1&ID=189332&Type=bkzyb&SubID=119245
+[39]: https://www.bilibili.com/video/BV1ak4y1n76j
