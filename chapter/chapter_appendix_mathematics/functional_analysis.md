@@ -120,6 +120,8 @@ $$
 
 ## Banach不动点定理
 
+巴拿赫不动点定理，又称为压缩映射定理或压缩映射原理，是度量空间理论的一个重要工具。它保证了度量空间的一定自映射的不动点的存在性和唯一性，并提供了求出这些不动点的构造性方法。[3]
+
 对于度量空间 $(\mathcal{X}, d)$ 上的映射 $t: \mathcal{X} \rightarrow \mathcal{X}$ ，如果 $x \in \mathcal{X}$ 使得 $t(x)=x$ ，则称 $\mathrm{x}$ 是映射t的不动点 (fix point)。 $v_*(s)(s \in \mathcal{S})_{\text {满足Bellman最优方程，是Bellman最优算子 }} t_*$ 的不动点。
 
 完备度量空间上的压缩映射有非常重要的结论：Banach不动点定理。Banach不动点定理（Banach fixed-point theorem， 缩映射，则映射t在 $x$ 内有且仅有一个不动点 ${ }^x+\infty$ 。更进一步，这个不动点可以通过下列方法求出: 从 $x$ 内的任意一个元素 $x$ 0开始，定义迭代序列 $x_k=t\left(x_{k-1}\right)(k=1,2,3, \ldots)$ ，这个序列收敛，且极限为 $x_{+\infty}$ 。（证明: 考虑任取 $\times$ 的及其确定的列 $\left\{x_k: k=0,1, \ldots\right\}$ ，我们可以证明它是Cauchy序列。对于任意的 $k^{\prime}, k^{\prime \prime}$ 且 $k^{\prime}<k^{\prime \prime}$ ，用距离的三角不等式和非负性可知，
@@ -142,3 +144,4 @@ Banach不动点定理给出了求完备度量空间中压缩映射不动点的�
 
 [1]: https://baike.baidu.com/item/%E6%B3%9B%E5%87%BD%E5%88%86%E6%9E%90/4151#:~:text=%E6%B3%9B%E5%87%BD%E5%88%86%E6%9E%90%EF%BC%88Functional%20Analysis,%E4%BD%9C%E7%94%A8%E4%BA%8E%E5%87%BD%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E3%80%82
 [2]: https://developer.aliyun.com/article/726187?spm=a2c6h.12873639.article-detail.5.20c06a2ewJKXn1#slide-4
+[3]: https://zh.wikipedia.org/zh-cn/%E5%B7%B4%E6%8B%BF%E8%B5%AB%E4%B8%8D%E5%8A%A8%E7%82%B9%E5%AE%9A%E7%90%86

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-06-02 23:16:48
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-03 23:12:41
+ * @LastEditTime: 2023-08-25 03:05:17
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -45,7 +45,7 @@ obs_tensor = torch.as_tensor(obs, dtype=torch.float32)
 actions = pi_net(obs_tensor)
 ```
 
-### 分类策略
+### 分类策略（Categorical polices）
 
 分类策略就像对离散动作的分类器。您为分类策略构建神经网络的方式与为分类器构建的方式相同：输入是观察结果，然后是一些层（可能是卷积层或密集连接层，具体取决于输入的类型），然后您有最后一个线性层为您提供每个动作的 logits，然后是 softmax 将 logits 转换为概率。
 

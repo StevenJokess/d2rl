@@ -110,8 +110,14 @@ Libratus 以反事实遗憾最小化算法为基本框架求解博弈的近似�
 
 ## Pluribus
 
+
+## AlphaHoldem
+
+[6]
+
 [1]: https://zhuanlan.zhihu.com/p/73268685
 [2]: https://www.ambchina.com/data/upload/image/20220226/2017%E4%B8%AD%E5%9B%BD%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E5%88%97%E7%99%BD%E7%9A%AE%E4%B9%A6--%E6%99%BA%E8%83%BD%E5%8D%9A%E5%BC%88-2017.pdf
 [3]: https://www.ambchina.com/data/upload/image/20220226/2017%E4%B8%AD%E5%9B%BD%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%B3%BB%E5%88%97%E7%99%BD%E7%9A%AE%E4%B9%A6--%E6%99%BA%E8%83%BD%E5%8D%9A%E5%BC%88-2017.pdf
 [4]: https://personal.ntu.edu.sg/boan/Chinese/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AE%80%E4%BB%8B.pdf
 [5]: http://cjc.ict.ac.cn/online/onlinepaper/zl-202297212302.pdf
+[6]: https://zhiqianghe.blog.csdn.net/article/details/126858696

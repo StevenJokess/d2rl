@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-11 16:59:55
+ * @LastEditTime: 2023-08-25 03:44:17
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -50,9 +50,13 @@ MDP具有上述两个特点，Bellman方程把问题递归为求解子问题，�
 
 code
 
-## 策略迭代（Policy Iteration）
+## 策略迭代（Policy Iteration，PI）
 
-为了求解最优策略 $\pi^*$，一种思路是：从一个任意的策略开始，首先计算该策略下价值函数（或动作-价值函数），然后根据价值函数调整改进策略使其更优，不断迭代这个过程直到策略收敛。通过策略计算价值函数的过程叫做策略评估（policy evaluation），通过价值函数优化策略的过程叫做策略优化（policy improvement），策略评估和策略优化交替进行的强化学习求解方法叫做通用策略迭代（Generalized Policy Iteration，GPI）。
+为了求解最优策略 $\pi^*$，一种思路是：从一个任意的策略开始，首先计算该策略下价值函数（或动作-价值函数），然后根据价值函数调整改进策略使其更优，不断迭代这个过程直到策略收敛。收敛性证明，可见[](../chapter_appendix_mathematics/functional_analysis2.md)
+
+- 通过策略计算价值函数的过程叫做策略评估（policy evaluation），
+- 通过价值函数优化策略的过程叫做策略优化（policy improvement）。
+- 策略评估和策略优化交替进行的强化学习求解方法叫做策略迭代（Policy Iteration，PI）。为何叫迭代？因为，每一次策略评估都是一个迭代计算过程，需要基于前一个策略的价值进行计算。[11]
 
 步骤：
 
@@ -265,12 +269,31 @@ v_{k+1}(s)=\max _{a \in A}\left(R_s^a+\gamma \sum_{s^{\prime} \in S} P_{s s^{\pr
 - 值迭代和策略迭代都需要经过非常多的迭代次数才能完全收敛。在实际应用中，可以不必等到完全收敛，如阈值$\theta \leftarrow 0.0001$。这样，当状态和动作数量有限时，经过有限次迭代就可以能收敛到近似最优策略。[4]
 - 本质上，Policy Iteration和Value Iteration都属于Model-based方法，这种方法假设我们知道Action带来的Reward和新状态，即P(s', r | s, a)。最明显的特点是，不用玩迷宫游戏，便能根据转移矩阵计算出最优策略。
 
+### 广义/通用 策略迭代（Generalized Policy Iteration，GPI）
 
-### 广义策略迭代
+策略迭代算法和值迭代算法可以利用广义策略迭代方法进行统一描述。所谓广义策略迭代(GPI)，是指让策略评估和策略改进相互作用的一般思路。策略总是基于特定的价值函数进行改进，价值函数也始终会向对应特定策略的真实价值函数收敛。
 
-策略迭代算法和值迭代算法可以利用广义策略迭代方法进行统一描述。
+广义策略迭代过程视为一场竞争和合作的博弈：
+
+- 策略迭代算法，让策略在评估过程中对价值函数表现出贪心的倾向，通常会导致价值函数与当前策略不匹配。
+- 而值迭代算法使价值函数与策略保持一致，通常会导致策略不再表现出贪心的特性，两者之间出现协同的现象。
+
+> 所谓的贪心策略，其特点在于它的决策仅基于当前状态下可获取的信息，而没有考虑将来可能的情况。这种局部决策可能会导致策略在长远中陷入次优或不稳定的情况，因为没有充分考虑长期的影响。
+> 对于复杂的问题，贪心策略往往不足以找到最优解，因为它缺乏全局信息和长远考虑。
+
+在这个循环中，通过持续的评估和改进，策略逐渐在“竞争”和“合作”的过程中演化和优化，最终达到一个相对稳定的状态。这种状态下，策略和价值函数达到一种平衡，相互支持，从而使得策略在实际应用中变得更加有效和可靠。
+
+### 动态规划的优缺点
+
+优点：
+
+1. DP算法能保证最优性。
 
 
+缺点：
+
+1. DP算法对一些规模很大的问题不是很适合，动态规划算法找到最优策略的时间（最坏情况）与状态和动作的数量呈多项式级关系。
+2. DP算法有时会由于维度灾难，而被认为缺乏实用性，即不适用于离散状态空间和离散动作空间很大，更不用提连续状态和连续动作了。维度灾难指的是，状态的总数量经常随着状态变量的增加而指数级上升。
 
 ## 小结
 
@@ -380,3 +403,4 @@ https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_dp.html
 [8]: https://www.zhihu.com/column/c_1356366236041924609
 [9]: https://mooc1.xueyinonline.com/nodedetailcontroller/visitnodedetail?courseId=233015706&knowledgeId=720084467&enc=
 [10]: https://bigquant.com/wiki/doc/-xoRs2BYj3r
+[11]：https://zhuanlan.zhihu.com/p/397509298

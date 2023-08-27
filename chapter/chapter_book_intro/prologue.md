@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-02 19:57:53
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-25 03:52:31
+ * @LastEditTime: 2023-08-25 02:53:54
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -36,7 +36,7 @@
 
 传统的强化学习具有以下局限性：
 
-1. 不适用于连续状态和动作空间：不适用于连续状态和动作空间。传统的强化学习在处理连续状态和动作空间时会面临维度灾难的问题，因为状态和动作的数量呈指数级增长。这会导致传统强化学习算法难以处理这些问题，需要进行维度削减或者采用近似方法。
+1. 不适用于连续状态和动作空间：不适用于连续状态和动作空间。传统的强化学习在处理连续状态和动作空间时会面临维度灾难的问题，所谓维度灾难指的是，状态或动作的总数量，经常随着状态、动作变量的增加而指数级增长。这会导致传统强化学习算法难以处理这些问题，需要进行维度削减或者采用近似方法。
 
 近年来深度强化学习的提出和普及，使得一些在传统的强化学习领域解决不好的问题得到极大的改善。强化学习需要通过数据逼近函数的方法来部署价值函数、策略、环境模型和更新状态，而深度学习则是近年来最热、最成功的函数逼近器，两者的结合能够显著提升深度强化学习的应用范围。故，深度强化学习具有以下独特的优势和适用性：
 
@@ -89,5 +89,7 @@ TODO：改
 
 [1]: https://www.ituring.com.cn/book/tupubarticle/23030
 [2]：https://www.epubit.com/articleDetails?id=NN8d3150d1-097c-4dc9-8715-adae9f3fd09a
+[3]: https://zhuanlan.zhihu.com/p/419634069
+
 
 > 1. https://chat.openai.com/chat; Promp: 为何说强化学习的可解释性强
