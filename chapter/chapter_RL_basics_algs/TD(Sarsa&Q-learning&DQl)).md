@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-08-31 22:25:03
+ * @LastEditTime: 2023-09-01 20:52:41
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -23,7 +23,7 @@
 
 ## 时序差分方法 TD
 
-时序差分（Temporal-Difference，TD）是一种用来估计一个策略的价值函数的方法，它结合了蒙特卡洛（Monte carlo）和动态规划算法（DP）的思想。时序差分方法和蒙特卡洛的相似之处在于可以从样本数据中学习，不需要事先知道环境；和动态规划的相似之处在于根据贝尔曼方程的思想，利用后续状态（successor state[14]）的价值估计来更新当前状态的价值估计，是通过预测去更新而无需等到整个决策完成[4]。引导（Bootstrapping）是个重要思想，在TD算法中智能体在每次完成动作后收到动作的奖励，这种奖励是它离自己的目标是更近与否而估计的。这些宇哥的奖励影响了它未来的行动。
+时序差分（Temporal-Difference，TD）是一种用来估计一个策略的价值函数的方法，它结合了蒙特卡洛（Monte carlo）和动态规划算法（DP）的思想。时序差分方法和蒙特卡洛的相似之处在于可以从样本数据中学习，不需要事先知道环境；和动态规划的相似之处在于根据贝尔曼方程的思想，利用后续的状态（successor state[14]）的价值估计，来更新当前状态的价值估计，是通过预测去更新而无需等到整个决策完成[4]。引导（Bootstrapping）是个重要思想，在TD算法中智能体在每次完成动作后收到动作的奖励，这种奖励是它离自己的目标是更近与否而估计的。这些宇哥的奖励影响了它未来的行动。
 
 其次，TD算法的「收敛性在理论上也是有保证」的。在Sutton的书中也提到：“如果步长参数是一个足够小的常数，对于任何策略\pi, TD(0)中对状态值的估计的「均值」能够收敛到v_{\pi}。如果该参数能够同时满足以下两个条件，\sum_{n=1}^{\infty}\alpha_n(a) = \infty\\\sum_{n=1}^{\infty}\alpha^2_n(a) < \infty\\，则该值能够依概率1收敛。”[8]
 
@@ -170,7 +170,7 @@ $$
 \pi(a \mid s)= \begin{cases}\epsilon /|\mathcal{A}|+1-\epsilon & \text { 如果 } a=\arg \max _{a^{\prime}} Q\left(s, a^{\prime}\right) \\ \epsilon /|\mathcal{A}| & \text { 其他动作 }\end{cases}
 $$
 
-现在，我们就可以得到一个实际的基于时序差分方法的强化学习算法。这个算法被称为 SARSA，SARSA 指的是 「S」tate-「A」ction-「R」eward-「S」tate-「A」ction，因为它的动作价值更新用到了当前状态 $S_t$ 、当前动作 $A_t$ 、获得的奖励 $R_t$ 、下一个状态 $S_{t+1}$ 和下一个动作 $A_{t+1}$，将这些符号拼接后就得到了算法名称。
+现在，我们就可以得到一个实际的基于时序差分方法的强化学习算法。这个算法被称为 SARSA，SARSA 指的是 「S」tate-「A」ction-「R」eward-「S」tate-「A」ction，因为它的动作价值更新用到了当前状态 $S_t$ 、当前动作 $A_t$ 、获得的奖励 $R_t$ 、下一个状态 $S_{t+1}$ 和下一个动作 $A_{t+1}$，将这些首字母拼接后就得到了算法名称。
 
 SARSA 的具体算法如下：
 
@@ -182,7 +182,6 @@ SARSA 的具体算法如下：
   - 得到环境反馈的 $R_{t+1}, S_{t+1}$
   - 用 $\epsilon$-greedy 策略根据 $Q$ 选择当前状态 $S_{t+1}$ 下的动作 $A_{t+1}$
   - 用公式去更新动作价值函数 $Q(S_t, A_t)$ ：$Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma Q\left(S_{t+1}, A_{t+1}\right)-Q(S_t, A_t)\right]$
-
   - $S_{t} \leftarrow S_{t+1}, A_t \leftarrow A_{t+1}$
   - end for
 - end for
@@ -191,14 +190,18 @@ SARSA 的具体算法如下：
 
 $Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma Q\left(S_{t+1}, A_{t+1}\right)-Q(S_t, A_t)\right]$
 
-Policy Improvment时使用的是on-policy：
-- SARSA必须执行两次动作得到 $\left(s, a, r, s^{\prime}, a^{\prime}\right)$ 才可以更新 一次；而且 $a^{\prime}$ 是在特定策略 $\pi$ 的指导下执行的动作，因此估计出来的 $Q(s, a)$ 是在该策略 $\pi$ 之下的 $Q$ 值，样本生成用的 $\pi$ 和估计的 $\pi$ 是同一个，因此是on policy。[2]
+注意到：SARSA必须执行两次动作得到 $\left(s, a, r, s^{\prime}, a^{\prime}\right)$ 才可以更新一次。
 
-Sarsa算法的收敛性取决于策略对Q的依赖性。[19]
+Policy Improvment时使用的是on-policy，其原因是：而且 $a^{\prime}$ 是在特定策略 $\pi$ 的指导下执行的动作，因此估计出来的 $Q(s, a)$ 是在该策略 $\pi$ 之下的 $Q$ 值，样本生成用的 $\pi$ 和估计的 $\pi$ 是同一个，因此是on policy。[2]
+
+SARSA算法的收敛性取决于策略对Q的依赖性？[19]
+
+
+
 
 ### *代码*：
 
-我们仍然在悬崖漫步（cliff Walking）环境下尝试 SARSA 算法。首先来看一下悬崖漫步环境的代码，这份环境代码和第 4 章中的不一样，因为此时环境不需要提供奖励函数和状态转移函数，而需要提供一个和智能体进行交互的函数`step()`，该函数将智能体的动作作为输入，输出奖励和下一个状态给智能体。
+我们仍然在悬崖漫步（Cliff Walking）环境下尝试 SARSA 算法。首先来看一下悬崖漫步环境的代码，这份环境代码和第 4 章中的不一样，因为此时环境不需要提供奖励函数和状态转移函数，而需要提供一个和智能体进行交互的函数`step()`，该函数将智能体的动作作为输入，输出奖励和下一个状态给智能体。
 
 接下来我们就在悬崖漫步环境中运行 SARSA 算法，一起来看看结果吧！
 
@@ -223,7 +226,6 @@ Q\left(S_t, A_t\right) & \leftarrow Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\
 & \leftarrow Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \sum_a \pi\left(a \mid S_{t+1}\right) Q\left(S_{t+1}, a\right)-Q\left(S_t, A_t\right)\right]
 \end{aligned}
 $$
-
 
 ### 多步 SARSA 算法
 
@@ -250,31 +252,33 @@ $$
 Q\left(S_t, A_t\right) \leftarrow Q\left(S_t, A_t\right)+\alpha\left[R_t+\gamma R_{t+1}+\cdots+\gamma^n Q\left(S_{t+n}, A_{t+n}\right)-Q\left(S_t, A_t\right)\right] .
 $$
 
-伪代码：
+### 伪代码：
 
-![多步 SARSA 算法伪代码](../img/n_steps_SARSA.png)
+![多步 SARSA 算法伪代码](../../img/n_steps_SARSA.png)
+
+#### Python代码：
 
 我们接下来实现一下多步SARSA算法。我们在SARSA代码的基础上进行修改，引入多步时序差分计算。
 
 code
 
 
-因为需要计算动作价值的求和，所以它有着更大的计算量，但是这样的期望运算减小了 SARSA 算法中出现的个别不恰当决策，这样可以避免在更新后期极个别不当决策对最终效果带来不好的影响，因此它通常需要更大的学习率
+因为需要计算动作价值的求和，所以它有着更大的计算量，但是这样的期望运算减小了 SARSA 算法中出现的个别不恰当决策，这样可以避免在更新后期极个别不当决策对最终效果带来不好的影响，因此它通常需要更大的学习率。
 
 ---
 
 ## Q-learning 算法
 
-Q-Learning的训练过程是Q表的Q值逐渐调整的过程，其核心是根据已经知道的Q值，当前选择的行 动a作用于环境获得的回报R和下一轮 $S_{t+1}$ 对应可以获得的最大利益Q，总共三个量进行加权求和算出新的Q值，来更新Q表:
+Q-Learning的训练过程是Q表的Q值逐渐调整的过程，其核心是根据已经知道的Q值，当前选择的行动 $a$ 作用于环境获得的回报 $R$ 和下一轮 $S_{t+1}$ 对应可以获得的最大利益Q，总共三个量进行加权求和算出新的Q值，来更新Q表:
 
 $$
 \begin{aligned}
-Q\left(S_t, A_t\right) &= Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \max _a Q\left(S_{t+1}, a\right)-Q\left(S_t, A_t\right)\right] \\
+Q\left(S_t, A_t\right) &= Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \max _{a'} Q\left(S_{t+1}, a'\right)-Q\left(S_t, A_t\right)\right] \\
 &= (1-\alpha) Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \max _a Q\left(S_{t+1}, a\right)\right]
 \end{aligned}
 $$
 
-其中 $Q\left(S_{t+1}, a\right)$ 是在 $t+1$ 时刻的状态和采取的行动（并不是实际行动，所以公式采用了所有可 能采取行动的 $\mathrm{Q}$ 的最大值) 对应的 $\mathrm{Q}$ 值， $Q\left(S_t, A_t\right)$ 是当前时刻的状态和实际采取的形同对应的 $\mathrm{Q}$ 值。折扣因子 $\gamma$ 的取值范围是 $[0,1]$ ，其本质是一个衰减值，如果gamma更接近0，agent趋向于只 考虑瞬时奖励值，反之如果更接近1，则agent为延迟奖励赋予更大的权重，更侧重于延迟奖励；奖 励值 $R_{t+1}$ 为 $\mathrm{t}+1$ 时刻得到的奖励值。 $\alpha$ 为是学习率。
+其中 $R_{t+1}=R(s_t, a_t, s_{t+1})$[21]，$Q\left(S_{t+1}, a\right)$ 是在 $t+1$ 时刻的状态和采取的行动（并不是实际行动，所以公式采用了所有可 能采取行动的 $\mathrm{Q}$ 的最大值) 对应的 $\mathrm{Q}$ 值， $Q\left(S_t, A_t\right)$ 是当前时刻的状态和实际采取的形同对应的 $\mathrm{Q}$ 值。折扣因子 $\gamma$ 的取值范围是 $[0,1]$ ，其本质是一个衰减值，如果gamma更接近0，agent趋向于只 考虑瞬时奖励值，反之如果更接近1，则agent为延迟奖励赋予更大的权重，更侧重于延迟奖励；奖 励值 $R_{t+1}$ 为 $\mathrm{t}+1$ 时刻得到的奖励值。 $\alpha$ 为是学习率。
 
 这里动作价值 $\mathrm{Q}$ 函数的目标就是逼近最优的 $q * ，q *=R_{t+1}+\gamma \max _a Q\left(S_{t+1}, a\right)$ ，并且轨迹的行 动策略与最终的 $q *$ 是无关的。后面中括号的加和式表示的是 $q *$ 的贝尔曼最优方程近似形式。
 
@@ -300,19 +304,15 @@ $$
 
 ### 伪代码（Pseudocode）
 
-$\epsilon-greedy$的Q-learning的伪代码：
+带探索的Q-learning的伪代码：
 
 - Input: $\epsilon,\left\{\alpha_t\right\}$
 - Initialize $Q \leftarrow 0$ for all $(s, a)$
 - Observe first state $s_1$
 - For $t=1,2,3, \ldots$
-  - Choose action with $\epsilon$-greedy exploration
-  $$
-  a_t \leftarrow\left\{\begin{array}{l}
-  \arg \max _a Q\left(s_t, a\right) \\
-  \text { random action } \quad \text { with probability } 1-\epsilon
-  \end{array}\right.
-  $$
+  - take a option:
+    - 1. $\epsilon-greedy$ policy: $$\pi_e(a \mid s) = \begin{cases}\mathrm{argmax}_{a'} \hat{Q}(s, a') & \textrm{with prob. } 1-\epsilon \\ \textrm{uniform}(\mathcal{A}) & \textrm{with prob. } \epsilon,\end{cases}$$
+    - 2. softmax exploration policy:  $$\pi_e(a \mid s) = \frac{e^{\hat{Q}(s, a)/T}}{\sum_{a'} e^{\hat{Q}(s, a')/T}};$$
   - Take action $a_t$, observe reward $r_t$ and next-state $s_{t+1}$
   - Update: $Q\left(s_t, a_t\right) \leftarrow Q\left(s_t, a_t\right)+\alpha_t\left(r_t+\gamma \max _a Q\left(s_{t+1}, a\right)-Q\left(s_t, a_t\right)\right)$
 
@@ -320,9 +320,7 @@ Note: once $Q \approx Q^*$ is learned, $\pi(s)=\arg \max _a Q(s, a)$ is close to
 
 ### 代码
 
-TODO
-
-
+TODO:
 
 需要注意的是，打印出来的回报是行为策略在环境中交互得到的，而不是 Q-learning 算法在学习的目标策略的真实回报。我们把目标策略的行为打印出来后，发现其更偏向于走在悬崖边上，这与 SARSA 算法得到的比较保守的策略相比是更优的。 但是仔细观察 SARSA 和 Q-learning 在训练过程中的回报曲线图，我们可以发现，在一个序列中 SARSA 获得的期望回报是高于 Q-learning 的。这是因为在训练过程中智能体采取基于当前函数的 $\epsilon$ -贪婪策略来平衡探索与利用，Q-learning 算法由于沿着悬崖边走，会以一定概率探索“掉入悬崖”这一动作，而 SARSA 相对保守的路线使智能体几乎不可能掉入悬崖。
 
@@ -335,17 +333,28 @@ Q-learning具有以下缺点：
   > -  只能解决有限大小的状态和动作，当状态数为n，动作数为m时。（Only for finite-sized problems with $n$ states and $m$ actions（
   > - 状态转移概率 $P\left(s^{\prime} \mid s, a\right)$ 的空间复杂度为 $O(n^2*m)$  而 $R(s, a)$ 和 $Q(s, a)$ 的空间复杂度为 $O(n m)$（Needs $O\left(n^2 m\right)$ entries for $P\left(s^{\prime} \mid s, a\right)$, and $O(n m)$ for $R(s, a)$ and $Q(s, a)$
   > - 这使得很难应用到复杂问题（Do no scale well to large problems）[18]
-3. 难以应对时序关联的环境：****[16]改进见：R
+3. 难以应对时序关联的环境：TODO:[16]
 4. 难以学习随机策略：策略是通过从Q函数最大化回报，确定地计算出来的，所以无法学习随机策略。
+
+### 代码中，对终幕的处理技巧
+
+通常在真实的问题中，当智能体到达终幕时，轨迹结束。这样的终幕的动作-状态价值函数为零，因为智能体在该状态不采取任何进一步的动作。我们应该利用指示符变量来消除 $Q\left(S_{t+1}, A_{t+1}\right)$，来处理这样的状态：
+
+SARSA: $Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma(1 - \mathbb{1}_{s_{t+1}^i \textrm{ is terminal}} ) Q\left(S_{t+1}, A_{t+1}\right)-Q(S_t, A_t)\right]$
+
+Q-Learning: $Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma(1 - \mathbb{1}_{s_{t+1}^i \textrm{ is terminal}} ) \max _{a'} Q\left(S_{t+1}, a'\right)-Q(S_t, A_t)\right]$
+
+其中 $\mathbb{1}_{S_{t+1} \textrm{is terminal}}$ 是指示符变量，如果 $S_{t+1}$ 是终幕的状态，则该指示符变量为1，否则为0。
+
 
 ### SARSA与Q-learning的关系与比较
 
 - 我不认可：SARSA可算是Q-learning的*改进* 这句话（出自「神经网络与深度学习」的第 342 页）我不认可 (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，
-- Sarsa和Q-learning的区别是Sarsa采取的是策略所选择的动作，而Q-learning是取最高Q值的动作。[5]
+- SARSA和Q-learning的区别是SARSA采取的是策略所选择的动作，而Q-learning是取最高Q值的动作。[5]
 
-- Q-learning算法更有可能得到最优策略：Sarsa算法与Q-learning算法选择了两种不同的路线，Q-learning的探索更全面，而且向着**贪婪**方向更新，因此找出了最短路径，而sarsa则更保守。![Sarsa_VS_Q-learning最终收敛策略对比](../../img/Sarsa_VS_Q-learning.png)
-- Sarsa的回报收敛相对早，Q-learning更难收敛：由于Q-learning需要进行随即动作的探索，偶尔会掉落到悬崖中，因此如果没训练好的回报，可能要相比保守的sarsa差。[17] ![Sarsa_VS_Q-learning最终收敛策略对比](../../img/Sarsa_VS_Q-learning_return.png)
--
+- Q-learning算法更有可能得到最优策略：SARSA算法与Q-learning算法选择了两种不同的路线，Q-learning的探索更全面，而且向着**贪婪**方向更新，因此找出了最短路径，而SARSA则更保守。![SARSA_VS_Q-learning最终收敛策略对比](../../img/SARSA_VS_Q-learning.png)
+- SARSA的回报收敛相对早，Q-learning更难收敛：从两黄框可见，由于Q-learning需要进行随即动作的探索，回报波动很大，偶尔会掉落到悬崖中，因此如果没训练好的Q-learning，其回报可能要相比保守的SARSA差。[17] ![SARSA_VS_Q-learning最终收敛策略对比](../../img/SARSA_VS_Q-learning_return.png)
+
 
 ### 解少过估计的Double Q-learning
 
@@ -393,7 +402,7 @@ Double Q-learning 加倍了内存开销，但是却没有增加额外的计算�
 [9]: https://www.bilibili.com/video/BV1UT411a7d6?p=35&vd_source=bca0a3605754a98491958094024e5fe3
 [10]: https://www.cnblogs.com/jinxulin/p/5116332.html
 [11]: https://datawhalechina.github.io/easy-rl/#/chapter5/chapter5
-[12]: https://chengfeng96.com/blog/2020/02/16/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89-%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E5%AD%A6%E4%B9%A0/#%E6%9C%9F%E6%9C%9B-sarsa-%E7%AE%97%E6%B3%95expected-sarsa
+[12]: https://chengfeng96.com/blog/2020/02/16/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89-%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E5%AD%A6%E4%B9%A0/#%E6%9C%9F%E6%9C%9B-SARSA-%E7%AE%97%E6%B3%95expected-SARSA
 [13]: https://www.bilibili.com/video/BV1Y24y1q7CX?p=3&vd_source=bca0a3605754a98491958094024e5fe3
 [14]: https://zhuanlan.zhihu.com/p/56907086
 [15]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2023/2/9/27c20431-8ed3-4562-83b5-5c82706f28a5.pdf
@@ -402,4 +411,5 @@ Double Q-learning 加倍了内存开销，但是却没有增加额外的计算�
 [18]: https://www.bilibili.com/video/BV1q4411X7A4
 [19]: https://zhuanlan.zhihu.com/p/472610846
 [20]: https://proceedings.neurips.cc/paper/3964-double-q-learning.pdf
+[21]: http://preview.d2l.ai/d2l-en/master/chapter_reinforcement-learning/qlearning.html#an-optimization-problem-underlying-q-learning
 答:

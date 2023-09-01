@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-22 16:07:02
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-16 21:47:29
+ * @LastEditTime: 2023-09-01 20:29:41
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -33,6 +33,8 @@ Prove 证明：
 
 This project is a synthesis of my hands-on learning from a series of projects, including "Hands-on Reinforcement Learning," "EasyRL," and other (deep) reinforcement learning resources that I was able to find and understand on the internet. 此项目是我再去动手学 《动手学强化学习》、EasyRL等一系列项目和浏览理解了互联网所有我能找到的（深度）强化学习资料后，综合而成的项目。
 
+![狗屎封面设计](../../read/d2rl/chapter/cover.jpg)
+
 Innovation points 创新点有：
 
 - A Tutorial Anyone Can Learn From 傻瓜都能学会的教程！
@@ -49,9 +51,12 @@ Innovation points 创新点有：
   - unlike a book need to be pulished, it is forever unfinished and never perfect 不像需要被出版的书，它永不完结、永不完美
   - TODO：use Tianshou DRL repo to train 用Tianshou库来训练
 
+
 ## The Repo's Statement (本项目的声明)
 
 This project and its content are welcome to be forked and reposted, but the link must be placed in the first position, otherwise it will be considered as riding on the popularity. If commercial use is intended, please contact (email: llgg8679@qq.com) for approval before use, otherwise, there will be consequences. This project currently has no other commercial intentions, and only accepts help that can provide me with enough necessary goods and services for living. 本项目及其内容欢迎fork、转载，但转载时必须将链接放在第一的位置，否则必去蹭热度。若进行商用必先咨询（邮箱：llgg8679@qq.com）后同意才可使用，否则必去叨扰。本项目暂时无其他商业模式的意向，只接受帮我获得足够生活所需物品和服务的帮助。
+
+
 
 ## My Mission（我的使命）
 
