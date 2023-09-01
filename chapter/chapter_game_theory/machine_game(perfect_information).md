@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-01 23:34:46
+ * @LastEditTime: 2023-09-01 23:38:30
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -67,7 +67,7 @@ MAX 先行，两人轮流出招，直到游戏结束。游戏结束时给优胜�
 
 而在中间过程，为了计算机处理，也有那么一个先行方的效用估计值（来对应到强化学习里是状态的价值[14]），来先去估计局面对先行方的有利程度并将其量化。
 
-所谓理性是指，尽量想办法使得自己获得更大的赢面。那么自己理性，且悲观地认为对方也总是理性的情况下，各方总是选择对自己最有利的节点作为自己的走步，即都执行最优策略。因为是相互对抗的，对自己最有利，总是对对方最不利。
+所谓理性是指，尽量想办法使得自己获得更大的赢面。那么自己理性，且悲观[4]地认为对方也总是理性的情况下，各方总是选择对自己最有利的节点作为自己的走步，即都执行最优策略。因为是相互对抗的，对自己最有利，总是对对方最不利。
 
 **具体来说**：
   - 先行方，总想使其效用估计值尽量大，故总是选择具有极大值的节点作为自己的走步，故可叫MAX。
@@ -422,7 +422,7 @@ $\min_{x \in X} \max_{y \in Y} f(x, y) = \max_{y \in Y} \min_{x \in X} f(x, y).$
 [1]: https://zh.wikipedia.org/wiki/%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E5%80%BC%E5%AE%9A%E7%90%86
 [2]: https://www.zhihu.com/question/51080557/answer/671522746
 [3]: https://zhuanlan.zhihu.com/p/520638488
-Del [4]:
+[4]: https://www.cnblogs.com/lqblala/p/15302959.html
 [5]: https://zh.wikipedia.org/zh-sg/%E4%BA%95%E5%AD%97%E6%A3%8B
 [6]: https://www.cnblogs.com/royalflush/p/12460242.html
 [7]: https://www.zhihu.com/question/30163532/answer/2356671861
