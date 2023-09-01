@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-08-25 00:42:22
+ * @LastEditTime: 2023-08-31 22:25:03
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -335,16 +335,17 @@ Q-learning具有以下缺点：
   > -  只能解决有限大小的状态和动作，当状态数为n，动作数为m时。（Only for finite-sized problems with $n$ states and $m$ actions（
   > - 状态转移概率 $P\left(s^{\prime} \mid s, a\right)$ 的空间复杂度为 $O(n^2*m)$  而 $R(s, a)$ 和 $Q(s, a)$ 的空间复杂度为 $O(n m)$（Needs $O\left(n^2 m\right)$ entries for $P\left(s^{\prime} \mid s, a\right)$, and $O(n m)$ for $R(s, a)$ and $Q(s, a)$
   > - 这使得很难应用到复杂问题（Do no scale well to large problems）[18]
-3. 难以应对时序关联的环境：**可以模拟行动空间离散且较小的场景，但难以处理复杂情况，无法处理连续的行动空间。**[16]
+3. 难以应对时序关联的环境：****[16]改进见：R
 4. 难以学习随机策略：策略是通过从Q函数最大化回报，确定地计算出来的，所以无法学习随机策略。
 
-### SARSA与Q-learning的关系
+### SARSA与Q-learning的关系与比较
 
 - 我不认可：SARSA可算是Q-learning的*改进* 这句话（出自「神经网络与深度学习」的第 342 页）我不认可 (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，
 - Sarsa和Q-learning的区别是Sarsa采取的是策略所选择的动作，而Q-learning是取最高Q值的动作。[5]
 
 - Q-learning算法更有可能得到最优策略：Sarsa算法与Q-learning算法选择了两种不同的路线，Q-learning的探索更全面，而且向着**贪婪**方向更新，因此找出了最短路径，而sarsa则更保守。![Sarsa_VS_Q-learning最终收敛策略对比](../../img/Sarsa_VS_Q-learning.png)
-- Sarsa的回报收敛相对早：由于Q-learning需要进行随即动作的探索，偶尔会掉落到悬崖中，因此如果没训练好的回报，可能要相比保守的sarsa差。[17] ![Sarsa_VS_Q-learning最终收敛策略对比](../../img/Sarsa_VS_Q-learning_return.png)
+- Sarsa的回报收敛相对早，Q-learning更难收敛：由于Q-learning需要进行随即动作的探索，偶尔会掉落到悬崖中，因此如果没训练好的回报，可能要相比保守的sarsa差。[17] ![Sarsa_VS_Q-learning最终收敛策略对比](../../img/Sarsa_VS_Q-learning_return.png)
+-
 
 ### 解少过估计的Double Q-learning
 

@@ -1,3 +1,16 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-03-08 21:32:56
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-08-31 22:34:11
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # 更多资源
 
 Recommended Books：[1]
@@ -33,5 +46,20 @@ Recommended Courses：
 ## 招聘
 
 http://rlchina.org/topics/node/13
+
+
+## Textbook $ Lectures
+
+Textbook: Reinforcement Learning: An Introduction
+• http://incompleteideas.net/sutton/book/the-book.html
+• Lectures of David Silver
+• http://www0.cs.ucl.ac.uk/staff/D.Silver/web/Teaching.ht
+ml (10 lectures, around 1:30 each)
+• http://videolectures.net/rldm2015_silver_reinforcemen
+t_learning/ (Deep Reinforcement Learning )
+• Lectures of John Schulman
+• https://youtu.be/aUrX-rP_ss4
+
+
 
 [1]: https://github.com/mimoralea/applied-reinforcement-learning/tree/master/12-recommended-books

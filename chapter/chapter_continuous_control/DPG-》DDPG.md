@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 21:12:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-04 18:43:29
+ * @LastEditTime: 2023-08-31 22:28:51
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -26,9 +26,11 @@
 - 离散动作：是可数的，例如：在 CartPole 环境中，可以有向左推小车、向右推小车两个动作。在 Frozen Lake 环境中，小乌龟可以有上、下、左、右4个动作。在雅达利的 Pong 游戏中，游戏有 6 个按键的动作可以输出。
 - 连续动作：是不可数的。 在实际情况中，我们经常会遇到连续动作空间的情况，也就是输出的动作是不可数的。比如：推小车推力的大小、选择下一时刻方向盘转动的具体角度、给四轴飞行器的4个螺旋桨给的电压的大小。
 
-[使用神经网络输出离散动作与连续动作](../img/disconcrete&continuous_action_output_by_NN.png)
+[使用神经网络输出离散动作与连续动作](../../img/disconcrete&continuous_action_output_by_NN.png)
 
 如图 12.3 所示，要输出离散动作，我们就加一个 softmax 层来确保所有的输出是动作概率，并且所有的动作概率和为 1。要输出连续动作，我们一般可以在输出层加一层 tanh 函数。tanh 函数的作用就是把输出限制到 [−1,1] 。我们得到输出后，就可以根据实际动作的范围将其缩放，再输出给环境。比如神经网络输出一个浮点数 2.8，经过 tanh 函数之后，它就可以被限制在 [−1,1] 之间，输出 0.99。假设小车速度的范围是 [−2,2] ，我们就按比例从 [−1,1] 扩大到 [−2,2]，0.99 乘 2，最终输出的就是 1.98，将其作为小车的速度或者推小车的推力输出给环境。
+
+
 
 ## DPG算法(Deterministic Policy Gradient)
 

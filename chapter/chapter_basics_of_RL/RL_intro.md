@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-08-25 01:11:06
+ * @LastEditTime: 2023-08-31 22:23:08
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -334,7 +334,7 @@ $s, a$ ：可以称之为一步。智能体的行为可以描述为一系列步�
 
 计算回报公式(formulations of return):
 
-- 即时奖励（immediate / instantaneous [28] reward），即当前 $t$ 时刻发生$a_t$后的奖励 $r_{t+1}$ 或$r(s_t,a_t)$。注意：有的资料的 $r$ 用下标可能是 $t$ 代表发生$a_t$后的奖励，但本项目一律采用 $t+1$ 代表发生$a_t$后的奖励。
+- 即时奖励（immediate / instantaneous [28] reward），即当前 $t$ 时刻发生$a_t$后的奖励 $r_{t+1}$ 或 $r(s_t,a_t)$ 。注意：有的资料的 $r$ 用下标可能是 $t$ 代表发生 $a_t$ 后的奖励，但本项目一律采用 $t+1$ 代表发生 $a_t$ 后的奖励。
 - 远期奖励（long-term reward），又叫延迟奖励（delayed reward），是指在一次行动后在一定时间$k$后（或者是一系列动作后）才获得回报。这种回报可能是一次, 也可能是多次。单个时间步的奖励 $r_{t+k}$ 或 $r(s_{t+k}, a_{t+k})$ 可用奖励函数 $R(s_{t+k}, a_{t+k})$算得。
 - 注：实际奖励用 $r$ ，而后面的奖励函数用 $R$ 。
 
@@ -401,7 +401,9 @@ $s, a$ ：可以称之为一步。智能体的行为可以描述为一系列步�
   $$
   其中，$V_{\pi}$ 是在状态 $s$ 下，根据策略 $\pi$ （具体介绍见后）执行后的预期累积奖励，$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野 $\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$），$\mathbb{E}_\pi$ 是在策略 $\pi$ 下的期望。第二个等式成立，是由于预测下一个即时的奖励: $\mathbf{R}_{}= \mathbb{E}_{\pi}\left[R_{t+1} \mid S_{t}=s, A_{t}=a\right]$。
 - **动作-状态价值函数**（state-action value function），简称**动作价值函数**（action value function）表示从某个状态开始，先随便执行一个行动 $a$ (有可能不是按照策略走的），之后每一步都按照固定的策略 $\pi$ 执行后的每个状态-行为对下的价值函数，又叫Q函数。[11]下面公式，只由一个状态s和一个动作a确定V，是由于此时是[马尔可夫决策过程 MDP](../chapter_MDP/MDP.md)。
-$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积奖励。$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野 $\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$ ） 是在策略 $\pi$ 下的期望。注意，动作价值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
+$$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots \mid S_t = s, A_t = a \right]$$ 其中，$Q_{\pi}$ 是在状态 $s$ 下执行动作 $a$，根据策略 $\pi$ 执行后的预期累积奖励。$G_t$ 是从时刻 $t$ 开始的累积奖励（可分有限视野 $\sum_{k=0}^{T} \gamma^k R_{t+k+1}$ 和无限视野 $\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}$ ） 是在策略 $\pi$ 下的期望。
+- 从 $t$ 开始的累计奖励，也在直观上也比较容易理解：因为在执行这个动作之前发生的事情是与执行这个动作是没有关系的，所以在执行这个动作之前得到的奖励都不能算是这个动作的贡献。我们把执行这个动作以后发生的所有奖励加起来，才是这个动作真正的贡献。[60]
+- 注意，动作价值函数 $Q^\pi(s, a)$ 是状态 $s$ 和动作 $a$ 的函数。可以通过 Q 函数得到进入某个状态要采取的最优动作。
 - 由二者的定义得，
   - $V^\pi(s)=\mathbb{E}_{a \sim \pi}\left[Q^\pi(s, a)\right]=\sum_{a \in A} \pi(a_s)Q^\pi(s,a)$,[43] 其中$\pi(a_s)$为策略，后面会介绍。
   - $Q^\pi(s, a)=R_s^a+\gamma \sum_{s^{\prime}} P_{s s^{\prime}}^a V^\pi\left(s^{\prime}\right)$【当我们选择A，并转移到新的状态时，就能获得奖励，我们必须把这个奖励也算上！】，其中P_{s s^{\prime}}^a为状态转移概率，后面也会介绍。
@@ -595,6 +597,7 @@ TODO:[12]
 [57]: https://www.zhihu.com/zvideo/1651586565607591937
 [58]: https://www.zhihu.com/zvideo/1651630658035363840
 [59]: https://zhuanlan.zhihu.com/p/636382873
+[60]: https://my.oschina.net/u/4939618/blog/10097837
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 

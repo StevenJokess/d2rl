@@ -81,5 +81,14 @@ $A(s, a)=Q(s, a)-V(s)$ 是为了解决基于价值方法具有高变异性。 �
 - TD(0)：$A(s, a)=r+\gamma V\left(s^{\prime}\right)-V(s)$ 。
 - TD(n)：$\sum_{i=0}^{k-1} \gamma^i r_{t+i}+\gamma^k V\left(s_{t+k} ; \theta_v\right)-V\left(s_t ; \theta_v\right)$
 
+## GA3C
+
+为了更好地利用GPU的计算资源从而提高整体计算效率，A3C进一步优化提升为GA3C.与A3C不同，GA3C中的Actor并没有模型参数，整个架构中只有一个模型，保存在Learner中。当Actor需要采样时，将状态放入预测队列，Learner的采样线程将队列中的所有状态拿出来进行一次采样），将得到的结果返回给相应的Actors。Actor收到对应的动作之后，在环境中进行step，并得到对应的reward信号。Actor收集到一定的样本之后，会将这些样本放入训练队列，Learner的训练线程使用这些样本进行模型更新。下图展示了A3C和GA3C架构的差别：
+
+
+
+采用这个架构之后，随着模型变得越来越复杂，GA3C带来的加速比也变得越来越大。[3]
+
 [1]: https://raw.githubusercontent.com/openmlsys/openmlsys-zh/main/chapter_reinforcement_learning/distributed_node_rl.md
 [2]: https://zhuanlan.zhihu.com/p/478990678
+[3]: https://blog.csdn.net/crazy_girl_me/article/details/123263603

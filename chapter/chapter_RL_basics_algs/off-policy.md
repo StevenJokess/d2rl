@@ -25,7 +25,7 @@
 
 ## 重要性采样（Importance Sampling）
 
-目标策略和行动策略同轨迹下的相对概率，就是重要度采样。
+目标策略和行动策略同轨迹下的相对概率，就是重要性采样。
 
 ### 离散变量的重要性采样：
 
@@ -204,7 +204,7 @@ $$
 $$
 
 - 其中 $A^\theta\left(s_t, a_t\right)$ 指的是 advantage 函数，其计算方式为加上衰减机制后的奖励值并减去基线。
-- 由于 $\frac{p_\theta\left(s_t\right)}{p_{\theta^{\prime}}\left(s_t\right)}$ 的值难以计算，将其设置为 1 ，简化计算
+- 由于 $\frac{p_\theta\left(s_t\right)}{p_{\theta^{\prime}}\left(s_t\right)}$ 的值难以计算，将其设置为 1 ，约去，简化计算
 
 ### 目标函数
 
@@ -214,13 +214,18 @@ $$
 J^{\theta^{\prime}}(\theta)=E_{\left(s_t, a_t\right) \sim \pi_{\theta^{\prime}}}\left[\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^{\prime}}\left(a_t \mid s_t\right)} A^{\theta^{\prime}}\left(s_t, a_t\right)\right]
 $$
 
-### off policy 代替的前提
+### off policy 可代替的前提
 
-使用off policy代替on policy的前提是， $p_\theta$ 和 $p_{\theta^{\prime}}$ 不能差太多，否则效果不好。
+重要性采样解决了采样效率的问题，但也可能会引入新问题。
 
-问: 如何保证 “ $p_\theta$ 和 $p_{\theta^{\prime}}$ 不能差太多”?
+我们再来看下重要性采样的公式：$E_{x\sim p}[f(x)]=E_{x\sim q}[f(x)\frac{p(x)}{q(x)}]$，虽然它们期望是相等的，但它们的方差如何呢？根据方差计算公式 ${Var} [X]=E[X^2]-(E[X])^2$，分别计算出 $f(x)$ 和 $f(x)\frac{p(x)}{q(x)}$ 的方差：
 
-答: 近端优化策略 PPO/TRPO[4]
+可以看到 2 个方差的第一项是不同的，$\operatorname{Var}_{x \sim q}\left[f(x) \frac{p(x)}{q(x)}\right]d$ 的第一项多乘了 $\frac{p(x)}{q(x)}$ ，如果 $\frac{p(x)}{q(x)} $ 差距很大，$p_{\theta}\left(a_{t} | s_{t}\right)$ 的方差就会很大。
+
+也就是说如果 $p_{\theta}\left(a_{t} | s_{t}\right)$ 与 $p_{\theta'}\left(a_{t} | s_{t}\right)$  相差太大，即这两个分布相差太多，重要性采样的结果就会不好。也就是说通过有限次的采样，如果 $p(x)$ 和 $q(x)$ 的差距过大，我们是无法保证这个期望的等式在采样数据上一定成立。[5]
+
+那如何避免 “ $p_\theta$ 和 $p_{\theta^{\prime}}$ 差太多”? 后面将利用信任区域策略优化 TRPO 和 近端优化策略 PPO [4]
 
 [3]: https://zhuanlan.zhihu.com/p/614049308
 [4]: https://windmissing.github.io/DeepLearningNotes/RL/Policy4.html
+[5]: https://my.oschina.net/u/4939618/blog/10097837

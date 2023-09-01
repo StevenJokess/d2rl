@@ -5,25 +5,13 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 02:25:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-01 02:29:21
+ * @LastEditTime: 2023-08-31 22:39:34
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 
-
-<!--
- * @version:
- * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-03-01 00:20:18
- * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-17 05:04:05
- * @Description:
- * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
- * @TODO::
- * @Reference:
--->
 # 资源
 
 如果你是一位深度强化学习的研究者，你现在可能已经对深度强化学习有了很多的了解。你知道它 “很难_ 而且 `不总是有效`_ 。即便是严格按照步骤来， `可重现性`_ 依然是一大挑战。如果你准备从头开始， `学习的曲线非常陡峭`_ 。虽然已经有很多很棒的学习资源（比如 ），但是因为很多资料都很新，以至于还没有一条清晰明确的捷径。这个项目的目的就是帮助你克服这些一开始的障碍，并且让你清楚的知道，如何成为一名深度强化学习研究院。在这个项目里，我们会介绍一些有用的课程，作为基础知识，同时把一些可能适合研究的方向结合进来。
@@ -35,7 +23,7 @@
 
 至少熟悉一种深度学习框架 Tensorflow or PyTorch 非常适合练手。你不用知道所有东西，但是你要能非常自信的实现一种监督学习算法。
 
-对于强化学习中的主要概念和术语很了解 知道什么是状态、行动、轨迹、策略、奖励、值函数和行动值函数。如果你对这些不了解，去读一读项目里面介绍部分的材料。OpenAI Hackthon 的 [强化学习介绍](https://spinningup.readthedocs.io/zh_CN/latest/spinningup/spinningup.html#id79) 也很值得看，或者是 Lilian Weng 的 [综述](https://arxiv.org/abs/1810.06339)。如果你对于数学理论很感兴趣，可以学习 [monotonic improvement theory](http://joschu.net/docs/thesis.pdf) （策略梯度算法的的基础）或者 [classical RL algorithms](https://sites.ualberta.ca/~szepesva/papers/RLAlgsInMDPs.pdf) （尽管被深度强化学习所替代，但还是有很多能推动新的研究的 insights）。
+对于强化学习中的主要概念和术语很了解 知道什么是状态、行动、轨迹、策略、奖励、值函数和行动值函数。如果你对这些不了解，去读一读项目里面介绍部分的材料。OpenAI Hackthon 的 [强化学习介绍](https://spinningup.readthedocs.io/zh_CN/latest/spinningup/spinningup.html#id79) 也很值得看，或者是 Lilian Weng 的 [综述](https://arxiv.org/abs/1810.06339)。如果你对于数学理论很感兴趣，可以学习 [monotonic improvement theory](http://joschu.net/docs/thesis.pdf) （策略梯度算法的基础）或者 [classical RL algorithms](https://sites.ualberta.ca/~szepesva/papers/RLAlgsInMDPs.pdf) （尽管被深度强化学习所替代，但还是有很多能推动新的研究的 insights）。
 
 ## 在动手中学习
 
