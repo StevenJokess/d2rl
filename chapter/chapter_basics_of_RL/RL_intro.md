@@ -3,7 +3,7 @@
  * @Author:  StevenJokess https://github.com/StevenJokess
  * @Date: 2021-02-04 20:30:32
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-08-31 22:23:08
+ * @LastEditTime: 2023-09-01 17:19:35
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -41,6 +41,8 @@
 $$
 S_0, A_0, R_1, S_1, A_1, R_2, S_2, A_2, R_3, S_3, A_3, \ldots
 $$
+
+特定的一条轨迹：$\tau=\left(s_0, a_0, r_0, s_1, a_1, r_1, s_2, a_2, r_2, \ldots\right)$
 
 ## 算法间的比较
 
@@ -239,13 +241,22 @@ $$
 
 (s, a, R(s), s')
 
-火星探寻车作为例子（Mars Rover Example）[57]：
+以火星探寻车作为例子（Mars Rover Example）[57]：
 
 ![Mars Rover Example](../../img/Mars_Rover_Example.png)
 
 - 状态（State）：探测器所处状态
 - 动作（Action）：探测器要采取的动作，即向左走还是向右走
-- 奖励（Reward）：每到达一个新状态获得的奖励
+- 奖励（Reward）：每到达一个新状态获得的奖励。值得注意的是，奖励是由用户（创建强化学习算法的人）根据目标设计的。[61]
+
+再以网格世界导航任务作为例子（gridworld navigation task example）：
+
+机器人的网格世界导航任务，其中机器人不仅要找到其到达目标位置的路（如绿色所示），还必须避开陷阱位置（如红十字标志所示）。![gridworld navigation task](../../img/grid_navigation.png)
+
+可设计为：
+
+- 正奖励：能到目标位置的途中
+- 负奖励：陷阱位置触发
 
 #### 先、（状态--"观测"-->）观察（Observation）/状态（State）
 
@@ -346,7 +357,7 @@ $s, a$ ：可以称之为一步。智能体的行为可以描述为一系列步�
    - 折扣因子（Discount Factor）是一个用来平衡未来奖励的价值衰减因子，表示在未来的每个时刻，奖励会以一定的比例进行衰减。使用时间折扣是为了使强化学习智能体更好地处理长期决策问题，同时能够适应不同的环境和任务。
    - 折扣因子通常表示为 $\gamma$ ，其中 $0 \leq \gamma \leq 1$ 。
    - 如果每个智能体的行为都碰巧只影响当前收益，而不是未来的回报，那么目光短浅的智能体可以通过单独最大化每个当前收益来最大化累计回报。但一般来说，最大化当前收益会减少未来的收益，以至于实际上的收益变少了。
-   - 由于 $\gamma \leq 1$ ，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计奖励公式，越远视，即未来奖励对当前选择动作的影响越大，一般选择0.99或者0.995[49]；越接近0，越短视。
+   - 由于 $\gamma \leq 1$ ，因未来的奖励价值会以指数级别的速度进行衰减，这表达出了我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。$\gamma$ 越接近1，越接近原累计奖励公式，也就越远视，即未来奖励对当前选择动作的影响越大，一般选择0.99或者0.995[49]，更会去探索，更容易找到最佳的策略；越接近0，越短视。
    - 分幕式任务——从当前时间步$t$开始到未来有限视野 $T$ 的所有时间步的累积奖励可以表示为：$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+2} + \cdots = \sum_{k=0}^{T} \gamma^k r_{t+1+k}$$
    - 持续性任务——无限视野(Infinite Horizon) 时，则是$$G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k r_{t+1+k}$$
      - 其中，$r_{t+1}$ 表示在时间步 $t$ 发生$a_t$后获得的奖励，$\gamma$ 是时间折扣因子，$G_t$ 表示从时间步 $t$ 开始的累积奖励。[12]
@@ -598,6 +609,7 @@ TODO:[12]
 [58]: https://www.zhihu.com/zvideo/1651630658035363840
 [59]: https://zhuanlan.zhihu.com/p/636382873
 [60]: https://my.oschina.net/u/4939618/blog/10097837
+[61]: https://d2l.ai/chapter_reinforcement-learning/mdp.html
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 

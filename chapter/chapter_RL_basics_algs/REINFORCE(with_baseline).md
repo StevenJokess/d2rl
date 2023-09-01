@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-05-23 23:55:42
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-23 23:56:20
+ * @LastEditTime: 2023-09-01 17:04:57
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,7 +15,7 @@
 
 ## 背景
 
-REINFORCE算法使用了MC方法，因而具有了一个明显的缺点，那就是方差太大（后面的 R_{k} 从t时刻到n时刻都是随机变量，随机变量维度高，导致的方差大[2]）。
+REINFORCE算法使用了MC方法，因而具有了一个明显的缺点，那就是**方差太大**（后面的 R_{k} 从t时刻到n时刻都是随机变量，随机变量维度高，导致的方差大[2]）。
 
 baseline则是一种可以减小其方差的办法。具体做法就是为动作价值函数找到一个基线与之对比。
 
