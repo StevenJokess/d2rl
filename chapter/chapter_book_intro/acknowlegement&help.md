@@ -5,13 +5,15 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-09 16:17:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-16 02:51:38
+ * @LastEditTime: 2023-09-06 01:32:49
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 致谢
+# 来互利共赢
+
+## 致谢
 
 致谢在此感谢为本repo成型时参考的所有作者。同时，还要感谢我的父母，他们在本书写作期间给予我极大的支持。
 
@@ -19,9 +21,13 @@
 
 如果你想加入蔡舒起呆瓜的深度强化学习勃士生团队或有兴趣给我当奴隶, 请通过电子邮件：867907127@qq.com与蔡舒起呆瓜联系。
 
-## 帮助
+## 联系和帮助（Contact & Help me!）
 
-- 无产阶级间的帮助群：171097552
+Questions and suggestion feedback:
+
+- 无产阶级间的帮助群（QQ group）：171097552
+- ![Github issues](https://github.com/StevenJokess/d2rl/issues)
+- 下方的讨论区Discussion：TODO:
 
 ## 资源
 

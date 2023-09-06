@@ -34,7 +34,7 @@
 ```toc
 :maxdepth: 1
 
-author_intro(front_fold)
+about_the_author(front_fold)
 ```
 
 

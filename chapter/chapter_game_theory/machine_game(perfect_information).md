@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-01 23:38:30
+ * @LastEditTime: 2023-09-04 22:05:48
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -109,7 +109,7 @@ MAX、MIN交替走步过程的图示如下，
 
 ### Minimax算法
 
-Minimax算法是一种递归或回溯算法，用于决策和博弈论。它为玩家提供了一个最佳的动作，假设对手也在玩最佳状态。[22]
+Minimax算法是一种递归或回溯算法，用于决策和博弈论。它为玩家提供了一个最佳的动作，以应对博弈中最不利的情况，即假设的对手是最佳状态的。[22]
 
 Minimax算法的基本思路是这样的，从树的叶子结点开始看，如果是本方回合就选择Max的，如果是对方回合就选择Min的（实际上这也是假设对方是聪明的也会使用Minimax算法）。
 

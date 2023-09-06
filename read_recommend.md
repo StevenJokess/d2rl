@@ -5,13 +5,21 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-10 00:25:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-16 21:00:19
+ * @LastEditTime: 2023-09-04 17:38:41
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 # 阅读推荐
+
+## 产品特点
+
+- 理论不完备，涵盖强化学习主干理论和常见算法，ChatGPT技术要点我参不透；
+- 实战性不强，每章都有编程案例，深度强化学习算法随缘提供TenorFlow和PyTorch对照实现；
+- 配套不丰富，逐章提供知识点总结，章后习题形式丰富多样。
+- 纯自学产物：没啥Gym源码解读、开发环境搭建指南、习题答案等在线资源，不希望助力你自学。
+- ⭐京东链接：不考虑上架。只有要饭码：![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
 
 ## 自编推荐
 

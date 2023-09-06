@@ -5,13 +5,18 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-22 16:07:02
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-01 20:29:41
+ * @LastEditTime: 2023-09-06 00:49:23
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
+
+[![GitHub issues](https://img.shields.io/github/issues/StevenJokess/d2rl)](https://github.com/StevenJokess/d2rl/issues) [![GitHub stars](https://img.shields.io/github/stars/StevenJokess/d2rl)](https://github.com/StevenJokess/d2rl/stargazers) [![GitHub forks](https://img.shields.io/github/forks/StevenJokess/d2rl)](https://github.com/StevenJokess/d2rl/network) [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FStevenJokess%2Fd2rl%2F&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey" /></a>
+
+
 # Hands-on Deep Reinforcement Learning with Tianshou, by StevenJokess（偷天动手学深度强化学习，蔡舒起作）
+
 
 ## Author's bio（作者简介）
 
@@ -33,7 +38,7 @@ Prove 证明：
 
 This project is a synthesis of my hands-on learning from a series of projects, including "Hands-on Reinforcement Learning," "EasyRL," and other (deep) reinforcement learning resources that I was able to find and understand on the internet. 此项目是我再去动手学 《动手学强化学习》、EasyRL等一系列项目和浏览理解了互联网所有我能找到的（深度）强化学习资料后，综合而成的项目。
 
-![狗屎封面设计](../../read/d2rl/chapter/cover.jpg)
+![狗屎封面设计](chapter/Front_Cover)
 
 Innovation points 创新点有：
 
@@ -93,6 +98,8 @@ My email: a867907127@gmail.com
 - 该项目收入我也会尽量公开，如果生活所需满足了，也就不需要赞助了，我就会撤下收款码。目前收入10元左右。
 
 ![收款码](img/收.jpg)
+
+
 
 ## More Projects 更多项目：
 

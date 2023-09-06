@@ -23,6 +23,6 @@ IRL
 GAIL
 assistance_game
 Human_Preference
+DRL_from_Human_Preferences
 RLHF
-
 ```

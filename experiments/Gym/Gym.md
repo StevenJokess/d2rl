@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-02 14:41:35
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-08 22:16:27
+ * @LastEditTime: 2023-09-04 20:27:04
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,7 +13,29 @@
 -->
 # Gym库
 
-OpenAI 的 Gym库是一个环境仿真库，里面包含很多现有的环境。
+OpenAI 的 Gym库是一个环境仿真库。[1]
+
+它用Python语言实现了离散时间智能体/环境接口中的环境部分。除了依赖少量商业库外，整个项目是开源免费的。
+
+算法环境：包括一些字符串处理等传统计算机算法的实验环境。
+
+Gym库内置上百种实验环境，包括以下几类。
+- 简单文本环境：包括几个用文本表示的简单游戏。
+- 经典控制环境：包括一些简单几何体的运动，常用于经典强化学习算法的研究。
+- Atari游戏环境：包括数十个Atari 2600游戏，具有像素化的图形界面，希望玩家尽可能争夺高分。
+- 二维方块（Box2D）环境：包括一些连续性控制的任务。
+- MuJoCo环境：利用收费的MuJoCo运动引擎进行连续性控制任务。
+- 机械控制环境：关于机械臂的抓取和控制等。[2]
+
+Gym环境列表可参见网址https://gym.openai.com/envs/ 。
+
+## 安装
+
+本节我们将安装并使用Gym库，通过一个完整的实例来演示智能体与环境的交互。
+
+
+
+## 进入环境
 
 安装了Gym库，就可以直接调入Taxi-v3的环境。
 
@@ -82,3 +104,4 @@ Discrete(3)表示这个任务有三个选的Action,分别是TODO
 
 
 [1]: https://blog.csdn.net/qq_40990057/article/details/125750328
+[2]: https://developer.aliyun.com/article/726171

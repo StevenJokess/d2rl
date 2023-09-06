@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-29 01:01:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-07-04 21:46:59
+ * @LastEditTime: 2023-09-06 00:59:35
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,6 +13,21 @@
 -->
 
 # A3C 算法
+
+Policy Gradient(PG)算法的最大问题在于On-Policy所带来的样本效率(sample efficiency)问题。具体而言，
+
+$$
+\begin{aligned}
+\nabla_\theta \eta\left(\pi_\theta\right) & =\nabla_\theta E_{\tau \sim p\left(\pi_\theta\right)}[R(\tau)] \\
+& =\nabla_\theta \sum_{\tau \sim p\left(\pi_\theta\right)} \log p_\theta(\tau) R(\tau)
+\end{aligned}
+$$
+
+由于样本是从 $p\left(\pi_\theta\right)$ 中采样的，因此在PG进行更新后 $\left(\theta \rightarrow \theta^{\prime}\right)$ ，正确的采样分布已经变成 了 $p\left(\pi_{\theta^{\prime}}\right)$ ，故原来的样本都必须全部被丟弃，然后重新采样样本并更新。可以发现，**每个样本只能用于一次策略更新**，这显然是效率低下的。
+
+A3C算法就是为了解决上述问题。但事实上，A3C算法本质上是逃避了这个问题，即“大力出奇迹”。既然PG的样本效率低，那么同时并行用很多个Agent去采样不就可以了（蚌）。但为了保证On-Policy，并行采样的Agent必须保持同步，而这显然限制了采样效率。A3C算法直接忽略了这一点，即采样异步采样算法，并定期同步所有Agent的权重，其潜在的假设就是只要**同步频率得当**，那么不同Agent间的步调不会相差太远。[4]
+
+但A3C实际上没有解决On-Policy样本效率低的问题。
 
 ## A3C的引入
 
@@ -81,7 +96,7 @@ $A(s, a)=Q(s, a)-V(s)$ 是为了解决基于价值方法具有高变异性。 �
 - TD(0)：$A(s, a)=r+\gamma V\left(s^{\prime}\right)-V(s)$ 。
 - TD(n)：$\sum_{i=0}^{k-1} \gamma^i r_{t+i}+\gamma^k V\left(s_{t+k} ; \theta_v\right)-V\left(s_t ; \theta_v\right)$
 
-## GA3C
+## 改进：GA3C
 
 为了更好地利用GPU的计算资源从而提高整体计算效率，A3C进一步优化提升为GA3C.与A3C不同，GA3C中的Actor并没有模型参数，整个架构中只有一个模型，保存在Learner中。当Actor需要采样时，将状态放入预测队列，Learner的采样线程将队列中的所有状态拿出来进行一次采样），将得到的结果返回给相应的Actors。Actor收到对应的动作之后，在环境中进行step，并得到对应的reward信号。Actor收集到一定的样本之后，会将这些样本放入训练队列，Learner的训练线程使用这些样本进行模型更新。下图展示了A3C和GA3C架构的差别：
 
@@ -92,3 +107,4 @@ $A(s, a)=Q(s, a)-V(s)$ 是为了解决基于价值方法具有高变异性。 �
 [1]: https://raw.githubusercontent.com/openmlsys/openmlsys-zh/main/chapter_reinforcement_learning/distributed_node_rl.md
 [2]: https://zhuanlan.zhihu.com/p/478990678
 [3]: https://blog.csdn.net/crazy_girl_me/article/details/123263603
+[4]: https://www.zhihu.com/column/c_1664539238795296768

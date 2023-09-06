@@ -25,5 +25,8 @@
 
 - PPO: ![Proximal Policy Optimization Algorithms](../../papers_PDF/PPO.pdf)(https://arxiv.org/abs/1707.06347)
 - AlphaGo Zero：![Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm](../../papers_PDF/) https://arxiv.org/abs/1712.01815
--
 
+- RLHF: ![reinforcement learning from human preferences. arxiv: 1706.03741. S.
+Casper, et. al. Open problems and fundamental limitations of
+reinforcement learning from human feedback. arxiv: 2307.15217.](../../papers_PDF/2307.15217.pdf) https://arxiv.org/pdf/2307.15217
+-
