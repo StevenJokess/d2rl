@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-09 16:17:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-06 01:32:49
+ * @LastEditTime: 2023-09-06 14:04:28
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -26,7 +26,7 @@
 Questions and suggestion feedback:
 
 - 无产阶级间的帮助群（QQ group）：171097552
-- ![Github issues](https://github.com/StevenJokess/d2rl/issues)
+- 发现笔误（typo）![Github issues](https://github.com/StevenJokess/d2rl/issues)将汇总=》成勘误（errata）
 - 下方的讨论区Discussion：TODO:
 
 ## 资源

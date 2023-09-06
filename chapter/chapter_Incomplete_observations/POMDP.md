@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-01 04:16:38
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-01 01:55:08
+ * @LastEditTime: 2023-09-06 13:55:00
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -29,8 +29,7 @@ $$
 
 ## 部分可观测（partially observed）
 
-部分可观测马尔可夫决策过程（partially observab
-但对于那些由于各种客观原因的限制, 无法观测到完全信息的决策场景和系统, 我们可以预设真实状态的决策过程依然是一个标准的 MDP。只是智能体不能直接观察底层真实状态, 仅能观察到其中一部分的信息 $o_t \in O$ , 此刻称这个环境是部分可观测（partially observed）的。
+对于那些由于各种客观原因的限制, 无法观测到完全信息的决策场景和系统, 我们可以预设真实状态的决策过程依然是一个标准的 MDP。只是智能体不能直接观察底层真实状态, 仅能观察到其中一部分的信息 $o_t \in O$ , 此刻称这个环境是部分可观测（partially observed）的。
 
 ## 部分可观测马尔可夫决策过程（partially observable Markov decision process，POMDP）
 

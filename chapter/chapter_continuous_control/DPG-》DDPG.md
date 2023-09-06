@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 21:12:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-08-31 22:28:51
+ * @LastEditTime: 2023-09-06 14:26:11
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -21,16 +21,26 @@
 
 本章要讲解的**深度确定性策略梯度**（deep deterministic policy gradient，DDPG）算法就是如此，它构造一个**确定性策略**，用梯度上升的方法来最大化 $Q$ 值。DDPG 也属于一种 Actor-Critic 算法。我们之前学习的 REINFORCE、TRPO 和 PPO 学习随机性策略，而本章的 DDPG 则学习一个**确定性策略**。总结，DDPG是同时学习确定性策略和 Q 函数的算法，即DDPG = DQN + DPG（deterministic policy gradient）。[3]
 
-## 离散动作与连续动作的区别
+## 为何要用DDPG？DQN不行！
+
+### 离散动作与连续动作的区别
 
 - 离散动作：是可数的，例如：在 CartPole 环境中，可以有向左推小车、向右推小车两个动作。在 Frozen Lake 环境中，小乌龟可以有上、下、左、右4个动作。在雅达利的 Pong 游戏中，游戏有 6 个按键的动作可以输出。
 - 连续动作：是不可数的。 在实际情况中，我们经常会遇到连续动作空间的情况，也就是输出的动作是不可数的。比如：推小车推力的大小、选择下一时刻方向盘转动的具体角度、给四轴飞行器的4个螺旋桨给的电压的大小。
 
-[使用神经网络输出离散动作与连续动作](../../img/disconcrete&continuous_action_output_by_NN.png)
+![使用神经网络输出离散动作与连续动作](../../img/disconcrete&continuous_action_output_by_NN.png)
 
 如图 12.3 所示，要输出离散动作，我们就加一个 softmax 层来确保所有的输出是动作概率，并且所有的动作概率和为 1。要输出连续动作，我们一般可以在输出层加一层 tanh 函数。tanh 函数的作用就是把输出限制到 [−1,1] 。我们得到输出后，就可以根据实际动作的范围将其缩放，再输出给环境。比如神经网络输出一个浮点数 2.8，经过 tanh 函数之后，它就可以被限制在 [−1,1] 之间，输出 0.99。假设小车速度的范围是 [−2,2] ，我们就按比例从 [−1,1] 扩大到 [−2,2]，0.99 乘 2，最终输出的就是 1.98，将其作为小车的速度或者推小车的推力输出给环境。
 
+## DQN的argmax失效
 
+DQN是一种表格型方法，改进了传统Q-Learning存在的无法使用连续状态空间的问题，使用神经网络代替离散的表格，根据输入的状态输出对应状态下离散的动作的价值函数，进而选取最优动作作为该状态下的策略。
+
+但是对于连续控制问题来说，DQN仍然无法解决。
+
+整个状态-动作空间是一块布，当我们输入一个state时，有一维被固定，布就变成看了一条曲线。![连续的状态-动作空间](../../img/continuous_state&action.png)
+
+曲线代表了不同动作在该状态下的价值函数，传统的DQN可能会利用argmax操作选择最大的动作价值函数对应的动作，但是这仅限于离散的，较少的动作空间。但是当我们使用连续动作空间时，对于一个函数曲线来说，argmax操作是很难实现的，所以，寻找更好的方法求得曲线的最值就是突破的目标。
 
 ## DPG算法(Deterministic Policy Gradient)
 

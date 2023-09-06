@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-08-31 22:43:49
+ * @LastEditTime: 2023-09-06 11:23:08
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -79,12 +79,27 @@ REINFORCE 算法的具体算法流程如下：
 
 可以用DP部分观测的MDP[3]
 
-## 缺点：
+## PG的技巧
+
+### PG的实现技巧1：
+
+添加基线， $R_{\theta}^{target} = \sum_{i=1}^N\sum_{t=1}^T (R(\tau^i)-b) log p_{\theta}(a_t^i|s_t^i)$
+
+### PG的实现技巧2：
+
+异质化奖励， $R_{\theta}^{target} = \sum_{i=1}^N\sum_{t=1}^T (G_t^i -b) log p_{\theta}(a_t^i|s_t^i) $，其中 $G_t-b$ 可以设置为 $G_t-b = Q(s_t,a_t)-V(s_t) = A(s_t,a_t)$ ，并用评论员网络拟合 $A(s_t,a_t)$ 。
+
+## 优缺点：
+
+
+
+缺点：
 
 - 只有在能够对序列采样的 episodic 环境下使用。[8]
 - 对步长大小的选择非常敏感：
   - 当迭代步长太小，则收敛缓慢，学习效率慢。因为样本利用率低，由于每次更新需要根据一个策略采集一条完整的轨迹（即,由于蒙特卡洛的特性，只有到终止状态的序列，才能被采样），并计算这条轨迹上的回报，而且每次更新后就要将这些样本扔掉，重新采样，再实现更新。[7] 后面会介绍用重要性采样来改良。
   - 当迭代步长太小，则难以收敛，性能差。由于利用策略梯度法计算的结果方差会很大。学习困难，由于 agent 在一个序列中会采取很多动作，我们很难说哪个动作对最后结果是有用的。
+-  即采样得到的数据只能做一次更新。因为 $R_{\theta}^{target} =E_{\tau\sim \pi_{\theta}}[R(\tau) logp_{\theta}(\tau)] $，故更新后基于 \pi_{\theta} 的采样分布会发生变化，因此演员之前采样的数据作废。[9]
 
 
 ## 小结：
@@ -177,3 +192,4 @@ https://hrl.boyuai.com/chapter/2/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E
 [6]: https://zhuanlan.zhihu.com/p/271000523
 [7]: https://weread.qq.com/web/reader/62332d007190b92f62371aek81232fb025f812b4ba28a23
 [8]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
+[9]: https://zhuanlan.zhihu.com/p/631505020#Chapter3%EF%BC%9A%E8%A1%A8%E6%A0%BC%E5%9E%8B%E6%96%B9%E6%B3%95

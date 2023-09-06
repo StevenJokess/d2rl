@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-02 14:41:35
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-04 20:27:04
+ * @LastEditTime: 2023-09-06 11:28:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -21,7 +21,7 @@ OpenAI 的 Gym库是一个环境仿真库。[1]
 
 Gym库内置上百种实验环境，包括以下几类。
 - 简单文本环境：包括几个用文本表示的简单游戏。
-- 经典控制环境：包括一些简单几何体的运动，常用于经典强化学习算法的研究。
+- 经典控制环境：包括一些简单几何体的运动，常用于经典强化学习算法的研究。![经典控制环境](../../img/gym_basic.png)
 - Atari游戏环境：包括数十个Atari 2600游戏，具有像素化的图形界面，希望玩家尽可能争夺高分。
 - 二维方块（Box2D）环境：包括一些连续性控制的任务。
 - MuJoCo环境：利用收费的MuJoCo运动引擎进行连续性控制任务。

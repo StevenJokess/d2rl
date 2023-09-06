@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-10 00:25:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-04 17:38:41
+ * @LastEditTime: 2023-09-06 14:13:34
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -63,7 +63,7 @@ YiWu是ASB共私开发的深度强化学习框架，不兼容目前主流的深�
 
 ## 读者人群
 
-任何炒作人工智能、智能科学与技术的人、以及被AI炒作忽悠的人。
+本书适合任何炒作人工智能、智能科学与技术的人、以及被AI炒作忽悠的人阅读。
 
 ## 精踩试读
 

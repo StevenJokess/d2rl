@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:03:50
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-24 00:28:26
+ * @LastEditTime: 2023-09-06 15:24:12
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -74,12 +74,19 @@ $$
 
 ## 竞争深度Q网络（Dueling DQN）
 
-对于 $\boldsymbol{Q}(s, a)$ ，其对应的状态由于为表格的形式，因此是离散的，而实际的状态大多不是离散的。
+对于 $\boldsymbol{Q}(s, a)$ ，其对应的状态价值函数用Q表来表示，因此要求是离散的，而实际的状态大多不是离散的。
 
-将Q值分解为状态价值和优势函数，即 $\mathrm{Q}$ 值 $\boldsymbol{Q}(s, a)=$ $V(s)+\boldsymbol{A}(s, a)$ ，可以得到更多信息。
+将Q值分解为状态价值函数和优势函数二者相加，即 $\mathrm{Q}$ 值 $\boldsymbol{Q}(s, a)=$ $V(s)+\boldsymbol{A}(s, a)$ ，可以得到更多信息。
 
+![](../../img/dueling(Q=V+A).png)
 
-其中的 $V(s)$ 是对于不同的状态都有值， $\boldsymbol{A}(s, a)$ 对于不同的状态都有不同的动作对应的值。所以本质上，我们最终的矩阵 $\boldsymbol{Q}(s, a)$ 是将每一个 $V(s)$ 加到矩阵 $\boldsymbol{A}(s, a)$ 中得到的。但是有时我们更新时不一定会将 $V(s)$ 和 $\boldsymbol{Q}(s, a)$ 都更新。我们将其分成两个部分后，就不需要将所有的状态-动作对都采样一遍，我们可以使用更高效的估计Q值的方法将最终的 $\boldsymbol{Q}(s, a)$ 计算出来。[3]
+上面图片中，第一个网络代表着原来的natural Q-net，下面的就是我们将其改变后的样子。
+
+所以本质上，我们最终的矩阵 $\boldsymbol{Q}(s, a)$ 是将每一个 $V(s)$ 加到矩阵 $\boldsymbol{A}(s, a)$ 中得到的。在这种情况下，原来进行一次梯度回传只能够改变一个值Q，但是现在可以同时改变优势函数和状态价值函数。但是有时我们更新时不一定会将 $V(s)$ 和 $\boldsymbol{Q}(s, a)$ 都更新。
+
+利用这种分解我们能得到什么好处？在假设优势函数不变的情况下，仅仅改变状态价值函数的值，就可以更新在该状态下所有动作价值函数，这意味着我们即使不能够采样到所有的动作-价值对，也可以高效的估计Q值。[7]
+
+但是会出现一种极端的情况，就是 $V==0, Q=A$ 。为了避免该情况发生，我们要对 $A$ 添加约束。最直观的就是同一状态下，所有动作的优势加起来为 0 ，即计算 $\mathrm{Q}$ 时构造 $A(s, a) \leftarrow A(s, a)-\operatorname{mean} A(s, a)$ ，减去均值即可实现上述。
 
 
 
@@ -140,7 +147,7 @@ $$
 为什么分布式深度Q网络不会高估奖励奖励，反而会低估奖励呢？因为分布式深度Q网络输出的是一个分布的范围，输出的范围不可能是无限的，我们一定会设一个限制， 比如最大输出范围就是从 −
 −10 ~ 10。假设得到的奖励超过 10，比如 100 怎么办？我们就当作没看到这件事，所以奖励很极端的值、很大的值是会被丢弃的，用分布式深度Q网络的时候，我们不会高估奖励，反而会低估奖励。
 
-![图 7.11 彩虹：去掉其中一种方法](../img/rainbow_2.png)
+![图 7.11 彩虹：去掉其中一种方法](../../img/rainbow_2.png)
 
 ## 总结
 
@@ -154,3 +161,4 @@ $$
 [4]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
 [5]: https://www.youtube.com/watch?v=X2-56QN79zc
 [6]: https://zhuanlan.zhihu.com/p/433114679#3.5%20%E8%BF%91%E7%AB%AF%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95
+[7]: https://zhuanlan.zhihu.com/p/548659845#4.dueling-network
