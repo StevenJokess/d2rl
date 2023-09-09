@@ -15,7 +15,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/StevenJokess/d2rl)](https://github.com/StevenJokess/d2rl/issues) [![GitHub stars](https://img.shields.io/github/stars/StevenJokess/d2rl)](https://github.com/StevenJokess/d2rl/stargazers) [![GitHub forks](https://img.shields.io/github/forks/StevenJokess/d2rl)](https://github.com/StevenJokess/d2rl/network) [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FStevenJokess%2Fd2rl%2F&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey" /></a>
 
 
-# Hands-on Deep Reinforcement Learning with Tianshou, by StevenJokess（偷天动手学深度强化学习，蔡舒起作）
+# Dive Into Deep Reinforcement Learning,by StevenJokess（动手学深度强化学习，蔡舒起作）
 
 
 ## Author's bio（作者简介）
@@ -99,8 +99,6 @@ My email: a867907127@gmail.com
 
 ![收款码](img/收.jpg)
 
-
-
 ## More Projects 更多项目：
 
 - [To be AI PM 成为AI产品经理](https://stevenjokess.github.io/2bPM/)
@@ -108,7 +106,10 @@ My email: a867907127@gmail.com
 
 ## Citing the repo 引用项目：
 
+
 To cite this repo in publications:, please use this bibtex entry:
+
+```bibtex
 @misc{d2rl2023,
     author = {StevenJokess（蔡舒起，原StevenJokes）},
     title = {Dive into Deep Reinforcement Learning},
@@ -117,3 +118,4 @@ To cite this repo in publications:, please use this bibtex entry:
     howpublished = {\url{https://github.com/StevenJokess/d2rl}},
     year = {2023}
 }
+```

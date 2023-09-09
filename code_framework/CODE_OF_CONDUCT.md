@@ -13,11 +13,14 @@
 -->
 # Code of Conduct
 
-This project has adopted the ASB Open Source Code of Conduct.
+This project has adopted the following ASB Open Source Code of Conduct.
 
-For more information see the Code of Conduct FAQ or contact llgg8679@qq.com with any additional questions or comments.
+For more information see the Code of Conduct FAQ or contact llgg8679@qq.com with any additional questions or comments.[1]
 
 ## ASB Open Source Code of Conduct
 
+TODO:
 
-https://github.com/d2l-ai/d2l-en/blob/master/CODE_OF_CONDUCT.md
+
+
+[1]: https://github.com/d2l-ai/d2l-en/blob/master/CODE_OF_CONDUCT.md

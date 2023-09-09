@@ -1,0 +1,10 @@
+name: reimplementations
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+
+TODO:
+
+[1]: https://github.com/BrianPulfer/PapersReimplementations/blob/main/environment.yml

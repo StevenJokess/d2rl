@@ -138,6 +138,15 @@ chapter_appendix-thinkings/index
 chapter_appendix-tools/index
 ```
 
+```toc
+:maxdepth: 1
+
+how_to_contribute
+```
+
+
+
+
 
 
 [1]: https://github.com/d2l-ai/d2l-en/edit/master/chapter_reinforcement-learning/index.md

@@ -19,7 +19,7 @@ setup(
     version = "0.0.1",
     include_package_data=True,
     author='StevenJokess',
-    author_email='zhding@gmail.com',
+    author_email='867907127@qq.com',
     url = "https://github.com/StevenJokess/d2rl/code_framework" ,
     license = "Check the LISENSE file" ,
     packages = find_packages(),
