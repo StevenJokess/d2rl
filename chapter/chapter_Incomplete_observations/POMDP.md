@@ -51,6 +51,22 @@ $$
 
 
 
+---
+
+Based on Cassandra, Kaelbling, & Littman, 12th AAAI, 1994
+Start with an MDP <S, A, T, R>, where
+S is finite state set
+A is finite action set
+T is the state transition function: T(s, a, s’) is prob that next state is s’, given doing a  in state s
+R is the reward function: R(s, a) is the immediate reward for doing a in state s
+Add partial observability:
+O, a finite set of possible observations
+O, an observation function: O(a, s, o) is probability of observing o after taking action a in state s
+Complexity: finite horizon: PSPACE-complete.
+                     infinite horizon: undecidable
+
+
+
 [1]: http://coregroup.snu.ac.kr/teaching/
 [2]: https://www.zhihu.com/question/496058048/answer/2889510108
 [3]: https://github.com/opendilab/PPOxFamily/blob/main/chapter5_time/chapter5_supp_belief.pdf

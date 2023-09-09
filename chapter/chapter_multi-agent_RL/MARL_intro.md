@@ -15,16 +15,22 @@
 
 ## MAL
 
-多智能体学习（Multi­agent Learning，MAL）将机器学习技术引入多智能体系统领域，研究如何设计算法去创建动态环境下的自适应智能体。MAL 领域被广泛研究的技术是强化学习（Reinforcement Learning）。单智能体的强化学习通常在马尔科夫决策过程（Markov Decision Processes，MDP）的框架内就能被较好地描述。一些独立的强化学习算法（如Q-­learning）在智能体所处环境满足马氏性且智能体能够尝试足够多行动的前提下会收敛至最优的策略。
+多智能体学习（Multi­agent Learning，MAL）将机器学习技术引入多智能体系统领域，研究如何设计算法去创建动态环境下的自适应智能体。
 
-尽管MDP 为单智能体学习提供了可靠的数学框架，对多智能体学习却并非如此。在多个自适应智能体相互作用的情况下，一个智能体的收益通常依赖于其他个体的行动，学习环境已经不再是静态的了，而是非稳态（Non-Stationary）[5]的环境。
+在多个自适应智能体相互作用的情况下，一个智能体的收益通常依赖于其他个体的行动。学习环境已经不再是静态的了，而是非稳态（Non-Stationary）[5]的环境。所谓非稳态是指，环境迁移的分布会发生改变。
 
-当这个环境当中，除了有一个智能体在学习以外，还有别的智能体在相应的去发生交互和学习的这个过程当中。这个整个任务就变成了一个叫做多智能体强化学习，也叫Multi-agent reinforcement learning 。由于这时候环境变成了是多个智能体之间的交互，以至于它就变成了是一个非稳态的环境。
+## MA+RL
 
-此时每个智能体面临一个**目标不断变化**的问题——单个智能体需要学习的内容依赖于其他智能体学到的内容，并随之改变。因此，有必要对原有的MDP 框架作相应的扩展，这其中有马尔科夫博弈和联合行动学习机等。在这些扩展中，学习发生在不同智能体的状态集和行动集的积空间上。因而当智能体、状态或行动的数量太大时，这些扩展面临积空间过大的问题。此外，共享的联合行动空间也未必可用。比如在信息不完全的情况下，智能体未必能观察到其他智能体的行动。如何处理复杂的现实问题，如何高效地处理大量的状态、大量的智能体以及连续的策略空间已经成为目前MAL 研究的首要问题。
+MAL 领域被广泛研究的技术是强化学习（Reinforcement Learning）。单智能体的强化学习通常在马尔科夫决策过程（Markov Decision Processes，MDP）的框架内就能被较好地描述。一些独立的强化学习算法（如Q-­learning）在智能体所处环境满足马氏性且智能体能够尝试足够多行动的前提下会收敛至最优的策略。
 
+尽管MDP为单智能体学习提供了可靠的数学框架，对多智能体学习却并非如此。当这个环境当中，除了有一个智能体在学习以外，还有别的智能体在相应的去发生交互和学习的这个过程当中。这个整个任务就变成了一个叫做多智能体强化学习，也叫Multi-agent reinforcement learning 。由于这时候环境变成了是多个智能体之间的交互，以至于它就变成了是一个非稳态的环境。
 
-随着深度强化学习的兴起，上述问题的解决迎来了新的转机，多智能体强化学习（Multi­Agent Reinforcement Learning， MARL）乘势兴起。多智能体强化学习中，每个智能体都采用强化学习对自己的策略进行训练，其中智能体的策略利用深度网络来表示。[4]
+> 假如把其他智能体考虑成环境的一部分从而能够使用单智能体的Q学习算法，是否可行？
+>
+>- 这种做法破坏了理论上的收敛保证，使学习不稳定？？？
+>- 即，每个智能体策略（学习目标）都依赖其他智能体的策略，并要不断变化以随机应变。
+
+因此，有必要对原有的MDP 框架作相应的扩展，这其中有马尔科夫博弈和联合行动学习机等。
 
 
 ## 多智能体强化学习的环境
@@ -47,8 +53,6 @@ $$
 & Q_i^H(s， a)=E_i^H\left[R_{t+1}+\gamma Q_i^H\left(S_{t+1}， A_{t+1}\right) \mid S_t=s， A_t=a\right]
 \end{aligned}
 $$
-
-
 
 ## 算法分类
 
@@ -156,7 +160,42 @@ Centralised Critic (CC) : CC 专注于学习从集中状态到价值估计的批
 
 在当下的研究趋势中，研究者正在把MARL 应用到更为复杂和更大规模的多智能体学习任务上，诸如地面和空中交通管控、分布式监测、电子市场、机器人营救和机器人足球赛、智能电网等一系列实际应用场合。
 
-## 环境分类
+### 例1：对战游戏
+
+6Lianmin Zheng, Weinan Zhang et al. Magent: a many-agent reinforcement learning platform for artificial collective intelligence. NIPS17 & AAAI18.
+
+### 例2：队伍排列
+
+7Lianmin Zheng, Weinan Zhang et al. Magent: a many-agent reinforcement learning platform for artificial collective intelligence. NIPS17 & AAAI18.
+
+https://github.com/boyu-ai/Hands-on-RL/issues/56
+
+### 例3：去中心化的游戏人工智能（AI）
+
+为复杂的集体游戏智能设计多智能体通信和协同学习的算法
+
+8Peng, Peng, et al. "Multiagent bidirectionally-coordinated nets for learning to play starcraft combat games." NIPS workshop 2017
+
+### 例4：城市大脑模拟器
+
+ 设计
+• 车辆路由策略
+• 交通灯控制
+• 车队管理及出租车派车
+
+Huichu Zhang, Weinan Zhang et al. CityFlow: A Multi-Agent Reinforcement Learning Environment for Large Scale
+City Traffic Scenario. WWW 2019
+
+### 例5：分拣机器人
+
+10Haifeng Zhang, Weinan Zhang et al. Layout design for intelligent warehouse by evolution with fitness
+approximation. IEEE Access 201
+
+### 存在问题以及解决方案
+
+在这些扩展中，学习发生在不同智能体的状态集和行动集的积空间上。因而当智能体、状态或行动的数量太大时，这些扩展面临积空间过大的问题。此外，共享的联合行动空间也未必可用。比如在信息不完全的情况下，智能体未必能观察到其他智能体的行动。如何处理复杂的现实问题，如何高效地处理大量的状态、大量的智能体以及连续的策略空间已经成为目前MAL研究的首要问题。
+
+随着深度强化学习的兴起，上述问题的解决迎来了新的转机，多智能体强化学习（Multi­Agent Reinforcement Learning， MARL）乘势兴起。多智能体强化学习中，每个智能体都采用强化学习对自己的策略进行训练，其中智能体的策略利用深度网络来表示。[4]
 
 [1]: http://www.jidiai.cn/algorithm#marl_title
 [2]: https://developer.aliyun.com/article/818419?spm=a2c6h.12873639.article-detail.55.7fa137a8RUrUg3

@@ -1,4 +1,23 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-04-03 03:12:26
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-09-06 17:42:29
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # Bandit问题的核心
+
+## MAB的变体
+
+多臂赌博机包含多种变体，例如：Contextual bandit，Adversarial bandit，Infinite-armed bandit，Non-stationary bandit，Dueling bandit，Collaborative bandit，Combinatorial bandit 等。
+
+## 核心问题
 
 Bandit的研究总是需要回答3个核心问题：
 
@@ -15,6 +34,8 @@ Thompson Sampling是Bayesian学派的代表，用概率分布来刻画
 利用已有历史信息(Exploitation)：推荐高质量的新闻，确保用户当前的体验，也就是 p 值较高的那些新闻
 勇于探索 (Exploration)：有些新闻才出来，或者用户以前没点击过，不确定性高，但如果推荐出来用户也有可能会喜欢，也就是 \Delta 高的那些新闻
 如何平衡Exploitation和Exploration：万变不离其宗，我们是 \tilde{p} \in [p-\Delta, p + \Delta] 对物品进行排序 ， [p-\Delta, p + \Delta] 是一个区间，如何在这个区间取值反映了我们对Exploitation v.s. Exploration的偏好[1]
+
+
 
 # 上下文赌博机（Context Bandits）
 

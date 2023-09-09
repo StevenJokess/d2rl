@@ -13,9 +13,16 @@
 -->
 # 前折页
 
-作者(失业要饭，蔡舒起）介绍：
+作者（蔡舒起）介绍：
 
-毕业即失业，在家鬼混3年的人士罢了。
+毕业即失业，在家鬼混3年的要饭人士罢了。
+
+作者的联系方式：
+
+- 邮箱: 867907127@qq.com
+- 知乎: ![StevenJokes](https://www.zhihu.com/people/Steven_Jokes)
+- QQ群：171097552
+- 个人网站: https://stevenjokess.github.io/2bPM/
 
 ## 简历 PDF 和 要饭码
 

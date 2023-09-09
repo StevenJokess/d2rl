@@ -16,8 +16,7 @@
 :maxdepth: 2
 MAS
 multi-agent_DRL_intro
-MCTS
-self-play
+
 MARL
 MiniMax-Q
 NashQ
@@ -26,5 +25,6 @@ MADDPG
 COMA
 VDN
 QMIX
+self-play
 Applications
 ```

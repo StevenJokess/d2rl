@@ -112,6 +112,11 @@ $$
 
 以上介绍的是确定性策略梯度方法，可以称为 DPG的方法。有了DPG，我们再讲DDPG。[7]
 
+有两个点值得注意：
+
+DPG和随机策略梯度SPG差异在于随机策略梯度中有一个log项，本质上源于随机策略需要重新加一层策略u的期望，导致策略网络u的梯度相对DPG需要除以策略u，数学转化成log(u)的倒数了。这个形式和交叉熵很接近，其实完全可以从概率角度去理解，有物理意义。
+DPG中本质上式在max(Q)，和DQN最终竟还是殊途同归，直观的去理解的话，Policy是按照Q值最大的方向调整policy的参数。[10]
+
 ## DDPG算法
 
 为了打破数据之间的相关性，DQN用了两个技巧：经验回放和独立的目标网络。DDPG的算法便是将这两条技巧用到了DPG算法中[7]，，但目标网络的更新与 深度Q网络 的有点儿不一样。
@@ -163,6 +168,10 @@ $$
 
 
 ## 伪代码
+
+英文版伪代码：
+
+![英文版伪代码(../../img/DDPG_en.png)
 
 参数提前说明：
 
@@ -240,6 +249,7 @@ DDPG 算法简洁易用, 可以很容易应用到高维的连续状态和动作�
 [7]: https://zhuanlan.zhihu.com/p/26441204
 [8]: http://tigerneil.github.io/2016/05/31/rl-rldm-david-silver/#%E7%A1%AE%E5%AE%9A%E5%9E%8B%E6%B7%B1%E5%BA%A6%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6ddpg
 [9]: http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.c200159
+[10]: https://zhuanlan.zhihu.com/p/25239682
 
 TODO:DDPG论文: 深强化学习连续控制 - Johnson7788的文章 - 知乎
 https://zhuanlan.zhihu.com/p/371451813

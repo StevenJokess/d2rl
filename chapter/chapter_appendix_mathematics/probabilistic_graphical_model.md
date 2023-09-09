@@ -13,3 +13,4 @@
 -->
 # 概率图模型
 
+https://tsinghua-gongjing.github.io/posts/probabilistic-graphic-model.html
