@@ -87,7 +87,6 @@
 
 
 
-
 ## ？？？
 
 - X[Posterior Sampling Reinforcement Learning (PSRL)](https://www.ece.uvic.ca/~bctill/papers/learning/Strens_2000.pdf)
@@ -103,10 +102,8 @@
 
 ## chapter_app_chatbot
 
-- RLHF: [reinforcement learning from human preferences. arxiv: 1706.03741. S.
-Casper, et. al. Open problems and fundamental limitations of
-reinforcement learning from human feedback. arxiv: 2307.15217.](../../papers_PDF/2307.15217.pdf) https://arxiv.org/pdf/2307.15217
--
+- RLHF: [reinforcement learning from human preferences(RLHF)](../../papers_PDF/2307.15217.pdf) https://arxiv.org/pdf/2307.15217
+
 
 
 
