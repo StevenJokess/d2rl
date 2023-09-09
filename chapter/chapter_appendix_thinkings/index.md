@@ -19,9 +19,6 @@
 conclusion&perspective
 resource
 more_resources
-ChatGPT(RLHF)
-RLHF
 other_authors'_thinking
 my_thinking
-TODO
 ```

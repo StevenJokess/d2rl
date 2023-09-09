@@ -193,3 +193,35 @@ https://hrl.boyuai.com/chapter/2/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E
 [7]: https://weread.qq.com/web/reader/62332d007190b92f62371aek81232fb025f812b4ba28a23
 [8]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
 [9]: https://zhuanlan.zhihu.com/p/631505020#Chapter3%EF%BC%9A%E8%A1%A8%E6%A0%BC%E5%9E%8B%E6%96%B9%E6%B3%95
+
+TODO: 看不懂证明。。
+[10]: https://lilianweng.github.io/posts/2018-02-19-rl-overview/#policy-gradient-theorem
+
+---
+
+Or analytically,
+$$
+\mathcal{J}(\theta)=\mathbb{E}_{\pi \theta}[r]=\sum_{s \in \mathcal{S}} d_{\pi \theta}(s) \sum_{a \in \mathcal{A}} \pi(a \mid s ; \theta) R(s, a)
+$$
+Actually we have nice theoretical support for (replacing $d($.$) with d_\pi($.$) ):$
+事实上，我们有很好的理论支持（用 $d_\pi($.$) 替换 d($.$) ) :$
+$$
+\mathcal{J}(\theta)=\sum_{s \in \mathcal{S}} d_{\pi \theta}(s) \sum_{a \in \mathcal{A}} \pi(a \mid s ; \theta) Q_\pi(s, a) \propto \sum_{s \in \mathcal{S}} d(s) \sum_{a \in \mathcal{A}} \pi(a \mid s ; \theta) Q_\pi(s, a)
+$$
+Check Sec 13.1 in Sutton \& Barto (2017) for why this is the case.
+查看萨顿\& Barto（2017）的第13.1节，了解为什么会出现这种情况。
+Then,
+$$
+\begin{aligned}
+\mathcal{J}(\theta) & =\sum_{s \in \mathcal{S}} d(s) \sum_{a \in \mathcal{A}} \pi(a \mid s ; \theta) Q_\pi(s, a) \\
+\nabla \mathcal{J}(\theta) & =\sum_{s \in \mathcal{S}} d(s) \sum_{a \in \mathcal{A}} \nabla \pi(a \mid s ; \theta) Q_\pi(s, a) \\
+& =\sum_{s \in \mathcal{S}} d(s) \sum_{a \in \mathcal{A}} \pi(a \mid s ; \theta) \frac{\nabla \pi(a \mid s ; \theta)}{\pi(a \mid s ; \theta)} Q_\pi(s, a) \\
+& =\sum_{s \in \mathcal{S}} d(s) \sum_{a \in \mathcal{A}} \pi(a \mid s ; \theta) \nabla \ln \pi(a \mid s ; \theta) Q_\pi(s, a) \\
+& =\mathbb{E}_{\pi \theta}\left[\nabla \ln \pi(a \mid s ; \theta) Q_\pi(s, a)\right]
+\end{aligned}
+$$
+This result is named "Policy Gradient Theorem" which lays the theoretical foundation for various policy gradient algorithms:
+这个结果被命名为“策略梯度定理"，为各种策略梯度算法奠定了理论基础:
+$$
+\nabla \mathcal{J}(\theta)=\mathbb{E}_{\pi \theta}\left[\nabla \ln \pi(a \mid s, \theta) Q_\pi(s, a)\right]
+$$

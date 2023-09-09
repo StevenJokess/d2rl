@@ -17,6 +17,26 @@
 
 进化算法 (Evolutionary Algorithms) 包括遗传算法 (Genetic Algorithms)、进化规划 (Evolutionary Programming)、进化策略 (Evolution Strategies) 及遗传编程 (Genetic Programming)。它们都是借鉴生物界中进化与遗传的机理, 用于解决复杂的工程技术问题。
 
+
+
+ES, as a black-box optimization algorithm, is another approach to RL problems (In my original writing, I used the phrase “a nice alternative”; Seita pointed me to this discussion and thus I updated my wording.). It has a couple of good characteristics (Salimans et al., 2017) keeping it fast and easy to train:
+ES，作为一种黑盒优化算法，是另一种解决强化学习问题的方法（在我最初的写作中，我使用了“一个不错的选择”; Seita向我指出了这个讨论，因此我更新了我的措辞。它具有几个良好的特性（Salimans等人，2017年，保持快速和易于训练：
+
+ES does not need value function approximation;
+ES不需要值函数逼近;
+ES does not perform gradient back-propagation;
+ES不执行梯度反向传播;
+ES is invariant to delayed or long-term rewards;
+ES对延迟或长期奖励是不变的;
+ES is highly parallelizable with very little data communication.
+ES是高度并行化的，几乎没有数据通信。
+
+
+TODO: https://lilianweng.github.io/posts/2018-02-19-rl-overview/#policy-gradient-theorem
+
+---
+
+
 ## 生物界中进化与遗传的机理
 
 地球上的生物, 都是经过长期进化而形成的。根据达尔文的自然选择学说, 地球上的生物具有很强的繁殖能力。在繁殖过程中, 大多数生物通过遗传, 使物种保持相似的后代; 部分生物由于变异, 后代具有明显 差别, 甚至形成新物种。正是由于生物的不断繁殖后代, 生物数目大量增加, 而自然界中生物赖以生存的 资源却是有限的。因此, 为了生存, 生物就需要竞争。生物在生存竞争中, 根据对环境的适应能力, 适者 生存, 不适者消亡。自然界中的生物, 就是根据这种优胜劣汰的原则, 不断地进行进化。进化算法就是借 角生物进化的规律, 通过繁殖竞争再繁殖再竞争, 实现优胜劣汰, 一步一步地逼近问题的最优解。

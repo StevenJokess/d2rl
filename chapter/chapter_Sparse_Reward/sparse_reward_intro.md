@@ -5,13 +5,13 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-02 15:05:52
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-06 16:46:45
+ * @LastEditTime: 2023-09-10 03:35:17
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 稀疏奖励
+# 稀疏奖励问题介绍
 
 ## RL面临的挑战： 奖励稀疏性（sparse reward）
 

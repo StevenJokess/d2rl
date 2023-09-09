@@ -34,5 +34,6 @@ acknowledgements&support
 glossary&notations
 algs&papers
 abbreviation
+how_to_contribute
 appendix-publish-cost&benefits
 ```
