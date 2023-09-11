@@ -62,4 +62,27 @@ t_learning/ (Deep Reinforcement Learning )
 
 
 
+
+### 协会
+
+人工智能的主要专业协会有：
+
+- 人工智能促进协会（Advancement of Artificial Intelligence，AAAI）、
+- ACM 人工智能特别兴趣小组（Special Interest Group in Artificial Intelligence，SIGAI，其前身为SIGART）、
+- 欧洲人工智能协会以及人工智能和行为模拟协会（Society for Artificial Intelligence and Simulation of Behaviour，AISB）。
+- 人工智能的伙伴关系将许多关注人工智能的道德和社会影响的商业和非营利组织聚集在一起。
+- AAAI 的AI  Magazine 包含许多专题和教程，其网站包含了人工智能相关新闻、教程和背景资料。
+
+### 会议
+
+人工智能的最新工作会出现在国际人工智能联合会议（International Joint Conference on AI，IJCAI）、欧洲人工智能会议（European Conference on AI，ECAI）和AAAI 会议这类主要人工智能会议的会刊中。国际机器学习会议（International Conference on Machine Learning，ICML）和神经信息处理系统（Neural Information Processing Systems，NeurIPS）会议涵盖机器学习领域。
+
+通用人工智能的主要期刊是
+
+- Artificial Intelligence
+- Computational  Intelligence
+- IEEE Transactions  on  Pattern  Analysis  and  Machine  Intelligence   （TPAMI）
+- IEEE  Intelligent  Systems（TIS）
+- Journal of Artificial Intelligence Research（JAIR）
+
 [1]: https://github.com/mimoralea/applied-reinforcement-learning/tree/master/12-recommended-books

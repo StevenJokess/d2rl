@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-06 11:23:08
+ * @LastEditTime: 2023-09-10 21:01:41
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -173,7 +173,7 @@ $$
 
 ？？？
 
-![数学推导[5]](../img/PG_math.png)
+![数学推导[5]](../../img/PG_math.png)
 
 假设 $\eta(s)$ 是在状态s下的某种计数，例如在训练过程中该状态被访问的次数。那么，$\sum_s \eta(s)$ 表示所有状态的计数之和。因此， $\frac{\eta(s)}{\sum_s \eta(s)}$  可以解释为状态s被访问的概率，即状态s在所有状态中的比例。
 
@@ -198,6 +198,8 @@ TODO: 看不懂证明。。
 [10]: https://lilianweng.github.io/posts/2018-02-19-rl-overview/#policy-gradient-theorem
 
 ---
+
+![](../../img/PG_easy.png)
 
 Or analytically,
 $$

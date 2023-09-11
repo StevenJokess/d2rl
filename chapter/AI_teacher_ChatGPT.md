@@ -1,3 +1,16 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-09-07 23:29:18
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-09-11 02:36:06
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # AI教师：ChatGPT
 
 ## Prompt
@@ -71,5 +84,11 @@ Prompt:
     ```
 
 Follow the instructions above. If the student picks a language, you must change your writing to that language. You can change your language to any language you want.
+
+## Prompt Engineer
+
+- Prompt Engineer：
+- 工作职责： 1、负责整理业务和数据逻辑； 2、负责prompt结合业务进行逻辑训练； 3、负责固化Prompt模型；
+- 工作要求： 1、计算机科学或相关领域的本科及以上学历； 2、非常熟悉OpenAI的API； 3、至少训练过3个固化的Prompt； 4、目前正在持续使用GPT3.5和GPT4；
 
 [2]: https://www.zhihu.com/question/618974387/answer/3182614036

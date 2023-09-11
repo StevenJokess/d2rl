@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-05 19:51:29
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-14 01:27:17
+ * @LastEditTime: 2023-09-11 02:22:35
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -27,6 +27,8 @@
 - 义务：义务劳动，资本主义市场经济下咋活下去？
 - 艺无：抄绝艺——唐朝诗人杜牧的诗句“绝艺如君天下少，闲人似我世间无”。[3]
 - 逸舞：失业的项目。“每一个不曾起舞的日子都是对生命的辜负。”
+- MADDPG作者之一：[MADDPG](https://arxiv.org/pdf/1706.02275.pdf)
+
 
 是的，这个项目代码都没写，尽琢磨内涵了。
 
