@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-05-26 22:47:02
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-17 23:33:18
+ * @LastEditTime: 2023-09-11 18:42:22
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -122,10 +122,18 @@ GA(遗传算法)和ES(进化规划)都是从随机产生的初始可行解出发
 
 进化规划和进化策略分别在美国和德国单独出现，随后又各自平行发展。这两种进化算法既有差别，又有相似之处。进化规划和进化策略的差别主要表现在：进化规划没有重组算子，只依靠变异产生新个体。进化策略采用重组和变异两种手段产生新个体。关于重组和变异的作用一直存在争论，有人强调变异的作用，有人重视重组，还有人主张兼容二者。随着两者的不断发展，进化策略与进化规划的差异逐渐不明显。
 
+## 神经网络进化
+
+### NEAT 监督学习
+
+
+### NEAT 强化学习
 
 https://zhuanlan.zhihu.com/p/189010215s
 
 应用于证券投资：http://59.252.42.34:6251/Qw/Paper/168437#anchorList
+
+更多见：https://www.bilibili.com/video/BV1wW411Y7tr?p=15
 
 [1]: https://www.bilibili.com/video/BV1iN411o7N1/
 [2]: https://www.bilibili.com/video/BV1kK4y1R7rv/

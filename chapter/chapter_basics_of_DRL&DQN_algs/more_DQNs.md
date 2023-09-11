@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:03:50
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-06 15:24:12
+ * @LastEditTime: 2023-09-11 11:33:45
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -88,9 +88,7 @@ $$
 
 但是会出现一种极端的情况，就是 $V==0, Q=A$ 。为了避免该情况发生，我们要对 $A$ 添加约束。最直观的就是同一状态下，所有动作的优势加起来为 0 ，即计算 $\mathrm{Q}$ 时构造 $A(s, a) \leftarrow A(s, a)-\operatorname{mean} A(s, a)$ ，减去均值即可实现上述。
 
-
-
-## 优先级经验回放
+## 优先级经验回放（PER）
 
 第三个技巧称为**优先级经验回放（prioritized experience replay，PER）**。如图 7.6 所示，我们原来在采样数据训练 Q 网络的时候，会均匀地从回放缓冲区里面采样数据。这样不一定是最好的， 因为也许有一些数据比较重要。
 

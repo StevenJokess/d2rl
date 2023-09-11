@@ -1,3 +1,16 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-04-02 16:51:54
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-09-11 20:41:42
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # 统计学基础
 
 ## 抽样（Sampling）
@@ -31,6 +44,8 @@ from numpy.random import choice
 samples choice(['R','G','B'】,size=100,p=[0.2,0.5,0.3])
 print(samples)
 ```
+
+推荐书目：https://seeing-theory.brown.edu/cn.html
 
 
 [1]: https://www.guyuehome.com/38340

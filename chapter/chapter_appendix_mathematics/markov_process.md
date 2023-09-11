@@ -1,4 +1,17 @@
-## 马尔可夫过程(markov process)
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-09-04 17:02:57
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-09-11 21:39:41
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
+# 马尔可夫过程(markov process)
 
 马尔科夫过程是一个具有马尔科夫性 (无后效性) 的随机过程。其末来的状态，只与当前状态有关，而与过去的所有状态无关。
 
@@ -15,7 +28,7 @@ $$
 
 在已知现在状态的情况下，具备马尔科夫性系统的末来状态只与现在状态有关，而与过去的所有状态无关。
 
-状态离散的马尔科夫过程被称为**马尔科夫链**。
+状态离散（或叫，离散时间）的马尔科夫过程被称为**马尔科夫链**。
 
 ## 马尔科夫链
 
@@ -39,9 +52,11 @@ $$
 P\left\{X_{n+1}=j \mid X_n=i\right\}=P\left\{X_{m+1}=j \mid X_m=i\right\}
 $$
 
-齐次马尔枓夫链 $\left\{X_n, n \geq 1\right\}$ ，其状态空间 $\mathbf{S}=\{1,2 \cdots\}$ ，转移概率矩阵为 $\mathbf{P}=\left[p_{i j}\right], i, j \in S$, 依据转移概率的性质可对齐次马尔科夫链的状态进行分类。
+齐次马尔科夫链 $\left\{X_n, n \geq 1\right\}$ ，其状态空间 $\mathbf{S}=\{1,2 \cdots\}$ ，转移概率矩阵为 $\mathbf{P}=\left[p_{i j}\right], i, j \in S$,
 
-#### 平稳分布
+下面依据转移概率的性质可对齐次马尔科夫链的状态进行分类。
+
+#### 平稳分布(Stationary Distribution)[2]
 
 $\forall j \in S$ ，若 $\pi_j \geq 0, \sum_{j \in S} \pi_j=1$, 且 $\pi_j=\sum_{i \in S} \pi_i p_{i j}$ ，则称概率分布 $\left\{\pi_j, j \in S\right\}$ 为齐次马尔枓夫链 $\left\{X_n\right\}$ 的平稳分布 (或极限分布)。
 
@@ -90,5 +105,6 @@ $$
 
 
 [1]: https://cloud.tencent.com/developer/article/2091514?areaSource=&traceId=
+[2]: https://nndl.github.io/
 
 马尔科夫链：http://www.jingxuanyang.com/2021/01/27/Markov-Chains/

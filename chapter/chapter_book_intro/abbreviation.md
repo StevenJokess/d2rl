@@ -201,3 +201,5 @@
 | VI | 价值迭代 | Value Iteration |
 | VNM | von Neumann Morgenstern效用 | von Neumann Morgenstern |
 | VPG | 简单的策略梯度算法 | Vanilla Policy Gradient |
+
+[1]: https://raw.githubusercontent.com/ZhiqingXiao/rl-book/master/en2023/abbreviation_zh.md

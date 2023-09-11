@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:14:03
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-28 21:16:02
+ * @LastEditTime: 2023-09-11 20:09:31
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -36,9 +36,20 @@
 
 本章介绍完全去中心化方法，在原理解读和代码实践之后，进一步通过实验结果图看看这种方法的效果。第 21 章会进一步介绍进阶的多智能体强化学习的求解范式。
 
+## 独立学习（independent learning）
+
+接下来将介绍一个完全去中心化的算法，此类算法被称为独立学习（independent learning）。
+
+## IQL（Independent Q-Learning）
+
+IQL（independent Q-learning）就是非常暴力的给每个智能体执行一个Q-learning算法，因为共享环境，并且环境随着每个智能体策略、状态发生改变，对每个智能体来说，环境是动态不稳定的，因此这个算法也无法收敛，但是在部分应用中也具有较好的效果。
+
+放弃学习中心式 $Q_{\text {tot}}$，而转去对每个智能体学习一个独立的$Q_a$。但是这个方法不能表现出智能体之间的互动，而且每个智能体的训练会被其他智能体的探索和学习干扰。[2]
+
+
 ## IPPO 算法
 
-接下来将介绍一个完全去中心化的算法，此类算法被称为独立学习（independent learning）。由于对于每个智能体使用单智能体算法 PPO 进行训练，所因此这个算法叫作**独立 PPO**（Independent PPO，IPPO）算法。具体而言，这里使用的 PPO 算法版本为 PPO-截断，其算法流程如下：
+由于对于每个智能体使用单智能体算法 PPO 进行训练，所因此这个算法叫作**独立 PPO**（Independent PPO，IPPO）算法。具体而言，这里使用的 PPO 算法版本为 PPO-截断，其算法流程如下：
 
 - 对于$N$个智能体，为每个智能体初始化各自的策略以及价值函数
 - for 训练轮数 $k =0, 1, 2...$  do
@@ -75,3 +86,4 @@ code
 本章介绍了多智能体强化学习的概念和两类基本的解决范式，并针对其中的完全去中心化方法进行了详细的介绍，讲解了一个具体的算法 IPPO，即用 PPO 算法为各个智能体训练各自的策略。在 Combat 环境中，我们共享了两个智能体之间的策略，以达到更好的效果。但这仅限于多个智能体同质的情况，若它们的状态空间或动作空间不一致，那便无法进行策略共享。
 
 [1]: https://hrl.boyuai.com/chapter/3/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8
+[2]: https://blog.csdn.net/wzduang/article/details/115874734?spm=1001.2014.3001.5502

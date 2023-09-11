@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-09 20:32:52
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-09 23:34:37
+ * @LastEditTime: 2023-09-11 22:25:03
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -91,11 +91,11 @@
 
 ### 强化学习
 
-一般规律： 大写是随机事件或随机变量，小写是确定性事件或确定性数值。衬线体（如Times New Roman字体）是数值，非衬线体（如Open Sans字体）则不一定是数值。粗体是向量或矩阵。花体是集合。
+一般规律： 大写是随机事件或随机变量，小写是确定性事件或确定性数值。衬线体（如Times New Roman字体）是数值，非衬线体（如Open Sans字体）则不一定是数值。粗体是向量或矩阵。花体是集合。[2]
 
-| 符号（Notations）                 | 意义表示（Meaning） |[2]
+| 符号（Notations）                 | 意义表示（Meaning） |
 | :---                     | :--- |
-| $\mathcal {S}$           | 状态空间（State space）：所有合法状态的集合 |
+| $\mathcal {S}$ 或 $\Omega$           | 状态空间（State space）：所有合法状态的集合 |
 | $\mathcal {A}$           | 动作空间（Action space）：所有合法动作的集合 |
 | $\mathcal {P}$           | 转移函数（Transition function） |
 | $\mathcal {R}$           | 回报函数（Reward function） |

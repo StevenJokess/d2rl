@@ -5,23 +5,13 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 16:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-11 00:50:33
+ * @LastEditTime: 2023-09-11 21:41:06
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-<!--
- * @version:
- * @Author:  StevenJokess https://github.com/StevenJokess
- * @Date: 2021-02-04 20:30:32
- * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-11 00:33:38
- * @Description:
- * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
- * @TODO::
- * @Reference:
--->
+
 
 # 强化学习
 
@@ -601,7 +591,7 @@ Atari Breakout（横杆接小球）游戏的四大要素：
 [9]: https://easyai.tech/ai-definition/reinforcement-learning/
 [10]: https://www.huoban.com/news/post/2237.html
 [11]: https://spinningup.qiwihui.com/zh_CN/latest/spinningup/rl_intro.html
-[12]:
+[12]: https://zhuanlan.zhihu.com/p/140427486#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%B1%BB%E5%9E%8B
 [13]: https://baike.baidu.com/item/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/6171383?fromModule=search-result_lemma-recommend
 [13]: https://echenshe.com/class/ml-intro/4-02-RL-methods.html
 [14]: https://anesck.github.io/M-D-R_learning_notes/RLTPI/notes_html/1.chapter_one.html

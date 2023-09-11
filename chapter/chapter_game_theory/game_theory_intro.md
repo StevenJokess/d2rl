@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-23 22:55:04
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-01 21:03:51
+ * @LastEditTime: 2023-09-11 22:04:52
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -54,15 +54,16 @@ PAPI（by Eric Rasmusen）：
 
 从博弈者对其他参与博弈者所了解的信息的完全程度来看，博弈分为完全信息博弈和不完全信息博弈。信息是博弈论中重要的内容。
 
+- 有时，完全也翻译成完备。（complete information）[40]
 - 完全信息博弈指参与者对所有参与者的策略空间及策略组合下的代价有"完全的了解"（知道存在一些随机事件，以及概率），否则是不完全信息博弈。
 - 如Chess知道全局所有的信息，而德州扑克各玩家之间是不知道对方的底牌的。
 - 严格地讲，完全信息博弈是指参与者的策略空间及策略组合下的支付，是博弈中所有参与者的"公共知识"的博弈。
 - 对于不完全信息博弈，参与者所做的是努力使自己的期望支付或期望效用最大化。
 
-> 按各Agent之间的历史动作是否可知，分完美信息博弈和非完美信息博弈：
+> 按各Agent之间的**历史动作**是否可知，分完美信息（perfect information）博弈和非完美信息（imperfect information）博弈：
 >
-> - 完美信息博弈是指在博弈过程中各方都知道其他Agent之前都有过哪些策略，但无法确定在这一次博弈过程中会采取哪一套策略；如Chess一直可以看到对方是怎么走棋的。完美信息博弈的例子包括井字博弈 Tic-tac-toe 、跳棋 Checkers 、无限象棋 Infinite chess 和围棋 Go 。完美信息博弈已经在组合博弈论 Combinatorial game theory 中得到研究，发展出新颖的表示法，例如超现实数字 Surreal numbers ，以及利用组合和代数（有时是非构造性的）的证明方法来解决特定类型的博弈，包括可能导致无限长移动序列的“环形”博弈。
-> - 非完美信息博弈是指双方均不能完全掌握对方之前采取过哪些策略。StarCraft在开局阶段存在战争迷雾，并不知道对方在搞什么。如：扑克和桥牌[19]，西洋双陆棋 Backgammon【你必须在对方完成之前，把所有的十五个棋子送到你的领地去】
+> - 完美信息博弈是指在博弈过程中各方都知道其他Agent之前都有过哪些策略，但无法确定在这一次博弈过程中会采取哪一套策略；如Chess一直可以看到对方是怎么走棋的。完美信息博弈的例子包括井字博弈 Tic-tac-toe 、跳棋 Checkers 、无限象棋 Infinite chess 和围棋 Go 。[40]完美信息博弈已经在组合博弈论 Combinatorial game theory 中得到研究，发展出新颖的表示法，例如超现实数字 Surreal numbers ，以及利用组合和代数（有时是非构造性的）的证明方法来解决特定类型的博弈，包括可能导致无限长移动序列的“环形”博弈。
+> - 非完美信息博弈是指双方均不能完全掌握对方之前采取过哪些策略。StarCraft在开局阶段存在战争迷雾，并不知道对方在搞什么。如：桥牌[19]，西洋双陆棋 Backgammon【你必须在对方完成之前，把所有的十五个棋子送到你的领地去】
 
 > 完美信息和完全信息的区别：
 >
@@ -410,3 +411,5 @@ DeepStack for Texas Hold’em poker
 [37]: https://www.bilibili.com/video/BV16T4y1w7gY
 [38]: https://www.zgbk.com/ecph/words?SiteID=1&ID=189332&Type=bkzyb&SubID=119245
 [39]: https://www.bilibili.com/video/BV1ak4y1n76j
+[40]: https://bbs.pinggu.org/thread-1065495-1-1.html
+[41]: https://bbs.pinggu.org/thread-1065495-1-1.html
