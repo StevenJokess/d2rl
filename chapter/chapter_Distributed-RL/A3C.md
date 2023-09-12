@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-29 01:01:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-06 00:59:35
+ * @LastEditTime: 2023-09-12 20:54:53
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -25,11 +25,9 @@ $$
 
 由于样本是从 $p\left(\pi_\theta\right)$ 中采样的，因此在PG进行更新后 $\left(\theta \rightarrow \theta^{\prime}\right)$ ，正确的采样分布已经变成 了 $p\left(\pi_{\theta^{\prime}}\right)$ ，故原来的样本都必须全部被丟弃，然后重新采样样本并更新。可以发现，**每个样本只能用于一次策略更新**，这显然是效率低下的。
 
-A3C算法就是为了解决上述问题。但事实上，A3C算法本质上是逃避了这个问题，即“大力出奇迹”。既然PG的样本效率低，那么同时并行用很多个Agent去采样不就可以了（蚌）。但为了保证On-Policy，并行采样的Agent必须保持同步，而这显然限制了采样效率。A3C算法直接忽略了这一点，即采样异步采样算法，并定期同步所有Agent的权重，其潜在的假设就是只要**同步频率得当**，那么不同Agent间的步调不会相差太远。[4]
+A3C算法就是为了解决上述问题。但事实上，A3C算法本质上是逃避了这个问题，即“大力出奇迹”。既然PG的样本效率低，那么**同时并行用很多个Agent去采样**不就可以了（蚌）。但为了保证On-Policy，并行采样的Agent必须保持同步，而这显然限制了采样效率。A3C算法直接忽略了这一点，即**采样异步采样算法**，并定期同步所有Agent的权重，其潜在的假设就是只要**同步频率得当**，那么不同Agent间的步调不会相差太远。[4]
 
 但A3C实际上没有解决On-Policy样本效率低的问题。
-
-
 
 ## A3C的引入
 

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:38:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-12 21:35:12
+ * @LastEditTime: 2023-09-12 22:18:53
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -21,7 +21,7 @@
 
 ## Actor-Critic
 
-## 回顾REINFORCE
+### 回顾REINFORCE
 
 回顾一下，在 REINFORCE 算法中，目标函数的梯度中有一项轨迹回报，用于指导策略的更新。REINFORCE 算法用蒙特卡洛方法来估计，能不能考虑拟合一个值函数来指导策略进行学习呢？这正是 Actor-Critic 算法所做的。
 
@@ -30,8 +30,6 @@
 $$
 \nabla_\theta J\left(\pi_\theta\right)=\mathbb{E}\left[\sum_{t=0}^T \psi_t \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right)\right]=
 $$
-
-$\frac{1}{N} \sum_{n=1}^N \sum_{t=1}^{T_n}\left(\sum_{t^{\prime}=t}^{T_n} \gamma^{t^{\prime}-t} r_{t^{\prime}}^n-b\right) \nabla \log \pi_\theta\left(a_t^n \mid s_t^n\right)$
 
 其中， $\psi_t$ 可以有很多种形式：
 
@@ -49,16 +47,18 @@ $\frac{1}{N} \sum_{n=1}^N \sum_{t=1}^{T_n}\left(\sum_{t^{\prime}=t}^{T_n} \gamma
 
 这个时候，我们可以把状态价值函数作为基线，从函数减去这个函数则得到了函数，我们称之为优势函数（advantage function），这便是形式(5)。更进一步，我们可以利用等式得到形式(6)。
 
-**本章将着重介绍形式(6)**，即通过时序差分残差来指导策略梯度进行学习。事实上，用值或者值本质上也是用奖励来进行指导，但是用神经网络进行估计的方法可以减小方差、提高鲁棒性。除此之外，REINFORCE 算法基于蒙特卡洛采样，只能在序列结束后进行更新，这同时也要求任务具有有限的步数，而 Actor-Critic 算法则可以在每一步之后都进行更新，并且不对任务的步数做限制，所以相对来说计算更复杂，需要更多的超参数。[3]
+**本章将着重介绍形式(6)**，即通过**时序差分残差**来指导策略梯度进行学习。事实上，用值或者值本质上也是用奖励来进行指导，但是用神经网络进行估计的方法可以减小方差、提高鲁棒性。除此之外，REINFORCE 算法基于蒙特卡洛采样，只能在序列结束后进行更新，这同时也要求任务具有有限的步数，而 Actor-Critic 算法则可以在每一步之后都进行更新，并且不对任务的步数做限制，所以相对来说计算更复杂，需要更多的超参数。[3]
+
+### Actor-Critic 的组成
 
 我们将 Actor-Critic 分为两个部分：Actor（策略网络）和 Critic（价值网络），如图 10-1 所示。
 
 ![AC方法网络结构](../../img/AC.png)
 
-- Actor 要做的是与环境交互，并在 Critic 价值函数的指导下用策略梯度学习一个更好的**策略**。
+- Actor 要做的是与环境交互，并在 Critic 价值函数的指导下，用**策略梯度**的原则，学习一个更好的**策略**。
 - Critic 要做的是通过 Actor 与环境交互收集的数据学习一个**价值函数**，这个价值函数会用于判断在当前状态什么动作是好的，什么动作不是好的，进而帮助 Actor 进行策略更新。
 
-Actor 的更新采用策略梯度的原则，那 Critic 如何更新呢？
+### 那 Critic 如何更新呢？
 
 我们将 Critic 价值网络表示为 $V_\omega$ ，参数为 $\omega$ 。于是，我们可以采取时序差分残差的学习方式，对于单个数据定义如下价值函数的损失函数:
 
@@ -73,6 +73,8 @@ $$
 $$
 
 然后使用梯度下降方法来更新 Critic 价值网络参数即可。
+
+### Actor-Critic 伪代码
 
 - 初始化策略网络参数 $\theta$ ，价值网络参数 $\omega$
   - for 序列 $e=1 \rightarrow E$ do:
@@ -114,6 +116,11 @@ code
 - 只基于价值的模型(Critic only)，只会对整个序列完成后才给reward和更新，对中间好的action损失较多，
 - 基于价值和策略的模型就不会(例如Actor-critic)，从Loss函数就能看出来。策略损失通常基于动作概率和优势函数的梯度，而价值损失通常基于TD误差（时间差分误差）。
 
+## 可能的改进
+
+1. 两个网络的前半部分可以共享
+1. 输出larger entropy，即更不确定的action，更鼓励探索。即，SAC。[7]
+
 ## 总结
 
 本章讲解了 Actor-Critic 算法，它是基于值函数的方法和基于策略的方法的叠加。价值模块 Critic 在策略模块 Actor 采样的数据中学习分辨什么是好的动作，什么不是好的动作，进而指导 Actor 进行策略更新。随着 Actor 的训练的进行，其与环境交互所产生的数据分布也发生改变，这需要 Critic 尽快适应新的数据分布并给出好的判别。
@@ -124,6 +131,25 @@ Actor-Critic 算法非常实用，后续章节中的 TRPO、PPO、DDPG、SAC 等
 
 形式（3）：
 
+$$
+\nabla_\theta J\left(\pi_\theta\right)=\frac{1}{N} \sum_{n=1}^N \sum_{t=1}^{T_n}\left(\sum_{t^{\prime}=t}^{T_n} \gamma^{t^{\prime}-t} r_{t^{\prime}}^n-b\right) \nabla \log \pi_\theta\left(a_t^n \mid s_t^n\right)
+$$
+
+式中$\sum_{t^{\prime}=t}^{T_n} \gamma^{t^{\prime}-t} r_{t^{\prime}}^n$ 代表回报 $G$ ，可方差较大，想替换为期望（期望能使方差降低？）
+
+而动作价值函数的公式 $Q^\pi(s, a)=E_\pi\left[G_t \mid s_t=s, a_t=a\right]$ 就是给定了某个状态且策略采取了某个动作之后，所获得的回报 $G$ 的期望。所以这里可以使用动作价值函数替换掉 $\sum_{t^{\prime}=t}^{T_n} \gamma^{t^{\prime}-t} r_{t^{\prime}}^n$ 。
+
+然后在形式（3）公式中，还有减去 $b$ 这么一个操作，在之前的讨论中 $b$ 一般是 $\sum_{t^{\prime}=t}^{T_n} \gamma^{t^{\prime}-t} r_{t^{\prime}}^n$ 的期望，这样能够保证减去 $b$ 之后有正有负，现在替换成动作价值函数 $Q^\pi(s, a)$ 之后，这里的 $b$ 就最好是 $Q^\pi(s, a)$ 的期望。
+
+由状态价值函数与动作价值函数的转换公式 $V^\pi(s)=\sum_{a \in A} \pi(a \mid s) Q^\pi(s, a)=E_{a \in A}\left[Q^\pi(s, a)\right]$ ，可以看出状态价值函数 $V^\pi(s)$ 就可以看作是动作价值函数的期望，所以这里的 $b$ 就采取状态价值函数。[8]
+
+替换完之后的梯度公式如下：
+
+$$
+\nabla_\theta J\left(\pi_\theta\right)=\frac{1}{N} \sum_{n=1}^N \sum_{t=1}^{T_n}\left[Q^\pi\left(s_t^n, a_t^n\right)-V^\pi\left(s_t^n\right)\right] \nabla \log p_\theta\left(a_t^n \mid s_t^n\right)
+$$
+
+
 
 
 [1]: https://hrl.boyuai.com/chapter/2/actor-critic%E7%AE%97%E6%B3%95/#101-%E7%AE%80%E4%BB%8B
@@ -132,3 +158,5 @@ Actor-Critic 算法非常实用，后续章节中的 TRPO、PPO、DDPG、SAC 等
 [4]: https://thinkwee.top/2019/09/23/easyrl/#more
 [5]: https://zhuanlan.zhihu.com/p/556399318
 [6]: https://paddlepedia.readthedocs.io/en/latest/tutorials/reinforcement_learning/Actor-Critic.html#id5
+[7]: https://blog.csdn.net/greyduan/article/details/104945705
+[8]: https://zhuanlan.zhihu.com/p/655562566
