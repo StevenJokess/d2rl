@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-08-25 03:44:17
+ * @LastEditTime: 2023-09-12 16:22:43
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -108,9 +108,13 @@ $$
 
 #### 思路：
 
-在讨论如何优化策略之前, 首先需要明确什么是“更好”的策略。分别给出 $\pi$ 和 $\pi^{\prime}$ 两个策略, 如果对于任意状态 $s \in S$, 有 $V_\pi(s) \leq V_{\pi^{\prime}}(s)$, 那么可以 认为策略 $\pi^{\prime}$ 不比策略 $\pi$ 差, 可见“更优”策略是一个偏序关系。
+##### 定义：什么算更好的策略
 
-**策略优化定理**：
+在讨论如何优化策略之前, 首先需要明确什么是“更好”的策略。
+
+分别给出 $\pi$ 和 $\pi^{\prime}$ 两个策略, 如果对于任意状态 $s \in S$, 有 $V_\pi(s) \leq V_{\pi^{\prime}}(s)$, 那么可以认为策略 $\pi^{\prime}$ 不比策略 $\pi$ 差, 可见“更优”策略是一个**偏序关系**。
+
+##### **策略优化定理**：
 
 对于确定的策略 $\pi$ 和 $\pi^{\prime}$, 如果对于任意状态 $s \in S$
 $$
@@ -122,7 +126,7 @@ V_{\pi^{\prime}}(s) \geq V_\pi(s)
 $$
 即策略 $\pi^{\prime}$ 不比 $\pi$ 差
 
-**其证明**：
+**对其证明**：
 
 $$
 \begin{gathered}
