@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-06 23:20:44
+ * @LastEditTime: 2023-09-12 15:06:05
  * @Description:
  * @TODO::
  * @Reference:
@@ -14,7 +14,7 @@
 
 下面考虑这样一个**非关联性**的简化环境，智能体与环境的交互不会改变环境的状态，可看作无状态的强化学习（stateless reinforcement learning）[11]，从而避免了完整强化学习问题的大部分复杂性，多臂老虎机问题可被视为序列决策问题的一种特殊情况，只是为了帮助我们更好地理解强化学习的基本概念和方法。
 
-> 为何特殊？多臂赌博机和一般的强化学习问题的最大不同有两点:（选自[exploration-talk](../../papers_PDF/exploration-talk.pdf)
+> 为何特殊？多臂赌博机和一般的强化学习问题的最大不同有两点:（选自[exploration-talk](../../papers_PDF/exploration-talk.pdf)）
 >
 > (i) 多臂赌博机的目标策略只需要在单一情况中找到最优动作，这个情况要么是静态的，要么是动态地随时间变化的; 而一般的强化学习要求找到到最优策略则是要找到一种可以在不同状态下找到最优动作的映射，要进行更复杂的序列决策;
 > (ii) 多臂赌博机对于动作的选择只影响即时的回报，而强化学习问题在每个时刻的动作的选择会影响后续的回报。
@@ -30,11 +30,11 @@
 
 ## 优化目标
 
-假设每个时间步只能拉动一个拉杆，多臂老虎机的目标为最大化一段时间步 $T$ 内（累积的，因为无延迟回报，所以即时回报就是所有回报）回报: $\max \sum_{t=1}^T r_t, r_t \sim \mathcal{R}\left(\cdot \mid a_t\right)$ 。 其中 $a_t$ 表示在第 $t$ 时间步拉动某一拉杆的动作， $r_t$ 表示动作 $a_t$ 获得的奖励。
+假设每个时间步只能拉动一个拉杆，多臂老虎机的目标为最大化一段时间步 $T$ 内（累积的，因为回报是无延迟的，所以，即时回报就是所有回报）回报: $\max \sum_{t=1}^T r_t, r_t \sim \mathcal{R}\left(\cdot \mid a_t\right)$ 。 其中 $a_t$ 表示在第 $t$ 时间步拉动某一拉杆的动作， $r_t$ 表示动作 $a_t$ 获得的奖励。
 
 ### 累积懊悔（累计误差）
 
-对于每一个动作 $a$ ，我们定义其期望回报为 $Q(a)=\mathbb{E}_{r \sim \mathcal{R}(\cdot \mid a)}[r]$ 。
+对于每一个动作 $a$ ，我们用点估计[14][15] 的方法，即历史样本的回报均值来推断得该动作的期望回报，从而得到其对应的动作价值函数的值， $Q(a)=\mathbb{E}_{r \sim \mathcal{R}(\cdot \mid a)}[r] = \frac{1}{k} \sum_{i=1}^k r_i$ 。（其中，k为拉动该杆的次数）
 
 由于，至少存在一根拉杆，它的期望回报不小于拉动其他任意一根拉杆，我们将该最优期望回报表示为 $Q^*=\max _{a \in \mathcal{A}} Q(a)$ 。
 
@@ -304,6 +304,8 @@ $\pi_{\theta}=\mu_{\theta}+\varepsilon ,\varepsilon \sim N\left(0,\sigma^2\right
 [11]: https://www.bilibili.com/video/BV1DK411y7Dv/
 [12]: https://zhuanlan.zhihu.com/p/54670989
 [13]: https://www.ituring.com.cn/book/2794
+[14]: https://zh.wikipedia.org/zh-cn/%E7%82%B9%E4%BC%B0%E8%AE%A1
+[15]: https://zhuanlan.zhihu.com/p/104618189#%E4%B8%80%E3%80%81%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD
 
 
 更多资料：

@@ -3,31 +3,12 @@
 <!--
  * @version:
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-05-25 02:41:42
+ * @Date: 2023-09-12 14:31:03
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-10 03:34:02
+ * @LastEditTime: 2023-09-12 14:31:12
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# RL_basics_algs
-:label:`chap_RL_basics_algs`
-
-
-
-```toc
-:maxdepth: 2
-
-basic_RL_algs_intro
-DP(policy&value_iteration)
-value-based(MC+
-TD(Sarsa&Q-learning&DoubleQ))
-gradient-based(VPG)
-REINFORCE&REINFORCE(with_baseline)
-off-policy(off-policy_MC&off-policy_policy_gradient)
-derivative-free(EA(GA&ES))
-```
-
-
-[1]: https://bigquant.com/community/t/topic/127158
+https://chengzhaoxi.xyz/categories/AI%E5%B7%A5%E7%A8%8B/%E8%BF%90%E7%BB%B4/

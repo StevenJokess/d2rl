@@ -23,3 +23,5 @@ https://tsinghua-gongjing.github.io/posts/probabilistic-graphic-model.html
 - 两种概率生成模型：深度生成模型和序列生成模型。
 
 [1]: https://nndl.github.io/
+
+https://chengzhaoxi.xyz/6619575e.html
