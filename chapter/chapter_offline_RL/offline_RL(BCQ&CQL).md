@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:35:41
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-18 02:14:33
+ * @LastEditTime: 2023-09-14 01:40:58
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -24,6 +24,7 @@
 离线强化学习：
 
 ![离线强化学习总览](../img/Overview_of_Offline_RL.png)
+
 
 ## 批量限制 Q-learning （BCQ）算法
 
@@ -88,6 +89,8 @@ $$
 - end for
 
 除此之外，BCQ 还使用了一些实现上的小技巧。由于不是 BCQ 的重点，此处不再赘述。考虑到 VAE 不属于本书的讨论范围，并且 BCQ 的代码中有较多技巧，有兴趣的读者可以参阅 BCQ 原文[3]，*自行实现代码*。此处介绍 BCQ 算法，一是因为它对离线强化学习的误差分析和实验很有启发性，二是因为它是无模型离线强化学习中限制策略集合算法中的经典方法。下面我们介绍另一类直接限制函数 $Q$ 的算法的代表：保守 Q-learning。
+
+更多见：https://zhuanlan.zhihu.com/p/493039753
 
 ## 保守 Q-learning （CQL）算法
 
