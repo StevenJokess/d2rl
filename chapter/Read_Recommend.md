@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-10 00:25:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-11 01:53:00
+ * @LastEditTime: 2023-09-13 00:55:25
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -18,18 +18,19 @@
 
 - ※ 理论不完备：试图涵盖强化学习主干理论和常见算法，但ChatGPT技术要点我肯定参不透；
 - ※ 内容不新颖：主要是历史里比较重要的深度强化学习方法，真跟不上学术最前沿；
-- ※ 提问不解决：只介绍强化学习的弱点，但克服方法却找不太到；
-- ※ 知识不精悍：不实用、不精简，知识随看随抄，成书篇幅不知多少页；
+- ※ 提问不解决：只介绍强化学习的弱点，但克服方法却找不太能都找到；
+- ※ 知识不精悍：不实用、不精简，知识随看随抄，成书篇幅不知多少页，时不时出现令人烦闷的定理证明；
 - ※ 封面自设计：自己拿别人的图书封面和AI绘图瞎PS出来的；
 - ※ 形式纯随心：文章大片复制，语言不一定简练，不一定有步步引导，没啥对话形式；
-- ※ 架构难清晰：自己啥也不懂，谈啥架构，结构混乱；
+- ※ 架构难清晰：自己啥也不懂，谈啥架构，结构混乱，没有主线，小节间充满跳跃，内容很多重复；
 - ※ 过复杂公式：不想把数学表达式拆开看，没时间没能力理解；
-- ※ 抄得图太多：书中非原创插图不计其数，很多是拿截图软件截了完事；
+- ※ 抄得图太多：书中非原创插图不计其数，很多是拿截图软件截了完事，版权问题一旦追究难以解决；
 - ※ 实战性不强：每章不一定有编程案例，因为连服务器也租不起，深度强化学习算法随缘提供MXNet/TenorFlow/PyTorch/JAX实现；
 - ※ 配套不丰富：随缘提供知识点总结，随缘写点习题，形式不控；
 - ※ 没对应课件：没几个章节配有 PPT 和没钱录公开视频课；
 - ※ 没啥点击量： [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FStevenJokess%2Fd2rl%2F&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)]
 - ※ 评论区丢人：评论区的求职简历，阅读量不知多少的作者；
+- ※ 很好为人师：老试图化身面试官，提出了一些问题，来刁难读者。
 - ※ 作者在要饭，要饭界专家蔡舒起作品，自己要饭钱还没找到，好心人给口饭；
 - ※ 纯自学产物：Gym源码解读、开发环境搭建指南、习题答案等在线资源特别乱，
 - ※ 初学不友好：因为就不希望助力你自学，抢我还没吃过的饭碗；

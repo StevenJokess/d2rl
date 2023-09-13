@@ -149,9 +149,6 @@ $$
 \nabla_\theta J\left(\pi_\theta\right)=\frac{1}{N} \sum_{n=1}^N \sum_{t=1}^{T_n}\left[Q^\pi\left(s_t^n, a_t^n\right)-V^\pi\left(s_t^n\right)\right] \nabla \log p_\theta\left(a_t^n \mid s_t^n\right)
 $$
 
-
-
-
 [1]: https://hrl.boyuai.com/chapter/2/actor-critic%E7%AE%97%E6%B3%95/#101-%E7%AE%80%E4%BB%8B
 [2]: https://zhuanlan.zhihu.com/p/26441204
 [3]: https://chat.openai.com/chat

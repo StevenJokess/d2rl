@@ -1,4 +1,19 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-02-26 17:20:19
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-09-13 01:03:50
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # 模型预测控制
+
+基于模型预测的控制算法（MPC），这类方法也是 MIT 之前开源的主要算法。算法对环境进行建模后，在每个时间步求解优化问题以找到最优的控制信号。这类方法的问题是其效果依赖于环境模型的建模准确度，并且在实际部署过程中需要耗费比较大的算力去求解最优的控制信号。[2]
 
 ## 简介
 
@@ -57,3 +72,4 @@ code
 通过学习与实践，我们可以看出模型预测控制（MPC）方法有着其独特的优势，例如它不用构建和训练策略，可以更好地利用环境，可以进行更长步数的规划。但是 MPC 也有其局限性，例如模型在多步推演之后的准确性会大大降低，简单的控制策略对于复杂系统可能不够。MPC 还有一个更为严重的问题，即每次计算动作的复杂度太大，这使其在一些策略及时性要求较高的系统中应用就变得不太现实。
 
 [1]: https://hrl.boyuai.com/chapter/3/%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B%E6%8E%A7%E5%88%B6/
+[2]: https://ai.baidu.com/support/news?action=detail&id=2612

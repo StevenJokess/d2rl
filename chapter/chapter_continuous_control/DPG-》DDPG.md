@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 21:12:17
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-06 14:26:11
+ * @LastEditTime: 2023-09-13 00:47:15
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -114,8 +114,10 @@ $$
 
 有两个点值得注意：
 
-DPG和随机策略梯度SPG差异在于随机策略梯度中有一个log项，本质上源于随机策略需要重新加一层策略u的期望，导致策略网络u的梯度相对DPG需要除以策略u，数学转化成log(u)的倒数了。这个形式和交叉熵很接近，其实完全可以从概率角度去理解，有物理意义。
-DPG中本质上式在max(Q)，和DQN最终竟还是殊途同归，直观的去理解的话，Policy是按照Q值最大的方向调整policy的参数。[10]
+1. DPG和随机策略梯度SPG差异在于随机策略梯度中有一个log项，本质上源于随机策略需要重新加一层策略u的期望，导致策略网络u的梯度相对DPG需要除以策略u，数学转化成log(u)的倒数了。这个形式和交叉熵很接近，其实完全可以从概率角度去理解，有物理意义。
+1. DPG中本质上式在max(Q)，和DQN最终竟还是殊途同归，直观的去理解的话，Policy是按照Q值最大的方向调整policy的参数。[10]
+
+
 
 ## DDPG算法
 

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:04:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-26 23:42:35
+ * @LastEditTime: 2023-09-13 01:50:03
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,11 +13,18 @@
 -->
 # 模仿学习（Imitation Learning）
 
-模仿学习（Imitation Learning），也被称为通过演示（demostration）学习、学徒学习（apprenticeship learning），
+模仿学习（Imitation Learning），也被称为通过演示（demonstration）学习、学徒学习（apprenticeship learning），
+
+## 类比
+
+- 学车，你需要一个暴躁（可能）的教练；
+- 健身，你需要一个动作标准且壮实的私教；
+- 读研，你需要一个mentor
 
 ## 模仿学习的作用：
 
 专家展示了如何解决问题：
+
 - 机器也跟环境交互，但没能获得显式明确的回报。
 - 很难确定某些问题的回报
 - 手动的回报函数的设计，可能会导致不可控的行为。
@@ -64,6 +71,7 @@ $$
 
 **BC 也存在很大的局限性**：
 
+1. **收集专家示例（collection expect demonstrations）**：费时费力，还需要大量数据样本进行监督学习训练。此外，只能收集到好的示范，会导致事故的示范很难收集。
 1. **复合误差**（compounding error）问题**：该局限在数据量比较小的时候犹为明显。由于通过 BC 学习得到的策略只是拿小部分专家数据进行训练，因此 BC 只能在专家数据的状态分布下预测得比较准。然而，强化学习面对的是一个序贯决策问题，通过 BC 学习得到的策略在和环境交互过程中不可能完全学成最优，只要存在一点偏差（包括机器所采用的动作和人类的动作有偏差或者动作所产生的结果有偏差），就有可能导致下一个遇到的状态是在少量专家数据中没有见过的。此时，由于没有在此状态（或者比较相近的状态）下训练过，策略可能就会随机选择一个动作，这会导致下一个状态进一步**偏离专家策略遇到的的数据分布**，再这么下去，可能导致智能体遇到学习时没有碰到过的状态，那么智能体就完全不知道该怎么做了。最终，该策略在真实环境下不能得到比较好的效果，这被称为行为克隆的**复合误差**（compounding error）问题，如图 15-1 所示。![compounding_error](../../img/compounding_error.jpg)严格的讲，就是学习时和实际操作时的 $o_t$ 的分布不同，实际操作时的 $o_t$ 的情况由于存在偏 差而会比学习时的要糟糕许多。
 1. **Mismatch问题**：如果复制所有行为，也包括不相干的动作。那如果机器有限容量，可能挑到错误行为去复制了。如：老师的语言与手势里，只有语言是需要复制的。
 
