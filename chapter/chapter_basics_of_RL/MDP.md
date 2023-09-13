@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-06 14:38:04
+ * @LastEditTime: 2023-09-14 02:59:00
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -39,7 +39,7 @@
 
 ### 马尔可夫过程
 
-马尔可夫过程 (Markov process) 指具有马尔可夫性质的随机过程，也被称为**马尔可夫链** (Markov chain) 。
+马尔可夫过程 (Markov process) 指具有马尔可夫性质的随机过程，也被称为**马尔可夫链** (Markov chain)，国内将其简称为马氏链 。
 
 我们通常用二元组 $\langle\mathcal{S}, \mathcal{P}\rangle$ 描述一个马尔可夫过程，其中，
 
@@ -75,7 +75,10 @@ $$
 
 给定一个马尔可夫过程，我们就可以从某个状态出发，根据它的状态转移矩阵生成一个状态**序列** (episode)，这个步骤也被叫做**采样**（sampling）。例如，从 $s_1$ 出发，可以生成序列 $s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_6$ 或序列 $s_1 \rightarrow s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_4 \rightarrow s_5 \rightarrow s_3 \rightarrow s_6$ 等。生成这些序列的概率和状态转移矩阵有关。
 
-> 马尔科夫链与Episode：Episode可以翻译为片段、情节、回合等，在强化学习问题中，一个Episode就是一个马尔科夫链，根据状态转移矩阵可以得到许多不同的Episode，也就是多个马尔科夫链。
+> 马尔科夫链与回合（Episode）的关系：
+>
+> 在回合制任务（有结束）中，将状态，动作，奖励直到状态结束的序列（sequence）命名为回合（Episode），即$(s_0, a_0. r_1, s_1, a_1, r_2, ..., s_T)$
+> 在常见的强化学习问题中，一个Episode就是一条马尔科夫链。根据状态转移矩阵可以得到许多不同的Episode，也就是多条马尔科夫链。
 
 ### 马尔可夫奖励过程（MRP）
 

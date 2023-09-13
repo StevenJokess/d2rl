@@ -164,7 +164,7 @@ TODO:
 
 1. 每一次游戏，都需要先从头走到尾，再进行回溯更新；而其实对于相对复杂的问题，往往在限定的步数内无法探索到最终奖励；以及对于轨迹无终止的情况就不适用。[6]
 2. 由于MC是通过采样的方式估计值函数，难点在保证充分的探索。  为解决MC保证有充分的探索，一个简单的方法就是使用exploring starts，让每个episode从不同的状态开始，从而使得所有状态都能探索到。当然这个假设有时候不切实际，因此我们引入离策略机制。让行为策略是一个随机策略以保证探索，而待优化的目标策略是确定性策略。具体可见 [异策略MC](../chapter_off-policy/off-policy_MC.md)
-
+3. 如果回合（Episode）数量太少，则学习后的效果不佳，原因是 1.智能体没在每个状态下尝试完所有动作 2.当前收集Episodes质量低，智能体采取的动作都很差。[8]
 
 [1]: http://www.icdai.org/ibbb/2019/ID-0004.pdf
 [2]: https://what-is-pi.onlyahuman.repl.co/
@@ -173,3 +173,4 @@ TODO:
 [5]: https://www.cnblogs.com/kailugaji/p/16140474.html
 [6]: https://www.guyuehome.com/43784
 [7]: https://blog.51cto.com/u_15279775/2937884
+[8]: https://blog.csdn.net/weixin_43236007/article/details/114378104

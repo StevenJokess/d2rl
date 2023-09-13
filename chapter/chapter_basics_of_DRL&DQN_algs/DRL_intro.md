@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-02 18:38:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-16 23:50:46
+ * @LastEditTime: 2023-09-14 03:22:43
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -21,11 +21,18 @@
 
 强化学习由于其优秀的决策能力在人工智能领域得到了广泛应用。然而, 早期的强化学习主要依赖于人工提取特征, 难以处理复杂高维状态空间下的问题。随着深度学习的发展, 算法可以直接从原始的高维数据中提取出特征。深度学习具有较强的感知能力，可作为价值和策略的近似函数，但是缺乏一定的决策能力; 而强化学习具有较强的决策能力, 但对感知问题束手无策。 因此, 将深度学习（Deep Learning，DL）的特征提取能力和强化学习（Reinforcement Learning，RL）的决策能力结合起来, 优势互补, 能够为复杂状态下的感知决策问题提供解决思路。[2]
 
+![深度强化学习的序列[5]](../../img/DRL_sars.png)
+
 结合的产物就是深度强化学习，其可以直接根据输入的多维数据做出最优决策输出，是一种端对端（end-to-end）的决策控制系统。广泛应用于动态决策、实时预测、仿真模拟、游戏博弈等领域，其通过与环境不断地进行实时交互，将环境信息作为输入来获取失败或成功的经验来更新决策网络的参数，从而学习到最优决策。深度强化学习框架如下：
 
 ![深度强化学习框架](../../img/DRL_frame.png)
 ![DRL = DL + RL](../../img/DRL_DL_RL.png)
 ![DRL原理图](../../img/DRL_schematic_diagram.png)
+
+## 离散空间 VS 连续空间
+
+
+
 
 ## DRL的分类
 
@@ -50,3 +57,4 @@ TODO:
 [2]: http://159.226.21.68/bitstream/173211/45043/1/%e6%b7%b1%e5%ba%a6%e5%bc%ba%e5%8c%96%e5%ad%a6%e4%b9%a0%e8%bf%9b%e5%b1%95_%e4%bb%8eAlphaGo%e5%88%b0AlphaGo_Zero_%e5%94%90%e6%8c%af%e9%9f%ac.pdf
 [3]: https://www.china-simulation.com/article/2023/1004-731X/1004-731X-2023-35-4-671.shtml
 [4]: https://www.zhihu.com/column/c_125238795
+[5]: https://zhuanlan.zhihu.com/p/637642589

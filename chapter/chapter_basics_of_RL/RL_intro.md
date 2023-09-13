@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 16:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-14 02:38:14
+ * @LastEditTime: 2023-09-14 03:08:54
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -187,9 +187,7 @@ $$
 - 非确定性环境（stochastic environment）：环境具有随机性。例，如果迷宫会时刻随机变化，那么机器人面对的环境就是非确定性的。一般，在完全可观测的确定性环境中，智能体不需要担心不确定性。然而，如果环境是部分可观测的，那么它可能是非确定性的。
 
 
-
-
-### 优化（学习/训练）
+### 优化/学习/训练
 
 #### 优化目标(Optimization goal)
 
