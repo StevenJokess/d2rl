@@ -5,13 +5,13 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:09:19
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 23:51:46
+ * @LastEditTime: 2023-09-14 21:07:25
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 基于模型的方法（Model-based）
+# 基于模型的方法（Model-based method）
 
 ## 与免模型的方法（Model-free）的起源对比
 
@@ -35,12 +35,15 @@
 - 当前RL的发展还处于初级阶段，学界的研究重点还是集中在环境是确定的、静态的，状态主要是离散的、静态的、完全可观察的，反馈也是确定的问题（如Atari游戏）上。针对这种相对“简单”、基础、通用的问题，免模型方法本身很合适
 - 绝大多数DRL方法是对DQN的扩展，属于免模型方法
 
+## 基本框架
+
+![](../../img/model-based_algs.png)
 
 ## 分类
 
 不同于免模型学习，有模型学习方法不是很好分类：很多方法之间都会有交叉。我们会给出一些例子，当然肯定不够详尽，覆盖不到全部。在这些例子里面， 模型 要么已知，要么是可学习的。
 
-**背景：纯规划 ：**这种最基础的方法，从来不显示的表示策略，而是纯使用规划技术来选择行动，例如 [模型预测控制](/MPC.md) (model-predictive control, MPC)。在模型预测控制中，智能体每次观察环境的时候，都会计算得到一个对于当前模型最优的规划，这里的规划指的是未来一个固定时间段内，智能体会采取的所有行动（通过学习值函数，规划算法可能会考虑到超出范围的未来奖励）。智能体先执行规划的第一个行动，然后立即舍弃规划的剩余部分。每次准备和环境进行互动时，它会计算出一个新的规划，从而避免执行小于规划范围的规划给出的行动。
+**背景：纯规划** ：这种最基础的方法，从来不显示的表示策略，而是纯使用规划技术来选择行动，例如 [模型预测控制](/MPC.md) (model-predictive control, MPC)。在模型预测控制中，智能体每次观察环境的时候，都会计算得到一个对于当前模型最优的规划，这里的规划指的是未来一个固定时间段内，智能体会采取的所有行动（通过学习值函数，规划算法可能会考虑到超出范围的未来奖励）。智能体先执行规划的第一个行动，然后立即舍弃规划的剩余部分。每次准备和环境进行互动时，它会计算出一个新的规划，从而避免执行小于规划范围的规划给出的行动。
 
 - [MBMF](https://sites.google.com/view/mbmf) 在一些深度强化学习的标准基准任务上，基于学习到的环境模型进行模型预测控制。
 
@@ -58,7 +61,7 @@ Embedding Planning Loops into Policies. ：另一种方法直接把规划程序�
 
 参见 [I2A](https://arxiv.org/abs/1707.06203)智能体被这种想象力赋予了这种风格。
 
-## Rollout
+## 基本概念：Rollout
 
 这个词经常会出现在 model-based 算法中，我一般常译作'展开'，或'模型展开'，用于描述如何使用 learned model 加速training过程。
 
@@ -66,6 +69,8 @@ Embedding Planning Loops into Policies. ：另一种方法直接把规划程序�
 
 - MC 中，采样是为了逐步使信息更准确，进而更准确地改善策略。
 - Rollout 中，采样是采出每一步之后的一定信息，利用信息更新后，然后做出选择让这一步进入下一个状态（思想依然是主要关注当前状态）。[4]
+
+
 
 [1]: https://spinningup.readthedocs.io/zh_CN/latest/spinningup/rl_intro2.html
 [2]: https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html

@@ -3,19 +3,11 @@
 <!--
  * @version:
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-03-26 22:51:55
+ * @Date: 2023-09-14 20:54:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-14 20:38:23
+ * @LastEditTime: 2023-09-14 21:13:21
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# R2D2
-
-Recurrent Replay Distributed DQN[1]
-
-R2D2：两个R是Actor，Learner；两个D是Distributed DQN
-
-[1]: https://deepreinforcementlearningbook.org/assets/pdfs/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0(%E4%B8%AD%E6%96%87%E7%89%88-%E5%BD%A9%E8%89%B2%E5%8E%8B%E7%BC%A9).pdf
-[2]: https://blog.csdn.net/weixin_40056577/article/details/104980197

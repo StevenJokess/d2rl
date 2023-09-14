@@ -126,17 +126,18 @@ chapter_game_theory/index
 chapter_multi-agent_RL/index
 chapter_multi-agent_DRL/index
 
-
-
 chapter_app-board_game/index
 chapter_app-card_game/index
 chapter_app-video_game/index
 chapter_app-finance/index
 chapter_app-real_world/index
+dd
 
-chapter_appendix-mathematics/index
+chapter_appendix-math_foundations/index
+chapter_appendix_AI_foundations/index
+chapter_appendix_RL_foundations/index
 chapter_appendix-thinkings/index
-chapter_appendix-tools/index
+chapter_appendix-tools_for_DRL/index
 ```
 
 ```toc

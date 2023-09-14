@@ -53,8 +53,18 @@ TODO:
 1. 人类在做一些任务时会假定一个奖励函数并以此来检验行为或作为目标（大脑中的基底核似乎与奖励机制有关）
 1. 而且无模型的强化学习过程和实验中的动物适应过程有一定一致性（可能会用一些探索——利用的策略之类的）等。[4]
 
+## DRL面临的一些挑战
+
+- 人学习的速度很快，无论是模仿还是借鉴，但deep RL却很慢？
+- 借鉴的学习方式在deep RL中是一个open problem，经验该如何借鉴才能学起来更快速有效呢？
+- 每个人的行为action动机背后的奖赏函数都不太一样，所以很明显reward function是可变的，那该如何表示单任务或多任务中的reward function呢？
+- 观察环境，根据环境的结构信息进行某种预测（prediction），从而辅助决策，那prediction究竟是什么？如何表示？作用显著吗？[6]
+
+Alan Turing ：Instead of trying to produce a program to simulate the adult mind, why not rather try to produce one which simulates the child’s? If this were then subjected to an appropriate course of education one would obtain the adult brain.
+
 [1]: https://zhuanlan.zhihu.com/p/556399318
 [2]: http://159.226.21.68/bitstream/173211/45043/1/%e6%b7%b1%e5%ba%a6%e5%bc%ba%e5%8c%96%e5%ad%a6%e4%b9%a0%e8%bf%9b%e5%b1%95_%e4%bb%8eAlphaGo%e5%88%b0AlphaGo_Zero_%e5%94%90%e6%8c%af%e9%9f%ac.pdf
 [3]: https://www.china-simulation.com/article/2023/1004-731X/1004-731X-2023-35-4-671.shtml
 [4]: https://www.zhihu.com/column/c_125238795
 [5]: https://zhuanlan.zhihu.com/p/637642589
+[6]: https://blog.csdn.net/weixin_40056577/article/details/104109073

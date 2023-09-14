@@ -219,8 +219,17 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 - 介绍视频[12]
 - 训练成果[13]
 
+美国华裔计算机科学家David Wu开发的Katago，借鉴了AlphaGo Zero的思想和神经网络算法，但是Katago有很多原创的改进，使得Katago在很短时间内用了很小的成本，就超越了Leela、星阵等围棋AI引擎。
 
+David Wu于2020年11月发表论文《Accelerating Self-Play Learning in Go》，其自我训练的速度，相比AlphaGo Zero提升了50倍！所以KataGo使用了30块v100 GPU训练19天，就超越了。
 
+KataGo的主要贡献有下面几点：
+
+1. 开源贡献巨大！
+2. 极大减少了自我训练的算力需求（50倍），提升速度快，成本低；
+3. 通过针对性引入特征数据，部分解决了围棋AI连环劫和复杂征子的bug；
+4. 价值网络可以预测目差，可以随意设置贴目，让子棋能力也提升了！[16]
+5. KataGo恐怖的ELO值，人类最高才3800分
 
 [1]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf
 [2]: http://ir.ia.ac.cn/handle/173211/15288
@@ -235,4 +244,4 @@ AlphaGo作为人工智能领域的里程碑, 其智能突出体现在以下4点�
 [13]: https://www.bilibili.com/video/BV18v411v794/?spm_id_from=333.999.0.0&vd_source=bca0a3605754a98491958094024e5fe3
 [14]: https://github.com/borninfreedom/DeepLearning/blob/master/Papers/AlphaZero%E5%8E%9F%E7%90%86%E4%B8%8E%E5%90%AF%E7%A4%BA.pdf
 [15]: https://arxiv.org/abs/1701.07274
-[16]:
+[16]: https://zhuanlan.zhihu.com/p/442128967

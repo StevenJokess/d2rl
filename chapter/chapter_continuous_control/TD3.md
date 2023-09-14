@@ -5,9 +5,9 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-06-04 00:45:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-05 17:22:36
+ * @LastEditTime: 2023-09-14 21:25:02
  * @Description:
- * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
@@ -68,4 +68,19 @@ TD3的作者给出了其对应[PyTorch的实现](https://github.com/sfujim/TD3/)
 
 TODO：https://spinningup.openai.com/en/latest/algorithms/td3.html
 
+
+![](../../img/TD3_experiment.png)
+
+## TD3 的优缺点
+
+
+优点：总结来说TD3中一共使用了三个技巧来消除AC方法中的偏差问题：
+
+1. Clipped Double-Q Learning：使用两个Q函数进行学习，并在更新参数时使用其中最小的一个来避免value的过高估计。
+2. Delayed Policy Updates：对Target以及policy都进行延时更新，避免更新过程中的累积误差。
+3. Target Policy Smoothing：对target action增加噪音，对Q函数进行平滑操作，减少policy的误差。[2]
+
+缺点：暂无。
+
 [6]: https://datawhalechina.github.io/easy-rl/#/chapter12/chapter12
+[2]: https://mayi1996.top/2020/08/07/Addressing-Function-Approximation-Error-in-Actor-Critic-Methods/#
