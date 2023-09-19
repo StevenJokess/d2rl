@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 17:29:23
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-03-18 01:27:38
+ * @LastEditTime: 2023-09-20 01:07:04
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -41,7 +41,26 @@ $$
 
 根据 19.2 节的定义，可以发现目标导向的强化学习的奖励往往是非常稀疏的。由于智能体在训练初期难以完成目标而只能得到 $-1$ 的奖励，从而使整个算法的训练速度较慢。那么，有没有一种方法能有效地利用这些“失败”的经验呢？从这个角度出发，**事后经验回放**（hindsight experience replay，HER）算法于 2017 年**神经信息处理系统**（Neural Information Processing Systems，NeurIPS）大会中被提出，成为 GoRL 的一大经典方法。
 
+## 简介
 
+事后经验回放技术则不需要任何领域来设计奖赏函数。在稀疏奖励的环境中, 如果智 能体观测序列  $s_1,s_2,…,s_T$ 且目标任务  $g≠s_1,s_2,…,s_T$ , 则智能体在该回合内的每一步的奖赏都为-1。
+
+HER 的思想是用一个不同的目标重新检查这条轨迹一虽然这条轨迹可能不会帮 助智能体学习如何实现目标任务  $g$ , 但该轨迹在回放时肯定会告诉智能体学习一些如何实 现状态  $s_T$ 的信息。这些信息可以通过使用非策略 RL 算法和经验回放来获取, HER 技术将 经验池中的 $g$ 替换为 $s_T$
+。智能体在经验回放时采样一个额外子目标 $g′$ 的集合来代替期望目标任务 $g$ , 并重新计算奖赏, 然后形成转移样本  $(s_t, ∥g′,a_t,r′,s_t+1∥g′)$ 放入经验池中。因此, 即使智能体没有实现目标任务 $g$ , 智能体也可以学习到关于实现虚拟目标任务 $g′$ 的信 息。在 HER 中, 采样虚拟目标任务 $g′$ 的方式如下:
+
+1. Final-从与环境最终的状态对应的目标中采样虚拟目标 $g′$；
+2. Future-从同一个回合的末来时间步中采样虚拟目标 $g'$;
+3. Episode-从同一个回合中随机采样虚拟目标 $g'$;
+4. Random-在整个训练过程中采样虚拟目标  $g′$ 。
+
+事后经验回放(HER)技术通过使用已实现的目标 $ag$ 代替期望目标 $g$
+ , 形成虚拟目标 $g′$ 。 使智能体在稀疏奖励环境中, 增强了探索。即使在没有成功的情况下, 智能体也可以得到一些信息。[2]
+
+ ## 伪代码
+
+HER 算法的伪代码如下所示。
+
+![HER 算法的伪代码](../../img/HER.jpg)
 
 在 HER 的实验中，future 方案给出了最好的效果，该方案也最直观。因此在代码实现中用的是 future 方案。
 
@@ -76,8 +95,17 @@ code
 
 通过实验对比，可以观察到使用 HER 算法后，效果有显著提升。这里 HER 算法的主要好处是通过重新对历史轨迹设置其目标（使用 future 方案）而使得奖励信号更加稠密，进而从原本失败的数据中学习到使“新任务”成功的经验，提升训练的稳定性和样本效率。
 
+## 改进
+
+目前对于事后经验回放算法的改进主要在于降低偏差、改进目标采样方式、适配在线策略算法等。Lanka等[41]认为HER修改目标引入的新数据带来了偏差，提出通过调整真实奖励和HER的奖励的权重来降低偏差。Manela等[42]指出，在目标物体未移动的情况下，采样的目标只与初始位置有关而与策略无关，这样的样本会给训练带来偏差，于是提出Filtered-HER，通过滤去该类型目标来缓解该问题。Rauber等[43]通过重要性采样将HER运用到策略梯度方法上，实验结果表明HER明显提高了策略梯度方法的样本利用效率。
+
 ## 小结
 
 本章介绍了目标导向的强化学习（GoRL）的基本定义，以及一个解决 GoRL 的 有效的经典算法 HER。通过代码实践，HER 算法的效果得到了很好的呈现。我 们从 HER 的代码实践中还可以领会一种思维方式，即可以通过整条轨迹的信息 来改善每个转移片段带给智能体策略的学习价值。例如，在 HER 算法的 future 方案中，采样当前轨迹后续的状态作为目标，然后根据下一步状态是否离目标 足够近来修改当前步的奖励信号。此外，HER 算法只是一个经验回放的修改方 式，并没有对策略网络和价值网络的架构做出任何修改。而在后续的部分 GoRL 研究中，策略函数和动作价值函数会被显式建模成 $\pi(a \mid s, g)$ 和 $Q(s, a, g)$ ，即构 建较为复杂的策略架构，使其直接知晓当前状态和目标，并使用更大的网络容 量去完成目标。有兴趣的读者可以自行查阅相关的文献。
 
 [1]: https://hrl.boyuai.com/chapter/3/%E7%9B%AE%E6%A0%87%E5%AF%BC%E5%90%91%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0
+[2]:
+
+[41]	LANKA S, WU Tianfu. ARCHER: aggressive rewards to counter bias in hindsight experience replay[EB/OL]. NC, USA: arXiv, 2018. [2019-12-3] https://arxiv.org/pdf/1809.02070. (1)
+[42]	MANELA B, BIESS A. Bias-reduced hindsight experience replay with virtual goal prioritization[EB/OL]. BeerSheva, Israel: arXiv, 2019. [2019-12-3] https://arxiv.org/pdf/1905.05498.pdf. (1)
+[43]	RAUBER P, UMMADISINGU A, MUTZ F, et al. Hindsight policy gradients[EB/OL]. London, UK: arXiv, 2017. [2019-11-2] https://arxiv.org/pdf/1711.06006.pdf. (1)

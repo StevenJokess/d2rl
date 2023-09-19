@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 16:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-14 20:48:58
+ * @LastEditTime: 2023-09-14 23:18:52
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -135,7 +135,7 @@ $$
 
 按照任务是否具结束条件：
 
-- 回合/阶段制任务（episodic/terminating task）：对于回合制任务，有明确的开始状态和终止状态（Terminal State）[21]。当到达终止状态时，一个智能体和环境的交互过程就结束了，这一轮交互的过程称为一个回合（Episode）或试验（Trial）。很多环境都是回合制的，如围棋（序贯的 sequential，短期行为可能会产生长期影响。[42]）等棋类、回合游戏。
+- 回合/阶段制任务（episodic/terminating task）：对于回合制任务，有明确的开始状态和终止状态（Terminal State or Termination）[21]。当到达终止状态时，一个智能体和环境的交互过程就结束了，这一轮交互的过程称为一个回合（Episode）或试验（Trial）。很多环境都是回合制的，如围棋（序贯的 sequential，短期行为可能会产生长期影响。[42]）等棋类、回合游戏。
 - 连续性任务（continuing/non-terminating[32] task）：对于连续性任务，没有明确的结束条件。即 $T=\infty$。例如买卖股票，市场是一值存在的，所以不存在一个截止点，智能体需要一直学下去。
 ![回合/阶段制任务 对比 连续性任务](../../img/episodic_task_VS_continuing_task.png)
 

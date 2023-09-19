@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-06-04 00:25:19
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-04 00:26:43
+ * @LastEditTime: 2023-09-14 22:32:15
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -22,7 +22,16 @@ Replay的优先级对于性能影响是最大的，而之前的Prioritised Repla
 
 整个算法也就是训练架构上发生改变，算法实质并没有变化。同时，由于使用Replay Buffer是Off-Policy独有，因此，这篇paper就在DQN和DDPG上进行改变验证。
 
+![Ape-X](../../img/Ape-X.png)
+
 如上图，
+
+DQN、GORILA有Replay Buffer是off-line的，而A3C与IMPALA去掉了Replay Buffer是on-line的，而Ape-X又引入了Replay Buffer，此处称为Replay Experiences。
+
+由图中可以看到，Ape-X重用了A3C的架构，只不过多了一个Replay Experiences，还有一个Priority Experience Replay。
+IMPALA中多个Learner实际上也是为了增加Diversity，探索更大的状态空间，倒不如还是维持一个Replay Buffer，用$(s,a,r,s')$ 样本来冲淡一下轨迹的correlation，而且off-policy对样本利用率更高，因此Ape-X还是引回Replay Buffer的模块。
+
+而且对Experience的Bellman Error来确定一个样本的重要性，实际上与TD Error差不多，虽然为每一个样本计算Bellman Error耗内存与计算资源，但效果好呀，知道哪些样本更重要一点。下面是目前为止分布式RL系统的性能对比图。[2]
 
 多个actor，每个有自己的环境，并且可以产生experience，并将其写入一个共享的experience replay memory，并且能计算initial priorities
 一个learner，从memory中sample，然后更新memory中的experience的priorities，并更新网络参数
@@ -57,5 +66,14 @@ for t = 1 to T do // 更新参数T次
 \(PERIODICALLY(REPLAY.REMOVETOFIT())\) // 从replay memory中删掉旧的experience
 endfor
 end procedure
+
+
+Recurrent Replay Distributed DQN[1]
+
+R2D2：两个R是Actor，Learner；两个D是Distributed DQN
+
+[1]: https://deepreinforcementlearningbook.org/assets/pdfs/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0(%E4%B8%AD%E6%96%87%E7%89%88-%E5%BD%A9%E8%89%B2%E5%8E%8B%E7%BC%A9).pdf
+[2]: https://blog.csdn.net/weixin_40056577/article/details/104980197
+[3]: https://blog.csdn.net/weixin_40056577/article/details/104980197
 
 [1]: https://daiwk.github.io/posts/rl-distributed-rl.html#2-a3c
