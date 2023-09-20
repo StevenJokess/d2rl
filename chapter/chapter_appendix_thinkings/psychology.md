@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-02 18:48:58
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-14 02:29:20
+ * @LastEditTime: 2023-09-20 13:38:29
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -43,6 +43,11 @@
 
 [1]:
 
+## 强化学习与行为心理学
+
+强化学习( Reinforcement Leaming ，简称 RL ，又译为"增强学习" )这一名词就是来源于行为心理学，表示生物为了趋利避害而更频繁实施对自己有利的策略 例如，我每天工作中会根据策略决定做出各种动作 如果我的某种决定使我升职加薪，或者使我免遭处罚，那么我在以后的工作中会更多采用这样的策略 据此，心理学家 Ivan Pavlov 1927 年发表的专著中用"强化" (reinforcement) 这一名词来描述特定剌激使生物更趋向于采用某些策略的现象 强化行为的剌激可以称为"强化物" (reinforcer) 因为强化物导致策略的改变称为"强化学习"。
+
+心理学家 Jack Michael 1975 年发表文章《Positive and negative reinforcement, a distinction that is no longer necessary》，说明了强化包括正强化( positive reinforcement)负强化 (negative reinforcement) ，其中正强化使得生物趋向于获得更多利益，负强化使得生物趋向于避免损害。在前面例子中，升职加薪就是正强化，免遭处罚就是负强化 正强化和负强化都能够起到强化的效果。
 
 [2]: https://ticket-assets.baai.ac.cn/uploads/%E3%80%8A%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%9A%E7%8E%B0%E4%BB%A3%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89%E3%80%8B%E6%A0%B7%E7%AB%A0.pdf
 

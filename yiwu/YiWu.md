@@ -5,9 +5,9 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-05 19:51:29
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-11 02:22:35
+ * @LastEditTime: 2023-09-20 14:32:38
  * @Description:
- * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
@@ -26,7 +26,7 @@
 - 一！悟！：突然地领悟，即涌现。
 - 义务：义务劳动，资本主义市场经济下咋活下去？
 - 艺无：抄绝艺——唐朝诗人杜牧的诗句“绝艺如君天下少，闲人似我世间无”。[3]
-- 艺悟：围棋AI“绝艺”、王者荣耀AI“绝悟”项目[4]
+- 艺悟：围棋AI修炼棋艺的“绝艺”、王者荣耀AI“绝悟”项目[4]
 - 逸舞：失业的项目。“每一个不曾起舞的日子都是对生命的辜负。”
 - MADDPG作者之一：[MADDPG](https://arxiv.org/pdf/1706.02275.pdf)
 
