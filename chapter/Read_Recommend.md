@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-10 00:25:56
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-13 00:55:25
+ * @LastEditTime: 2023-09-20 16:04:00
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -14,7 +14,6 @@
 # 阅读推荐
 
 ## 本书作为产品的特点
-
 
 - ※ 理论不完备：试图涵盖强化学习主干理论和常见算法，但ChatGPT技术要点我肯定参不透；
 - ※ 内容不新颖：主要是历史里比较重要的深度强化学习方法，真跟不上学术最前沿；
@@ -35,11 +34,13 @@
 - ※ 纯自学产物：Gym源码解读、开发环境搭建指南、习题答案等在线资源特别乱，
 - ※ 初学不友好：因为就不希望助力你自学，抢我还没吃过的饭碗；
 - ※ 没京东链接：暂不考虑上架，呵呵，真好意思说，你要人家也不给上啊。
-- ※ 只有要饭码：![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+- ※ 只有要饭码：
+![支付宝收款码](/img/收.jpg)
+:width:`300px`
 
 ## 自编推荐
 
-YiWu是ASB共私开发的深度强化学习框架，不兼容目前主流的深度强化学习框架，不支持端/边/云全场景全栈协同开发。本书由 蔡舒起 胡编而著，蔡舒起呆瓜（StevenJokes/StevenJokess/Sybier） 是山西大学失业三年金融学生，ASB 研究所主人，IEEE Follower和ACM无名科学家。《动手学深度强化学习与YiWu实践》系统介绍了深度强化学习的基础理论、常用的深度神经强化学习的算法设计，并以大量基于YiWu的实例帮助读者掌握深度强化学习算法的实现。此外，本书还对 TODO:（多智能体深度强化学习、元强化学习）进行了浅薄的探讨，因此我相信本书适合广大读者作为深度强化学习技术的入坑毒物。
+YiWu是ASB AI开发的深度强化学习框架，不兼容目前主流的深度强化学习框架，不支持端/边/云全场景全栈协同开发。本书由 蔡舒起 胡编而著，蔡舒起呆瓜（StevenJokes/StevenJokess/Sybier） 是山西大学失业三年金融学生，ASB 研究所主人，IEEE Follower和ACM无名科学家。《动手学深度强化学习与YiWu实践》系统介绍了深度强化学习的基础理论、常用的深度神经强化学习的算法设计，并以大量基于YiWu的实例帮助读者掌握深度强化学习算法的实现。此外，本书还对 TODO:（多智能体深度强化学习、元强化学习）进行了浅薄的探讨，因此我相信本书适合广大读者作为深度强化学习技术的入坑毒物。
 
 ## 作者“寄”语
 
@@ -47,7 +48,7 @@ YiWu是ASB共私开发的深度强化学习框架，不兼容目前主流的深�
 
 ————蔡舒起 ASB分布式实验室主人
 
-## 砖家点评（PROFESSIONAL RECOMMEND）
+## 砖家点评（UNPROFESSIONAL RECOMMEND）
 
 强化学习是极烧钱的重要机器学习范式 本书是浅显理解强化学习基本概念和算法的猩猩之作，也是迄今最离谱最整蛊描述强化学习领域的教材。
 
