@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-09 20:45:12
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-09 20:56:12
+ * @LastEditTime: 2023-09-20 11:18:19
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -28,15 +28,16 @@
 - 对称性：对任意的 $x^{\prime}, x^{\prime \prime} \in X$ ，有 $d\left(x^{\prime}, x^{\prime \prime}\right)=d\left(x^{\prime \prime}, x^{\prime}\right)$;
 - 三角不等式：对任意的 $x^{\prime}, x^{\prime \prime}, x^{\prime \prime \prime} \in x ，$ 有 $d\left(x^{\prime}, x^{\prime \prime}\right) \leq d\left(x^{\prime}, x^{\prime \prime}\right)+d\left(x^{\prime \prime}, x^{\prime \prime \prime}\right)$ 。
 
-有序对 $(X, d)$ 又称为度量空间 (metric space)。
+有序对 $(X, d)$ 又称为**度量空间** (metric space)。
 
-我们来看一个度量空间的例子。考虑有限Markov决策过程状态函数 $v(s) \quad(s \in S)$ ，其所有可能的取值组成集合 $\mathcal{V}=\mathbb{R}^{|S|}$ ，定义 ${ }^{\infty}$ 如下：
+我们来看一个度量空间的例子。考虑有限Markov决策过程状态函数 $v(s) \quad(s \in S)$ ，其所有可能的取值组成集合 $\mathcal{V}
+=\mathbb{R}^{|S|}$ ，定义 $d_{\infty}$ 如下：
 
 $$
 d_{\infty}\left(v^{\prime}, v^{\prime \prime}\right)=\max _{s e \mathcal{S}}\left|v^{\prime}(s)-v^{\prime \prime}(s)\right|
 $$
 
-可以证明， $d_{\infty}$ 是V上的一个度量。（证明：非负性、同一性、对称性是显然的。由于对于 $\forall s \in \mathcal{S}$ 有
+可以证明， $d_{\infty}$ 是 $\mathcal{V}$ 上的一个度量。（证明：非负性、同一性、对称性是显然的。由于对于 $\forall s \in \mathcal{S}$ 有
 
 $$
 \begin{aligned}
@@ -48,8 +49,11 @@ $$
 \end{aligned}
 $$
 
-对于一个度量空间，如果Cauchy序列都收玫在该空间内，则称这个度量空间是完备的 (complete)。
-例如，实数集R就是一个著名的完备空间（事实上实数集就是由完备性定义出来的。有理数集不完备，加上无理数集就完 $\varepsilon>0$ ，存在正整数K使得任意的 $k^{\prime}, k^{\prime}>K$ ，均有 $d\left(v_{k^{\prime}}, v_{k^{\prime}}\right)<\varepsilon$ 。对于 $\forall s \in \mathcal{S},\left|v_{k^{\prime}}(s)-v_{k^{\prime}}(s)\right| \leqslant d\left(v_{k^{\prime}}, v_{k^{\prime}}\right)<\varepsilon$ ，所以 $\left\{v_k(s): k=0,1,2, \ldots\right\}$ 是Cauchy列。由实数集的完备性，可以知道 $\left\{v_k(s): k=0,1,2, \ldots\right\}$ 收玫于某个实数，记这个实数为 $v_{\infty}(s)$ 。所以，对于 $\forall \varepsilon>0$ ，存在正整数 $\kappa(s)$ ，对于任意 $k>\kappa(s)$ ，有 $\left|v_k(s)-v_{\infty}(s)\right|<\varepsilon$ 。.取 $\kappa(\mathcal{S})=\max _{s \in s} \kappa(s)$ ， 有 $d\left(v_k, v_{\infty}\right)<\varepsilon$ ，所以 $\left\{v_k: k=0,1,2, \ldots\right\}$ 收玫于 $v_{\infty}$ ，而 $v_{\infty} \in \mathcal{V}$ ，完备性得证)。
+可得三角不等式。) 所以， $\left(\mathcal{V}, \mathrm{d}_{\infty}\right)$ 是一个度量空间。
+
+对于一个度量空间，如果Cauchy序列都收敛在该空间内，则称这个度量空间是完备的 (complete)。
+
+例如，实数集R就是一个著名的完备空间（事实上实数集就是由完备性定义出来的。有理数集不完备，加上无理数集就完 $\varepsilon>0$ ，存在正整数K使得任意的 $k^{\prime}, k^{\prime}>K$ ，均有 $d\left(v_{k^{\prime}}, v_{k^{\prime}}\right)<\varepsilon$ 。对于 $\forall s \in \mathcal{S},\left|v_{k^{\prime}}(s)-v_{k^{\prime}}(s)\right| \leqslant d\left(v_{k^{\prime}}, v_{k^{\prime}}\right)<\varepsilon$ ，所以 $\left\{v_k(s): k=0,1,2, \ldots\right\}$ 是Cauchy列。由实数集的完备性，可以知道 $\left\{v_k(s): k=0,1,2, \ldots\right\}$ 收玫于某个实数，记这个实数为 $v_{\infty}(s)$ 。所以，对于 $\forall \varepsilon>0$ ，存在正整数 $\kappa(s)$ ，对于任意 $k>\kappa(s)$ ，有 $\left|v_k(s)-v_{\infty}(s)\right|<\varepsilon$ 。.取 $\kappa(\mathcal{S})=\max _{s \in s} \kappa(s)$ ， 有 $d\left(v_k, v_{\infty}\right)<\varepsilon$ ，所以 $\left\{v_k: k=0,1,2, \ldots\right\}$ 收敛于 $v_{\infty}$ ，而 $v_{\infty} \in \mathcal{V}$ ，完备性得证）。
 
 ## 压缩映射与Bellman算子
 
@@ -136,7 +140,7 @@ $$
 d\left(x_{k^{\prime}}, x_{k^{\prime}}\right) \leqslant \sum_{k=k^{\prime}}^{+\infty} d\left(x_{k+1}, x_k\right) \leqslant \sum_{k=k^{\prime}}^{+\infty} \gamma^k d\left(x_1, x_0\right)=\frac{\gamma^{k^{\prime}}}{1-\gamma} d\left(x_1, x_0\right)
 $$
 
-由于 $\gamma \in(0,1)$ ，所以上述不等式右端可以任意小，得证。)
+由于 $\gamma \in(0,1)$ ，所以上述不等式右端可以任意小，得证。）
 
 Banach不动点定理给出了求完备度量空间中压缩映射不动点的方法：从任意的起点开始，不断迭代使用压缩映射，最终 就能收敛到不动点。并且在证明的过程中，还给出了收敛速度，即迭代正比于 $\gamma^k$ 的速度收敛 (其中是 $\mathrm{i}$ 迭代次数) 。在射，那么就可以用迭代的方法求Bellman期望算子和Bellman最优算子的不动点。由于Bellman期望算子的不动点就是策略 价值，Bellman最优算子的不动点就是最优价值，所以这就意味着我们可以用迭代的方法求得策略的价值或最优价值。在后面的小节中，我们就来具体看看求解的算法。
 
@@ -145,3 +149,4 @@ Banach不动点定理给出了求完备度量空间中压缩映射不动点的�
 [1]: https://baike.baidu.com/item/%E6%B3%9B%E5%87%BD%E5%88%86%E6%9E%90/4151#:~:text=%E6%B3%9B%E5%87%BD%E5%88%86%E6%9E%90%EF%BC%88Functional%20Analysis,%E4%BD%9C%E7%94%A8%E4%BA%8E%E5%87%BD%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E3%80%82
 [2]: https://developer.aliyun.com/article/726187?spm=a2c6h.12873639.article-detail.5.20c06a2ewJKXn1#slide-4
 [3]: https://zh.wikipedia.org/zh-cn/%E5%B7%B4%E6%8B%BF%E8%B5%AB%E4%B8%8D%E5%8A%A8%E7%82%B9%E5%AE%9A%E7%90%86
+[4]: https://cread.jd.com/read/startRead.action?bookId=30513215&readType=1

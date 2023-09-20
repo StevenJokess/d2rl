@@ -26,6 +26,7 @@
 - 一！悟！：突然地领悟，即涌现。
 - 义务：义务劳动，资本主义市场经济下咋活下去？
 - 艺无：抄绝艺——唐朝诗人杜牧的诗句“绝艺如君天下少，闲人似我世间无”。[3]
+- 艺悟：围棋AI“绝艺”、王者荣耀AI“绝悟”项目[4]
 - 逸舞：失业的项目。“每一个不曾起舞的日子都是对生命的辜负。”
 - MADDPG作者之一：[MADDPG](https://arxiv.org/pdf/1706.02275.pdf)
 
@@ -40,3 +41,4 @@
 [1]: https://github.com/tensorlayer/RLzoo/blob/master/setup.py
 [2]: https://github.com/sjtu-marl/malib/blob/main/install.sh
 [3]: https://book.pep.com.cn/1452001134201/mobile/#p=130
+[4]: http://www.deeprlhub.com/d/1402-2024

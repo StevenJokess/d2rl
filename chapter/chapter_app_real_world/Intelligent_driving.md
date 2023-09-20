@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-23 23:05:23
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-07-04 22:28:46
+ * @LastEditTime: 2023-09-20 01:57:23
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -51,15 +51,24 @@
 
 ### 传统技术
 
-传感器技术的进步使得智能驾驶得到了快速发展。目前, 国内外众多研究团队已经将智能驾驶作为重要研究方向并取得了初步的研究成果。然而类似激光雷达这类价格昂贵的传感器的使用大大增加了智能车成本, 极大地阻碍了智能车的普及。依靠人工设计的算法从复杂环境中提取关键信息，根据这些信息进行决策和判断。该算法缺乏一定的泛化能力，不具备应有的智能性和通用性。
+传感器技术的进步使得智能驾驶得到了快速发展。目前, 国内外众多研究团队已经将智能驾驶作为重要研究方向并取得了初步的研究成果。然而类似激光雷达这类价格昂贵的传感器的使用大大增加了智能车成本, 极大地阻碍了智能车的普及。
+
+依靠人工设计的算法从复杂环境中提取关键信息，根据这些信息进行决策和判断。该算法缺乏一定的泛化能力，不具备应有的智能性和通用性。
 
 深度强化学习的出现有效地改善了传统算法泛化性不足的问题，能给智能驾驶领域带来新的思路。
+
+
+无人驾驶领域的规划算法传统上是基于搜索/采样/优化为主的算法，这些算法在常见的驾驶环境中表现良好，具备较好的安全性，通过性和舒适性，但在少量**复杂交互的带有博弈性质**的场景中，其表现不能令人满意。在强交互环境中，主车需要理解环境中车辆的意图，并与其进行复杂的互动，这就要求主车具备较好的推理能力。
+
+
 
 ### 强化学习
 
 智能驾驶问题通过控制方向盘、油门、刹车等设备完成各种运输目标（见图1-4）。智能驾驶问题既可以在虚拟环境中仿真（比如在电脑里仿真），也可能在现实世界中出现。有些任务往往有着明确的目标（比如从一个指定地点到达另外一个指定地点），但是每一个具体的动作却没有正确答案作为参考。这正是强化学习所针对的任务。基于强化学习的控制策略可以帮助开发自动驾驶的算法。[2]
 
 智能驾驶（本图截取自仿真平台AirSimNH）
+
+强化学习非常适合在多个agent交互序列过程中进行识别和推理的场景，在棋类游戏和电子游戏等强互动与博弈的过程中表现出强大的智能性，但在无人驾驶领域的应用与落地上还存在诸多挑战需要突破，例如，无人驾驶中的动作空间是连续的高维空间，同时与多个职能agent进行互动，多个agent的状态是部分可观测的，整个过程中reward的设计比游戏有大得多的不确定性，对于实时性的要求，等。该项目希望能在无人驾驶领域中，能克服上述挑战，应用强化学习解决在高度交互场景下的博弈问题。[8]
 
 ### 深度强化学习
 
@@ -100,15 +109,17 @@ $$
 现阶段深度强化学习在智能驾驶领域的研究大多在基于仿真环境下进行，在实车上的应用较为缺乏。如何在真实道路环境和车辆上应用深度强化学习算法构建智能驾驶系统仍是一个开放性问题。
 
 
-TODO:https://github.com/apachecn/apachecn-dl-zh/blob/master/docs/rl-tf/09.md
+
 [1]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2023/2/9/27c20431-8ed3-4562-83b5-5c82706f28a5.pdf
 [2]: https://developer.aliyun.com/article/718967
 [3]: https://pdf-1307664364.cos.ap-chengdu.myqcloud.com/%E6%95%99%E6%9D%90/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E3%80%8A%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%B8%A6%E4%BD%A0%E5%8E%BB%E9%9D%A2%E8%AF%95%E3%80%8B%E4%B8%AD%E6%96%87PDF.pdf
 [4]: http://www.dzkbw.com/books/zjb/xinxijishu/gzxzxbx4/020.htm
 [5]: https://www.zhihu.com/column/c_1364693795540553728
 [6]: https://www.eefocus.com/article/402315.html
-https://www.bilibili.com/video/BV1Y34y1i7vC/?spm_id_from=333.999.0.0
+[7]: https://www.bilibili.com/video/BV1Y34y1i7vC/?spm_id_from=333.999.0.0
+[8]: http://www.deeprlhub.com/d/56-research-intern
 
 TODO:
 https://www.jishulink.com/post/1862719
 https://www.jianshu.com/p/a3432c0e1ef2
+https://github.com/apachecn/apachecn-dl-zh/blob/master/docs/rl-tf/09.md

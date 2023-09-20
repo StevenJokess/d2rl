@@ -232,6 +232,13 @@ print(KL_divergence(q, p)) # 0.013183150978050884
 print(KL_divergence(p, p)) # 0
 ```
 
+PyTorch：假设y为真实分布，x为预测分布。[9]
+
+```py
+import torch.nn.functional as F
+kl = F.kl_div(x.softmax(dim=-1).log(), y.softmax(dim=-1), reduction='sum')
+```
+
 ## JS散度
 
 JS 散度（Jensen-Shannon Divergence）是一种对称的衡量两个分布相似度的度量方式，定义为：
@@ -306,5 +313,6 @@ $$
 [6]: https://finance.sina.com.cn/stock/stockzmt/2020-05-09/doc-iirczymk0646869.shtml
 [7]: https://zhuanlan.zhihu.com/p/143105854#5.1%20%E7%A6%BB%E6%95%A3%E5%88%86%E5%B8%83%E7%9A%84JS%E6%95%A3%E5%BA%A6python%E5%AE%9E%E7%8E%B0
 [8]: https://chenjunren.gitbook.io/read-the-beauty-of-mathematics/di-6-zhang-xin-xi-de-du-liang-he-zuo-yong
+[9]: https://zhuanlan.zhihu.com/p/339613080
 
 TODO:https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#information

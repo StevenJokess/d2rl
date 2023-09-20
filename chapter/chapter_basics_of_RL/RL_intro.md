@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 16:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-14 23:18:52
+ * @LastEditTime: 2023-09-20 02:43:48
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -553,6 +553,14 @@ $$
 
 ![强化学习的各个组成元素间的关系](../../img/elements'_relationship.png)
 
+## 问题测验
+
+1. 什么是强化学习？
+1. 强化学习和监督学习、无监督学习的区别是什么？
+1. 强化学习适合解决什么样子的问题？
+1. 强化学习的损失函数（loss function）是什么？和深度学习的损失函数有何关系？[70]
+
+前三问可见本节的前面内容。而第四题的答：在强化学习中，用“回报函数”（reward function）。智能体的目标是最大化未来累积奖励或最大化价值函数的估计值。与深度学习的损失函数不同，强化学习的损失函数通常不是在监督学习的设置下定义的，而是根据智能体的行动和环境的反馈来设计的。与深度学习的损失函数相比，强化学习的损失函数更加复杂，因为它通常涉及到与环境互动的序列数据和延迟奖励。在深度学习中，损失函数通常用于监督学习或无监督学习任务，例如分类、回归或生成任务，而且通常是针对单个数据点或数据批次的。在深度学习中，损失函数的目标是最小化模型的预测与真实标签之间的差异。（参考ChatGPT）
 
 ## 附录——RL里程碑：AlphaGo
 
@@ -671,6 +679,7 @@ Atari Breakout（横杆接小球）游戏的四大要素：
 [67]: https://deepreinforcementlearningbook.org/assets/pdfs/ch2.pdf
 [68]: https://blog.csdn.net/weixin_43236007/article/details/89292596
 [69]: https://blog.csdn.net/weixin_40056577/article/details/104109073
+[70]: http://www.deeprlhub.com/d/376-196
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 
