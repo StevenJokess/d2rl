@@ -20,6 +20,9 @@
 
 双延迟确定性策略梯度算法TD3 (Twin Delayed Deep Deterministic policy gradient)通过使用两个 critic 网络（Double DQN）和延迟的策略更新，提高了训练稳定性和效果。
 
+S. Fujimoto 等人在文章《 Addressing function approximation error in actor-critic methods》 中给出了双重延迟深度确定性策略梯度算法 (Twin Delay Deep Deterministic Policy Gradient,连续动作空间的确定性策略TD3 ), 结合了深度确定性策略梯度算法和双重 $\mathrm{Q}$ 学习。
+回顾前文, 双重 $\mathrm{Q}$ 学习可以消除最大偏差。基于查找表的双重 $\mathrm{Q}$ 学习用了两套动作价 值函数 $q^{(0)}(s, a)$ 和 $q^{(1)}(s, a)(s \in \mathcal{S}, a \in \mathcal{A})$, 其中一套动作价值函数用来计算最优动作（如 $A^{\prime}=\arg \max _a q^{(0)}\left(S^{\prime}, a\right)$ ), 另外一套价值函数用来估计回报（如 $\left.q^{(1)}\left(S^{\prime}, A^{\prime}\right)\right)$; 双重 $\mathrm{Q}$ 网络则考 但是对于确定性策略梯度算法, 动作已经由含参策略 $\pi(\boldsymbol{\theta})$ 决定了 (如 $\pi\left(S^{\prime} ; \boldsymbol{\theta}\right)$ ), 双重网络 则要由双重延迟深度确定性策略梯度算法维护两份学习过程的价值网络参数 $\mathbf{w}^{(i)}$ 和目标网 络参数 $\mathbf{w}_{\text {目标 }}^{(i)}(i=0,1)$ 。在估计目标时, 选取两个目标网络得到的结果中较小的那个, 即 $\min _{i=0,1} q\left(\cdot, ; \mathbf{w}_{\text {目标 }}^{(i)}\right)$ 。[3]
+
 ## 关键特点
 
 - **截断的双Critic结构(clipped double Q-learning)**： TD3 使用两个（因此名字中有 “twin"）独立训练的 critic 网络（Q函数 $Q_{\phi_1}$ 和 $Q_{\phi_2}$）来估计状态-动作对的 Q 值，取两者的较小值被作为如下的 $Q_{\phi i, \operatorname{targ}}$，来用于值函数的更新，从而降低了过度估计的风险。
@@ -45,13 +48,9 @@
 
 对于 Actor，目标是找到能最大化预期累积回报的策略，这通过最大化 Q 值来实现。因此，Actor 的损失函数可以表示为 $-Q_1(s, a)$，其中 a 是 Actor 网络对当前状态 s 输出的动作。
 
-
-
-我们可以使用实际的 Q 值与Q网络输出的 Q 值进行对比。实际的 Q 值可以用蒙特卡洛来算。根据当前的策略采样 1000 条轨迹，得到 G
-G 后取平均值，进而得到实际的 Q 值。
+我们可以使用实际的 Q 值与Q网络输出的 Q 值进行对比。实际的 Q 值可以用蒙特卡洛来算。根据当前的策略采样 1000 条轨迹，得到 G 后取平均值，进而得到实际的 Q 值。
 
 双延迟深度确定性策略梯度（twin delayed DDPG，TD3）通过引入3个关键技巧来解决这个问题。
-
 
 目标策略平滑化的工作原理如下:
 
@@ -61,6 +60,7 @@ $$
 
 其中 $\epsilon$ 本质上是一个噪声，是从正态分布中取样得到的，即 $\epsilon \sim$ $N(0, \sigma)$ 。目标策略平滑化是一种正则化方法。
 
+![TD3](../../img/TD3.png)
 
 如图 12.10 所示，我们可以将 TD3 算法与其他算法进行对比。TD3算法的作者自己实现的 深度确定性策略梯度（图中为our DDPG）和官方实现的 DDPG 的表现不一样，这说明 DDPG 对初始化和调参非常敏感。TD3对参数不是这么敏感。在TD3的论文中，TD3的性能比**软演员-评论员（soft actor-critic，SAC）**高。软演员-评论员又被译作软动作评价。但在SAC的论文中， SAC 的性能比TD3 高，这是因为强化学习的很多算法估计对参数和初始条件敏感。
 
@@ -84,3 +84,4 @@ TODO：https://spinningup.openai.com/en/latest/algorithms/td3.html
 
 [6]: https://datawhalechina.github.io/easy-rl/#/chapter12/chapter12
 [2]: https://mayi1996.top/2020/08/07/Addressing-Function-Approximation-Error-in-Actor-Critic-Methods/#
+[3]: E:/BaiduNetdiskDownload/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8B.pdf

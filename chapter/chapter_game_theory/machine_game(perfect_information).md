@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-21 22:38:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-04 22:05:48
+ * @LastEditTime: 2023-09-21 20:20:13
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -368,6 +368,11 @@ Func ABNegamax(node, alpha, beta):
 
 TODO
 
+## Alpha-Beta剪枝的总结
+
+- 前向 Forward：起始状态（根节点）一直搜索状态到最终状态（叶节点）
+- 反向 Back up：把各最终状态（叶节点）的价值反向传播到之前状态直到起始状态（根节点），其间可通过Alpha-Beta对搜索树剪枝来减少需要搜索的最终状态来提高搜索效率。
+
 ### Alpha-Beta剪枝的优缺点
 
 优点：
@@ -392,10 +397,14 @@ TODO
 合，以减少博弈树的规模，提高搜索效率。[24]
 
 
-## 总结
 
-- 前向 Forward：起始状态（根节点）一直搜索状态到最终状态（叶节点）
-- 反向 Back up：把各最终状态（叶节点）的价值反向传播到之前状态直到起始状态（根节点），其间可通过Alpha-Beta对搜索树剪枝来减少需要搜索的最终状态来提高搜索效率。
+
+## 习题
+
+1．什么是博弈树？
+2．简述极大极小搜索的原理。
+3．极大极小搜索存在什么问题？
+4．简述Alpha-Beta搜索原理。
 
 ## 附录：纳什均衡点
 

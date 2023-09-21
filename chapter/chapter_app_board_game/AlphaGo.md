@@ -34,6 +34,8 @@ AlphaGo 创新性地结合深度强化学习和蒙特卡罗树搜索, 通过价�
 
 原理流程主要包含线下学习和在线对弈两部分。
 
+![AlphaGo 架构](../../img/AlphaGo_architect.png)
+
 ### 线下学习(Offline learning)
 
 线下学习包含3个阶段, 如下图所示

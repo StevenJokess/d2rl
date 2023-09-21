@@ -5,22 +5,14 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-02 19:41:38
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-12 03:30:22
+ * @LastEditTime: 2023-09-21 20:32:53
  * @Description:
  *
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 序言
-
-## 作者介绍
-
-蔡舒起，ASB AI Idiot，负责胡思乱想。目前主要使用的货币是人民币。不熟悉主流的深度学习框架，如PyTorch和TensorFlow，也不熟悉计算机视觉、自然语言处理和推荐系统方面的深度学习算法。
-
-作者毕业即失业3年，参加百度产品经理面试（失败）、中国人寿保险销售面试（不想去）。
-
-## 破序言
+# 自序
 
 被自己邀请作为ASB工程师的代表为本书写篇简单的序言[1]，我深感荣幸。
 

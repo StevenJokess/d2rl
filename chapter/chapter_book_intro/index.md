@@ -16,7 +16,7 @@
 本章介绍这本书，包括：
 
 - flyleft&copyleft 衬页和声明
-- preface 序言
+- author's_preface 自序
 - prologue 前言
 - FAQ(Prerequisite) 疑问回答（前置学习条件）
 - glossary&notations 术语表和符号

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 16:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-20 14:47:09
+ * @LastEditTime: 2023-09-20 20:31:16
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -23,7 +23,7 @@
 
 ## 强化学习的概念（Concept）
 
-**强化学习**（Reinforcement Learning，简称RL），也叫增强学习，是指一类**智能体**从与环境交互中不断学习以取得最大回报（Return）的问题以及解决这类问题的方法。强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的不断交互，每次交互包括观察（Observate）当前的环境状态（State）、根据这个状态选择某个动作（Action）、并由此获得奖励（Award）或收益（Reward），我们把惩罚（punishment/penalty）处理成负收益形式，通过多次交互，智能体学习到了如何使得总体收益（Return）最大化。其中，强化是增加行为的意思，即当某个行为在从环境中获得正奖励后就会倾向去增加这种行为。[1]
+**强化学习**（Reinforcement Learning，简称RL），也叫增强学习、再励学习、评价学习，是指一类**智能体**从与环境交互中不断学习以取得最大回报（Return）的问题以及解决这类问题的方法。强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的不断交互，每次交互包括观察（Observate）当前的环境状态（State）、根据这个状态选择某个动作（Action）、并由此获得奖励（Award）或收益（Reward），我们把惩罚（punishment/penalty）处理成负收益形式，通过多次交互，智能体学习到了如何使得总体收益（Return）最大化。其中，强化是增加行为的意思，即当某个行为在从环境中获得正奖励后就会倾向去增加这种行为。[1]
 
 ## 强化学习的历史（History）
 
@@ -260,6 +260,14 @@ $$
 - 状态（State）：探测器所处状态
 - 动作（Action）：探测器要采取的动作，即向左走还是向右走
 - 奖励（Reward）：每到达一个新状态获得的奖励。值得注意的是，奖励是由用户（创建强化学习算法的人）根据目标设计的。[61]
+
+#### 集合=》空间
+
+- 智能体观察状态 $S_t \in \mathcal{S}$ 的环境, 得到观测 $O_t \in \mathcal{O}$, 其中 $\mathcal{S}$ 是**状态空间** (state space), 表示状态取值的综合; $\mathcal{O}$ 是**观测空间** (observation space), 表示观测取值的集合。
+- 智能体根据观测决定做出动作 $A_i \in \mathcal{A}$, 其中 $\mathcal{A}$ 是**动作集合**。
+- 环境根据智能体的动作, 给予智能体奖励 $R_{t+1} \in \mathcal{R}$, 并进人下一步的状态 $S_{t+1} \in \mathcal{S}$ 。其 中 $\mathcal{R}$ 是奖励空间（reward space），表示奖励取值的集合，它是实数集 $\mathbb{R}$ 的子集。
+
+#### 奖励的设计
 
 再以网格世界导航任务作为例子（gridworld navigation task example）：
 

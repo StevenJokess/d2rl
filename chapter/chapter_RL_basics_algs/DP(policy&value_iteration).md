@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-12 16:22:43
+ * @LastEditTime: 2023-09-20 20:46:39
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -104,7 +104,6 @@ $$
 ### 策略优化/改进（policy improvement）
 
 策略优化/改进（policy improvement）：根据值函数来计算当前状态的最好Action，来更新策略，公式是$\pi(s) =argmax_{a} \sum_{s', r} (r + \gamma V(s'))$
-
 
 #### 思路：
 
@@ -293,11 +292,25 @@ v_{k+1}(s)=\max _{a \in A}\left(R_s^a+\gamma \sum_{s^{\prime} \in S} P_{s s^{\pr
 
 1. DP算法能保证最优性。
 
-
 缺点：
 
 1. DP算法对一些规模很大的问题不是很适合，动态规划算法找到最优策略的时间（最坏情况）与状态和动作的数量呈多项式级关系。
-2. DP算法有时会由于维度灾难，而被认为缺乏实用性，即不适用于离散状态空间和离散动作空间很大，更不用提连续状态和连续动作了。维度灾难指的是，状态的总数量经常随着状态变量的增加而指数级上升。
+2. DP算法有时会由于维度灾难，而被认为缺乏实用性，即不适用于离散状态空间和离散动作空间很大，更不用提连续状态和连续动作了。维度灾难指的是，状态的总数量经常随着状态变量的增加而指数级上升。[11]
+3. DP的一次扫描需要对所有状态进行全面更新，这样会有不必要的计算。
+
+### 异步动态规划算法
+
+针对缺点3，异步动态规划算法部分避免了这个缺陷。
+
+异步动态规划的思想是, 每次扫描不再完整地更新一整套状态价值函数, 而是只更新**部分感兴趣**的值。例如, 有些状态 $s$ 不会转移到另一些状态 (例如对任意 $a \in \mathcal{A}$ 均有 $p\left(s^{\prime} \mid s, a\right)=0$ 的状态 $\left.s^{\prime}\right)$, 那么更新状态 $s$ 的价值函数后再更新 $s^{\prime}$ 的价值函数就没有意义。通 过只做有意义的更新，可能会大大减小计算量。
+
+在异步动态规划中, 优先更新（prioritized sweeping）是一种根据 Bellman 误差来选择性更新状态的算法。在迭代过程中，当更新一个状态后，试图找到一个 Bellman 误差最大的状态并更新该状态。具体而言，当更新一个状态价值函数后，针对这个状态价值函数会 影响到的状态价值函数, 计算 Bellman 误差:
+
+$$
+\left|\max _a\left(r(s, a)+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v\left(s^{\prime}\right)\right)-v(s)\right|
+$$
+
+并用一个优先队列来维护各状态的 Bellman 误差。然后从队头中取出 Bellman 误差最大的状态，更新其状态价值函数。[12]
 
 ## 小结
 
@@ -407,4 +420,5 @@ https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_dp.html
 [8]: https://www.zhihu.com/column/c_1356366236041924609
 [9]: https://mooc1.xueyinonline.com/nodedetailcontroller/visitnodedetail?courseId=233015706&knowledgeId=720084467&enc=
 [10]: https://bigquant.com/wiki/doc/-xoRs2BYj3r
-[11]：https://zhuanlan.zhihu.com/p/397509298
+[11]: https://zhuanlan.zhihu.com/p/397509298
+[12]: E:/BaiduNetdiskDownload/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8B.pdf

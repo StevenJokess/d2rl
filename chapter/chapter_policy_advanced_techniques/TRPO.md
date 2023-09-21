@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:59:33
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-25 04:22:14
+ * @LastEditTime: 2023-09-20 17:48:18
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -158,7 +158,7 @@ $$
 
 ## 伪代码（Pseudocode）
 
-![TRPO的伪代码[4]](../img/trpo_Pseudocode.svg)
+![TRPO的伪代码[4]](../../img/trpo_Pseudocode.svg)
 
 
 
