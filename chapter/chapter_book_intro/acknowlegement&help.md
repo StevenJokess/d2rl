@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-09 16:17:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-20 12:09:18
+ * @LastEditTime: 2023-09-21 22:04:00
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,10 +15,10 @@
 
 ## 致谢（Acknowlegement）
 
-- 感谢自己，因为本书由蔡舒起呆瓜单人组成了所谓的深度强化学习勃士生团队。
-- 致谢在此感谢为本repo成型时参考的所有作者。
+- 感谢自己，因为本书由蔡舒起呆瓜单人组成了所谓的深度强化学习勃士生团队。（组织、主编、撰稿、统稿、审阅、校对、宣传）
+- 由于本书撰写时参考的所有专家学者作者的学术研究成果，在此致谢。
 - 同时，还要感谢我的父母，他们在本书写作期间没把我逐出家门。
-- 感谢你选择本repo。祝你学习快乐！
+- 感谢你选择本Repo，祝你学习快乐！
 
 ## 代码下载（Code download）
 
@@ -28,6 +28,7 @@
 
 ## 联系我以寻找技术支持（Contact me for my tech support）
 
+- 由于时间仓促、水平有限，本书难免有疏漏及不足之处，恳请广大读者给予批评指正。
 - 如果你有任何疑问，请在下方的讨论区TODO:Discussion讨论。
 - 也可请通过电子邮件：867907127@qq.com，与蔡舒起呆瓜联系。
 - 有兴趣给我要饭钱，并听我和无产阶级发牢骚的QQ群：171097552

@@ -288,6 +288,13 @@ $P(A_t = a)$ or $\pi(a \mid S_t = s)$ or $\pi_t(a)$ $ = \frac{e^{H_t(a)}}{\sum_{
 
 $\pi_{\theta}=\mu_{\theta}+\varepsilon ,\varepsilon \sim N\left(0,\sigma^2\right)$
 
+## 习题
+
+1．描述多臂赌博机的探索-利用困境。
+2．多臂赌博机问题中，通过引入哪个指标来评价策略的好坏？请详细描述此指标。
+3．本节提到了哪些朴素探索？这些探索策略总后悔值随时间如何变化？
+4．给出UCB1探索的算法描述。
+5．简述汤普森采样算法。
 
 
 
@@ -306,7 +313,7 @@ $\pi_{\theta}=\mu_{\theta}+\varepsilon ,\varepsilon \sim N\left(0,\sigma^2\right
 [13]: https://www.ituring.com.cn/book/2794
 [14]: https://zh.wikipedia.org/zh-cn/%E7%82%B9%E4%BC%B0%E8%AE%A1
 [15]: https://zhuanlan.zhihu.com/p/104618189#%E4%B8%80%E3%80%81%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD
-
+[16]: https://weread.qq.com/web/reader/57d321c0813ab6bf8g016fe1ke2e329c0261e2ef524fbf75
 
 更多资料：
 

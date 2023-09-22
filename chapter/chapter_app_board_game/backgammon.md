@@ -20,5 +20,8 @@ Tesauro (1994) approached Backgammon by using neural networks to approximate val
 
 按下为准？
 
+西洋双陆棋的状态空间大约是 $10^{20}$ ，[3]
+
 [1]: https://pdf-1307664364.cos.ap-chengdu.myqcloud.com/%E6%95%99%E6%9D%90/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E3%80%8A%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%B8%A6%E4%BD%A0%E5%8E%BB%E9%9D%A2%E8%AF%95%E3%80%8B%E4%B8%AD%E6%96%87PDF.pdf
 [2]: https://arxiv.org/pdf/1701.07274
+[3]: https://weread.qq.com/web/reader/57d321c0813ab6bf8g016fe1k9a132c802349a1158154a83
