@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-12 15:06:05
+ * @LastEditTime: 2023-09-22 22:28:15
  * @Description:
  * @TODO::
  * @Reference:
@@ -100,7 +100,7 @@ $$
 
 决策是根据各个动作价值函数值确定选择哪个动作。
 
-#### 探索 还是 利用？（困境 dilemma）
+#### 探索 还是 利用？这是个窘境 （dilemma）
 
 很明显，我们希望执行预期回报最多的动作，但我们需要先探索哪个动作具有最大的回报，再进行利用。由于在选择某个动作时无法同时解决探索和利用，这二者便常常被称为一对矛盾或困境。[14]
 
