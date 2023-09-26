@@ -21,6 +21,9 @@
 Game
 Board_Game
 tic-tac-toe
+four_in_a_row_or_line
+Gomuku
+Reversi
 backgammon
 Chess
 Go
