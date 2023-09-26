@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 16:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-27 00:19:09
+ * @LastEditTime: 2023-09-27 00:24:59
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -70,7 +70,7 @@ $$
 |      | 监督学习  | 无监督学习  | 强化学习 |
 | ---- | ---------------- | ------------- | ------ |
 | 朴素定义 |老师教一部分例子，包括正确答案，学生通过例子归纳出原理，再通过原理去举一反三，泛化推广以解决之前没有遇到的问题，即模仿学习 | 没有老师，学生通过自学摸索出原理，再通过原理解决问题 | 老师在学生做出某个动作之后，只反馈结果怎样，如打分，而不是去教学生该如何去做[47]的|
-| 输入数据 | 一次性给定的supervisor提供正确且严格的标签  | 没有标签  | 没有标签、supervisor，属于semi-supervised learning。在智能体与环境交互的过程中得到评价反馈，叫做奖励，其起到一点的指导作用，但是又不同于标签，因为它又不是最终的目的。这些反馈是时间序列数据（sequential data），这些序列性的数据，是跟其他机器学习最大的不同它们不断被收集，用来去自校正。[62]（即在线学习[66]） 如果智能体不采取某个决策动作，那么该动作对应的数据就永远无法被观测到，所以当前智能体的训练数据来自之前智能体的决策结果。|
+| 输入数据 | 一次性给定（即数据一旦给定，则一般不变，除了预处理时的数据augmentation[77]）的supervisor提供正确且严格的标签  | 没有标签  | 没有标签、supervisor，属于semi-supervised learning。在智能体与环境交互的过程中得到评价反馈，叫做奖励，其起到一点的指导作用，但是又不同于标签，因为它又不是最终的目的。这些反馈是时间序列数据（sequential data），这些序列性的数据，是跟其他机器学习最大的不同它们不断被收集，用来去自校正。[62]（即在线学习[66]） 如果智能体不采取某个决策动作，那么该动作对应的数据就永远无法被观测到，所以当前智能体的训练数据来自之前智能体的决策结果。|
 | 输入要求 | 独立同分布(i.i.d.), 为了消除数据之间的相关性。    | 独立同分布(i.i.d.)   | 归一化的占用度量（occupancy measure）用于衡量在一个智能体决策与一个动态环境的交互过程中，采样到一个具体的状态动作对（state-action pair）的概率分布。|
 | 动作 | exploitation | exploitation | Trial-and-error，即存在exploration和exploitation的平衡 (不一定按照已知的最优做法去做)|
 | 驱动 | 任务驱动，模型是单纯被动地获得样本并被教育(instruct)[34] | 数据驱动  | Active learning，自驱的，有目标，从错误中学习[4]，这个错误是模型与目标的距离，通过奖励函数定量判断[5] |
@@ -747,6 +747,8 @@ Atari Breakout（横杆接小球）游戏的四大要素：
 [74]: https://weread.qq.com/web/reader/e68320b07265a6e9e688e51k45c322601945c48cce2e120
 [75]: https://weread.qq.com/web/reader/e68320b07265a6e9e688e51k65132ca01b6512bd43d90e3
 [76]: https://zhuanlan.zhihu.com/p/655383536
+[77]: https://blog.csdn.net/kuweicai/article/details/106590031
+
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 
