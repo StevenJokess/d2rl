@@ -23,4 +23,7 @@
 
 作为基础理论，控制论应用在许多领域，比如工业控制、机器人技术、交通控制和能源管理等。
 
+## 控制论与RL的对比
+
+![控制论与RL](../../img/control_VS_RL.png)
 [1]: https://developer.aliyun.com/article/1201435
