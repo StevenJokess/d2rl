@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-09-11 11:29:38
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-11 18:37:01
+ * @LastEditTime: 2023-10-02 23:56:55
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,6 +13,9 @@
 -->
 # Prioritized Experience Replay(PER)
 
+随机选择经验回放的做法使得输入经验间的时序相关性被打破。不过，由于是随机选择经验回放，那些更加有价值的经验和一般的经验便被同样的频率被回放，所以经验的学习效率便不会太高。
+
+而本文正是考虑到传统的经验回放机制的这个不足，提出使用基于优先级的经验回放机制。[2]
 
 
 ## Prioritized replay 算法
@@ -48,3 +51,5 @@ SumTree 是一种树形结构，每片树叶存储每个样本的优先级 p，�
 
 
 [1]: https://mofanpy.com/tutorials/machine-learning/reinforcement-learning/prioritized-replay#%E8%A6%81%E7%82%B9
+[2]: https://cardwing.github.io/files/131270027-%E4%BE%AF%E8%B7%83%E5%8D%97-%E9%99%88%E6%98%A5%E6%9E%97.pdf
+

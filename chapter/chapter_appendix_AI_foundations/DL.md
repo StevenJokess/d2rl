@@ -1,4 +1,24 @@
-深度学习原理简介
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-09-11 21:41:57
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-10-03 00:00:47
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
+# 深度学习原理简介
+
+## 机器学习
+
+机器学习就是一个通过直接使用数据的方式来设计和最优化信息处理系统的方法。在现实世界中，由于训练数据有限并且不可能包含所有可能的场景，这个信息处理系统需要学着去在训练数据没有包含的那部分场景里有较好的表现。在这种情况下，过拟合（over-fitting）是机器学习领域中的一个非常普遍和棘手的问题，它的一般表现就是所训练的系统的表现可以严格符合训练集的要求，但却不能很好地在那些没有见过的输入数据中有较好的表现，即泛化性能（generalization）差。[2]
+
+## 深度学习
+
 为了学习一种好的表示，需要构建具有一定“深度”的模型，并通过学习算法来让模型自动学习出好的特征表示（从底层特征，到中层特征，再到高层特征），从而最终提升预测模型的准确率。
 
 所谓“深度”是指原始数据进行非线性特征转换的次数。如果把一个表示学习系统看作是一个有向图结构，深度也可以看作是从输入节点到输出节点所经过的最长路径的长度。
@@ -26,3 +46,5 @@
 深度学习是机器学习的分支，是一种以人工神经网络为架构，对数据进行表征学习的算法。深度学习在搜索技术，数据挖掘，机器学习，机器翻译，自然语言处理等多个领域都取得了卓越的成果，可见其重要性，本文将通过梳理知识体系脉络帮助大家深入浅出了解深度学习。[1]
 
 [1]: https://zhuanlan.zhihu.com/p/140427486#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%B1%BB%E5%9E%8B
+[2]: https://cardwing.github.io/files/131270027-%E4%BE%AF%E8%B7%83%E5%8D%97-%E9%99%88%E6%98%A5%E6%9E%97.pdf
+

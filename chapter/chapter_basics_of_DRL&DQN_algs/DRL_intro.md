@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-02 18:38:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-14 03:22:43
+ * @LastEditTime: 2023-10-02 23:56:28
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -16,6 +16,8 @@
 ## 历史
 
 在如今大数据和深度学习快速发展的时代下，针对传统强化学习无法解决高维数据输入的问题，2013年Mnih V等人首次将深度学习中的卷积神经网络（Convolutional Neural Networks，CNN）引入强化学习中，提出了DQN（Deep Q Learning Network）算法，至此国际上便开始了对深度强化学习（Deep Reinforcement Learning，DRL）的科研工作。除此之外，深度强化学习领域中一个里程牌事件是2016年的AlphaGo 对战李世石的围棋世纪大战，谷歌旗下的人工智能团队DeepMind 基于深度强化学习开发出的围棋程序 AlphaGo击败了世界顶级围棋大师李世石，震惊了世界，也因此拉开了深度强化学习从学术界走向大众认知的帷幕。
+
+
 
 ## 概念
 
@@ -46,12 +48,26 @@ TODO:
 - 值函数（Value functions）（用来衡量状态的好坏，或者状态—动作对的好坏）（可用来选择最优策略）
 - 动态模型（用来预测下一状态和奖励）
 
+## 几个技巧帮助深度学习与强化学习结合
+
+过去，人们曾试图将强化学习算法和神经网络相结合，不过却都以失败而告终。由于深度神经网络为非线性模型，在训练过程中网络参数变化幅度大，容易振荡甚至发散。不过，最大的问题在于强化学习得到的输入数据间存在很强的时序相关性，而这种时序相关性又和那些更新神经网络的梯度算法的前提相冲突。
+
+这时，目标网络训练法（target network）和经验回放机制（experience replay mechanism）这两种方法被提出用来克服上面提到的问题。
+
+- 目标网络法就是每隔一定步数将待训练的网络做一个拷贝，然后待训练的网络以这个拷贝网络作为目标，不断更新自己的网络参数。
+- 经验回放机制将在下面介绍。经验回放机制就是拿一块有限大小的内存来存储智能体之前和环境交互得 到的经验 (经验就是 $\left(s_t, a_t, r_t, s_{t+1}\right)$ 元组), 这块内存也叫经验池 (replay buffer)。 然后, 每次神经网络需要输入时, 从这个经验池中随机选择一个 minibatch 数目 的经验来更新网络。这种做法有两个好处, 一个是由于之前获得的经验也机会被再次学到, 所以经验的使用效率得到提高。二是随机选择经验回放的做法使得输入经验间的时序相关性被打破。
+- 同时，为了提高网络训练的稳定性，批正则化（batch normalization）被提出用于预处理输入每层网络的数据，以达到限制每层网络权重的变化范围的目的。
+
+这样，结合了上述几个方法，强化学习和深度学习很好地结合，形成了深度强化学习算法（Deep Reinforcement Learning，DRL）。
+
 ## 深度强化学习与人脑的相像之处：
 
 1. 两者都能接受不同的复杂的感知信息
 1. 对于不同的感知信息的加工和反应任务都使用同一套学习算法（人类的舌头经过学习之后能“看见”物体）
 1. 人类在做一些任务时会假定一个奖励函数并以此来检验行为或作为目标（大脑中的基底核似乎与奖励机制有关）
 1. 而且无模型的强化学习过程和实验中的动物适应过程有一定一致性（可能会用一些探索——利用的策略之类的）等。[4]
+
+
 
 ## DRL面临的一些挑战
 
@@ -68,3 +84,4 @@ Alan Turing ：Instead of trying to produce a program to simulate the adult mind
 [4]: https://www.zhihu.com/column/c_125238795
 [5]: https://zhuanlan.zhihu.com/p/637642589
 [6]: https://blog.csdn.net/weixin_40056577/article/details/104109073
+[7]: https://cardwing.github.io/files/131270027-%E4%BE%AF%E8%B7%83%E5%8D%97-%E9%99%88%E6%98%A5%E6%9E%97.pdf
