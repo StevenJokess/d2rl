@@ -279,6 +279,7 @@ $$
 **策略优化**
 
 作者使用了TRPO来解决下列的受限制的优化问题：
+
 $$
 \begin{align}
 \mathop{\text{minimize}}\limits_{\phi} ~~& g^T (\phi - \phi_{old}) \\
@@ -288,7 +289,6 @@ $$
 L_{\theta_{old}}(\theta) = \frac 1N \sum_{n = 0}^N \frac{\pi_{\theta}(a_n|s_n)}{\pi_{\theta_{old}}(a_n|s_n)}\hat A_n\\
 & \overline{D}_{KL}^{\theta_{old}}(\pi_{old}, \pi_{\theta}) =
 \frac 1N \sum_{n = 1}^N D_{KL}[\pi_{\theta_{old}}(\cdot | s_n) \| \pi_\theta(\cdot | s_n)]
-
 \end{align}
 $$
 同样地，作者也通过将优化目标线性化以及将限制条件变成二次形式来进一步处理。
@@ -341,11 +341,4 @@ $$
 
 
 
-
-
-
-
-
-
-
-
+TODO: https://zhuanlan.zhihu.com/p/45107835

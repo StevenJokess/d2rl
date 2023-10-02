@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-06-02 23:16:48
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-08-25 03:05:17
+ * @LastEditTime: 2023-10-03 00:44:58
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,6 +15,7 @@
 
 在 DRL 中，我们处理参数化策略（parameterized policies）：其输出是依赖于一组参数（例如神经网络的权重和偏差）的 可计算函数的策略，我们可以通过一些优化算法调整这些参数以改变行为。
 
+
 我们经常用 $\theta$ 或 $\phi$ 来表示这种策略的参数，然后将其作为下标写在策略符号上以突出连接:
 
 $$
@@ -23,6 +24,10 @@ $$
 & a_t \sim \pi_\theta\left(\cdot \mid s_t\right) .
 \end{aligned}
 $$
+
+## 深度强化学习中的不同策略类型
+
+![深度强化学习中的不同策略类型](../../img/DRL_policies.png)
 
 ## 确定性策略
 

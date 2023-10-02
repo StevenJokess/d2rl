@@ -36,4 +36,24 @@
 
 开源库：https://github.com/colingogogo/gobang_AI#gobang_ai
 
+## 基于蒙特卡洛树和策略价值网络的深度强化学习五子棋
+
+特点：自我对弈、详细注释、流程简单
+
+代码结构：
+
+- net：策略价值网络实现
+- mcts：蒙特卡洛树实现
+- server：前端界面代码
+- legacy：废弃代码
+- docs：其他文件
+- utils：工具代码
+- network.py：移植过来的网络结构代码
+- model_5400.pkl：移植过来的网络训练权重
+- train_agent.py：训练脚本
+- web_server.py：对弈服务脚本
+- web_server_demo.py：对弈服务脚本（移植网络）
+
+TODO:https://cloud.tencent.com/developer/article/2302559
+
 [1]: E:/BaiduNetdiskDownload/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8B.pdf

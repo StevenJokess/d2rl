@@ -119,7 +119,7 @@
 
 TODO:
 
-自举（Bootstrapping）：“拔自己的鞋带，把自己举起来”（To lift oneself up by his bootstraps.）在强化学习里，用一个估算去更新同类的估算（In RL,bootstrapping means "using an estimated value in theupdate step for the same kind of estimated value".）[3]
+自举（Bootstrapping）：“拔自己的鞋带，把自己举起来”（To lift oneself up by his bootstraps.）在强化学习里，用一个估算去更新同类的估算（In RL,bootstrapping means "using an estimated value in theupdate step for the same kind of estimated value".）[3]我们基于之前估计的量来估计当前的量。[5]
 
 
 
@@ -128,3 +128,4 @@ TODO:
 [2]: https://zhuanlan.zhihu.com/p/510965690
 [3]: https://www.youtube.com/watch?v=X2-56QN79zc
 [4]: https://raw.githubusercontent.com/d2l-ai/d2l-en/master/chapter_notation/index.md
+[5]: https://blog.csdn.net/qq_40145095/article/details/126337455

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-22 14:41:08
+ * @LastEditTime: 2023-10-03 02:50:40
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -22,8 +22,8 @@
 
 | 章节 | 名称 | 文件夹名 | 内容 | 状态（未完成；已完成） |
 | :---: | :---: | :---: | :---: | :---: |
-| 扉页 | 作者介绍 | prefix.tex | 写在前面、致谢、说明 | V1.0 |
-| 第-0章 | AI老师 | introduction.tex | 迁移学习基本介绍 | V1.0 |
+| 扉页 | 作者介绍 | about_the_author(front_fold) | 作者简介 | V1.0 |
+| 第-0章 | AI老师 | AI_teacher(ChatGPT+) | 迁移学习基本介绍 | V1.0 |
 | :---: | :---: | :---: | :---: | :---: |
 | 第0章 | 书籍介绍 | prefix.tex | 写在前面、致谢、说明 | V1.0 |
 | 第1章 | 强化学习包的安装| introduction.tex | 迁移学习基本介绍 | V1.0 |
@@ -58,10 +58,11 @@
 | 第24章 | 应用：金融 | appendix.tex | 附录 | V1.0 |
 | 第25章 | 应用：真实世界 | appendix.tex | 附录 | V1.0 |
 | :---: | :---: | :---: | :---: | :---: |
-| 第26章 | 附录：相关数学基础 | appendix.tex | 附录 | V1.0 |
-| 第27章 | 附录：一些思考 | appendix.tex | 附录 | V1.0 |
-| 第28章 | 附录：工具 | appendix.tex | 附录 | V1.0 |
-
+| 第26章 | 附录：相关数学基础 | chapter_appendix-math_foundations | 附录 | V1.0 |
+| 第27章 | 附录：相关AI基础 | chapter_appendix_AI_foundations | 附录 | V1.0 |
+| 第27章 | 附录：相关RL基础 | chapter_appendix_RL_foundations | 附录 | V1.0 |
+| 第28章 | 附录：DRL的伟人 | chapter_appendix_great_people_for_DRL | 附录 | V1.0 |
+| 第27章 | 附录：信息和思考 | chapter_appendix_information&thinkings | 附录 | V1.0 |
 
 所有的代码实验均在`experiments`目录下。
 
@@ -95,7 +96,7 @@ AI_teacher_ChatGPT
 :numbered:
 
 chapter_book_intro/index
-chapter_installation/index
+chapter_install_tools_for_DRL/index
 chapter_basics-of-RL/index
 chapter_RL_basics_algs/index
 chapter_Eligibility_Trace/index
@@ -131,13 +132,11 @@ chapter_app-card_game/index
 chapter_app-video_game/index
 chapter_app-finance/index
 chapter_app-real_world/index
-dd
 
 chapter_appendix-math_foundations/index
 chapter_appendix_AI_foundations/index
 chapter_appendix_RL_foundations/index
-chapter_appendix-thinkings/index
-chapter_appendix-tools_for_DRL/index
+chapter_appendix_information&thinkings/index
 ```
 
 ```toc
