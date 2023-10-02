@@ -508,7 +508,7 @@ $$Q_{\pi}(s, a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \m
 
 $$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
 
-> 我们之后会继续谈论优势函数，它对于策略梯度方法非常重要。
+> 我们之后会继续谈论优势函数，它对于策略梯度方法和Dueling DQN非常重要。
 
 #### 策略（Policy）
 

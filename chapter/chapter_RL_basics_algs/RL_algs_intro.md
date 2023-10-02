@@ -15,7 +15,9 @@
 
 ## 强化学习的基础算法的简介
 
-强化学习的基础算法，据学习目标[1]/优化方法分类：
+
+
+### 据学习目标[1]/优化方法分类：
 
 - 不基于模型，即免模型学习（model-free）方法：该方法放弃了对环境的建模（不去直接估计状态的转移，也没的到环境的具体转移变量[12]），直接与真实环境进行交互，所以其通常需要较多的数据或者采样工作来优化策略，这也使其对于真实环境具有更好的泛化性能[2]；由于这种方式更加容易实现，也容易在真实场景下调整到很好的状态。所以免模型学习方法更受欢迎，得到更加广泛的开发和测试。
   1. **基于价值函数**（value-based）：该方法是智能体通过学习价值函数（value function）（如状态值函数或动作值函数 value function or action-value function）来隐式地构建最优策略，即选择具有最大值的动作。包括，采取回合更新的蒙特卡洛方法（MC）、采取单步或多步更新的时间差分方法（TD）{使用表格学习的 Q-learning、Sarsa算法以及一系列基于Q-learning的算法（具体见off-policy）}。此时我们在训练 $Q_\theta$ 以满足自洽方程，间接地优化智能体的表现，即训练的是一个主要完成任务的Actor。 优点：Value-based算法因为其更能有效地重用历史，所以样本利用率高、价值函数估值方差小, 不易陷入局部最优；缺点：此类算法只能解决离散动作空间问题, 容易出现过拟合, 且可处理问题的复杂度受限. 同时, 由于动作选取对价值函数的变化十分敏感, value-based算法收敛性质较差。[3]![基于值函数的方法](../../img/rl-overview-value-function.png)
@@ -29,6 +31,23 @@
 - 更多相关：模仿学习智能体（imitation learning agent）：该类智能体不是直接学习环境奖励，而是尝试模仿人类或其他专家的决策。模仿学习可以提供一种简单而有效的方式，使智能体学习到正确的行为。
 
 > 在这个项目中选取了能够呈现强化学习近些年发展历程的核心算法。目前，在可靠性 (stability)和 采样效率 (sample efficiency)这两个因素上表现最优的策略学习算法是 PPO 和 SAC。从这些算法的设计和实际应用中，可以看出可靠性和采样效率两者的权衡。[11]
+
+
+
+## 按更新方式分类
+
+回合更新 Monte-Carlo update & 单步更新 Temporal-Difference update
+
+- 典型的 Monte-Carlo update 方法： Policy Gradient
+- 典型的Temporal-Difference update 方法：Q-Learning \ Sarsa \ 升级版 Policy Gradient
+
+
+## 按行为策略与目标策略是否一致分类
+
+在线学习 on-policy & 离线学习 off-policy
+
+- 典型的 on-policy 方法：Sarsa \ Policy Gradient
+- 典型的 off-policy 方法：Q-Learning \ Deep Q-learning \ 升级版 Policy Gradient[9]
 
 ## RL算法的两个重要的评价指标
 
@@ -73,9 +92,13 @@
 [6]: https://anesck.github.io/M-D-R_learning_notes/RLTPI/notes_html/1.chapter_one.html
 [7]: https://www.cnblogs.com/kailugaji/p/16140474.html
 [8]: https://zhuanlan.zhihu.com/p/594985695
+[9]: https://zhuanlan.zhihu.com/p/586978752
 [10]: https://blog.csdn.net/weixin_40056577/article/details/104109073
 [11]: https://spinningup.qiwihui.com/zh_CN/latest/spinningup/rl_intro.html
 [12]: https://blog.csdn.net/weixin_46438285/article/details/125045312
 [15]: https://blog.csdn.net/Hansry/article/details/80808097
 [16]: https://opendilab.github.io/DI-engine/02_algo/model_based_rl_zh.html
 [22]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19
+
+
+

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:03:50
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-11 11:33:45
+ * @LastEditTime: 2023-10-02 22:30:04
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -74,19 +74,60 @@ $$
 
 ## 竞争深度Q网络（Dueling DQN）
 
-对于 $\boldsymbol{Q}(s, a)$ ，其对应的状态价值函数用Q表来表示，因此要求是离散的，而实际的状态大多不是离散的。
+Dueling DQN 是 DQN 另一种的改进算法，它在传统 DQN 的基础上只进行了微小的改动，但却能大幅提升 DQN 的表现。
 
-将Q值分解为状态价值函数和优势函数二者相加，即 $\mathrm{Q}$ 值 $\boldsymbol{Q}(s, a)=$ $V(s)+\boldsymbol{A}(s, a)$ ，可以得到更多信息。
+在强化学习简介一节中，我们将状态动作价值函数 $Q$ 减去状态价值函数 $V$ 的结果定义为优势函数 $A$ ，即 $A(s, a)=Q(s, a)-V(s)$ 。
 
-![](../../img/dueling(Q=V+A).png)
+故，逆向思维，可将动作价值函数Q，分解为状态价值函数和优势函数二者相加，即 $\boldsymbol{Q}(s, a)=$ $V(s)+\boldsymbol{A}(s, a)$ 。将状态价值函数和优势函数分别建模，可以得到更多信息。
+
+![dueling(Q=V+A)](../../img/dueling(Q=V+A).png)
 
 上面图片中，第一个网络代表着原来的natural Q-net，下面的就是我们将其改变后的样子。
 
 所以本质上，我们最终的矩阵 $\boldsymbol{Q}(s, a)$ 是将每一个 $V(s)$ 加到矩阵 $\boldsymbol{A}(s, a)$ 中得到的。在这种情况下，原来进行一次梯度回传只能够改变一个值Q，但是现在可以同时改变优势函数和状态价值函数。但是有时我们更新时不一定会将 $V(s)$ 和 $\boldsymbol{Q}(s, a)$ 都更新。
 
-利用这种分解我们能得到什么好处？在假设优势函数不变的情况下，仅仅改变状态价值函数的值，就可以更新在该状态下所有动作价值函数，这意味着我们即使不能够采样到所有的动作-价值对，也可以高效的估计Q值。[7]
+利用这种分解我们能得到什么好处？
 
-但是会出现一种极端的情况，就是 $V==0, Q=A$ 。为了避免该情况发生，我们要对 $A$ 添加约束。最直观的就是同一状态下，所有动作的优势加起来为 0 ，即计算 $\mathrm{Q}$ 时构造 $A(s, a) \leftarrow A(s, a)-\operatorname{mean} A(s, a)$ ，减去均值即可实现上述。
+1. ：某些情境下智能体只会关注状态的价值，而并不关心不同动作导致的差异；即使智能体更好地处理与动作关联较小的状态。[1]例如，智能体开车时，在前面没有车时，车辆自身动作并没有太大差异，此时智能体更关注状态价值；而当智能体前面有车时（智能体需要超车），智能体开始关注不同动作优势值的差异。
+2. 反向传播时，能够更加频繁地学习状态价值函数，从而使状态价值函数更准确：每一次更新时，函数 $V$ 都会被更新。
+3. 正向传播时，能通过优势函数，再利用学习到的状态价值函数，间接地学习该状态其他的所有动作价值函数：在假设优势函数不变的情况下，当状态价值函数的值被更新得到改变，就会影响到在该状态下所有动作价值函数去进行更新，这意味着我们即使不能够采样到所有的动作-价值对，也可以高效的估计Q值。[7]（对比，传统的 DQN 只会更新某个动作的 $Q$ 值，其他动作的 $Q$ 值就不会更新。这相比，也就是 Dueling DQN 会比 DQN 好的原因）
+
+#### 可能的问题一：两个未知值相加得一已知值，导致V值和A值建模可能不唯一
+
+对于 Dueling DQN 中的公式 $Q_{\eta, \alpha, \beta}(s, a)=V_{\eta, \alpha}(s)+A_{\eta, \beta}(s, a)$ ，它存在对于 **$V$ 值和 $A$ 值建模不唯一性**的问题。例如，对于同样的 $Q$ 值，如果将 $V$ 值 加上任意大小的常数 $C$, 再将所有 $A$ 值减去 $C$, 则得到的 $Q$ 值依然不变, 这就导致了训练的不稳定性。
+
+**对应的解决方案**：
+
+为了解决这一问题, Dueling DQN 强制最优动作的优势函数的实际输出为 0 ，即:
+
+$$
+Q_{\eta, \alpha, \beta}(s, a)=V_{\eta, \alpha}(s)+A_{\eta, \beta}(s, a)-\max _{a^{\prime}} A_{\eta, \beta}\left(s, a^{\prime}\right)
+$$
+
+此时 $V(s)=\max _a Q(s, a)$ ，可以确保 $V$ 值建模的唯一性。
+
+#### 可能的问题二：无法分解的情况，当$V==0, Q=A$
+
+可能出现一种极端的情况，就是 $V==0, Q=A$，导致无法分解。
+
+**对应的解决方案**：
+
+为了避免该情况发生，我们要对 $A$ 添加约束。最直观的就是同一状态下，所有动作的优势加起来为 0。
+
+用平均值$\operatorname{mean} A(s, a)=\frac{1}{|\mathcal{A}|} \sum_{a^{\prime}} A_{\eta, \beta}\left(s, a^{\prime}\right)$就可实现这种约束效果，即:
+
+$$
+Q_{\eta, \alpha, \beta}(s, a)=V_{\eta, \alpha}(s)+A_{\eta, \beta}(s, a)-\frac{1}{|\mathcal{A}|} \sum_{a^{\prime}} A_{\eta, \beta}\left(s, a^{\prime}\right)
+$$
+
+此时 $V(s)=\frac{1}{|A|} \sum_{a^{\prime}} Q\left(s, a^{\prime}\right)$ 。在下面的代码实现中，我们将采取该种方式，虽然它不再满足贝尔曼最优方程，但实际应用时更加稳定。
+
+
+有的读者可能会问: “为什么 Dueling DQN 会比 DQN 好? "部分原因在于 Dueling DQN 能更高效学习状态价值函数。每一次更新时，函数 $V$ 都会被更新，这也会影响到其他动作的 $Q$ 值。而传统的 DQN 只会更新某个动作的 $Q$ 值，其他动作的 $Q$ 值就不会更新。因此，Dueling DQN 能够更加频繁、 准确地学习状态价值函数。
+
+### 代码
+
+根据代码运行结果我们可以发现，相比于传统的 DQN，Dueling DQN 在多个动作选择下的学习更加稳定，得到的回报最大值也更大。由 Dueling DQN 的原理可知，随着动作空间的增大，Dueling DQN 相比于 DQN 的优势更为明显。之前我们在环境中设置的离散动作数为 11，我们可以增加离散动作数（例如 15、25 等），继续进行对比实验。
 
 ## 优先级经验回放（PER）
 
@@ -151,6 +192,55 @@ $$
 
 在传统的 DQN 基础上，有两种非常容易实现的变式——Double DQN 和 Dueling DQN，Double DQN 解决了 DQN 中对值的过高估计，而 Dueling DQN 能够很好地学习到不同动作的差异性，在动作空间较大的环境下非常有效。从 Double DQN 和 Dueling DQN 的方法原理中，我们也能感受到深度强化学习的研究是在关注深度学习和强化学习有效结合：一是在深度学习的模块的基础上，强化学习方法如何更加有效地工作，并避免深度模型学习行为带来的一些问题，例如使用 Double DQN 解决值过高估计的问题；二是在强化学习的场景下，深度学习模型如何有效学习到有用的模式，例如设计 Dueling DQN 网络架构来高效地学习状态价值函数以及动作优势函数。
 
+## 习题测试
+
+1. Double DQN 解决DQN存在的什么问题？
+1. 为什么 Dueling DQN 会比 DQN 好？
+
+## 扩展阅读：对 Q 值过高估计的定量分析
+
+我们可以对 $Q$ 值的过高估计做简化的定量分析。假设在状态 $s$ 下所有动作的期望回报均无差异，即 $Q^*(s, a)=V^*(s)$ (此设置是为了定量分析所简化的情形，实际上不同动作的期望回报通常会存在差异 $)$; 假设神经网络估算误差 $Q_{\omega^{-}}(s, a)-V^*$ 服从 $[-1,1]$ 之间的均匀独立同分布; 假设动作空间大小为 $m$ 。那么，对于任意状态 $s$ ，有:
+
+$$
+\mathbb{E}\left[\max _a Q_\omega-(s, a)-\max _{a^{\prime}} Q_*\left(s, a^{\prime}\right)\right]=\frac{m-1}{m+1}
+$$
+
+即动作空间 $m$ 越大时， $Q$ 值过高，估计越严重。
+
+**证明**: 将估算送差记为 $\epsilon_a=Q_{\omega^{-}}(s, a)-\max _{a^{\prime}} Q^*\left(s, a^{\prime}\right)$ ，由于估算误差对于不同的动作是独立的，因此有:
+
+$$
+P\left(\max _a \epsilon_a \leq x\right)=\prod_{a=1}^m P\left(\epsilon_a \leq x\right)
+$$
+
+$P\left(\epsilon_a \leq x\right)$ 是 $\epsilon_a$ 的累积分布函数（cumulative distribution function，即 CDF)，它可以具体被写为:
+
+$$
+P\left(\epsilon_a \leq x\right)= \begin{cases}0 & \text { if } x \leq-1 \\ \frac{1+x}{2} & \text { if } x \in(-1,1) \\ 1 & \text { if } x \geq 1\end{cases}
+$$
+
+因此，我们得到关于 $\max _{i 2} \epsilon_a$ 的累积分布函数:
+
+$$
+\begin{aligned}
+P\left(\max _a \epsilon_a \leq x\right) & =\prod_{a=1}^m P\left(\epsilon_a \leq x\right) \\
+& = \begin{cases}0 & \text { if } x \leq-1 \\
+\left(\frac{1+x}{2}\right)^m & \text { if } x \in(-1,1) \\
+1 & \text { if } x \geq 1\end{cases}
+\end{aligned}
+$$
+
+最后我们可以得到:
+
+$$
+\begin{aligned}
+\mathbb{E}\left[\max _a \epsilon_a\right] & =\int_{-1}^1 x \frac{\mathrm{d}}{\mathrm{d} x} P\left(\max _a \epsilon_a \leq x\right) \mathrm{d} x \\
+& =\left[\left(\frac{x+1}{2}\right)^m \frac{m x-1}{m+1}\right]_{-1}^1 \\
+& =\frac{m-1}{m+1}
+\end{aligned}
+$$
+
+虽然这一分析简化了实际环境，但它仍然正确刻画了 $Q$ 值过高估计的一些性质，比如 $Q$ 值的过高估计随动作空间大小 $m$ 的增加而增加，换言之，在动作选择数更多的环境中， $Q$ 值的过高估计会更严重。
 
 
 [1]: https://hrl.boyuai.com/chapter/2/dqn%E6%94%B9%E8%BF%9B%E7%AE%97%E6%B3%95

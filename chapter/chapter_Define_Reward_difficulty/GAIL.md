@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-16 21:41:00
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-22 00:22:48
+ * @LastEditTime: 2023-10-02 22:35:50
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -58,13 +58,13 @@ $$
 
 ## 度量定义
 
-1. Occupancy Measure
+1. 占用度量（Occupancy Measure）
 
 $$
 \mathrm{p}_\pi(\mathrm{s}, \mathrm{a})=\pi(\mathrm{a} \mid \mathrm{s}) \sum_{\mathrm{t}=0}^{\infty} \gamma^{\mathrm{t}} \mathrm{P}\left(\mathrm{s}_{\mathrm{t}}=\mathrm{s} \mid \pi\right)
 $$
 
-用来衡量policy的(state, action)分布。当前状态 $\mathrm{s}$ 与动作 $\mathrm{a}$ 的联合概率 $=$ 给定状态 $\mathrm{s}$ 选择动作 $\mathrm{a}$ 的概率 $\times$ 将来回到当前状态 $\mathrm{s}$ 的可能概率。 因此，目标与有效的occupancy measure可表示为:
+用来衡量policy的(state, action)分布。当前状态 $\mathrm{s}$ 与动作 $\mathrm{a}$ 的联合概率 $=$ 给定状态 $\mathrm{s}$ 选择动作 $\mathrm{a}$ 的概率 $\times$ 将来回到当前状态 $\mathrm{s}$ 的可能概率。 因此，目标与有效的占用度量可表示为:
 
 $$
 \begin{gathered}
@@ -73,7 +73,7 @@ $$
 \end{gathered}
 $$
 
-2. Policy Occupancy Measure
+2. 策略占用度量（Policy Occupancy Measure）
 
 $$
 \pi_{\mathrm{p}}(\mathrm{a} \mid \mathrm{s})=\mathrm{p}_\pi(\mathrm{s}, \mathrm{a}) / \sum_{\mathrm{a}^{\prime}} \mathrm{p}\left(\mathrm{s}, \mathrm{a}^{\prime}\right)
@@ -98,11 +98,15 @@ $$
 \mathrm{RL} \circ \operatorname{IRL}_\psi\left(\pi_{\mathrm{E}}\right)=\underset{\pi \in \Pi}{\arg \min } \psi^*\left(\mathrm{p}_\pi-\mathrm{p}_{\pi_{\mathrm{E}}}\right)-\mathrm{H}(\pi)
 $$
 
-$\mathrm{p}_{\pi \mathrm{E}}$ 最小。
+$\mathrm{p}_{\pi_\mathrm{E}}$ 最小。
 
 - 如果 $\psi$ 是一个constant function， $\tilde{\mathrm{c}} \in \operatorname{IRL}_\psi\left(\pi_{\mathrm{E}}\right) ， \tilde{\pi} \in \mathrm{RL}(\tilde{\mathrm{c}})$ ，则有 $\mathrm{p}_{\tilde{\pi}}=\mathrm{p}_{\pi_{\mathrm{E}}}$ 。
 
-总结: 整个过程其实就是在说明， $R L \circ I R L$ 这个过程得到的policy，就是在拟合专家数据中的occupancy measure 因此问题变为:
+总结: 整个过程其实就是在说明， $R L \circ I R L$ 这个过程得到的policy，就是在拟合专家数据中的占用度量。
+
+![GAIL 的优化目标](../../img/GAIL_optimation_goal.png)
+
+因此问题变为:
 
 $$
 \min _\pi \mathrm{d}_\psi\left(\mathrm{p}_\pi, \mathrm{p}_{\mathrm{E}}\right)-\mathrm{H}(\pi)

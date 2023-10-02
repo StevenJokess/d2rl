@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:21:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-17 02:17:23
+ * @LastEditTime: 2023-10-02 22:50:50
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -147,6 +147,24 @@ $$
 
 创建环境`Pendulum-v0`，并设定随机数种子以便重复实现。接下来我们在倒立摆环境中训练 PPO 算法。
 
+大量实验表明，PPO-截断总是比 PPO-惩罚表现得更好。
+
+## PPO的评价：优缺点
+
+优点：
+
+1. 良好的性能：PPO算法被认为是最先进的model-free深度强化学习算法之一，它在许多复杂任务中都能取得非常好的结果。
+1. 更快的收敛：相比其他算法，PPO算法在训练模型时收敛速度更快。
+1. 可解释性良好：为了保证策略函数的稳定性，PPO算法使用近似值函数来学习策略函数。
+1. off-policy：可以自己边玩边学，也可以看别人玩并从中学到经验
+1. 能支持连续行动场景：师承DDPG一脉。
+
+缺点：
+
+1. model-free的代价就是莽撞、缺乏想象力；
+1. 单步更新：行动一次就更新参数，勇敢、效率高；缺乏长期记忆，无妨；；挺好，没啥缺点；[10]
+
+
 ## 总结
 
 PPO 是 TRPO 的一种改进算法，它在实现上简化了 TRPO 中的**复杂计算**，并且它在实验中的性能大多数情况下会比 TRPO 更好，因此目前常被用作一种常用的基准算法。需要注意的是，TRPO 和 PPO 都属于在线策略学习算法，即使优化目标中包含重要性采样的过程，但其只是用到了上一轮策略的数据，而不是过去所有策略的数据。
@@ -163,5 +181,5 @@ PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士�
 [7]: https://hjp-muser.github.io/2019/11/15/TRPO-PPO-%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%8B%EF%BC%89/
 [8]: https://blog.csdn.net/weixin_43522964/article/details/104239921
 [9]: https://mofanpy.com/tutorials/machine-learning/reinforcement-learning/DPPO
-
+[10]: https://zhuanlan.zhihu.com/p/587129005
 TODO:https://www.huaxiaozhuan.com/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/chapters/19_Deep_RL.html

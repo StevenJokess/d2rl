@@ -276,8 +276,44 @@ Incline：未观察到的倾斜/下降 地面
 面对 本论文的 混合地形的设计，能否 针对不同地形进行 进行问题分解，来挖掘 不同地形的共性，来透过 低层次策略 与 高层次策略 共同对混合地形问题进行拆分，让智能体也能够学会稳定的、鲁棒的策略。[3]
 
 
+## 伪代码
 
+DPPO （DeepMind版本）算法[4]步骤：
+
+**主脑算法**：// 假设共有 W 个副脑， D 为可接受的最大失效副脑个数
+
+- 对于 $i \in \{ 1,...,N\}$ ，循环执行以下步骤：
+  - 对于 $j \in \{ 1,...,M\}$ ，循环执行以下步骤:
+    - 直到搜集至少 W-D 个副脑关于 \theta 的梯度
+- 对这些关于 \theta 的梯度取平均，使用梯度下降更新全局参数 \theta
+  - 对于 j \in \{ 1,...,B\} ，循环执行以下步骤:
+- 直到搜集至少 W-D 个副脑关于 \phi 的梯度
+- 对这些关于 \phi 梯度取平均，使用梯度下降更新全局参数 \phi
+
+**副脑算法**：
+
+- 对于 i \in \{ 1,...,N\} ，循环执行以下步骤：
+  - 对于 w \in \{ 1,...,T/K \} ，循环执行以下步骤: // K 为观测窗口的大小
+  - 执行 \pi _\theta 一共 K 次，收集 \{ s_t, a_t, r_t \} ，其中 t\in \{ iK -K, ..., iK-1\}
+  - 估算累加激励 \hat R_t = \sum_{t=iK-K}^{ik-1} \gamma^{t-(iK-K)} r_t +\gamma^{K} V_\phi (s_{iK})
+  - 估算边际收益 \hat A_t = \hat R_t - V_\phi(s_t)
+  - 存储上述系列信息
+- $\pi_{old} \leftarrow \pi_\theta$
+- 对于 m \in \{ 1,...,M\} ，循环执行以下步骤：
+  - J_{PPO}(\theta) = \sum_{t=1}^{T} \frac{\pi_\theta (a_t|s_t)}{\pi_{old}(a_t|s_t) } \hat A_t - \lambda KL[\pi_{old} | \pi_\theta] - \xi max(0, (KL[\pi_{old}|\pi_\theta]-2KL_{target}))^2
+  - 如果 KL[\pi_{old} | \pi_\theta] > 4 KL_{target} ，跳出内循环，并使 i=i+1
+  - 否则，计算 \nabla_\theta J_{PPO}(\theta) ，并上传到主脑
+  - 等待主脑确认接收或者放弃该梯度；使用梯度下降更新副脑参数 \theta
+- 对于 b \in \{ 1,...,B\} ，循环执行以下步骤：
+  - L_{BL}(\phi) = - \sum_{t=1}^{T} \hat A_t^2
+  - 计算 \nabla_\phi L_{BL}(\phi) ，并上传到主脑
+  - 等待主脑确认接收或者放弃该梯度；使用梯度下降更新副脑参数 \phi
+- 如果 KL[ \pi_{old}| \pi_{\theta} ] > \beta_{high} KL_{target} ，则 \lambda \leftarrow \tilde \alpha \lambda // 增大 J_{PPO} 中 KL 正则项的权重
+- 如果 KL[ \pi_{old}| \pi_{\theta} ] < \beta_{low} KL_{target} ，则 \lambda \leftarrow \lambda / \tilde \alpha // 减小 J_{PPO} 中 KL 正则项的权重
 
 [1]: https://weread.qq.com/web/reader/62332d007190b92f62371ae?
 [2]: https://mofanpy.com/tutorials/machine-learning/reinforcement-learning/DPPO#%E7%AE%80%E5%8D%95%20PPO%20%E7%9A%84%E4%B8%BB%E7%BB%93%E6%9E%84
 [3]: https://raw.githubusercontent.com/datawhalechina/easy-rl/master/papers/Policy_gradient/Emergence%20of%20Locomotion%20Behaviours%20in%20Rich%20Environments.md
+[4]: https://zhuanlan.zhihu.com/p/587129005
+
+
