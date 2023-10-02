@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-22 16:07:02
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-06 00:49:23
+ * @LastEditTime: 2023-10-03 00:13:03
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -59,7 +59,13 @@ Innovation points 创新点有：
 
 ## The Repo's Statement (本项目的声明)
 
-This project and its content are welcome to be forked and reposted, but the link must be placed in the first position, otherwise it will be considered as riding on the popularity. If commercial use is intended, please contact (email: llgg8679@qq.com) for approval before use, otherwise, there will be consequences. This project currently has no other commercial intentions, and only accepts help that can provide me with enough necessary goods and services for living. 本项目及其内容欢迎fork、转载，但转载时必须将链接放在第一的位置，否则必去蹭热度。若进行商用必先咨询（邮箱：llgg8679@qq.com）后同意才可使用，否则必去叨扰。本项目暂时无其他商业模式的意向，只接受帮我获得足够生活所需物品和服务的帮助。
+This project and its content are welcome to be forked and reposted, but the link must be placed in the first position, otherwise it will be considered as riding on the popularity. If commercial use is intended, please contact (email: llgg8679@qq.com) for approval before use, otherwise, there will be consequences. This project currently has no other commercial intentions, and only accepts help that can provide me with enough necessary goods and services for living. 本项目及其内容
+
+欢迎fork、转载，但转载时必须将链接放在第一的位置，否则必去蹭热度。若进行商用必先咨询（邮箱：llgg8679@qq.com）后同意才可使用，否则必去叨扰。本项目暂时无其他商业模式的意向，只接受帮我获得足够生活所需物品和服务的帮助。
+
+This project also aims to explore the extent to which deep reinforcement learning can be achieved solely through open and free resources in this era.
+
+本项目也想尝试在这个时代仅仅凭借公开且免费的资源能把深度强化学习学到什么程度。
 
 
 
