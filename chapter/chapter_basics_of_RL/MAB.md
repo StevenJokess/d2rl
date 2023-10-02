@@ -5,14 +5,14 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-27 01:35:07
+ * @LastEditTime: 2023-10-02 15:36:03
  * @Description:
  * @TODO::
  * @Reference:
 -->
 # 多臂老虎机（multi-armed bandit，MAB）环境
 
-下面考虑这样一个**非关联性**的简化环境，智能体与环境的交互不会改变环境的状态，可看作无状态的强化学习（stateless reinforcement learning）[11]，从而避免了完整强化学习问题的大部分复杂性，多臂老虎机问题可被视为序列决策问题的一种特殊情况，只是为了帮助我们更好地理解强化学习的基本概念和方法。
+下面考虑这样一个**非关联性**的简化环境，智能体与环境的交互不会改变环境的状态，可看作无状态的强化学习（stateless reinforcement learning）[11]，从而避免了完整强化学习问题的大部分复杂性。多臂老虎机环境，就是这样的一个环境，其可被视为序列决策问题的一种特殊情况，是研究探索与利用技术理论的最佳环境[18]，也能帮助我们更好地理解强化学习的基本概念和方法，
 
 > 为何特殊？多臂赌博机和一般的强化学习问题的最大不同有两点:（选自[exploration-talk](../../papers_PDF/exploration-talk.pdf)）
 >
@@ -328,6 +328,7 @@ $\pi_{\theta}=\mu_{\theta}+\varepsilon ,\varepsilon \sim N\left(0,\sigma^2\right
 [15]: https://zhuanlan.zhihu.com/p/104618189#%E4%B8%80%E3%80%81%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD
 [16]: https://weread.qq.com/web/reader/57d321c0813ab6bf8g016fe1ke2e329c0261e2ef524fbf75
 [17]: https://zhuanlan.zhihu.com/p/655421127
+[18]: https://zhuanlan.zhihu.com/p/594161566
 
 
 更多资料：

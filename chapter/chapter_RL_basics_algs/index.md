@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-05-25 02:41:42
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-10 03:34:02
+ * @LastEditTime: 2023-10-02 15:52:02
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -19,7 +19,7 @@
 ```toc
 :maxdepth: 2
 
-basic_RL_algs_intro
+RL_algs_intro
 DP(policy&value_iteration)
 value-based(MC+
 TD(Sarsa&Q-learning&DoubleQ))

@@ -1,11 +1,20 @@
-# 离策略
+# 离策略专题
 
-## 定义
+本章节主要介绍异策略的定义、作用，重要性采样，以及异策略蒙特卡洛和蒙特卡洛梯度下降算法。
 
-- **异策略**（off-policy）：在执行【策略评估】和【策略提升】的时候，使用的不是相同的策略。off表示在策略评估时，我们使用的策略（我们叫做behavior policy）【偏离】了我们的目标策略（target policy）。
-- **同策略**（on-policy）：在执行【策略评估】和【策略提升】的时候，使用的是相同的策略。
+## 行为策略和目标策略
 
-## 离轨策略的蒙特卡洛
+定义：
+
+- 行为策略（behavior policy）：采样数据的策略为行为策略（behavior policy），通常是随机策略，去采取非最优行动，生成探索性的样本，以保证探索到最优行动
+- 目标策略（target policy）：称用这些数据来更新的策略为目标策略（target policy），即待优化的，通常是确定性策略。[1]
+
+## 算法机制的分类：同策略和异策略
+
+- 同策略（on-policy），又叫在轨策略，表示行为策略和目标策略是同一个策略；例如，Sarsa，其计算时序差分的价值目标的数据来自当前的策略。
+- 异策略（off-policy），又叫离线策略，表示行为策略和目标策略并非同一个策略（off表达行为策略【偏离】目标策略的意思）。例如，Q-learning，其计算时序差分的价值目标的数据不来自当前的策略。
+
+## 蒙特卡洛控制的假设难满足，需要异策略
 
 蒙特卡洛控制问题，基本思想是广义策略迭代（GPI），同时维护一个近似的策略和近似的价值函数，价值函数会不断迭代使其更加精确地近似对应当前策略的真实价值函数，而当前的策略也会根据当前的价值函数不断调优。两个过程相互影响，他们互相为对方确定一个变化的优化目标，并最终都趋向最优解。
 
@@ -13,15 +22,11 @@
 
 首先回顾一种同轨策略——贪心策略，在绝大多数时候贪心地选择最大价值的动作，但同时以一个比较小的概率 随机选择一个动作。即对所有的非最大价值的动作，都有 $\frac{\epsilon}{|A(s)|}$ 的概率被 选中，那么对于最大价值的动作，以 $1-\epsilon+\frac{\epsilon}{|A(s)|}$ 概率被选中。
 
-为解决MC保证有充分的探索，即确保找到能最优动作，一个简单的方法就是使用探索性开头（exploring starts），让每个回合（episode）从不同的状态开始，从而使得所有状态都能探索到。
+为解决MC保证有充分的探索，即确保找到能最优动作，一个简单的方法就是使用探索性开头（exploring starts），让每个回合（episode）从不同的状态开始，从而**使得所有状态都能探索到。**当然这个假设有时候不切实际，故，我们引入异策略机制。
 
-当然这个假设有时候不切实际，因此我们引入离轨策略机制。
+## 异策略（off-policy）的问题
 
-# 离轨策略（off-policy）& 同轨策略（on-policy）
-
-离轨策略（off-policy）共有两个策略：一个是行为策略，其是随机策略，去采取非最优行动，生成探索性的样本，以保证探索到最优行动；而另一个是待优化的，称为目标策略，是确定性策略。
-
-离轨策略（off-policy）是有偏差的，因为目标策略的评估需要期望回报，但是我们只有行动策略的回报，这样计算出来的价值函数是不准确的，所以就需要重要度采样来弥补，几乎所有的离轨策略都采用了重要度采样。下面具体介绍重要度采样。
+异策略（off-policy）是有偏差的，因为目标策略的评估需要期望回报，但是我们只有行动策略的回报，这样计算出来的价值函数是不准确的，所以就需要重要度采样来弥补，几乎所有的离轨策略都采用了重要度采样。下面具体介绍重要度采样。
 
 ## 重要性采样（Importance Sampling）
 
@@ -60,7 +65,6 @@ $$
     - $\pi\left(S_t\right) \leftarrow \operatorname{argmax} \max _a   Q\left(S_t, a\right) $(with ties broken consistently)
     - $\quad \text { If } A_t \neq \pi\left(S_t\right) \text { then   exit For loop }$
     - $\quad W \leftarrow W \frac{1}{b\left(A_t \mid S_t\right)}$
-
 
 
 ### 连续变量的重要性采样：
@@ -170,15 +174,15 @@ $\rho_N = \rho_{N-1}\frac{1}{\mu(a_N|s_N)}$
     - $\rho \leftarrow \rho \frac{1}{\mu\left(a_t \mid s_t\right)}$
     - $\pi\left(s_t\right) \leftarrow \operatorname{argmax}_a q\left(s_t, a_t\right)$ ，由于序列已经采样好，所以策略在for循环内更新更 在for循环外再加一层for更新策略没有区别
 
-## 总结
-
-- 同轨策略（On-policy：在蒙特卡罗方法中，如果采样策略是 $π^ϵ(s)$ ，不断改进策略也是 $π^ϵ(s)$而不是目标策略 $π^ϵ(s)$。这种采样与改进策略相同（即都是 $π^ϵ(s)$）的强化学习方法叫做同策略（on policy）方法。
-- 异轨策略（Off-policy）：如果采样策略是 $π^ϵ(s)$，而优化目标是策略π，可以通过重要性采样，引入重要性权重来实现对目标策略π的优化。这种采样与改进分别使用不同策略的强化学习方法叫做异策略（off policy）方法。
-
-
-[1]: https://zhuanlan.zhihu.com/p/360265418
 
 code:https://github.com/CHH3213/chhRL/blob/master/02-chh_MonteCarlo/MC_OffPolicy.py
+
+## 总结
+
+- 同轨策略（On-policy）：在蒙特卡罗方法中，如果采样策略是 $π^ϵ(s)$ ，不断改进策略也是 $π^ϵ(s)$而不是目标策略 $π^ϵ(s)$。这种采样与改进策略相同（即都是 $π^ϵ(s)$）的强化学习方法叫做同策略（on policy）方法。
+- 异轨策略（Off-policy）：如果采样策略是 $π^ϵ(s)$，而优化目标是策略π，可以通过重要性采样，引入重要性权重来实现对目标策略π的优化。这种采样与改进分别使用不同策略的强化学习方法叫做异策略（off policy）方法。[2]
+
+
 
 
 ## off-policy 梯度下降
@@ -214,7 +218,7 @@ $$
 J^{\theta^{\prime}}(\theta)=E_{\left(s_t, a_t\right) \sim \pi_{\theta^{\prime}}}\left[\frac{p_\theta\left(a_t \mid s_t\right)}{p_{\theta^{\prime}}\left(a_t \mid s_t\right)} A^{\theta^{\prime}}\left(s_t, a_t\right)\right]
 $$
 
-### off policy 可代替的前提
+### off-policy 可代替的前提
 
 重要性采样解决了采样效率的问题，但也可能会引入新问题。
 
@@ -225,6 +229,10 @@ $$
 也就是说如果 $p_{\theta}\left(a_{t} | s_{t}\right)$ 与 $p_{\theta'}\left(a_{t} | s_{t}\right)$  相差太大，即这两个分布相差太多，重要性采样的结果就会不好。也就是说通过有限次的采样，如果 $p(x)$ 和 $q(x)$ 的差距过大，我们是无法保证这个期望的等式在采样数据上一定成立。[5]
 
 那如何避免 “ $p_\theta$ 和 $p_{\theta^{\prime}}$ 差太多”? 后面将利用信任区域策略优化 TRPO 和 近端优化策略 PPO [4]
+
+[1]: https://zhuanlan.zhihu.com/p/360265418
+[2]: https://zhuanlan.zhihu.com/p/594578726
+
 
 [3]: https://zhuanlan.zhihu.com/p/614049308
 [4]: https://windmissing.github.io/DeepLearningNotes/RL/Policy4.html

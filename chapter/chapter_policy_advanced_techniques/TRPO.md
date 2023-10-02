@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:59:33
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-20 17:48:18
+ * @LastEditTime: 2023-10-01 01:43:39
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -179,6 +179,13 @@ TRPO在车杆环境中很快收敛，展现了十分优秀的性能效果。
 接下来我们尝试倒立摆环境，由于它是与连续动作交互的环境，我们需要对上面的代码做一定的修改。对于策略网络，因为环境是连续动作的，所以策略网络分别输出表示动作分布的高斯分布的均值和标准差。
 
 code
+
+## TRPO VS 梯度策略
+
+相同点：
+- 它们都是基于策略的强化学习；它们有相同的目标函数：$J(\boldsymbol{\theta})=\mathbb{E}_S\left[V_\pi(S)\right] $
+不同点：
+- TRPO 通过信任区域算法最大化 $J(\boldsymbol{\theta})$。而策略梯度算法通过随机梯度上升最大化 $J(\boldsymbol{\theta})$
 
 ## 总结
 
