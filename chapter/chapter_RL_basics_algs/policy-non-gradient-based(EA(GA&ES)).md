@@ -1,41 +1,10 @@
+# 无梯度优化
 
+除了基于梯度（ Gradient-Based）的优化方法来实现基于策略（ Policy-Based）的学习，也有非基于梯度（ Non-Gradient-Based）方法，也称无梯度（ Gradient-Gree）优化方法，包括交叉熵（ Cross-Entropy， CE）方法、协方差矩阵自适应（ Covariance Matrix Adaptation， CMA）、爬山法（ Hill Climbing）， Simplex / Amoeba / Nelder-Mead 算法等。[4]
 
-<!--
- * @version:
- * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-05-26 22:47:02
- * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-11 18:42:22
- * @Description:
- * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
- * @TODO::
- * @Reference:
--->
-# 进化算法
-
-## 概述
+## 进化算法概述
 
 进化算法 (Evolutionary Algorithms) 包括遗传算法 (Genetic Algorithms)、进化规划 (Evolutionary Programming)、进化策略 (Evolution Strategies) 及遗传编程 (Genetic Programming)。它们都是借鉴生物界中进化与遗传的机理, 用于解决复杂的工程技术问题。
-
-
-
-ES, as a black-box optimization algorithm, is another approach to RL problems (In my original writing, I used the phrase “a nice alternative”; Seita pointed me to this discussion and thus I updated my wording.). It has a couple of good characteristics (Salimans et al., 2017) keeping it fast and easy to train:
-ES，作为一种黑盒优化算法，是另一种解决强化学习问题的方法（在我最初的写作中，我使用了“一个不错的选择”; Seita向我指出了这个讨论，因此我更新了我的措辞。它具有几个良好的特性（Salimans等人，2017年，保持快速和易于训练：
-
-ES does not need value function approximation;
-ES不需要值函数逼近;
-ES does not perform gradient back-propagation;
-ES不执行梯度反向传播;
-ES is invariant to delayed or long-term rewards;
-ES对延迟或长期奖励是不变的;
-ES is highly parallelizable with very little data communication.
-ES是高度并行化的，几乎没有数据通信。
-
-
-TODO: https://lilianweng.github.io/posts/2018-02-19-rl-overview/#policy-gradient-theorem
-
----
-
 
 ## 生物界中进化与遗传的机理
 
@@ -53,7 +22,7 @@ TODO: https://lilianweng.github.io/posts/2018-02-19-rl-overview/#policy-gradient
 
 进化算法都是从一组随机生成的初始个体出发，经过选择、交叉、变异等操作，并根据适应度大小进行个体的优胜劣汰，提高新一代群体的质量，再经过多次反复迭代，逐步逼近最优解。从数学角度讲，进化算法实质上是一种搜索寻优的方法进化算法和传统的搜索寻优方法有很大的不同，它不要求所研究的问题是连续、可导的，但是却可以很快地得出所要求的最优解。进化算法的基本流程如下：
 
-![进化算法的流程](../../img/ES.png)
+![进化算法的流程](../../img/EA.png)
 
 进化算法的搜索方式特点如下:
 
@@ -63,6 +32,53 @@ TODO: https://lilianweng.github.io/posts/2018-02-19-rl-overview/#policy-gradient
 4. 全局最优解。进化算法由于采用多点并行搜索, 而且每次迭代借助交叉和变异产生新个体, 不断扩大搜索范围, 因此进化算法容易搜索出全局最优解而不是局部最优解。
 5. 黑箱式结构。从某种意义讲, 进化算法只研究输人与输出的关系, 并不深究造成这种关系的原因, 因此便于处理因果关系不明确的问题。
 6. 通用性强。传统的优化算法, 需要将所解决的问题用数学式子表达, 而且要求该数学函数的一阶异或二阶导数存在。进化算法, 只用某种编码方式表达问题, 然后根据适应度区分个体优劣, 其余的化操作都是统一的。虽然如此, 进化算法的编码问题以及合适的进化操作算子的选择是需要针对具体问题进化分析, 有时难以构造与选择。
+
+## ES
+
+ES, as a black-box optimization algorithm, is another approach to RL problems (In my original writing, I used the phrase “a nice alternative”; Seita pointed me to this discussion and thus I updated my wording.). It has a couple of good characteristics (Salimans et al., 2017) keeping it fast and easy to train:
+ES，作为一种黑盒优化算法，是另一种解决强化学习问题的方法（在我最初的写作中，我使用了“一个不错的选择”; Seita向我指出了这个讨论，因此我更新了我的措辞。它具有几个良好的特性（Salimans等人，2017年，保持快速和易于训练：
+
+
+- ES不需要值函数逼近；ES does not need value function approximation;
+- ES不执行梯度反向传播；ES does not perform gradient back-propagation;
+- ES对延时或长期回报不会改变；ES is invariant to delayed or long-term rewards;
+- ES是高度并行化的，几乎没有数据通信。ES is highly parallelizable with very little data communication.
+
+![进化算法的流程](../../img/EA.png)
+
+
+进化策略算法的思路如下：
+
+考虑确定性策略 $\pi(\boldsymbol{\theta})$ 。我们试图迭代更新策略参数 $\boldsymbol{\theta}$ 。 假设第k次迭代前的策略参数为 $\theta_k$ 。现在要确定如何修改这个策略参数使得修改后 的策略会更好。为此，随机选取 $n$ 个和参数 $\boldsymbol{\theta}_K$ 形状相同的方向参数 $\boldsymbol{\delta}_k^{(0)}, \boldsymbol{\delta}_k^{(1)}, \cdots, \boldsymbol{\delta}_k(n-1)$ ，并且将参数 $\boldsymbol{\theta}_k$ 按这 $n$ 个方向改变 $\sigma$ 倍，进而可以得到 $n$ 个新策略 $\pi\left(\boldsymbol{\theta}_k+\sigma \boldsymbol{\delta}_k^{(0)}\right), \pi\left(\boldsymbol{\theta}_k+\sigma \boldsymbol{\delta}_k^{(1)}\right) ， \cdots, \pi\left(\boldsymbol{\theta}_k+\sigma \boldsymbol{\delta} k_k^{(n-1)}\right)$ 。我 们可以让这些策略和环境交互，得到每个策略的期望回报估计 $G_k^{(0)}$ ， $G_k^{(1)}, \cdots, G_k^{(n-1)}$ 。如果某个 $G_k^{(i)}(0 \leqslant i<n)$ 比其他回报都大得多，那 么就说明策略 $\pi\left(\boldsymbol{\theta}_{\boldsymbol{k}^{+}} \boldsymbol{\sigma} \boldsymbol{\delta}(i)\right)$ 比其他策略更加高明，也说明方向 $\boldsymbol{\delta}_k^{(i)}$ 是一个好的 方向，应该让 $\boldsymbol{\theta}_k$ 向 $\boldsymbol{\delta}_k^{(i)}$ 方向改变；如果某个 $G_k^{(i)}(0 \leqslant i<n)$ 比其他回报都 小得多，那么就说明策略 $\pi\left(\boldsymbol{\theta}_k+\sigma \boldsymbol{\delta}(i)\right)$ 比其他策略差，也说明方向 $\boldsymbol{\delta}_k^{(i)}$ 是一个差的方向，应该让 $\boldsymbol{\theta}_k$ 向 $\boldsymbol{\delta}_k^{(i)}$ 的相反方向改变。基于这样的思想，我们可以将所 有 $G_k^{(0)}, G_k^{(1)}, \cdots, G_k^{(n-1)}$ 归一化为均值为 0 、方差为 1 的一组数，称为适合度(fitness score):
+
+$$
+F_k^{(i)}=\frac{G_k^{(i)}-\operatorname{mean}_{\substack{0 \leqslant j<n \\ k}}^{(j)}}{\operatorname{std} G_k^{(j)}}, 0 \leqslant i<n,
+$$
+
+这样得到的 $F_k^{(i)}$ 有正有负。然后，我们用 $F_k^{(i)}(0 \leqslant i<n)$ 对 $\boldsymbol{\delta}_k^{(i)}$ 进行加权，这样加权得到的方向 $\sum_{i=0}^{n-1} F^{(i)} \boldsymbol{\delta}^{(j)}$ 就可能让策略变好。然后，我们用这个方向更新策略参数，即
+
+$$
+\boldsymbol{\theta}_{k+1}=\boldsymbol{\theta}_k+\alpha \sum_{i=0}^{n-1} F_k^{(i)} \boldsymbol{\delta}_k^{(i)} 。
+$$
+
+这就是进化策略算法的原理。
+
+![进化策略算法](../../img/ES_algs.png)
+
+### ES的变种——ARS
+
+进化策略算法有许多变种。增强随机搜索(Augmented Random Search，ARS)算法是一类变种。本节介绍其中一种增强随机搜索算法。
+
+算法的思想如下：依然假设在第 $k$ 次迭代前的策略参数为 $\boldsymbol{\theta}_k$ ，并且随机选取 $n$ 个和 参数 $\boldsymbol{\theta}_k$ 形状相同的方向参数 $\boldsymbol{\delta}_k^{(0)}, \boldsymbol{\delta}_k^{(1)}, \cdots, \boldsymbol{\delta}_k^{(n-1)}$ 。但是，每个方向 $\boldsymbol{\delta}_k^{(i)}$ 可 以确定出两个不同的策略： $\pi\left(\boldsymbol{\theta}_k+\sigma \boldsymbol{\delta}{ }_k^{(i)}\right)$ 和 $\pi\left(\boldsymbol{\theta}_k-\sigma \boldsymbol{\delta}(i)\right)$ ，所以一共 有 $2 n$ 个新策略。接着，用这 $2 n$ 个新策略和环境交互，得到 $2 n$ 个回报期望估计。
+
+记策略 $\pi\left(\boldsymbol{\theta}_k+\sigma \boldsymbol{\delta}_k^{(i)}\right)$ 对应的回报期望估计为 $G_{+}^{(i)}, k, \pi\left(\boldsymbol{\theta}_k-\sigma \boldsymbol{\delta}_k^{(i)}\right)$ 对应 的回报期望估计为 $G^{(i)}, k^{\circ}$ 。如果 $G_{+}^{(i)}, k$ 远大于 $G^{(i)}, k^{\prime}$ 那么说明方向 $\boldsymbol{\delta}_k^{(i)}$ 是 一个好的方向，我们要让参数向 $\boldsymbol{\delta}_k^{(i)}$ 方向变化; 如果 $G_{+}^{(i)}, k$ 远小于 $G_{-}^{(i)}, k$ ，那 么说明 $\boldsymbol{\delta}_k^{(i)}$ 是一个差的方向，我们要让参数向 $\boldsymbol{\delta}_k^{(i)}$ 的相反方向变化。所以，方向 $\boldsymbol{\delta}_k^{(i)}$ 的适合度就可以定义为两个期望回报估计之差
+$$
+F_k^{(i)}=G_{+, k}^{(i)}-G_{-}^{(i)}, k 。
+$$
+算法11-2给出了这种增强随机搜索算法。[5]
+
+
+![ARS](../../img/ARS.png)
 
 ## 遗传算法（GA）
 
@@ -135,7 +151,28 @@ https://zhuanlan.zhihu.com/p/189010215s
 
 更多见：https://www.bilibili.com/video/BV1wW411Y7tr?p=15
 
+## 无梯度算法与策略梯度算法的对比得其优缺点
+
+无梯度算法和策略梯度算法都是通过优化策略参数来求解最优策略的算法。本节对这两类算法的优缺点进行比较。
+
+由于强化学习可以看作一个优化问题，所以它们的优缺点比较和比较基于梯度的优 化方法和不基于梯度的优化方法有类似之处。不过，在强化学习任务中，这样的区别会带来额外的优缺点。
+
+无梯度算法具有以下优点:
+
+- 无梯度算法往往有更好的探索性。无梯度算法生成新策略时，参数改变的方向是 任意选定的，不会在某个方向上有偏好。所以，它往往能探索到更多的情况。
+- 无梯度算法适合并行计算。无梯度算法主要在估计每个策略的平均回报上运算。 而这个过程是可以并行计算的，即让每个策略在不同的机器上与环境交互。所以， 无梯度算法非常适合并行计算。
+- 无梯度算法鲁棒性更好，更不容易受到随机数种子的影响。
+- 无梯度算法不需要计算梯度，适合于无法得到梯度的情况。
+
+无梯度算法具有以下缺点:
+
+- 无梯度算法数据利用率相对较低，不适合交互代价很大的环境。原因在于，其参 数改变方向任意，没有指导，会生成很多不合适的策略。
+
+
+
 [1]: https://www.bilibili.com/video/BV1iN411o7N1/
 [2]: https://www.bilibili.com/video/BV1kK4y1R7rv/
 [3]: https://easyai.tech/ai-definition/genetic-algorithm/
-
+[4]: https://blog.csdn.net/qq_40145095/article/details/126337455d
+[5]: https://weread.qq.com/web/reader/85532b40813ab82d4g017246k3ef329302553ef815416990
+TODO: https://lilianweng.github.io/posts/2018-02-19-rl-overview/#policy-gradient-theorem

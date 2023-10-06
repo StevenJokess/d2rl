@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 16:55:09
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-03 02:50:40
+ * @LastEditTime: 2023-10-06 20:48:43
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -37,12 +37,14 @@
 | 第8章 | 有关策略的先进技巧 | subspacelearn.tex | 子空间学习法 | V1.0 |
 | :---: | :---: | :---: | :---: | :---: |
 | 第9章 | 利用模型的强化学习 | deep.tex | 深度和对抗迁移方法 | V1.0 |
+| 第10章 | 值分布强化学习 | deep.tex | 深度和对抗迁移方法 | V1.0 |
+| 第11章 | 更多智能体/环境接口模型 | deep.tex | 深度和对抗迁移方法 | V1.0 |
 | :---: | :---: | :---: | :---: | :---: |
-| 第10章 | 离线强化学习 | appendix.tex | 附录 | V1.0 |
-| 第11章 | 无监督强化学习 | appendix.tex | 附录 | V1.0 |
-| 第12章 | 迁移强化学习 | appendix.tex | 附录 | V1.0 |
-| 第13章 | 元强化学习 | appendix.tex | 附录 | V1.0 |
-| 第14章 | 自动强化学习 | appendix.tex | 附录 | V1.0 |
+| 第12章 | 离线强化学习 | appendix.tex | 附录 | V1.0 |
+| 第13章 | 无监督强化学习 | appendix.tex | 附录 | V1.0 |
+| 第14章 | 迁移强化学习 | appendix.tex | 附录 | V1.0 |
+| 第15章 | 元强化学习 | appendix.tex | 附录 | V1.0 |
+| 第16章 | 自动强化学习 | appendix.tex | 附录 | V1.0 |
 | :---: | :---: | :---: | :---: | :---: |
 | 第15章 | 多机（分布式）强化学习 | appendix.tex | 附录 | V1.0 |
 | 第16章 | 多任务强化学习 | appendix.tex | 附录 | V1.0 |

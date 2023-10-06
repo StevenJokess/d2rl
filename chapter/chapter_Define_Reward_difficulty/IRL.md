@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-16 21:13:06
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-25 03:30:36
+ * @LastEditTime: 2023-10-06 20:18:59
  * @Description:
  *
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
@@ -35,6 +35,11 @@
 最大边际形式化的最大缺点是很多时候不存在单独的回报函数使得专家示例行为既是最优的又比其他任何行为好很多，或者有很多不同的回报函数会导致相同的专家策略，也就是说这种方法无法解决歧义的问题。
 
 基于概率模型的方法可以解决歧义性的问题。研究者们利用概率模型又发展出了很多逆向强化学习算法，如最大熵逆向强化学习、相对熵逆向强化学习、最大熵深度逆向强化学习，基于策略最优的逆向强化学习等等。
+
+
+## 测验与习题
+
+1. 什么是模仿学习？模仿学习一般应用于什么样的任务？能举一个模仿学习的应用例子吗？
 
 
 [1]: http://www.icdai.org/ibbb/2019/ID-0004.pdf

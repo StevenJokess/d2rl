@@ -170,6 +170,11 @@ NIPS 2016的文章比较久远，但是一篇十分经典、承上启下的文�
 一句话总结：通过引入GAN来拟合专家数据的(s,a)分布，从而获得对Policy Update的Guidance。
 启发：这种Guidance可以从其他形式获得。
 
+## 测验与习题
+
+1. 什么是生成对抗模仿学习？它和生成对抗网络有何联系？
+
+
 [1]: https://papers.nips.cc/paper_files/paper/2016/hash/cc7e2b878868cbae992d1fb743995d8f-Abstract.html
 [2]: https://boyuai.oss-cn-shanghai.aliyuncs.com/disk/%E5%8A%A8%E6%89%8B%E5%AD%A6%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%89%8B%E5%AD%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/%E8%AF%BE%E4%BB%B6pdf/10-%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0.pdf
 [3]: https://blog.csdn.net/weixin_40056577/article/details/106452740

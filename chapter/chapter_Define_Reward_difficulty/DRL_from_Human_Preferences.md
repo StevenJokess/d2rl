@@ -92,6 +92,9 @@ $σ^1 > σ^2$ 代表观察者倾向 $σ^1$ 到 $σ^2$ 的轨迹片段
 
 代码：[2]
 
+## 测验与习题
+
+1. 人类反馈强化学习如何用来训练GPT？
 
 [1]: http://www.abilitygame.cn/2022/12/12/rlhf-%E4%B8%80%E7%A7%8D%E5%BC%B1%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/
 [2]: https://github.com/HarderThenHarder/transformers_tasks/tree/main/RLHF
