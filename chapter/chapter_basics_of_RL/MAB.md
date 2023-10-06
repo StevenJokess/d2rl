@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-02 15:36:03
+ * @LastEditTime: 2023-10-06 21:02:49
  * @Description:
  * @TODO::
  * @Reference:
@@ -303,11 +303,12 @@ $\pi_{\theta}=\mu_{\theta}+\varepsilon ,\varepsilon \sim N\left(0,\sigma^2\right
 
 ## 思考题与习题
 
-1．描述多臂赌博机的探索-利用困境。
-2．多臂赌博机问题中，通过引入哪个指标来评价策略的好坏？请详细描述此指标。
-3．本节提到了哪些朴素探索？这些探索策略总后悔值随时间如何变化？
-4．给出UCB1探索的算法描述。
-5．简述汤普森采样算法。
+1. 什么是多臂赌博机问题？为什么要研究多臂赌博机问题？
+1. 描述多臂赌博机的探索-利用困境。
+1. 多臂赌博机问题中，通过引入哪个指标来评价策略的好坏？请详细描述此指标。
+1. 本节提到了哪些朴素探索？这些探索策略总后悔值随时间如何变化？
+1. 给出UCB1探索的算法描述。
+1. 简述汤普森采样算法。
 
 
 
