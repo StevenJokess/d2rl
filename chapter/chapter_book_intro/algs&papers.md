@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-06-04 20:48:28
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-10 03:49:52
+ * @LastEditTime: 2023-10-06 21:45:37
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -33,13 +33,17 @@
 - Double DQN： [Double DQN](https://arxiv.org/pdf/1509.06461.pdf)
 - Dueling DQN： [Dueling DQN](https://arxiv.org/pdf/1511.06581.pdf)
 - Branching DQN：[Branching DQN](https://arxiv.org/pdf/1711.08946.pdf)
-- Categorical DQN (C51)：[Categorical DQN (C51)](https://arxiv.org/pdf/1707.06887.pdf)
+
+## chapter_distributional_RL
+
 - QRDQN[Quantile Regression DQN (QRDQN)](https://arxiv.org/pdf/1710.10044.pdf)
+- Categorical DQN (C51)：[Categorical DQN (C51)](https://arxiv.org/pdf/1707.06887.pdf)
 - Rainbow DQN (Rainbow)：[Rainbow DQN (Rainbow)](https://arxiv.org/pdf/1710.02298.pdf)
+- X[Implicit Quantile Network (IQN)](https://arxiv.org/pdf/1806.06923.pdf)
 
 ## ？？？
 
-- X[Implicit Quantile Network (IQN)](https://arxiv.org/pdf/1806.06923.pdf)
+
 - X[Fully-parameterized Quantile Function (FQF)](https://arxiv.org/pdf/1911.02140.pdf)
 
 ## chapter_continuous_control
