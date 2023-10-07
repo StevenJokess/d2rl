@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-19 01:26:53
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-19 01:27:02
+ * @LastEditTime: 2023-10-07 03:02:11
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,8 +13,31 @@
 -->
 # 元学习
 
-1.元学习概述
-1.1元学习概念
+## 人工智能的进展
+
+第一代：良好的老式人工智能
+
+- 手工预测
+- 什么都不学
+
+第二代：浅学习
+
+- 手工功能
+- 学习预测
+第3代：深度学习
+
+- 手工算法（优化器，目标，架构……）
+- 端到端地学习功能和预测
+
+第4代：元学习
+
+- 不需要手工
+- 端到端学习算法和功能以及预测）
+
+## 元学习概述
+
+### 元学习概念
+
 元学习 (Meta-Learning) 通常被理解为“学会学习 (Learning-to-Learn)”，
 
 指的是在多个学习阶段改进学习算法的过程。
@@ -27,16 +50,12 @@
 
 因此，元学习的核心想法是学习一个先验知识 (prior)。
 
-1.2 元学习含义
+### 元学习含义
+
 元学习的含义有两层，
 
-第一层是让机器学会学习，使其具备分析和解决问题的能力，
-
-机器通过完成任务获取经验，提高完成任务的能力;
-
-第二层是让机器学习模型可以更好地泛化到新领域中，
-
-从而完成差异很大的新任务。
+- 第一层是让机器学会学习，使其具备分析和解决问题的能力，机器通过完成任务获取经验，提高完成任务的能力;
+- 第二层是让机器学习模型可以更好地泛化到新领域中，从而完成差异很大的新任务。
 
 Few-Shot Learning 是 Meta-Learning 在监督学习领域的应用。
 

@@ -125,4 +125,7 @@ python -m spinup.run test_policy /home/hxh/spinningup/data/mujocotest/mujocotest
 ^https://zhuanlan.zhihu.com/p/352304615
 ^https://blog.csdn.net/hehedadaq/article/details/109012048
 
+![Mujoco环境](../../img/mujoco.png)
+
 [1]: https://zhuanlan.zhihu.com/p/472290066
+[2]: https://www.zhihu.com/question/548351237/answer/2897588735

@@ -10,4 +10,5 @@ machine_game(perfect_information)
 game_theory_for_multi-players
 machine_game(imperfect_information)
 game_theory_design_rule
+noble_prize
 ```

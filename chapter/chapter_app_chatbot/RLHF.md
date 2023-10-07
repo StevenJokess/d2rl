@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-09-04 15:51:01
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-04 15:54:31
+ * @LastEditTime: 2023-10-07 01:29:36
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -27,7 +27,9 @@ RLHF适合于同时满足下面所有条件的任务：
 要解决的任务是一个强化学习任务，但是没有现成的奖励信号并且奖励信号的确定方式事先不知道。为了训练强化学习智能体，考虑构建奖励模型来得到奖励信号。
 
 反例：
+
 比如电动游戏有游戏得分，那样的游戏程序能够给奖励信号，那我们直接用游戏程序反馈即可，不需要人类反馈。
+
 反例：某些系统奖励信号的确定方式是已知的，比如交易系统的奖励信号可以由赚到的钱完全确定。这时直接可以用已知的数学表达式确定奖励信号，不需要人工反馈。
 
 不采用人类反馈的数据难以构建合适的奖励模型，而且人类的反馈可以帮助得到合适的奖励模型，并且人类来提供反馈可以在合理的代价（包括成本代价、时间代价等）内得到。如果用人类反馈得到数据与其他方法采集得到数据相比不具有优势，那么就没有必要让人类来反馈。

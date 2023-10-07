@@ -174,15 +174,17 @@ $$
 
 
 **定义2 变换的奖励函数**	已知一个从状态空间$\mathcal S$到$\mathbb R$的任意标量函数$\Phi: \mathcal S \rightarrow \mathbb R$，以及奖励函数$r(s, a ,s')$，定义变换后的奖励函数$\tilde r$：
+
 $$
 \tilde r(s, a, s') := r(s, a, s') + \gamma \Phi(s') - \Phi(s)
 $$
+
 考虑带指数衰减的变换奖励函数序列和，我们发现它与奖励函数序列和仅差一个$\Phi$
+
 $$
-\sum_{l = 0}^\infty \gamma^l \tilde r(s_{t+l}, a_t, s_{t + l + 1})
- =
- \sum_{l = 0}^\infty \gamma^l r(s_{t+l}, a_t, s_{t + l + 1}) - \Phi(s_t)
+\sum_{l = 0}^\infty \gamma^l \tilde r(s_{t+l}, a_t, s_{t + l + 1}) = \sum_{l = 0}^\infty \gamma^l r(s_{t+l}, a_t, s_{t + l + 1}) - \Phi(s_t)
 $$
+
 我们可以仿照变换的奖励函数的定义来定义变换后的$V$，$Q$以及优势函数$A$:
 
 * $\tilde Q^{\pi, \gamma}(s, a) = Q^{\pi, \gamma}(s, a) - \Phi(s)$
