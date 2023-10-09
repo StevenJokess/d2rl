@@ -29,7 +29,7 @@
 
 时序差分方法和蒙特卡洛的相似之处在于可以从样本数据中学习，不需要事先知道环境；和动态规划的相似之处在于根据贝尔曼方程的思想，利用后续的状态（successor state[14]）的价值估计，来更新当前状态的价值估计，是通过预测去更新而无需等到整个决策完成[4]。
 
-引导（Bootstrapping）是个重要思想，在TD算法中智能体在每次完成动作后收到动作的奖励，这种奖励是它离自己的目标是更近与否而估计的。这些宇哥的奖励影响了它未来的行动。
+自举（Bootstrapping）是个重要思想，在TD算法中智能体在每次完成动作后收到动作的奖励，这种奖励是它离自己的目标是更近与否而估计的。这些宇哥的奖励影响了它未来的行动。
 
 其次，TD算法的「收敛性在理论上也是有保证」的。在Sutton的书中也提到：“如果步长参数是一个足够小的常数，对于任何策略 $\pi$, TD(0)中对状态值的估计的「均值」能够收敛到 $v_{\pi}$。如果该参数能够同时满足以下两个条件，$\sum_{n=1}^{\infty}\alpha_n(a) = \infty\\\sum_{n=1}^{\infty}\alpha^2_n(a) < \infty\\$，则该值能够依概率1收敛。”[8]
 
@@ -175,12 +175,10 @@ $G_t^{(n)} = R_{t}+\gamma R_{t+1}+\cdots+\gamma^{n-1} R_{t+n-1}+\gamma^n V\left(
 - TD（N）平衡：为了解决估计的值函数的偏差过大与方差大的问题，我们可以通过调整N值，在方差与不精确的Q值之间取得一个平衡。这里介绍的参数N是超参数，需要微调参数 N，例如是要多采样3步、还是多采样5步。
 
 
-
 ### Policy Evalution&Policy Improvment
 
-Policy Evaluation时，套TD的Q公式就行了。
-
-Policy Improvment时，TD常见的on-policy是SARSA，常见的off-policy是Q-learning。
+- Policy Evaluation时，套TD的Q公式就行了。
+- Policy Improvment时，TD常见的on-policy是SARSA，常见的off-policy是Q-learning。
 
 下面将分别介绍SARSA 算法和Q-learning算法。
 

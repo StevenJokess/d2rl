@@ -1,12 +1,28 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-10-03 03:07:52
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-10-09 23:44:41
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # Richard S. Sutton
 
 Richard S. Sutton是加拿大的一个计算机科学家，当前任职于iCORE大学计算机科学系。Sutton是强化学习领域巨擘，在temporal difference learning, policy gradient methods, the Dyna architecture等方面都有重大贡献。自2003年起，Sutton就出任iCORE大学计算机科学系的教授，在这里他领导了强化学习和人工智能实验室(RLAI)。
 
 https://www.ualberta.ca/science/about-us/contact-us/faculty-directory/rich-sutton
 
-## 与Andrew Barto合著ReinforcementLearningAn Introduction
+## 与Andrew Barto合著Reinforcement Learning An Introduction
+
+1998年，Richard S.Sutton 出版了强化学习导论Reinforcement Learning：An Introduction，系统总结了1998年以前强化学习算法的各种进展，强化学习基本理论框架已经形成。[4]
 
 Andrew Barto 是Massachusetts大学Amherst分校的教授, 已于2012年退休.退休前, 他是Massachusetts大学Amherst分校自治学习实验室主任.目前, 他是assachusetts大学神经科学和行为项目的准会员, Neural Computation 副主编, Machine Learning Research杂志顾问,  Adaptive Behavior的编辑[1]
+
 
 ## 苦涩的教训
 
@@ -46,3 +62,4 @@ AI 研究人员常常试图在自身智能体中构建知识，
 [1]: https://cloud.tencent.com/developer/article/1616659
 [2]: https://www.linkresearcher.com/information/01af2812-2cbc-4c3b-bec8-2e3701c6ac2f
 [3]: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
+[4]: https://blog.csdn.net/lxs3213196/article/details/109846324

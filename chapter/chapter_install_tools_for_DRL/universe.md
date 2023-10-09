@@ -1,3 +1,16 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-10-03 02:41:50
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-10-08 01:37:12
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # Universe
 
 2016年年底，继4月发布Gym之后，OpenAI又推出
@@ -10,4 +23,12 @@ Universe的目标是让设计者开发单一的智能体，去完成Universe中�
 
 最典型的任务就是基于浏览器窗口的各项任务。互联网是一个蕴藏丰富信息的大宝藏。Universe提供了一个浏览器环境，要求AI能浏览网页并在网页间导航，像人类一样使用显示器、键盘和鼠标。当前的主要任务是学习与各类网页元素交互，如点击按钮、下拉菜单等。将来，AI可以完成更复杂的任务，如搜索、购物、预定航班等。
 
-[1]:
+## OpenAI Universe安装
+
+```bash
+git clone https://github.com/openai/universe.git
+cd universe
+pip install -e .
+```
+
+[1]:[ ](https://blog.csdn.net/QFire/article/details/91490383)

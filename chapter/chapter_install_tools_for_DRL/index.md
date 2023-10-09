@@ -25,12 +25,15 @@
 ```toc
 :maxdepth: 2
 
+gym
+Latex
+pybullet
 frameworks
 game_frameworks
 universe
 argparse
 seaborn
 mujoco
-Latex
+docker
 summary
 ```

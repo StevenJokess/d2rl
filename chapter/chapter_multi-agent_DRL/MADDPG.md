@@ -142,3 +142,5 @@ $\tau>0$ 被称作分布的温度参数，通过调整它可以控制生成的 G
 本章讲解了多智能体强化学习**CTDE 范式**下的经典算法 MADDPG，MADDPG 后续也衍生了不少多智能体强化学习算法。因此，理解 MADDPG 对深入探究多智能体算法非常关键，有兴趣的读者可阅读 MADDPG 原论文加深理解。
 
 [1]: https://hrl.boyuai.com/chapter/3/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%BF%9B%E9%98%B6/
+更多代码：
+https://blog.csdn.net/sinat_39620217/category_10940146.html
