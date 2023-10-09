@@ -17,6 +17,7 @@
 
 
 conclusion&perspective
+lesson
 resource
 more_resources
 other_authors'_thinking

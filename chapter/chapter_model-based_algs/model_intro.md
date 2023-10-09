@@ -5,13 +5,14 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-19 23:32:35
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-18 00:04:18
+ * @LastEditTime: 2023-10-10 01:29:18
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 # 模型（model）简介
+
 
 ## 规划
 
@@ -60,7 +61,7 @@ $M_{v,π}$ 通常用来表示一个包含状态值函数和策略的模型。
 
 基于模型学习模型学习表示四元组 $E=<S, A, P, R>$ 已知, 即机器可以对环境进行完整建模, 能在机器内部模 拟出与环境相同或近似的状况, 可以通过模拟推算 计算出来不同策略带来的价值回报, 通过不断的模 拟计算, 总能找出一个 (可能存在多个最优策略) 最优的策略来得到最大的回报, 因此在模型已知时 强化学习任务能够归结为基于动态规划的寻优问题。
 
-![基于模型的学习](../img/model_learning.png)
+![基于模型的学习](../../img/model_learning.png)
 
 循环：
 

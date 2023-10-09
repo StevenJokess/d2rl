@@ -82,5 +82,22 @@ $ pip install box2d-py
 
 $ pip install -e '.[classic_control]'
 
+## 注册
+
+gym的主要目的是提供大量的环境集合，这些环境暴露了一个公共接口，并进行了版本控制以便进行比较。要列出已安装可用的环境，只需询问`gym.env .registry`：
+
+```py
+from gym import envs
+print(envs.registry.all())
+```
+
+```py
+#> [EnvSpec(DoubleDunk-v0), EnvSpec(InvertedDoublePendulum-v0),EnvSpec(BeamRider-v0), EnvSpec(Phoenix-ram-v0), EnvSpec(Asterix-v0),EnvSpec(TimePilot-v0), EnvSpec(Alien-v0), EnvSpec(Robotank-ram-v0),EnvSpec(CartPole-v0), EnvSpec(Berzerk-v0), EnvSpec(Berzerk-ram-v0),EnvSpec(Gopher-ram-v0), ...
+```
+
+这将给出EnvSpec对象的列表。这些对象定义了特定任务的参数，包括要运行的试验数量和最大步数。例如，EnvSpec(Hopper-v1)定义了一个环境，其中的目标是让一个2D模拟机器人跳跃：EnvSpec(Go9x9-v0)在9x9棋盘上定义了围棋游戏。
+这些环境id被视为不透明的字符串。为了确保将来进行有效比较，环境永远不会以影响性能的方式更改，只会被更新的版本替换。我们现在给每个环境加上一个v0后缀，以便将来的替换可以自然地称为v1、v2等。
+将自己的环境添加到注册表中非常容易，从而使它们对gym.make()可用。make():只需在加载时注册register()它们。[2]
+
 [1]: https://blog.csdn.net/QFire/article/details/91490383
 [2]: https://mp.weixin.qq.com/s?__biz=MzU1OTkwNzk4NQ==&mid=2247484108&idx=1&sn=0c9ff7488185c6287fbe56a3fa24a286&chksm=fc115732cb66de24dab450f458cc39effea9ffe4441010d5d3e00078badcdf132a54eb5388ba&token=366879770&lang=zh_CN#rd

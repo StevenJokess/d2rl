@@ -1,21 +1,19 @@
-# anaconda的介绍，所以为照顾小白简单介绍下：
+# Anaconda和pip
 
-anaconda优势一：下载速度快，解决不同地区网络在下载时速度相差几十倍的窘境。
+## Anaconda的简介
 
-anaconda优势二：环境配置一次，多次使用；避免多次配置环境，以及空间浪费。
+Anaconda具有三大优势
 
-anaconda优势三：开源完全免费，和边车辅助一样。
+- 优势一：下载速度快，解决不同地区网络在下载时速度相差几十倍的窘境。
+- 优势二：环境配置一次，多次使用；避免多次配置环境，以及空间浪费。
+- 优势三：开源完全免费，和边车辅助一样。
 
-        Anaconda可以叫它环境配置软件，每一个程序在运行时都需要一些其他的支持性程序，以及依赖库，有很多是程序依赖于同一个环境配置的，但是stable-diffusion-webui的作者们为了方便易于使用，将环境安装路径集成进了他的文件夹，这就造成在很多方面出现bug。
-
-
-
+Anaconda可以叫它环境配置软件，每一个程序在运行时都需要一些其他的支持性程序，以及依赖库，有很多是程序依赖于同一个环境配置的，但是stable-diffusion-webui的作者们为了方便易于使用，将环境安装路径集成进了他的文件夹，这就造成在很多方面出现bug。
 
 例如stable-diffusion-webui依赖于Pytorch等程序，其他深度学习框架也依赖于Pytorch，当Pytorch集成进s-d-w（stable-diffusion-webui简称）文件夹中，外部程序再需要Pytorch时只能再次重新下载安装Pytorch，所以使用Anaconda的好处显而易见，可以一次配置，供多种程序使用。
 
+## 准备工作
 
-
-二、准备工作
 2.1下载安装Anaconda3
 
 官网下载地址：https://www.anaconda.com/products/distribution
@@ -48,6 +46,19 @@ XXXXXXXXXX替换为你喜欢的路径。一定不要有空格和奇怪的字符
 输入conda --version。如下图所示：
 
 安装成功[1]
+
+## pip
+
+更新pip至19.2.2版本，直接用以下命令即可：
+
+python -m pip install --upgrade pip
+
+Pip版本
+
+要求Pip版本至少为1.5.0，可执行pip install --ignore-installed pip进行pip升级。
+
+
+[1]: https://mp.weixin.qq.com/s?__biz=MzU1OTkwNzk4NQ==&mid=2247484108&idx=1&sn=0c9ff7488185c6287fbe56a3fa24a286&chksm=fc115732cb66de24dab450f458cc39effea9ffe4441010d5d3e00078badcdf132a54eb5388ba&token=366879770&lang=zh_CN#rd
 
 
 
