@@ -79,6 +79,12 @@ c. 当一个模型在训练集上的损失函数值很低，但在测试集上�
 a. 优化算法的作用是调整模型的参数，使损失函数的值最小化
 b. 最常见的优化算法是随机梯度下降 (SGD)[2]
 
+Online learning：其实就是跑一个样本更新一次参数
+
+Online learning和batch learning这两者存在于对机器学习算法的训练中，是训练方法。以训练神经网络为例，训练神经网络时需要计算损失函数，根据损失函数计算参数的梯度，从而去更新参数。这就涉及到神经网络学习多少样本后去计算损失函数，更新参数了。如果每学习一个样本，就去更新参数的话，这就是online learning。如果学习所有样本后，再去更新参数，这就是batch learning。显然，batch learning的优点是容易找到全局最优解，但样本较大时训练过程很慢。而online learning则相反。为了折中，出现了小批量学习，即学习小批量样本后更新参数，这个小批量的样本数量自己制定。[4]
+
+
 [1]: https://weread.qq.com/web/reader/5dc32d00723973a95dcfacckc45328f0274c45147dee704
 [2]: https://zhuanlan.zhihu.com/p/641978936
 [3]: https://datawhalechina.github.io/thorough-pytorch/%E7%AC%AC%E9%9B%B6%E7%AB%A0/0.1%20%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AE%80%E5%8F%B2.html
+[4]: https://blog.csdn.net/qq_45832958/article/details/123188899

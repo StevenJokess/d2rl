@@ -47,8 +47,11 @@ print(samples)
 
 推荐书目：https://seeing-theory.brown.edu/cn.html
 
+## Bootstrap
+
+Boostrap是一种抽样方法，在ensemble learning中很常见。是指对样本每次有放回的抽样，抽样K个，一共抽N次[4]
 
 [1]: https://www.guyuehome.com/38340
 [2]: https://jepsonwong.github.io/2018/12/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%8B%AC%E7%AB%8B%E5%90%8C%E5%88%86%E5%B8%83_%E9%87%87%E6%A0%B7/
 [3]: https://blog.csdn.net/SecondLieutenant/article/details/79375166
-
+[4]: https://blog.csdn.net/qq_45832958/article/details/123188899?spm=1001.2014.3001.5501

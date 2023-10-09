@@ -332,14 +332,14 @@ $$
   * 进一步解释？
 
 
+> GAE和TD(lambda)的区别是什么？
+>
+> - TD lambda: 用 n-step future reward估计value
+> - GAE: 用n-step TD residual of value估计advantage
+
 
 [1]: https://raw.githubusercontent.com/datawhalechina/easy-rl/master/papers/Policy_gradient/High-Dimensional%20Continuous%20Control%20Using%20Generalized%20Advantage%20Estimation.md
-
-
-
-
-
-
+[2]: https://www.zhihu.com/question/476110046/answer/2029179166
 
 
 

@@ -15,6 +15,13 @@
 # Board Game Applications for DRL
 :label:`chap_board_game_app_drl`
 
+- 先介绍了AI与游戏的关系，再介绍了棋盘游戏。
+- 应用于三子棋、四子棋、五子棋
+- 应用于翻转棋、西洋双陆棋
+- 应用于国际象棋、中国象棋
+- 应用于围棋（AlphaGo-》AlphaGo_Zero）
+- 应用于更多棋（Alpha_Zero-》Muzero）
+
 ```toc
 :maxdepth: 2
 
@@ -26,6 +33,7 @@ Gomuku
 Reversi
 backgammon
 Chess
+China_Chess
 Go
 AlphaGo
 AlphaGo_Zero

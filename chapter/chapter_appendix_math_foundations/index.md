@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 02:09:11
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-11 21:23:00
+ * @LastEditTime: 2023-10-10 02:14:59
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -14,6 +14,8 @@
 # 深度强化学习的数学原理与Python实现
 
 ![数学原理](../../img/数学原理.png)
+
+推荐项目：https://wuli.wiki/online/
 
 ```toc
 :maxdepth: 2
