@@ -11,6 +11,9 @@
  * @TODO::
  * @Reference:
 -->
+# MARL_index
+
+介绍一些CTDE比较典型的算法有COMA [2]，VDN [3]，QMIX [4]等
 
 ```toc
 :maxdepth: 2
