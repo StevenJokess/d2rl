@@ -1,3 +1,16 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-03-22 01:53:07
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-10-13 01:08:04
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # 结合RNN
 
 对于时间序列信息, 深度Q网络的处理方法是加入经验回放机制. 但是经验回放的记忆能力有限, 每个决策点需要获取整个输入画面进行感知记忆。
@@ -37,5 +50,7 @@ al. "Vector-based navigation using grid-like representations in artificial
 agents." Nature 557.7705 (2018): 429.
 
 最新的Nature文章， 介绍了通过监督学习引导RNN（LSTM）产生空间栅格细胞的能力
+
+code: https://github.com/zachary2wave/Torch-rl/blob/master/Torch_rl/agent/DRQN.py
 
 [1]: http://pg.jrj.com.cn/acc/Res/CN_RES/INDUS/2023/2/9/27c20431-8ed3-4562-83b5-5c82706f28a5.pdf

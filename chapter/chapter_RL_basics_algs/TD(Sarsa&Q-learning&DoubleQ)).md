@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-03 00:26:28
+ * @LastEditTime: 2023-10-13 01:36:32
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -295,6 +295,18 @@ code
 
 ## Q-learning 算法
 
+### 构建Q表（Q-Table）
+
+Q-Table是一个矩阵，其中每个元素对应于一个状态-动作二元组。因此，Q-Table将是一个mxn的矩阵，其中m是可能状态的数量，n是可能动作的数量。Q表的Q值必须有一个初始值，一般来说，Q-Table所有初始化值都设置为零。
+
+为了简化，假设环境Env将是一个具有4种可能状态(a,b,c,d)的房间，如下图所示。同时，不妨假设代理agent将能够执行4个可能的动作：向上、向下、向左和向右。
+
+考虑到上述代理agent和环境Env，Q-Table将是一个4x4的矩阵，其中4行对应于4种可能的状态States，4列对应于4个可能的动作Actions。如下所示，所有值都已初始化为零。
+
+![四状态房间的Q-table](../../img/Room_Q-table.png)
+
+### 训练过程
+
 Q-Learning的训练过程是Q表的Q值逐渐调整的过程，其核心是根据已经知道的Q值，当前选择的行动 $a$ 作用于环境获得的回报 $R$ 和下一轮 $S_{t+1}$ 对应可以获得的最大利益Q，总共三个量进行加权求和算出新的Q值，来更新Q表:
 
 $$
@@ -304,7 +316,7 @@ Q\left(S_t, A_t\right) &= Q\left(S_t, A_t\right)+\alpha\left[R_{t+1}+\gamma \max
 \end{aligned}
 $$
 
-其中 $R_{t+1}=R(s_t, a_t, s_{t+1})$[21]，$Q\left(S_{t+1}, a\right)$ 是在 $t+1$ 时刻的状态和采取的行动（并不是实际行动，所以公式采用了所有可 能采取行动的 $\mathrm{Q}$ 的最大值) 对应的 $\mathrm{Q}$ 值， $Q\left(S_t, A_t\right)$ 是当前时刻的状态和实际采取的形同对应的 $\mathrm{Q}$ 值。折扣因子 $\gamma$ 的取值范围是 $[0,1]$ ，其本质是一个衰减值，如果gamma更接近0，agent趋向于只 考虑瞬时奖励值，反之如果更接近1，则agent为延迟奖励赋予更大的权重，更侧重于延迟奖励；奖 励值 $R_{t+1}$ 为 $\mathrm{t}+1$ 时刻得到的奖励值。 $\alpha$ 为是学习率。
+其中 $R_{t+1}=R(s_t, a_t, s_{t+1})$[21]，$Q\left(S_{t+1}, a\right)$ 是在 $t+1$ 时刻的状态和采取的行动（并不是实际行动，所以公式采用了所有可能采取行动的 $\mathrm{Q}$ 的最大值) 对应的 $\mathrm{Q}$ 值， $Q\left(S_t, A_t\right)$ 是当前时刻的状态和实际采取的形同对应的 $\mathrm{Q}$ 值。折扣因子 $\gamma$ 的取值范围是 $[0,1]$ ，其本质是一个衰减值，如果gamma更接近0，agent趋向于只 考虑瞬时奖励值，反之如果更接近1，则agent为延迟奖励赋予更大的权重，更侧重于延迟奖励；奖 励值 $R_{t+1}$ 为 $\mathrm{t}+1$ 时刻得到的奖励值。 $\alpha$ 为是学习率。
 
 这里动作价值 $\mathrm{Q}$ 函数的目标就是逼近最优的 $q * ，q *=R_{t+1}+\gamma \max _a Q\left(S_{t+1}, a\right)$ ，并且轨迹的行 动策略与最终的 $q *$ 是无关的。后面中括号的加和式表示的是 $q *$ 的贝尔曼最优方程近似形式。
 

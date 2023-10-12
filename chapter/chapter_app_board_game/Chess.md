@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-05-12 02:24:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-13 00:22:37
+ * @LastEditTime: 2023-10-12 23:38:27
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -27,6 +27,7 @@
 
 简单来说，Alpha-Beta剪枝算法是一种启发式算法，它能够“剪掉”不需要搜索的棋面而提高搜索效率。比如，某一棋面后自己的“王”将死，就不需要以对手“放自己一条生路”为前提，继续往后搜索。平均来看，深蓝可以在3分钟内通过剪枝搜索算法将12.2步以内的所有棋面搜索完毕。事实上，除了上述的行棋策略外，深蓝还会参考已有的棋谱。这些棋谱由4000个开局棋谱、70000个中盘棋谱和众多的残局棋谱构成，其中，残局棋谱指5个或少于5个棋子的局面，或带有一对“兵”的6个棋子。通过对已有的棋谱库的搜索，深蓝倾向于选择那些在棋谱中出现率更高的走法。
 
+![象棋](../../img/Chess.png)
 
 [1]: https://pdf-1307664364.cos.ap-chengdu.myqcloud.com/%E6%95%99%E6%9D%90/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E3%80%8A%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%B8%A6%E4%BD%A0%E5%8E%BB%E9%9D%A2%E8%AF%95%E3%80%8B%E4%B8%AD%E6%96%87PDF.pdf
 [2]: http://www.dzkbw.com/books/zjb/xinxijishu/gzxzxbx4/020.htm

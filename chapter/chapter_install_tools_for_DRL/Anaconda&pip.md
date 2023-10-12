@@ -63,8 +63,42 @@ Pip版本
 
 
 
+## 镜像源
 
+
+在下载需要的包的时候难免会遇到源带来的问题[2：
+
+```
+To search for alternate channels that may provide the conda package you're
+looking for, navigate to
+
+    https://anaconda.org
+
+and use the search bar at the top of the page.
+```
+
+
+这个时候不必惊慌，我们可以指定一些稳定有效的源去下载安装。以下是我提供的镜像源：
+
+- https://pypi.doubanio.com/simple/             # 豆瓣
+- https://pypi.tuna.tsinghua.edu.cn/simple     # 清华
+- https://pypi.mirrors.ustc.edu.cn/simple/     # 中国科学技术大学
+
+指定镜像源的命令：
+
+①conda
+
+```python
+conda install -c 镜像源 包名
+```
+
+②pip
+
+```python
+pip install 包名 -i 镜像源
+```
 
 
 
 [1]: https://www.bilibili.com/read/cv21030152/?from=search&spm_id_from=333.337.0.0 出
+[2]: https://codeantenna.com/a/7r0VO6QkU2
