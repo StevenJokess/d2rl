@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 23:43:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-06 22:26:51
+ * @LastEditTime: 2023-10-13 04:01:01
  * @Description:
  * @Help me: 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO:: 伪代码和Code,
@@ -127,6 +127,7 @@ DQN 算法最终更新的目标是让$Q_\omega(s, a)$逼近$r+\gamma \max _{a^{\
 - **end for**
 
 ![DQN与改进的DQN对比](../../img/DQN_improve.png)
+![注意对终止状态的处理](../../img/DQN_with_Experience_Replay.png)
 
 ## DQN 代码实践
 
