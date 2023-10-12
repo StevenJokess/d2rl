@@ -5,28 +5,29 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 03:05:05
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-03 01:58:08
+ * @LastEditTime: 2023-10-13 03:42:46
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 # PyTorch
-## 安装说明
+
+## Conda 安装说明
 
 目前支持Python 3.7和Gym 0.25.2版本。
 
-创建Conda环境（需先安装Anaconda）
+### 创建Conda环境（需先安装Anaconda）
 
-```py
+```bash
 conda create -n joyrl python=3.7
 conda activate joyrl
 pip install -r requirements.txt
 ```
 
-安装Torch：
+### 安装Torch：
 
-```py
+```bash
 # CPU
 conda install pytorch==1.10.0 torchvision==0.11.0 torchaudio==0.10.0 cpuonly -c pytorch
 # GPU
@@ -35,6 +36,18 @@ conda install pytorch==1.10.0 torchvision==0.11.0 torchaudio==0.10.0 cudatoolkit
 pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 
+## Jupter notebook里用pip安装
+
+安装PyTorch[3]
+
+```py
+!pip install torch
+```
+
+```py
+import torch
+print(torch.__version__)  # torch.__version__ 返回安装的 PyTorch 的版本号
+```
 
 ## 模型上线
 
@@ -70,3 +83,4 @@ torch.onnx.export(policy_net, dummy_input, "policy_net_model.onnx")
 
 [1]: https://github.com/datawhalechina/easy-rl/tree/master/notebooks
 [2]: https://developer.aliyun.com/article/1333103?spm=a2c6h.14164896.0.0.59b247c5IMNEGo
+[3]: https://nb.bohrium.dp.tech/detail/6516425879
