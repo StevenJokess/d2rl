@@ -29,3 +29,5 @@ https://chengzhaoxi.xyz/98c9615f.html
 - Python中dict（字典）的底层结构？
 - 常用的深度学习框架有哪些，都是哪家公司开发的？
 
+CS231n课程笔记翻译：Python Numpy教程 - 杜客的文章 - 知乎
+https://zhuanlan.zhihu.com/p/20878530
