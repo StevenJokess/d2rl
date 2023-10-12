@@ -11,7 +11,7 @@
  * @TODO::
  * @Reference:
 -->
-# SAC算法
+# 基于最大熵的执行器-评价器算法[9]（SAC算法）
 
 ## 简介
 
@@ -314,5 +314,5 @@ $$
 [6]: https://www.math.pku.edu.cn/teachers/zhzhang/drl_v1.pdf
 [7]: https://spinningup.openai.com/en/latest/algorithms/sac.html
 [8]: https://github.com/ZhiqingXiao/rl-book/tree/master/en2022
-
+[9]: https://www.infocomm-journal.com/znkx/article/2020/2096-6652/2096-6652-2-4-00314.shtml
 > 1. https://chat.openai.com/chat; 熵多大算大？;比如常见的平衡点
