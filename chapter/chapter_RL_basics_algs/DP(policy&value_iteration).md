@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-20 20:46:39
+ * @LastEditTime: 2023-10-13 02:39:24
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -282,6 +282,7 @@ $$
 \pi_0 \stackrel{\mathrm{E}}{\rightarrow} V^{\pi_0} \stackrel{I}{\rightarrow} \pi_1 \stackrel{\mathrm{E}}{\rightarrow} V^{\pi_1} \stackrel{I}{\rightarrow} \cdots \stackrel{I}{\rightarrow} \pi^* \stackrel{\mathrm{E}}{\rightarrow} V^*
 $$
 
+![GPI](../../img/GPI.png)
 
 广义策略迭代过程视为一场竞争和合作的博弈：
 
@@ -292,6 +293,9 @@ $$
 > 对于复杂的问题，贪心策略往往不足以找到最优解，因为它缺乏全局信息和长远考虑。
 
 在这个循环（$\pi_i {\rightarrow} \pi_{i+1}$）中，通过持续的评估和改进，策略逐渐在“竞争”和“合作”的过程中演化和优化，最终达到一个相对稳定的状态。这种状态下，策略和价值函数达到一种平衡，相互支持，从而使得策略在实际应用中变得更加有效和可靠。
+
+
+
 
 ### 动态规划的优缺点
 

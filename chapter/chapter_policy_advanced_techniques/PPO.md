@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-25 23:21:39
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-07 02:44:37
+ * @LastEditTime: 2023-10-13 03:13:58
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -19,7 +19,7 @@
 
 近端策略优化 (proximal policy optimization，PPO)：为避免在使用重要性采样时由于在 $\theta$ 下的 $p_\theta\left(a_t \mid s_t\right)$ 与在 $\theta_\text {old}$ 下 的 $p_{\theta_\text {old}}\left(a_t \mid s_t\right)$ 相差太多，导致重要性采样结果偏差较大而采取的算法。具体来说就是在训练的过程中增加一个限制，这个限制对应 $\theta$ 和 $\theta_\text {old}$ 输出的动作的KL散度，来衡量 $p_\theta$ 与 $p_{\theta_\text {old}}$ 的相似程度。
 
-![PPO的架构](../../img/PPO_architect.png)
+![PPO的架构与流程图](../../img/PPO_architect3.png)
 
 ## 比较 TRPO 与 PPO
 
