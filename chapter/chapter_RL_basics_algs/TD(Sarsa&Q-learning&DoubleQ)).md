@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-13 01:36:32
+ * @LastEditTime: 2023-10-13 02:27:00
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -393,6 +393,31 @@ Q-Learning: $Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma(1 - \math
 - Q-learning算法更有可能得到最优策略：SARSA算法与Q-learning算法选择了两种不同的路线，Q-learning的探索更全面，而且向着**贪婪**方向更新，因此找出了最短路径，而SARSA则更保守。![SARSA_VS_Q-learning最终收敛策略对比](../../img/SARSA_VS_Q-learning.png)
 - SARSA的回报收敛相对早，Q-learning更难收敛：从两黄框可见，由于Q-learning需要进行随即动作的探索，回报波动很大，偶尔会掉落到悬崖中，因此如果没训练好的Q-learning，其回报可能要相比保守的SARSA差。[17] ![SARSA_VS_Q-learning最终收敛策略对比](../../img/SARSA_VS_Q-learning_return.png)
 
+### TD、SARSA、Q-learning
+
+时序差分(Temporal difference,TD)学习算法、Sarsa学习算法以及Q学习(Q-learning)算法都属于基于表格值的经典强化学习算法
+
+其中,TD算法为预测型算法,用于策略评估,即其学习对象为V函数;Sarsa学习和Q学习算法为控制型算法,用于求解最优策略,即学习对象为Q函数.这三种经典算法的值函数更新公式可以统一为
+
+$$
+f\left(\omega_t\right) \leftarrow f\left(\omega_t\right)+\alpha \delta
+$$
+
+其中
+
+$$
+\delta \leftarrow\left(r_t+\gamma f\left(\omega_t^{\prime}\right)\right)-f\left(\omega_t\right)
+$$
+
+$\alpha \in(0,1)$ 为学习率, $f: \Omega \rightarrow \mathbf{R}$ 为值函数, $\omega \in \Omega$ 为更新点, $\omega^{\prime} \in \Omega$ 为后继. 若值函数f为状态值函数 $V$, 则 $\Omega=S$; 若值函数f为状态动作对值函数 $\mathrm{Q}$,则 $\Omega=S \times A$. 给 $f, \omega, \omega^{\prime}$ 赋上具体内容时,如表 1 所列, 以上更新公式就对应了具体的算法. 以 $\mathrm{Q}$ 学习为例, 当 $f$ 为 $Q$ 函数, $\omega$ 为状态动作, $\omega^{\prime}$ 为贪心策略时, 就得到了的 $Q$ 学习方法.[23]
+
+| 算法 | $f$ | $\omega_t$ | $\omega^{\prime}$ |
+| :---: | :---: | :---: | :---: |
+| TD | $V$ | $s_t$ | $s_{t+1}$ |
+| Sarsa | $Q$ | $\left(s_t, a_t\right)$ | $\left(s_{t+1}, a_{t+1}\right)$ |
+| Q学习 | $Q$ | $\left(s_t, a_t\right)$ | $\left(s_{t+1}, \arg \mathop {\max}\limits_{a' in A } \mathrm{Q}\left(s_{t+1}, a^{\prime}\right)\right)$ |
+
+
 ### 解决过估计的Double Q-learning
 
 Q-learning 使用 $\max_a Q(S_{t+1},a)$ 来更新动作价值，会导致最大化偏差（maximization bias），主要会在一些中间状态出问题，需要大量的数据才能纠正。
@@ -450,3 +475,4 @@ Double Q-learning 加倍了内存开销，但是却没有增加额外的计算�
 [20]: https://proceedings.neurips.cc/paper/3964-double-q-learning.pdf
 [21]: http://preview.d2l.ai/d2l-en/master/chapter_reinforcement-learning/qlearning.html#an-optimization-problem-underlying-q-learning
 [22]: https://zhuanlan.zhihu.com/p/655449487
+[23]: http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.2016.y000003?viewType=HTML

@@ -276,6 +276,13 @@ v_{k+1}(s)=\max _{a \in A}\left(R_s^a+\gamma \sum_{s^{\prime} \in S} P_{s s^{\pr
 
 策略迭代算法和值迭代算法可以利用广义策略迭代方法进行统一描述。所谓广义策略迭代(GPI)，是指让策略评估和策略改进相互作用的一般思路。策略总是基于特定的价值函数进行改进，价值函数也始终会向对应特定策略的真实价值函数收敛。
 
+该过程描述亦可如下:[13]
+
+$$
+\pi_0 \stackrel{\mathrm{E}}{\rightarrow} V^{\pi_0} \stackrel{I}{\rightarrow} \pi_1 \stackrel{\mathrm{E}}{\rightarrow} V^{\pi_1} \stackrel{I}{\rightarrow} \cdots \stackrel{I}{\rightarrow} \pi^* \stackrel{\mathrm{E}}{\rightarrow} V^*
+$$
+
+
 广义策略迭代过程视为一场竞争和合作的博弈：
 
 - 策略迭代算法，让策略在评估过程中对价值函数表现出贪心的倾向，通常会导致价值函数与当前策略不匹配。
@@ -284,7 +291,7 @@ v_{k+1}(s)=\max _{a \in A}\left(R_s^a+\gamma \sum_{s^{\prime} \in S} P_{s s^{\pr
 > 所谓的贪心策略，其特点在于它的决策仅基于当前状态下可获取的信息，而没有考虑将来可能的情况。这种局部决策可能会导致策略在长远中陷入次优或不稳定的情况，因为没有充分考虑长期的影响。
 > 对于复杂的问题，贪心策略往往不足以找到最优解，因为它缺乏全局信息和长远考虑。
 
-在这个循环中，通过持续的评估和改进，策略逐渐在“竞争”和“合作”的过程中演化和优化，最终达到一个相对稳定的状态。这种状态下，策略和价值函数达到一种平衡，相互支持，从而使得策略在实际应用中变得更加有效和可靠。
+在这个循环（$\pi_i {\rightarrow} \pi_{i+1}$）中，通过持续的评估和改进，策略逐渐在“竞争”和“合作”的过程中演化和优化，最终达到一个相对稳定的状态。这种状态下，策略和价值函数达到一种平衡，相互支持，从而使得策略在实际应用中变得更加有效和可靠。
 
 ### 动态规划的优缺点
 
@@ -422,3 +429,4 @@ https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_dp.html
 [10]: https://bigquant.com/wiki/doc/-xoRs2BYj3r
 [11]: https://zhuanlan.zhihu.com/p/397509298
 [12]: E:/BaiduNetdiskDownload/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8B.pdf
+[13]: http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.2016.y000003?viewType=HTML
