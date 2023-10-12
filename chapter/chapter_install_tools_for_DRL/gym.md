@@ -99,5 +99,32 @@ print(envs.registry.all())
 这些环境id被视为不透明的字符串。为了确保将来进行有效比较，环境永远不会以影响性能的方式更改，只会被更新的版本替换。我们现在给每个环境加上一个v0后缀，以便将来的替换可以自然地称为v1、v2等。
 将自己的环境添加到注册表中非常容易，从而使它们对gym.make()可用。make():只需在加载时注册register()它们。[2]
 
+
+## 环境介绍
+
+在Gym包中内置了众多模拟环境, 包括经典的控制模型(如倒立摆、爬山小车), Atrai 2600像素游戏, Mujoco仿真环境和一些简单的机械臂模型. 实验采用了Gym包中的CartPole-v1、Acrobot-v1、LunarLander-v2和Qbert-ram-v0共4个环境.
+
+1) CartPole-v1: CartPole-v1 (CP)是一个经典的倒立摆模型, 如图2(a)所示, 一根杆连接在小车上, 而小车在光滑的水平面上. 系统通过对小车施加正向或负向的力来进行控制, 杆每保持一个时间单位的直立就获得一分, 而当杆偏离竖直的角度或是小车距起始点的距离超过了一定范围, 当次实验就结束. 最大的时间单位为500
+, 即该模型的最大得分也为500
+.
+
+
+图 2  实验环境
+Fig. 2  Experimental environments
+下载: 全尺寸图片 幻灯片
+2) Acrobot-v1: Acrobot-v1 (AB)如图2(b)所示, 该系统包括两个关节和两个连杆, 其中两个连杆之间的关节被驱动. 最初, 连杆是向下悬挂的, 目标是将较低连杆的末端向上摆动到给定的高度.
+
+3) LunarLander-v2: LunarLander-v2 (LL)是一个登月模型, 如图2(c)所示, 登月器从屏幕顶部开始移动, 最终以零速度到着陆台的奖励大约是在100
+到140
+分之间, 坠毁或成功着陆都将停止学习并分别获得额外的−100
+或+100
+分, 每条腿着陆+10
+分, 每次发动引擎−0.3
+分, 一般将实验成功的标准定为200
+分.
+
+4) Qbert-ram-v0: Qbert-ram-v0 (Qbert)是一个雅达利2600像素游戏, 如图2(d)所示, 玩家控制主角在一个由正方体构成的三角立面上来回跳跃, 每一次地面接触都会改变方块表层的颜色, 只要将所有色块踩成规定的颜色即告胜利. 状态观测选用雅达利的随机存储器(Random access memory, RAM)状态.
+
 [1]: https://blog.csdn.net/QFire/article/details/91490383
 [2]: https://mp.weixin.qq.com/s?__biz=MzU1OTkwNzk4NQ==&mid=2247484108&idx=1&sn=0c9ff7488185c6287fbe56a3fa24a286&chksm=fc115732cb66de24dab450f458cc39effea9ffe4441010d5d3e00078badcdf132a54eb5388ba&token=366879770&lang=zh_CN#rd
+[3]: http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.c220103?viewType=HTML
