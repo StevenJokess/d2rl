@@ -5,9 +5,9 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-10 21:01:41
+ * @LastEditTime: 2023-10-14 02:57:10
  * @Description:
- * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @Help me: 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:https://hrl.boyuai.com/chapter/2/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95
 -->
@@ -15,17 +15,37 @@
 
 ## 简介
 
-本书之前介绍的 Q-learning、DQN 及 DQN 改进算法都是**基于价值**（value-based）的方法，其中 Q-learning 是处理有限状态的算法，而 DQN 可以用来解决连续状态的问题。在强化学习中，除了基于值函数的方法，还有一支非常经典的方法，那就是**基于策略**（policy-based）的方法。对比两者，基于值函数的方法主要是学习值函数，然后根据值函数导出一个策略，学习过程中并不存在一个显式的策略；而基于策略的方法则是**直接显式地学习一个目标策略**。策略梯度是基于策略的方法的基础，本章从策略梯度算法说起。
+本书之前介绍的 Q-learning、DQN 及 DQN 改进算法都是**基于价值**（value-based）的方法，其中 Q-learning 是处理有限状态的算法，而 DQN 可以用来解决连续状态的问题。在强化学习中，除了基于值函数的方法，还有一支非常经典的方法，那就是**基于策略**（policy-based）的方法。
+
+两者作对比：
+
+- 基于值函数的方法主要是学习值函数，然后根据值函数导出一个策略，学习过程中并不存在一个显式的策略；
+- 基于策略的方法则是**直接显式地学习一个目标策略**。
+
+策略梯度是基于策略的方法的基础，本章从策略梯度算法说起。
+
 
 ## 策略梯度（Policy gradient）
 
-基于策略的方法首先需要将策略参数化。假设目标策略是一个随机性策略，并且处处可微，其中是对应的参数。我们可以用一个线性模型或者神经网络模型来为这样一个策略函数建模，输入某个状态，然后输出一个动作的概率分布。我们的目标是要寻找一个最优策略并最大化这个策略在环境中的期望回报。我们将策略学习的目标函数定义为
+### 组成部分
+
+策略梯度方法有三个基本组成部分：演员 (Actor)、环境和奖励函数，如下图所示，演员可以采取各种可能的动作与环境交互，在交互的过程中环境会依据当前环境状 态和演员的动作给出相应的奖励 (Reward)，并修改自身状态。演员的目的就在于调整策略 (Policy)，即根据环境信息决定采取什么动作以最大化奖励。​​
+
+![演员与环境交互过程](../../img/control_or_not.png)
+
+### 策略参数化以便优化
+
+基于策略的方法首先需要将策略参数化。假设目标策略是一个随机性策略，并且处处可微，其中是对应的参数。我们可以用一个线性模型或者神经网络模型来为这样一个策略函数建模，输入某个状态，然后输出一个动作的概率分布。
+
+### 设立目标——最大化期望回报的最优策略
+
+我们的目标是要寻找一个最优策略，即用该策略能最大化在环境中的期望回报。我们将策略学习的目标函数定义为
 
 $$
 J(\theta)=\mathbb{E}_{s_0}\left[V^{\pi_\theta}\left(s_0\right)\right]
 $$
 
-其中， $s_0$ 表示初始状态。现在有了目标函数，我们将目标函数对策略 $\theta$ 求导，得 到导数后，就可以用梯度上升方法来最大化这个目标函数，从而得到最优策略。
+其中， $s_0$ 表示初始状态。现在有了目标函数，我们将目标函数对策略 $\theta$ 求导，得到导数后，就可以用梯度上升方法来最大化这个目标函数，从而得到最优策略。
 
 我第 3 章讲解过策略 $\pi$ 下的状态访问分布，在此用 $\nu^\pi$ 表示。然后我们对目标函数求梯度，可以得到如下式子，更详细的推导过程将在 $9.6$ 节给出。
 
@@ -34,9 +54,12 @@ $$
 \nabla_\theta J(\theta) & \propto \sum_{s \in S} \nu^{\pi_\theta}(s) \sum_{a \in A} Q^{\pi_\theta}(s, a) \nabla_\theta \pi_\theta(a \mid s) \\
 & =\sum_{s \in S} \nu^{\pi_\theta}(s) \sum_{a \in A} \pi_\theta(a \mid s) Q^{\pi_\theta}(s, a) \frac{\nabla_\theta \pi_\theta(a \mid s)}{\pi_\theta(a \mid s)} \quad  \text{(乘以 $\frac{\pi_\theta(a \mid s)}{\pi_\theta(a \mid s)}$, 并重排序[4])} \\
 & =\mathbb{E}_{\pi_\theta}\left[Q^{\pi_\theta}(s, a) \nabla_\theta \ln \pi_\theta(a \mid s)\right] \quad  \text{$\left(\frac{d}{d x} \ln f(x)=\frac{f^{\prime}(x)}{f(x)}\right)$} \\
-& = \frac{1}{N} \sum_{n=1}^N Q^{\pi_\theta}(s^n, a^n) \nabla_\theta \ln \pi_\theta\left(a^n \mid s^n\right) \quad  \text{（N是采样轨迹（trajectory samples）的数量）[5]} \\
+& = \frac{1}{N} \sum_{n=1}^N Q^{\pi_\theta}(s^n, a^n) \nabla_\theta \ln \pi_\theta\left(a^n \mid s^n\right) \quad  \text{（N是采样轨迹 $\tau$  （trajectory samples）的数量）[5],第n个轨迹 $\tau^n$ 的状态-动作为 $(s^n, a^n)$} \\
+& = \frac{1}{N} \sum_{n=1}^N \sum_{t=1}^{T_n} Q^{\pi_\theta}(s^n_t, a^n_t) \nabla \ln \pi_\theta\left(a_t^n \mid s_t^n\right)
 \end{aligned}
 $$
+
+![策略梯度的更新](../../img/PG_update.jpg)
 
 这个梯度可以用来更新策略，且按回合（episode）更新。[2]需要注意的是，因为上式中期望的下标是  $\pi_\theta$ ，所以策略梯度算法为**在线策略**（on-policy）算法，即必须使用当前策略 $\pi_\theta$ 采样得到的数据来计算梯度。直观理解一下策略梯度这个公式，可以发现在每一个状态下，梯度的修改是*让策略更多地去采样到带来较高 $Q$ 值的动作更少地去采样到带来较低 $Q$ 值的动作*，可以说是不断试错的公式化，如图 9-1 所示。
 
@@ -93,13 +116,14 @@ REINFORCE 算法的具体算法流程如下：
 
 
 
+
 缺点：
 
 - 只有在能够对序列采样的 episodic 环境下使用。[8]
 - 对步长大小的选择非常敏感：
   - 当迭代步长太小，则收敛缓慢，学习效率慢。因为样本利用率低，由于每次更新需要根据一个策略采集一条完整的轨迹（即,由于蒙特卡洛的特性，只有到终止状态的序列，才能被采样），并计算这条轨迹上的回报，而且每次更新后就要将这些样本扔掉，重新采样，再实现更新。[7] 后面会介绍用重要性采样来改良。
   - 当迭代步长太小，则难以收敛，性能差。由于利用策略梯度法计算的结果方差会很大。学习困难，由于 agent 在一个序列中会采取很多动作，我们很难说哪个动作对最后结果是有用的。
--  即采样得到的数据只能做一次更新。因为 $R_{\theta}^{target} =E_{\tau\sim \pi_{\theta}}[R(\tau) logp_{\theta}(\tau)] $，故更新后基于 \pi_{\theta} 的采样分布会发生变化，因此演员之前采样的数据作废。[9]
+- 采样效率低，PG 采用蒙特卡洛采样方式，每次基于当前的策略对环境采样一个 episode 数据，然后基于这些数据更新一次策略，这个过程中数据仅仅被利用了一次就扔掉了，相比于 DQN 等离线学习算法，PG 这种更新方式是对数据的极大浪费。具体来说，PG 算法只有一个 agent，他与环境互动，然后学习更新， 这个过程中的policy 都是同一个。因此，当我们更新参数之后，之前计算的基于策略 $\pi_{\theta}$ 的概率分布会发生变化，目标网络的回报 $R_{\theta}^{target} =E_{\tau\sim \pi_{\theta}}[R(\tau) logp_{\theta}(\tau)]$ 也改变了。之前采样出来的数据就都作废而不能用了，换句话说，过程中的数据都只能用一次，需要重新去采样。这就造成了 policy gradient 会花很多时间在采样数据上，因为所有的数据都只能更新一次，更新一次之后就要重新采样。因为 $R_{\theta}^{target} =E_{\tau\sim \pi_{\theta}}[R(\tau) logp_{\theta}(\tau)]$，[9]
 
 
 ## 小结：

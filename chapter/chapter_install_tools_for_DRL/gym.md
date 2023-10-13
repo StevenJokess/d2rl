@@ -5,13 +5,13 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-10-06 20:22:13
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-10 00:00:16
+ * @LastEditTime: 2023-10-13 04:27:42
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# Gym
+# Gym(nasium)
 
 ## 简介
 
@@ -125,6 +125,61 @@ Fig. 2  Experimental environments
 
 4) Qbert-ram-v0: Qbert-ram-v0 (Qbert)是一个雅达利2600像素游戏, 如图2(d)所示, 玩家控制主角在一个由正方体构成的三角立面上来回跳跃, 每一次地面接触都会改变方块表层的颜色, 只要将所有色块踩成规定的颜色即告胜利. 状态观测选用雅达利的随机存储器(Random access memory, RAM)状态.
 
+## 升级
+
+强化学习环境升级 – 从gym到Gymnasium
+作为强化学习最常用的工具，gym一直在不停地升级和折腾，比如gym[atari]变成需要要安装接受协议的包啦，atari环境不支持Windows环境啦之类的，另外比较大的变化就是2021年接口从gym库变成了gymnasium库。让大量的讲强化学习的书中介绍环境的部分变得需要跟进升级了。
+
+不过，不管如何变，gym[nasium]作为强化学习的代理库的总的设计思想没有变化，变的都是接口的细节。
+
+step和观察结果
+总体来说，对于gymnasium我们只需要做两件事情：一个是初始化环境，另一个就是通过step函数不停地给环境做输入，然后观察对应的结果。
+
+初始化环境分为两步。
+第一步是创建gymnasium工厂中所支持的子环境，比如我们使用经典的让一个杆子不倒的CartPole环境：[5]
+
+import gymnasium as gym
+env = gym.make("CartPole-v1")
+
+
+## 常见问题
+
+### 不显示画面
+
+在早期版本gym中，调用env.render()会直接显示当前画面，但是现在的新版本中这一方法无效。现在有一下几种方法显示当前环境和训练中的画面：
+
+1. render_model = “human”
+
+env = gym.make("CartPole-v1", render_mode = "human")
+Python
+显示效果：
+
+
+
+
+
+问题：
+
+该设置下，程序会输出所有运行画面。但是这一步会带来一个问题，因为画面渲染需要时间，导致训练变的非常慢。强化学习的前期是一个一直试错的部分，显然我们并不是每次都想花费时间去观察模型试错，并且多数时候我们想要观察我们想观察的训练阶段。对此我们可以使用下一个方法；
+
+2. render_model = “rgb_array”
+
+env = gym.make("CartPole-v1", render_mode = "rgb_array")
+Python
+该方法会让env.render()返回一个 rgb_array， 这一rgb_array 表示当前step下的环境画面，当我们需要显示的时候可以使用cv2来进行渲染。方法如下：
+
+# RGB 转化为BGR， cv2显示格式为BGR
+img = cv2.cvtColor(env.render(), cv2.COLOR_RGB2BGR)
+
+# 显示画面，test为窗口名称
+cv2.imshow("test",img)
+
+# 给cv2一定时间完成渲染，否则无法显示
+cv2.waitKey(1)
+
+
 [1]: https://blog.csdn.net/QFire/article/details/91490383
 [2]: https://mp.weixin.qq.com/s?__biz=MzU1OTkwNzk4NQ==&mid=2247484108&idx=1&sn=0c9ff7488185c6287fbe56a3fa24a286&chksm=fc115732cb66de24dab450f458cc39effea9ffe4441010d5d3e00078badcdf132a54eb5388ba&token=366879770&lang=zh_CN#rd
 [3]: http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.c220103?viewType=HTML
+[4]: https://aitechtogether.com/python/137108.html
+[5]: https://aitechtogether.com/python/114618.html

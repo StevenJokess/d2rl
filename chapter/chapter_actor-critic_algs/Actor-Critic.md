@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:38:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-12 22:18:53
+ * @LastEditTime: 2023-10-13 05:16:07
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -21,9 +21,27 @@
 
 ## Actor-Critic
 
-### 回顾REINFORCE
+Actor-Critic 是Q-learning 和 Policy Gradient 的结合。[9]
 
-回顾一下，在 REINFORCE 算法中，目标函数的梯度中有一项轨迹回报，用于指导策略的更新。REINFORCE 算法用蒙特卡洛方法来估计，能不能考虑拟合一个值函数来指导策略进行学习呢？这正是 Actor-Critic 算法所做的。
+###
+
+
+
+## REINFORCE的优点
+
+Policy Gradient 算法的核心思想是： 根据当前状态，直接算出下一个动作是什么或下一个动作的概率分布是什么。即它的输入是当前状态 s, 而输出是具体的某一个动作或者是动作的分布。
+
+![PG](../../img/PG.png)
+
+我们可以想像，Policy Gradient 就像一个演员（Actor），它根据某一个状态s，然后作出某一个动作或者给出动作的分布，而不像Q-learning 算法那样输出动作的Q函数值。
+
+### REINFORCE的不足
+
+回顾一下，在 REINFORCE 算法中，目标函数的梯度中有一项轨迹回报，用于指导策略的更新。
+
+REINFORCE 算法用蒙特卡洛方法来估计，能不能考虑拟合一个值函数来指导策略进行学习呢？这正是 Actor-Critic 算法所做的。
+
+
 
 在策略梯度中，可以把梯度 $g$  写成下面这个更加一般的形式：
 
@@ -42,8 +60,10 @@ $$
 
 9.5 节提到 REINFORCE 通过蒙特卡洛采样的方法对策略梯度的估计是无偏的，但是*方差非常大*。我们可以用形式(3)引入基线函数（baseline function）来减小方差。此外，我们也可以采用 Actor-Critic 算法估计一个动作价值函数，代替蒙特卡洛采样得到的回报，这便是**形式(4)**。
 
-> 异策略随机策略梯度：采样策略为 $\beta$.
-> $$\nabla_\theta J_\beta\left(\pi_\theta\right)=E_{s \sim \rho^\beta, a \sim \beta}\left[\frac{\pi_\theta(a \mid s)}{\beta_\theta(a \mid s)} \nabla_\theta \log \pi_\theta(a \mid s) Q^\pi(s, a)\right]$$[2]
+> 异策略随机策略梯度：采样策略为 $\beta$.[2]
+> $$
+\nabla_\theta J_\beta\left(\pi_\theta\right)=E_{s \sim \rho^\beta, a \sim \beta}\left[\frac{\pi_\theta(a \mid s)}{\beta_\theta(a \mid s)} \nabla_\theta \log \pi_\theta(a \mid s) Q^\pi(s, a)\right]
+> $$
 
 这个时候，我们可以把状态价值函数作为基线，从函数减去这个函数则得到了函数，我们称之为优势函数（advantage function），这便是形式(5)。更进一步，我们可以利用等式得到形式(6)。
 
@@ -53,7 +73,9 @@ $$
 
 我们将 Actor-Critic 分为两个部分：Actor（策略网络）和 Critic（价值网络），如图 10-1 所示。
 
-![AC方法网络结构](../../img/AC.png)
+![Actor_Critic更新](../../img/Actor_Critic.png)
+
+![QAC方法网络结构](../../img/AC.png)
 
 - Actor 要做的是与环境交互，并在 Critic 价值函数的指导下，用**策略梯度**的原则，学习一个更好的**策略**。
 - Critic 要做的是通过 Actor 与环境交互收集的数据学习一个**价值函数**，这个价值函数会用于判断在当前状态什么动作是好的，什么动作不是好的，进而帮助 Actor 进行策略更新。
@@ -76,12 +98,22 @@ $$
 
 ### Actor-Critic 伪代码
 
+- 输入：迭代轮数 $T$ ，状态特征维度 $n$ ，动作集 $A$ ，步长 $\alpha ， \beta$ ，衰减因子 $\gamma$ ，探索率 $\epsilon ，$ Critic网络结构和Actor网络结构。
+- 输出: Actor网络参数 $\theta$ ， Critic网络参数 $w$
+
+---
+
 - 初始化策略网络参数 $\theta$ ，价值网络参数 $\omega$
-  - for 序列 $e=1 \rightarrow E$ do:
-    - 用当前策略 $\pi_\theta$ 采样轨迹 $\left\{s_1, a_1, r_2, s_2, a_2, r_3, \ldots\right\}$
-    - 为每一步数据计算: $\delta_t=r_{t+1}+\gamma V_\omega\left(s_{t+1}\right)-V_\omega\left(s_t\right)$
-    - 更新价值参数 $w=w+\alpha_\omega \sum_t \delta_t \nabla_\omega V_\omega\left(s_t\right)$
-    - 更新策略参数 $\theta=\theta+\alpha_\theta \sum_t \delta_t \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right)$
+  - for 时间步 $t=0 \rightarrow T$ do:
+    - $s_t$ 为当前状态序列的第 $t$ 个状态，拿到其特征向量 $\phi(s_t)$
+    - 在Actor网络中使用 $\phi(s_t)$ 作为输入，输出动作 $a_t$, 基于动作 $A$ 得到新的状态 $s_{t+1}$ , 反馈 $r_{t+1}$，
+    - 将 $\left\{s_t, a_t, r_{t+1}\right\}$ 存入到当前策略 $\pi_\theta$ 的采样轨迹，得$\left\{s_0, a_0, r_1，...,s_t, a_t, r_{t+1}\right\}$
+    - 在Critic网络中分别使用 $\phi(s_t) ， \phi\left(s_{t+1}\right)$ 作为输入，得到 $\mathrm{Q}$ 值输出 $V(s_t), V(s_{t+1})$[9]并保存
+    - 计算TD误差: $\delta_t=r_{t+1}+\gamma V_\omega\left(s_{t+1}\right)-V_\omega\left(s_t\right)$
+
+    - 更新Critic网络的价值参数： $w=w+\alpha_\omega \delta_t \nabla_\omega V_\omega\left(s_t\right)$
+    - 更新Actor网络的策略参数： $\theta=\theta+\alpha_\theta \delta_t \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right)$
+    - 【对于Actor的分值函数 $\nabla_\theta \log \pi_\theta\left(S_t, A\right)$ ，可以选择softmax或者高斯分值函数。】
 - end for
 
 以上就是 Actor-Critic 算法的流程，接下来让我们来用代码实现它，看看效果如何吧！
@@ -108,7 +140,9 @@ code
 
 ## 优缺点：
 
-- **优点**：可以进行单步更新，不需要跑完一个episode再更新网络参数，相较于传统的PG更新更快。传统PG对价值的估计虽然是无偏的，但方差较大，AC方法牺牲了一点偏差，但能够有效降低方差；
+- **优点**：
+  - 相比传统PG，Actor-Critic 应用了Q-learning 或其他策略评估的做法，使得其可以进行单步更新，不需要跑完一个episode再更新网络参数，相较于传统的PG更新更快。传统PG对价值的估计虽然是无偏的，但方差较大，AC方法牺牲了一点偏差，但能够有效降低方差；
+  - 相比以值函数为中心的算法，Actor-Critic 应用了策略梯度的做法，这能让它在连续动作或者高维动作空间中选取合适的动作，而Q-learning做这件事会很困难甚至瘫痪。[9]
 - **缺点**：Actor的行为取决于 Critic 的Value，但是因为 Critic本身就很难收敛和actor一起更新的话就更难收敛了。（为了解决收敛问题， Deepmind 提出了 Actor Critic 升级版 Deep Deterministic Policy Gradient，后者融合了 DQN 的一些 trick，使用了双Actor神经网络和双Critic神经网络的方法[6]， 解决了收敛难的问题）。
 
 ## 与基于价值的模型(Critic only)的对比
@@ -116,10 +150,12 @@ code
 - 只基于价值的模型(Critic only)，只会对整个序列完成后才给reward和更新，对中间好的action损失较多，
 - 基于价值和策略的模型就不会(例如Actor-critic)，从Loss函数就能看出来。策略损失通常基于动作概率和优势函数的梯度，而价值损失通常基于TD误差（时间差分误差）。
 
-## 可能的改进
+## 改进方案
 
-1. 两个网络的前半部分可以共享
-1. 输出larger entropy，即更不确定的action，更鼓励探索。即，SAC。[7]
+1. DDPG算法，使用了双Actor神经网络和双Critic神经网络的方法来改善收敛性。
+1. A3C算法，使用了多线程的方式，一个主线程负责更新Actor和Critic的参数，多个辅线程负责分别和环境交互，得到梯度更新值，汇总更新主线程的参数。而所有的辅线程会定期从主线程更新网络参数。这些辅线程起到了类似DQN中经验回放的作用，但是效果更好。[9]
+1. SAC算法[7]，输出larger entropy，即更不确定的action，更鼓励探索。即，
+1. ？算法，两个网络的前半部分可以共享
 
 ## 总结
 
@@ -157,3 +193,4 @@ $$
 [6]: https://paddlepedia.readthedocs.io/en/latest/tutorials/reinforcement_learning/Actor-Critic.html#id5
 [7]: https://blog.csdn.net/greyduan/article/details/104945705
 [8]: https://zhuanlan.zhihu.com/p/655562566
+[9]: https://blog.csdn.net/sinat_39620217/article/details/131025524
