@@ -1,5 +1,9 @@
 # 招Phd
 
+## 导师推荐
+
+SS Du，Zhaoran Wang, Jason Lee, Mengdi Wang, Tengyu Ma[1]
+
 ## 西湖大学工学院智能机器人项目招聘(深度强化学习方向)
 
 一、课题组主要研究方向
@@ -136,3 +140,5 @@ http://guiliang.me/
 请注意：可能你发的邮件我没有立刻回复，但我会保证一一查看并回复，如果一周以上我依然没有回复，请再次发送以提醒。
 
 http://www.deeprlhub.com/d/1420-ra
+
+[1]: https://www.zhihu.com/question/595513061/answer/2984279728

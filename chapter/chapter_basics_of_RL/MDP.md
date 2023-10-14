@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-15 00:47:26
+ * @LastEditTime: 2023-10-15 00:50:16
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -132,13 +132,13 @@ $$
 V(s)=r(s)+\gamma \sum_{s^{\prime} \in S} p\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)
 $$
 
-上式就是马尔可夫奖励过程中非常有名的贝尔曼方程 (Bellman equation)，对每一个状态都成立。
+上式就是马尔可夫奖励过程中非常有名的贝尔曼方程 (Bellman equation)，对每一个离散状态都成立。
 
 ### 状态价值函数的贝尔曼方程的具体推导（选学）
 
 #### 离散状态
 
-离散状态的形式（最后两行是推到到贝尔曼方程的一般形式）：
+离散状态的形式（注意，最后两行是推导到贝尔曼方程的一般形式）：
 
 $\begin{aligned}
 V(s)
