@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-17 18:02:50
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-06-17 21:10:12
+ * @LastEditTime: 2023-10-14 23:28:15
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了.![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -197,12 +197,32 @@ approximation. IEEE Access 201
 
 随着深度强化学习的兴起，上述问题的解决迎来了新的转机，多智能体强化学习（Multi­Agent Reinforcement Learning， MARL）乘势兴起。多智能体强化学习中，每个智能体都采用强化学习对自己的策略进行训练，其中智能体的策略利用深度网络来表示。[4]
 
+
+## 分层强化学习 VS 多智能体强化学习
+
+### 注重不同
+
+- 分层强化学习：分层强化学习着重于解决复杂任务时候的分层决策，将复杂任务分解为多个或者多层次的简单任务去分布执行，主要是为了提高任务完成的效率。
+- 多智能体强化学习，更加注重于多个智能体之间的协作或者说是竞争的问题，每个智能体能够单独感知环境并且作出决策。多智能体更注重于任务的完成或者说对抗过程中的胜率。
+
+### 相结合
+
+也有部分将多智能体强化学习和分层强化学习结合起来的场景。
+
+例如:有10个异构智能体，需要完成不同的两组任务在不同的地方，需要有不同数量的异构智能体进行组合，组成小队去完成任务，目的是更快，更好的完成任务。
+
+这个场景中，总的来说是多智能体强化学习，但是在实现过程中，使用分层强化学习进行设计，高层次决策用来指导10个异构智能体进行组队和选择具体任务，低层次决策只需要具体的智能体完成相应任务，即执行动作即可。
+
+通过分层强化学习，找到分组策略以及任务选择策略，从而更高效的完成任务，缩短任务完成时间。
+
 [1]: http://www.jidiai.cn/algorithm#marl_title
 [2]: https://developer.aliyun.com/article/818419?spm=a2c6h.12873639.article-detail.55.7fa137a8RUrUg3
 [3]: https://raw.githubusercontent.com/wwxFromTju/MARL-101/master/base/1-introduction-game-algorithm.md
 [4]: https://personal.ntu.edu.sg/boan/Chinese/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AE%80%E4%BB%8B.pdf
 [5]: https://zhuanlan.zhihu.com/p/545265220
 [6]: https://www.jsjkx.com/CN/article/openArticlePDF.jsp?id=20967
+[7]: https://www.zhihu.com/question/604708789/answer/3131170100
+
 TODO:
 
 https://opendilab.github.io/DI-engine/02_algo/multi_agent_cooperation_rl_zh.html

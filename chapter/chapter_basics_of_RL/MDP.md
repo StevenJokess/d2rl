@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-27 01:45:36
+ * @LastEditTime: 2023-10-15 00:47:26
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -119,14 +119,14 @@ code
 $$
 \begin{aligned}
 V(s) & =\mathbb{E}\left[G_t \mid S_t=s\right] \\
-& =\mathbb{E}\left[R_t+\gamma R_{t+1}+\gamma^2 R_{t+2}+\ldots \mid S_t=s\right] \\
-& =\mathbb{E}\left[R_t+\gamma\left(R_{t+1}+\gamma R_{t+2}+\ldots\right) \mid S_t=s\right] \\
-& =\mathbb{E}\left[R_t+\gamma G_{t+1} \mid S_t=s\right] \\
-& =\mathbb{E}\left[R_t+\gamma V\left(S_{t+1}\right) \mid S_t=s\right]
+& =\mathbb{E}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\ldots \mid S_t=s\right] \\
+& =\mathbb{E}\left[R_{t+1}+\gamma\left(R_{t+2}+\gamma R_{t+3}+\ldots\right) \mid S_t=s\right] \\
+& =\mathbb{E}\left[R_{t+1}+\gamma G_{t+1} \mid S_t=s\right] \\
+& =\mathbb{E}\left[R_{t+1} \mid S_t=s\right]+\gamma \mathbb{E}\left[G_{t+1} \mid S_t=s\right]
 \end{aligned}
 $$
 
-在上式的最后一个等号中，一方面，即时奖励的期望正是奖励函数的输出，即 $\mathbb{E}\left[R_t \mid S_t=s\right]=r(s)$ ；另一方面，等式中剩余部分 $\mathbb{E}\left[\gamma V\left(S_{t+1}\right) \mid S_t=s\right]$ 可以根据从状态 $s$ 出发的**转移概率**作为权重，来计算所有可能的下一状态 $s^{\prime}$ 对应的价值 $V\left(s^{\prime}\right)$ 的加权平均值，从而得到当前状态 $s$ 的价值 $V(s)$。
+在上式的最后一个等号中，一方面，即时奖励的期望正是奖励函数的输出，即 $\mathbb{E}\left[R_{t+1} \mid S_t=s\right]=r(s)$ ；另一方面，等式中剩余部分 $\mathbb{E}\left[\gamma V\left(S_{t+1}\right) \mid S_t=s\right]$ 可以根据从状态 $s$ 出发的**转移概率**作为权重，来计算所有可能的下一状态 $s^{\prime}$ 对应的价值 $V\left(s^{\prime}\right)$ 的加权平均值，从而得到当前状态 $s$ 的价值 $V(s)$。
 
 $$
 V(s)=r(s)+\gamma \sum_{s^{\prime} \in S} p\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)
@@ -134,26 +134,47 @@ $$
 
 上式就是马尔可夫奖励过程中非常有名的贝尔曼方程 (Bellman equation)，对每一个状态都成立。
 
-> 状态价值函数的贝尔曼方程的具体推导[14]：
->
-> $\begin{aligned} V(s) & =\mathbb{E}\left[G_t \mid S_t=s\right] \\ & =\mathbb{E}\left[R_{t+1}+\gamma R_{t+2}+\cdots \mid S_t=s\right] \\
-> & =\mathbb{E}\left[R_{t+1} \mid S_t=s\right]+\gamma \mathbb{E}\left[R_{t+2}+\gamma R_{t+3}+\cdots \mid S_t=s\right] \\ & =\mathcal{R}_s+\gamma \mathbb{E}\left[G_{t+1} \mid S_t=s\right] \\ & =\mathcal{R}_s+\gamma \int g_{t+1} p\left(G_{t+1}=g_{t+1} \mid S_t=s\right) \mathrm{d} g_{t+1} \\
-> & =r(s)+\gamma \int g_{t+1}\left(\int p\left(G_{t+1}=g_{t+1} \mid S_{t+1}=s^{\prime}, S_t=s\right) P\left(S_{t+1}=s^{\prime} \mid S_t=s\right) \mathrm{d} s^{\prime}\right) \mathrm{d} g_{t+1} \\
-> & =r(s)+\gamma \int g_{t+1}\left(\int p\left(G_{t+1}=g_{t+1} \mid S_{t+1}=s^{\prime}\right) P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime}\right) \mathrm{d} g_{t+1} \\
-> & =r(s)+\gamma \int\left(\int g_{t+1} p\left(G_{t+1}=g_{t+1} \mid S_{t+1}=s^{\prime}\right) \mathrm{d} g_{t+1}\right) P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime} \\
-> & =r(s)+\gamma \int \mathbb{E}\left[G_{t+1} \mid S_{t+1}=s^{\prime}\right] P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime} \\
-> & =r(s)+\gamma \int V\left(s^{\prime}\right) P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime} \\
-> & =r(s)+\gamma \sum_{s^{\prime} \in \mathcal{S}} V\left(s^{\prime}\right) P\left(s^{\prime} \mid s, a\right) .
-> \end{aligned}$
->
+### 状态价值函数的贝尔曼方程的具体推导（选学）
+
+#### 离散状态
+
+离散状态的形式（最后两行是推到到贝尔曼方程的一般形式）：
+
+$\begin{aligned}
+V(s)
+& =\mathbb{E}\left[R_{t+1} \mid S_t=s\right]+\gamma \mathbb{E}\left[G_{t+1} \mid S_t=s\right] \\
+& =r(s) +\gamma \sum_{s^{\prime}} \mathbb{E}\left[G_{t+1} \mid S_t=s, S_{t+1}=s^{\prime}\right] p\left(s^{\prime} \mid s\right) \\
+& =r(s) +\gamma \sum_{s^{\prime}} \mathbb{E}\left[G_{t+1} \mid S_{t+1}=s^{\prime}\right] p\left(s^{\prime} \mid s\right) \quad \text { (due to conditional independence) } \\
+& =r(s) +\gamma \sum_{s^{\prime}} V\left(s^{\prime}\right) p\left(s^{\prime} \mid s\right) \\
+& =r(s) +\gamma \sum_{s^{\prime}} V\left(s^{\prime}\right) \sum_a p\left(s^{\prime} \mid s, a\right) \pi(a \mid s) \\
+& =\underbrace{\sum_a \pi(a \mid s) \sum_r p(r \mid s, a) r}_{\text {mean of immediate rewards }}+\underbrace{\gamma \sum_a \pi(a \mid s) \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v_\pi\left(s^{\prime}\right),}_{\text {mean of future rewards }} \\
+& =\sum_a \pi(a \mid s)\left[\sum_r p(r \mid s, a) r+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v_\pi\left(s^{\prime}\right)\right], \quad \text {for all} s \in \mathcal{S} .
+\end{aligned}$
+
+#### 连续状态
+
+连续状态的形式[14]：
+
+$\begin{aligned}
+V(s)
+& =\mathbb{E}\left[R_{t+1} \mid S_t=s\right]+\gamma \mathbb{E}\left[G_{t+1} \mid S_t=s\right] \\
+& =r(s)+\gamma \mathbb{E}\left[G_{t+1} \mid S_t=s\right] \\
+& =r(s)+\gamma \int g_{t+1} p\left(G_{t+1}=g_{t+1} \mid S_t=s\right) \mathrm{d} g_{t+1} \\
+& =r(s)+\gamma \int g_{t+1}\left(\int p\left(G_{t+1}=g_{t+1} \mid S_{t+1}=s^{\prime}, S_t=s\right) P\left(S_{t+1}=s^{\prime} \mid S_t=s\right) \mathrm{d} s^{\prime}\right) \mathrm{d} g_{t+1} \\
+& =r(s)+\gamma \int g_{t+1}\left(\int p\left(G_{t+1}=g_{t+1} \mid S_{t+1}=s^{\prime}\right) P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime}\right) \mathrm{d} g_{t+1} \\
+& =r(s)+\gamma \int\left(\int g_{t+1} p\left(G_{t+1}=g_{t+1} \mid S_{t+1}=s^{\prime}\right) \mathrm{d} g_{t+1}\right) P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime} \\
+& =r(s)+\gamma \int \mathbb{E}\left[G_{t+1} \mid S_{t+1}=s^{\prime}\right] P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime} \\
+& =r(s)+\gamma \int V\left(s^{\prime}\right) P\left(s^{\prime} \mid s, a\right) \mathrm{d} s^{\prime}
+\end{aligned}$
+
+### 贝尔曼矩阵
 
 若一个马尔可夫奖励过程一共有 $|S| = n$ 个状态，即 $\mathcal{S}=\left\{s_1, s_2, \ldots, s_n\right\}$ 。并将所有状态的价值表示成一个列向量 $\mathcal{V}=\left[V\left(s_1\right), V\left(s_2\right), \ldots, V\left(s_n\right)\right]^T$ ，同理，将奖励函数写成一个列向量 $\mathcal{R} = \left[r\left(s_1\right), r\left(s_2\right), \ldots, r\left(s_n\right)\right]^T$ 。
 
-于是我们可以将贝尔曼方程写成矩阵的形式:
+于是我们可以将多个贝尔曼方程写成矩阵的形式:
 
 $$
 \begin{gathered}
-\mathcal{V}=\mathcal{R}+\gamma \mathcal{P} \mathcal{V} \\
 {\left[\begin{array}{c}
 V\left(s_1\right) \\
 V\left(s_2\right) \\
@@ -174,11 +195,12 @@ V\left(s_1\right) \\
 V\left(s_2\right) \\
 \ldots \\
 V\left(s_n\right)
-\end{array}\right]}
+\end{array}\right]}\\
+\mathcal{V}=\mathcal{R}+\gamma \mathcal{P} \mathcal{V} \\
 \end{gathered}
 $$
 
-我们可以直接根据矩阵运算求解，得到以下解析解:
+解法一：直接根据矩阵运算求解，得到以下解析解:
 
 $$
 \begin{aligned}
@@ -188,7 +210,15 @@ $$
 \end{aligned}
 $$
 
-以上解析解的计算复杂度是 $O(n^{3})$ ，其中 $n$ 是状态个数，因此这种方法只适用很小的马尔可夫奖励过程。求解较大规模的马尔可夫奖励过程中的价值函数时，可以使用**动态规划**（dynamic programming）算法、**蒙特卡洛方法**（Monte-Carlo method）和**时序差分**（temporal difference），这些方法将在之后的章节介绍。
+以上解析解的计算复杂度是 $O(n^{3})$ ，其中 $n$ 是状态个数，因此这种方法只适用很小的马尔可夫奖励过程。
+
+解法二：通过迭代的形式求出数值值，即
+
+
+
+求解较大规模的马尔可夫奖励过程中的价值函数时，可以使用**动态规划**（dynamic programming）算法、**蒙特卡洛方法**（Monte-Carlo method）和**时序差分**（temporal difference），这些方法将在之后的章节介绍。
+
+## 求解价值函数的解析解的代码
 
 接下来编写代码来实现求解价值函数的解析解方法，并据此计算该马尔可夫奖励过程中所有状态的价值。
 
@@ -323,7 +353,7 @@ $$
 
 每个浅色小圆圈旁的数字代表在某个状态下采取某个动作能获得的奖励。虚线箭头代表采取动作后可能转移到的状态，箭头边上的数字代表转移概率，如果没有数字则表示转移概率为 1。例如，在 $s_2$ 下， 如果采取动作“前往 $s_3$”，就能得到奖励-2，并且转移到$s_3$；在下，如果采取“概率前往”，就能得到奖励 1，并且会分别以概率 0.2, 0.4, 0.4 转移到 $s_2$, $s_3$ 或 $s_4$。
 
-![图3-4 马尔可夫决策过程的一个简单例子](../img/MDP_eg.png)
+![图3-4 马尔可夫决策过程的一个简单例子](../../img/MDP_eg.png)
 
 ### MDP的代码
 
