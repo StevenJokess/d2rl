@@ -33,16 +33,15 @@ g := \nabla_\theta \mathbb E\left[ \sum_{t=0}^\infty r_t  \right] = \mathbb  E\l
 $$
 
 > 对于上述等式的详细推导过程，在此给出一个不严谨但方便理解的版本，以值函数对参数求偏导为例：
->
-> $$\frac{V(s;\boldsymbol \theta)}{\boldsymbol \theta}$$
+
 > $$
 > \begin{aligned}
-> \frac{\part V(s;\boldsymbol \theta)}{\part \boldsymbol \theta}
-> = \frac{\part \sum_a \pi(a|s; \boldsymbol \theta)\cdot Q_\pi(s, a)}{\part \boldsymbol \theta} \\
-> &= \sum_a\frac{\part \pi(a|s; \boldsymbol \theta)\cdot Q_\pi(s, a)}{\part \boldsymbol \theta} \\
-> &= \sum_a\frac{\part \pi(a|s; \boldsymbol \theta)}{\part \boldsymbol \theta}\cdot Q_\pi(s, a) & \text{assume } Q_\pi \text{is independent of }\boldsymbol \theta \\
-> &= \sum_a\pi(a|s; \boldsymbol \theta) \cdot \frac{\part \log \pi(a|s; \boldsymbol \theta)}{\part \boldsymbol \theta}\cdot Q_\pi(s, a) &\text{chain rule} \\
-> &= \mathbb E_A\left[\frac{\part \log \pi(A|s; \boldsymbol \theta)}{\part \boldsymbol \theta}\cdot Q_\pi(s, A)\right]
+> \frac{\partial V(s;\boldsymbol \theta)}{\partial \boldsymbol \theta}
+> &= \frac{\partial \sum_a \pi(a|s; \boldsymbol \theta)\cdot Q_\pi(s, a)}{\partial \boldsymbol \theta} \\
+> &= \sum_a\frac{\partial \pi(a|s; \boldsymbol \theta)\cdot Q_\pi(s, a)}{\partial \boldsymbol \theta} \\
+> &= \sum_a\frac{\partial \pi(a|s; \boldsymbol \theta)}{\partial \boldsymbol \theta}\cdot Q_\pi(s, a) & \text{（assume $Q_\pi$ is independent of }\boldsymbol \theta \\
+> &= \sum_a\pi(a|s; \boldsymbol \theta) \cdot \frac{\partial \log \pi(a|s; \boldsymbol \theta)}{\partial \boldsymbol \theta}\cdot Q_\pi(s, a) &\text{（chain rule）} \\
+> &= \mathbb E_A\left[\frac{\partial \log \pi(A|s; \boldsymbol \theta)}{\partial \boldsymbol \theta}\cdot Q_\pi(s, A)\right]
 > \end{aligned}
 > $$
 > Remark. 证明参考自[Shusen Wang, Deep Reinforcement Learning](https://www.bilibili.com/video/BV1rv41167yx/?is_story_h5=false&p=1&share_from=ugc&share_medium=android&share_plat=android&share_session_id=9b64fa10-a83a-4a62-8104-4b8bb316ebdb&share_source=WEIXIN&share_tag=s_i&timestamp=1667564212&unique_k=TKDw0q7&vd_source=81247b204d5fa64ef8de53fe75ccd121)
