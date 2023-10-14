@@ -98,7 +98,7 @@ AI_teacher_ChatGPT
 :numbered:
 
 chapter_book_intro/index
-chapter_install_tools_for_DRL/index
+chapter_install&use_tools_for_DRL/index
 chapter_basics-of-RL/index
 chapter_RL_basics_algs/index
 chapter_Eligibility_Trace/index

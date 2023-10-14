@@ -27,29 +27,27 @@
 
 #### 2.1 估计策略梯度
 
-已知从某分布$\rho_0$采样的初始状态$s_0$，按照策略$\pi(a|s)$和状态转换分布函数$P(s'|s, a)$生成一条轨迹（trajectory）。在每个时间节点（time step）时智能体收到一个奖励$r_t = r(s_t, a_t, s_{t+1})$。因为我们需要将期望回报最大化，因此我们对期望回报$\mathbb E\left[\displaystyle \sum_{t=0}^\infty r_t \right]$求梯度：
+已知从某分布 $\rho_0$ 采样的初始状态 $s_0$ ，按照策略 $\pi(a|s)$ 和状态转换分布函数 $P(s'|s, a)$ 生成一条轨迹（trajectory）。在每个时间节点（time step）时智能体收到一个奖励 $r_t = r(s_t, a_t, s_{t+1})$ 。因为我们需要将期望回报最大化，因此我们对期望回报 $\mathbb E\left[\displaystyle \sum_{t=0}^\infty r_t \right]$ 求梯度：
 $$
 g := \nabla_\theta \mathbb E\left[ \sum_{t=0}^\infty r_t  \right] = \mathbb  E\left[ \sum_{t = 0}^\infty \Psi_t\nabla_\theta \log \pi_\theta(a_t|s_t) \right]
 $$
 
 > 对于上述等式的详细推导过程，在此给出一个不严谨但方便理解的版本，以值函数对参数求偏导为例：
+>
+> $$\frac{V(s;\boldsymbol \theta)}{\boldsymbol \theta}$$
 > $$
-> \begin{align}
-> \frac{\part V(s;\boldsymbol \theta)}{\part \boldsymbol \theta} &=
-> \frac{\part \sum_a \pi(a|s; \boldsymbol \theta)\cdot Q_\pi(s, a)}{\part \boldsymbol \theta}
-> \\
-> &= \sum_a\frac{\part \pi(a|s; \boldsymbol \theta)\cdot Q_\pi(s, a)}{\part \boldsymbol \theta}
-> \\
-> &= \sum_a\frac{\part \pi(a|s; \boldsymbol \theta)}{\part \boldsymbol \theta}\cdot Q_\pi(s, a) & \text{assume } Q_\pi \text{is independent of }\boldsymbol \theta
-> \\
-> &= \sum_a\pi(a|s; \boldsymbol \theta) \cdot \frac{\part \log \pi(a|s; \boldsymbol \theta)}{\part \boldsymbol \theta}\cdot Q_\pi(s, a) &\text{chain rule}
-> \\
+> \begin{aligned}
+> \frac{\part V(s;\boldsymbol \theta)}{\part \boldsymbol \theta}
+> = \frac{\part \sum_a \pi(a|s; \boldsymbol \theta)\cdot Q_\pi(s, a)}{\part \boldsymbol \theta} \\
+> &= \sum_a\frac{\part \pi(a|s; \boldsymbol \theta)\cdot Q_\pi(s, a)}{\part \boldsymbol \theta} \\
+> &= \sum_a\frac{\part \pi(a|s; \boldsymbol \theta)}{\part \boldsymbol \theta}\cdot Q_\pi(s, a) & \text{assume } Q_\pi \text{is independent of }\boldsymbol \theta \\
+> &= \sum_a\pi(a|s; \boldsymbol \theta) \cdot \frac{\part \log \pi(a|s; \boldsymbol \theta)}{\part \boldsymbol \theta}\cdot Q_\pi(s, a) &\text{chain rule} \\
 > &= \mathbb E_A\left[\frac{\part \log \pi(A|s; \boldsymbol \theta)}{\part \boldsymbol \theta}\cdot Q_\pi(s, A)\right]
-> \end{align}
+> \end{aligned}
 > $$
 > Remark. 证明参考自[Shusen Wang, Deep Reinforcement Learning](https://www.bilibili.com/video/BV1rv41167yx/?is_story_h5=false&p=1&share_from=ugc&share_medium=android&share_plat=android&share_session_id=9b64fa10-a83a-4a62-8104-4b8bb316ebdb&share_source=WEIXIN&share_tag=s_i&timestamp=1667564212&unique_k=TKDw0q7&vd_source=81247b204d5fa64ef8de53fe75ccd121)
 
-式中的$\Psi_t$可以被下面的这些表达式替换:
+式中的 $\Psi_t$ 可以被下面的这些表达式替换:
 
 * $\displaystyle \sum_{t=0}^\infty r_t$：奖励总和
 * $\displaystyle \sum_{t'=t}^\infty r_{t'}$：某时刻后的奖励总和
