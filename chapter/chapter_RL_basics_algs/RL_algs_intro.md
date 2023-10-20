@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-09-14 04:02:05
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-20 21:56:00
+ * @LastEditTime: 2023-10-21 02:22:38
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,8 +15,9 @@
 
 ## 强化学习的基础算法的简介
 
-
 ### 据学习目标[1]或优化方法分类（Categorizing RL agents）：
+
+![RL方法分类](../../img/agent_category.png)
 
 - 不基于模型，即免模型学习（model-free）方法：该方法放弃了对环境的建模（不去直接估计状态的转移，也没的到环境的具体转移变量[12]），直接与真实环境进行交互，所以其通常需要较多的数据或者采样工作来优化策略，这也使其对于真实环境具有更好的泛化性能[2]；由于这种方式更加容易实现，也容易在真实场景下调整到很好的状态。所以免模型学习方法更受欢迎，得到更加广泛的开发和测试。
   1. **基于价值函数**（value-based）：该方法是智能体通过学习价值函数（value function）（如状态值函数或动作值函数 value function or action-value function）来隐式地构建最优策略，即选择具有最大值的动作。包括，采取回合更新的蒙特卡洛方法（MC）、采取单步或多步更新的时间差分方法（TD）{使用表格学习的 Q-learning、Sarsa算法以及一系列基于Q-learning的算法（具体见off-policy）}。此时我们在训练 $Q_\theta$ 以满足自洽方程，间接地优化智能体的表现，即训练的是一个主要完成任务的Actor。 优点：Value-based算法因为其更能有效地重用历史，所以样本利用率高、价值函数估值方差小, 不易陷入局部最优；缺点：此类算法只能解决离散动作空间问题, 容易出现过拟合, 且可处理问题的复杂度受限. 同时, 由于动作选取对价值函数的变化十分敏感, value-based算法收敛性质较差。[3]![基于值函数的方法](../../img/rl-overview-value-function.png)
@@ -31,6 +32,9 @@
 
 > 在这个项目中选取了能够呈现强化学习近些年发展历程的核心算法。目前，在可靠性 (stability)和 采样效率 (sample efficiency)这两个因素上表现最优的策略学习算法是 PPO 和 SAC。从这些算法的设计和实际应用中，可以看出可靠性和采样效率两者的权衡。[11]
 
+## 其他分类方法
+
+
 
 
 ## 按更新方式分类
@@ -39,7 +43,6 @@
 
 - 典型的 Monte-Carlo update 方法： Policy Gradient
 - 典型的Temporal-Difference update 方法：Q-Learning \ Sarsa \ 升级版 Policy Gradient
-
 
 ## 按行为策略与目标策略是否一致分类
 
