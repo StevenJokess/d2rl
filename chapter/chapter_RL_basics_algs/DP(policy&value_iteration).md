@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:18:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-20 22:21:14
+ * @LastEditTime: 2023-10-20 22:49:07
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -252,25 +252,28 @@ code
 
 借用Stackoverflow的一张图，我们把价值迭代和策略迭代放在一起看：[6]
 
+### 不同点：
+
 ![价值迭代 v.s. 策略迭代](../../img/value_iteration_vs_policy_iteration.png)
 
 在策略迭代（Policy Iteration）中
 
-- 第一步 Policy Eval：一直迭代至收敛，获得准确的V(s)；第二步 Policy Improvement：根据准确的V(s)，求解最好的Action；即价值函数和策略函数的收敛是**串行的**；是不断优化策略以求最优策略：根据贝尔曼方程来更新值函数，并根据当前的值函数来改进策略。
-- 每次迭代的时间复杂度最大为 $O(|S|^3|A|^3)$，最大迭代次数为 $|A|^{|S|}$；即策略迭代的收敛速度相对较快，适用于状态空间较少的场景。
+- 第一步、策略评估（Policy Eval）：一直迭代至收敛，获得准确的 V(s)；第二步、策略改进（Policy Improvement）：根据准确的V(s)，求解最好的Action；即价值函数和策略函数的收敛是**串行的**；是不断优化策略以求最优策略：根据贝尔曼方程（贝尔曼**期望**算子）来更新值函数，并根据当前的值函数来改进策略。
+- 每次迭代的时间复杂度最大为 $O(|S|^3|A|^3)$ ，最大迭代次数为 $|A|^{|S|}$ ；即策略迭代的收敛速度相对较快，适用于状态空间较少的场景。
 
-对比之下，在价值迭代（Value Iteration）中
+对比之下，在价值迭代（Value Iteration）中 ，是。
 
-- 第一步 Policy Eval：迭代只做一步，获得不太准确的V(s)；第二步 Policy Improvement：根据不太准确的V(s)，求解最好的Action；即价值函数和策略函数的收敛是**并行的**；是通过求最优的值函数去求最优策略：直接使用贝尔曼最优方程 $
+- 第一步、策略评估（Policy Eval）：迭代只做一步，获得不太准确的 V(s)；第二步、策略改进（Policy Improvement）：根据不太准确的 V(s)，求解最好的Action；即价值函数和策略函数的收敛是**并行的**。每进行一次策略评估就更新一次策略，可以把价值迭代看成是策略迭代的一种特殊情况[14]；通过求最优的值函数去求最优策略：直接使用贝尔曼最优方程（贝尔曼**最优**算子） $
 v_{k+1}(s)=\max _{a \in A}\left(R_s^a+\gamma \sum_{s^{\prime} \in S} P_{s s^{\prime}}^a v_k\left(s^{\prime}\right)\right)$ 来更新值函数，收敛时的值函数就是最优的值函数，此时即最优策略。
 - 每次迭代的时间复杂度最大为 $O(|S|^{2}|A|)$，但迭代次数要比策略迭代算法更多；即价值迭代适用于状态空间相对偏大的环境，因为其计算量相对更小。
 
 ![关于收敛过程：策略迭代 v.s. 价值迭代 ](../../img/Policy_Iteration_VS_Value_Iteration.png)
 
-相同点：
+### 相同点：
 
-- 值迭代和策略迭代都需要经过非常多的迭代次数才能完全收敛。在实际应用中，可以不必等到完全收敛，如阈值$\theta \leftarrow 0.0001$。这样，当状态和动作数量有限时，经过有限次迭代就可以能收敛到近似最优策略。[4]
+- 价值迭代和策略迭代，都需要经过非常多的迭代次数才能完全收敛。在实际应用中，可以不必等到完全收敛，如阈值$\theta \leftarrow 0.0001$。这样，当状态和动作数量有限时，经过有限次迭代就可以能收敛到近似最优策略。[4]
 - 本质上，Policy Iteration和Value Iteration都属于Model-based方法，这种方法假设我们知道Action带来的Reward和新状态，即P(s', r | s, a)。最明显的特点是，不用玩迷宫游戏，便能根据转移矩阵计算出最优策略。
+
 
 ### 广义/通用 策略迭代（Generalized Policy Iteration，GPI）
 
@@ -434,3 +437,4 @@ https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_dp.html
 [11]: https://zhuanlan.zhihu.com/p/397509298
 [12]: E:/BaiduNetdiskDownload/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8BPDF+%E6%BA%90%E4%BB%A3%E7%A0%81/%E3%80%8A%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%E4%B8%8Epython%E5%AE%9E%E7%8E%B0%E3%80%8B.pdf
 [13]: http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.2016.y000003?viewType=HTML
+[14]: http://rlchina.org/topic/190

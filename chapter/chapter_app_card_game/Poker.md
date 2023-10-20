@@ -62,9 +62,7 @@ $$
 R_i^T(I, a)=\frac{1}{T} \sum_{t=1}^T \pi_{-i}^{\sigma^{\prime}}(I)\left(u_i\left(\left.\sigma^t\right|_{l \rightarrow a}, I\right)-u_i\left(\sigma^t, I\right)\right)
 $$
 
-对于信息集 $\mathrm{I}$ 中的每一个 $\pi_{-i}^{\sigma^*}$ 可选行动 $\mathrm{a}$, 玩家 $\mathrm{i}$ 在时间 $\mathrm{T}$的反现实悔恨值如公式 (3) 所示。其中, 表示除玩家 $\mathrm{i}$ 外其他玩家 依据策略 $\sigma$ 达到当前信息集的概率。图 7-2 展示了 CFR 算法的迭代求 解过程。
-
-
+对于信息集 $\mathrm{I}$ 中的每一个 $\pi_{-i}^{\sigma^*}$ 可选行动 $\mathrm{a}$, 玩家 $\mathrm{i}$ 在时间 $\mathrm{T}$ 的反现实悔恨值如公式 (3) 所示。其中, 表示除玩家 $\mathrm{i}$ 外其他玩家依据策略 $\sigma$ 达到当前信息集的概率。图 7-2 展示了 CFR 算法的迭代求解过程。
 
 
 
