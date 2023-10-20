@@ -31,3 +31,5 @@ https://chengzhaoxi.xyz/98c9615f.html
 
 CS231n课程笔记翻译：Python Numpy教程 - 杜客的文章 - 知乎
 https://zhuanlan.zhihu.com/p/20878530
+
+https://github.com/jackfrued/Python-100-Days

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-29 20:42:36
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-05-27 21:05:33
+ * @LastEditTime: 2023-10-20 21:49:48
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -173,7 +173,7 @@ $L(w)=-t_a \log \left(p_a\right)$ 其中，s为当前棋局为，a是在自我�
 
 估值网络部分用误差的平方作为损失函数，$L_2(w)=(R-V(s))^2$；其中R为胜负标记，V(s,a)为当前棋局s下，在a处落子时估值网络的输出。[10]
 
-### 基于演员-评价方法的强化学习
+### 基于演员-评论员方法的强化学习
 
 引入了收益增量的概念，该概念是对一步棋重要性的评价，重点学习那些直接关乎胜负的走法。该方法将策略网络和估值网络融合为一个网络一起学习，具有两个输出，分别对应于策略网络的输出和估值网络的输出。
 

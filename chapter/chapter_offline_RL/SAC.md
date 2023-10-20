@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:58:18
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-02 16:55:41
+ * @LastEditTime: 2023-10-20 21:38:35
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -68,10 +68,12 @@ $$
 Soft 贝尔曼方程，是依据贝尔曼期望方程，得动作价值函数和状态价值函数的关系。
 
 1. 用状态价值函数表示动作价值函数的贝尔曼等式：
+
 $$
 Q\left(s_t, a_t\right)=r\left(s_t, a_t\right)+\gamma \mathbb{E}_{s_{t+1}}\left[V\left(s_{t+1}\right)\right]
 $$
-2. 用动作价值函数表示状态价值函数的贝尔曼等式：
+
+1. 用动作价值函数表示状态价值函数的贝尔曼等式：
 $$
 V\left(s_t\right)=\mathbb{E}_{a_t \sim \pi}\left[Q\left(s_t, a_t\right)-\alpha \log \pi\left(a_t \mid s_t\right)\right]=\mathbb{E}_{a_t \sim \pi}\left[Q\left(s_t, a_t\right)\right]+\alpha H\left(\pi\left(\cdot \mid s_t\right)\right)
 $$
@@ -141,7 +143,7 @@ $$
 
 ## SAC
 
-在 $S A C$ 算法中，我们为两个动作价值函数 $Q$ (参数分别为 $\omega_1$ 和 $\omega_2$ ) 和 一个策略函数 $\pi$ (参数为 $\theta$ ) 建模。
+在 $SAC$ 算法中，我们对批评者（Critic）【包括两个动作价值函数 $Q$ (参数分别为 $\omega_1$ 和 $\omega_2$ )】 和 演员【一个策略函数 $\pi$ (参数为 $\theta$ )】 同时建模。
 
 ### Q 网络
 
@@ -151,8 +153,10 @@ $$
 
 $$
 \begin{aligned}
-L_Q(\omega) & =\mathbb{E}_{\left(s_t, a_t, r_t, s_{t+1}\right) \sim R}\left[\frac{1}{2}\left(Q_\omega\left(s_t, a_t\right)-\left(r_t+\gamma V_{\omega^{-}}\left(s_{t+1}\right)\right)\right)^2\right] \\
-& =\mathbb{E}_{\left(s_t, a_t, r_t, s_{t+1}\right) \sim R, a_{t+1} \sim \pi_\theta\left(\cdot \mid s_{t+1}\right)}\left[\frac{1}{2}\left(Q_\omega\left(s_t, a_t\right)-\left(r_t+\gamma\left(\min _{j=1,2} Q_{\omega_j^{-}}\left(s_{t+1}, a_{t+1}\right)-\alpha \log \pi\left(a_{t+1} \mid s_{t+1}\right)\right)\right)\right)^2\right]
+L_Q(\omega)
+& =\mathbb{E}_{\left(s_t, a_t, r_{t+1}, s_{t+1}\right) \sim R}\left[\frac{1}{2}\left(Q_\omega\left(s_t, a_t\right)-\left(\hat{\mathrm{Q}}\left(\mathrm{s}_{\mathrm{t}}, \mathrm{a}_{\mathrm{t}}\right)\right)\right)^2\right] \\
+& =\mathbb{E}_{\left(s_t, a_t, r_{t+1}, s_{t+1}\right) \sim R}\left[\frac{1}{2}\left(Q_\omega\left(s_t, a_t\right)-\left(r_{t+1}+\gamma V_{\omega^{-}}\left(s_{t+1}\right)\right)\right)^2\right] \\
+& =\mathbb{E}_{\left(s_t, a_t, r_{t+1}, s_{t+1}\right) \sim R, a_{t+1} \sim \pi_\theta\left(\cdot \mid s_{t+1}\right)}\left[\frac{1}{2}\left(Q_\omega\left(s_t, a_t\right)-\left(r_{t+1}+\gamma\left(\min _{j=1,2} Q_{\omega_j^{-}}\left(s_{t+1}, a_{t+1}\right)-\alpha \log \pi\left(a_{t+1} \mid s_{t+1}\right)\right)\right)\right)^2\right]
 \end{aligned}
 $$
 
@@ -160,9 +164,9 @@ $$
 
 SAC 中目标 $Q$ 网络的更新方式与 DDPG 中的更新方式一样。
 
-### 策略 $\pi$的损失函数
+### 策略 $\pi$ 的损失函数
 
-策略 $\pi$ 的损失函数由 $\mathrm{KL}$ 散度得到，化简后为:
+策略 $\pi$ 的损失函数，由 $\mathrm{KL}$ 散度得到，化简后为:
 
 $$
 L_\pi(\theta)=\mathbb{E}_{s_t \sim R, a_t \sim \pi_\theta}\left[\alpha \log \left(\pi_\theta\left(a_t \mid s_t\right)\right)-Q_\omega\left(s_t, a_t\right)\right]
@@ -259,14 +263,9 @@ code
 
 可以发现，SAC 在离散动作环境车杆下具有完美的收敛性能，并且其策略回报的曲线十分稳定，这体现出 SAC 可以在离散动作环境下平衡探索与利用的优秀性质。
 
-
-## 改进：SACwA
+## 后续改进：SACwA
 
 SACwA算法是对SAC算法的改进版本，主要在于增加了一个自适应的温度参数（alpha），用于动态地调整策略优化中的熵项权重。这使得SACwA可以在不同的环境中自适应地调整探索和利用的权衡，从而在不同任务和环境中表现更加灵活和高效。SACwA还引入了一个新的目标网络更新策略，通过使用经验池中的数据进行目标网络的更新，从而提高了训练的稳定性和收敛速度。[8]
-
-
-
-
 
 ## 小结
 
@@ -304,7 +303,7 @@ $$
 
 ![SAC 中文版；注意，K就是文中提到的 $\mathcal{H}_0$](../../img/SAC_zh.png)
 
-![SAC 英文版[7]；注意，d表示是否终止，d=1则终止](../../img/SAC_En.png)
+![SAC 英文版[7]；注意，d表示是否终止，d=1则终止](../../img/SAC_en.png)
 
 [1]: https://hrl.boyuai.com/chapter/2/sac%E7%AE%97%E6%B3%95
 [2]: https://chat.openai.com/chat

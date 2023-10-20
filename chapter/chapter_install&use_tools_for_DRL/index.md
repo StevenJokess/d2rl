@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-22 02:19:30
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-12 22:16:04
+ * @LastEditTime: 2023-10-15 02:17:35
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -16,8 +16,11 @@
 
 本章介绍深度强化学习的工具，即各种开源工具库，学习目标包括：
 
+- 了解和掌握操作系统Win10&Linux&Mac
+- 了解和掌握开发工具Python&C++
 - 了解和掌握包管理工具Anaconda和pip
-- 了解和掌握论文写作工具Latex
+- 了解和掌握代码管理工具Git和Github
+- 了解和掌握论文写作工具Markdown和Latex
 - 了解和掌握gym库
 - 了解和掌握pybullet库
 - 了解和掌握argparse库
@@ -29,7 +32,8 @@
 ```toc
 :maxdepth: 2
 
-Python
+Win10&Linux&Mac
+Python&C++
 Anaconda&pip
 GPU+cuda+cudnn
 gym
