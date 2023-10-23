@@ -205,3 +205,4 @@ TRPO 算法是比较难掌握的一种强化学习算法，需要较好的数学
 [8]: https://zhuanlan.zhihu.com/p/25239682
 
 TODO:https://zhuanlan.zhihu.com/p/126288378#%E5%8D%81%E4%B8%89%E3%80%81Hessian%20Free
+TODO: https://blog.csdn.net/tanjia6999/article/details/99716133

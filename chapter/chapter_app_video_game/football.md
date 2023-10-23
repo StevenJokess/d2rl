@@ -5,13 +5,14 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-10-03 03:50:34
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-17 01:06:26
+ * @LastEditTime: 2023-10-24 02:00:51
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 # Football
+
 
 ## Google Research Football 环境：
 
@@ -20,6 +21,11 @@ Link：https://github.com/google-research/football
 
 这个环境是google基于之前某个足球小游戏的环境进行改动和封装出来的，主要可以分为11v11 single-agent场景（控制一个active player在11名球员中切换）和5v5 multi-agent场景（控制4名球员+1个守门员）。该环境支持self-play，有三种难度内置AI可以打，你可以人肉去体验下，玩起来和实况，FIFA，绿茵之巅感觉都差不多。游戏状态基于vector的主要是球员的坐标/速度/角色/朝向/红黄牌等，也可以用图像输入，但需要打开render，估计会略慢，动作输出有二十多维，包括不同方向/长短传/加速等。此外环境还提供了所谓“football academy”，你可以自己进行游戏场景和球员坐标的初始化，相当于可以进行课程学习配置。Render如下：
 
+## 绝悟WeKick于Kaggle夺冠
+
+2020 年，Google 公司与英超曼城俱乐部在数据科学社区和数据科学竞赛平台Kaggle 上举办了首届Google 足球竞赛，这次竞赛基于Google Research Football强化学习环境，采取11vs11 的赛制，参赛团队需要控制其中1 个智能体与10 个内置智能体组成球队。经过多轮角逐，最终腾讯AI Lab 研发的绝悟WeKick 版本成为冠军球队。[4]
+
+### 细节
 
 2020 年 12 月，腾讯 AI Lab 绝悟团队借助「开悟」平台开发的足球 AI 「绝悟-WeKick 版本」在 Google Research 与英超曼城俱乐部联合举办的足球 AI Kaggle 竞赛上获得冠军。
 
@@ -143,6 +149,12 @@ GAIL 的优势（WeKick 的奖励设计综合了 Reward Shaping 和 GAIL 两种�
 
 https://www.kaggle.com/c/google-football/discussion/202232
 
+## Deepmind
+
+来自DeepMind 的科学家与利物浦足球俱乐部合作，对人工智能帮助球员和教练分析对战数据进行了探索[86]。举例来讲，他们分析了过去几年的点球数据，发现球员在踢向自己最强的一侧更容易得分。他们还在一个可以仿真球员关节动作且决策间隔精确到毫秒的足球环境中训练了AI 模型，发现AI 可以自发地形成一个队伍进行合作来取得胜利[49]。[4]
+
+
 [1]: https://cloud.tencent.com/developer/article/2197037
 [2]: https://www.sohu.com/a/442547985_473283
 [3]: https://www.infoq.cn/article/F77eX25RjDyspDkPlx1E?utm_source=related_read_bottom&utm_medium=article
+[4]: https://personal.ntu.edu.sg/boan/Chinese/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AE%80%E4%BB%8B.pdf

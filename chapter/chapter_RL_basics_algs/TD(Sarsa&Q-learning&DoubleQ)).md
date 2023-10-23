@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-20 23:08:20
+ * @LastEditTime: 2023-10-24 01:04:24
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -365,17 +365,27 @@ TODO:
 
 需要注意的是，打印出来的回报是行为策略在环境中交互得到的，而不是 Q-learning 算法在学习的目标策略的真实回报。我们把目标策略的行为打印出来后，发现其更偏向于走在悬崖边上，这与 SARSA 算法得到的比较保守的策略相比是更优的。 但是仔细观察 SARSA 和 Q-learning 在训练过程中的回报曲线图，我们可以发现，在一个序列中 SARSA 获得的期望回报是高于 Q-learning 的。这是因为在训练过程中智能体采取基于当前函数的 $\epsilon$ -贪婪策略来平衡探索与利用，Q-learning 算法由于沿着悬崖边走，会以一定概率探索“掉入悬崖”这一动作，而 SARSA 相对保守的路线使智能体几乎不可能掉入悬崖。
 
-### 缺点及后续的改进
+### 优点和缺点及后续的改进
+
+Q-learning具有以下优点：
+
+1. 所需的参数少；
+2. 不需要环境的模型；
+3. 不局限于episode task；
+4. 可以采用离线的实现方式；
+5. 可以保证收敛到 $Q_\pi$；[26]
+6. 评价策略比较容易，使用数据量相对较少，特别是用 experience replay的时候[27]
+
 
 Q-learning具有以下缺点：
 
-1. 只考虑动作最大估值，导致过大估计：考虑这样一个MDP过程，![Q-learning的过估计](../../img/Q-learning_over_estimate.png)，B状态可能会得到一个均值为-0.1，方差为1的奖励，而开始阶段Q-learning，一开始可能会从B处得到正向奖励，由于贪婪，导致后面更倾向于选left（很像网络博彩，前期给你点甜头），所以可以看到Q-learning算法一开始更倾向于选择left，后面才能趋于正确的策略。也就是开始阶段Q-learning算法产生了过估计。
-2. 难以应对复杂性环境：可以模拟行动空间离散且较小的场景，但难以处理复杂情况，无法处理连续的行动空间和状态空间。之后的DQN能处理连续的状态空间。
+1. 只考虑动作最大估值，导致过大估计（最大化偏差问题）：考虑这样一个MDP过程，![Q-learning的过估计](../../img/Q-learning_over_estimate.png)，B状态可能会得到一个均值为-0.1，方差为1的奖励，而开始阶段Q-learning，一开始可能会从B处得到正向奖励，由于贪婪，导致后面更倾向于选left（很像网络博彩，前期给你点甜头），所以可以看到Q-learning算法一开始更倾向于选择left，后面才能趋于正确的策略。也就是开始阶段Q-learning算法产生了过估计。
+2. 难以应对复杂性环境：由于需要一个Q table，可以模拟行动空间离散且较小的场景，但情况一旦复杂，Q table会很大，查找和存储都需要消耗大量的时间和空间。更无法处理连续的行动空间和状态空间。之后，改进的DQN能处理连续的状态空间。
   > -  只能解决有限大小的状态和动作，当状态数为n，动作数为m时。（Only for finite-sized problems with $n$ states and $m$ actions（
   > - 状态转移概率 $P\left(s^{\prime} \mid s, a\right)$ 的空间复杂度为 $O(n^2*m)$  而 $R(s, a)$ 和 $Q(s, a)$ 的空间复杂度为 $O(n m)$（Needs $O\left(n^2 m\right)$ entries for $P\left(s^{\prime} \mid s, a\right)$, and $O(n m)$ for $R(s, a)$ and $Q(s, a)$
   > - 这使得很难应用到复杂问题（Do no scale well to large problems）[18]
-3. 难以应对时序关联的环境：TODO:[16]
-4. 难以学习随机策略：策略是通过从Q函数最大化回报，确定地计算出来的，所以无法学习随机策略。
+1. 难以应对时序关联的环境[16]：智能体的决策只依赖当前环境的状态，所以如果状态之间存在时序关联那么学习的效果就不佳。[25]后续的改进，如DRQN。
+2. 难以学习随机策略：策略是通过从Q函数最大化回报，确定地计算出来的，所以无法学习随机策略。
 
 ### 代码中，对终幕的处理技巧
 
@@ -481,3 +491,6 @@ Double Q-learning 加倍了内存开销，但是却没有增加额外的计算�
 [22]: https://zhuanlan.zhihu.com/p/655449487
 [23]: http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.2016.y000003?viewType=HTML
 [24]: http://rlchina.org/topic/190
+[25]: https://blog.csdn.net/sinat_39620217/article/details/131004772?utm_source=bbs_include
+[26]: https://www.ofweek.com/ai/2018-06/ART-201717-11001-30241385.html
+[27]: https://www.zhihu.com/question/280077512

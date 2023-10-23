@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:18:52
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-02 21:12:45
+ * @LastEditTime: 2023-10-24 00:42:54
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -17,32 +17,55 @@
 
 第 20 章中已经初步介绍了多智能体强化学习研究的问题和最基本的求解范式。本章来介绍一种比较经典且效果不错的进阶范式：*中心化训练时去中心化执行*（centralized training with decentralized execution，CTDE）。
 
-- 所谓中心化训练是指在训练的时候使用一些单个智能体看不到的全局信息而以达到更好的训练效果。作用是有效地利用全局信息。
-- 所谓去中心化执行是指在执行（即策略模型推断）时不使用这些信息，每个智能体完全根据自己的策略直接动作以达到去中心化执行的效果。作用是利用局部信息，使算法具有一定的扩展性。
+### 解释CT、DE
+
+- 所谓**中心化训练**是指在训练的时候使用一些单个智能体看不到的全局信息而以达到更好的训练效果。作用是有效地利用全局信息。
+- 所谓**去中心化执行**是指在执行（即策略模型推断）时不使用这些信息，每个智能体完全根据自己的策略直接动作以达到去中心化执行的效果。作用是利用局部信息，使算法具有一定的扩展性。
+
+### 类比，训练有教练，而上场无教练
 
 CTDE 可以类比成一个足球队的训练和比赛过程：
 
-- 中心化训练：在训练时，11 个球员可以直接获得教练的指导从而完成球队的整体配合，而教练本身掌握着比赛全局信息，**教练的指导也是从整支队、整场比赛的角度进行的**；
-- 去中心化执行：当训练好的 11 个球员在上场比赛时，则根据场上的实时情况直接做出决策，不再有教练的指导。
+- **中心化训练**：在训练时，11 个球员可以直接获得教练的指导从而完成球队的整体配合，而教练本身掌握着比赛全局信息，**教练的指导也是从整支队、整场比赛的角度进行的**；
+- **去中心化执行**：当训练好的 11 个球员在上场比赛时，则根据场上的实时情况直接做出决策，不再有教练的指导。
+
+### CTDE 的分类
 
 CTDE 算法主要分为两种：
 
-- 基于价值函数的方法，例如 VDN，QMIX 算法等；
+- 基于 价值函数 的方法，例如 VDN，QMIX 算法等；
 - 基于 Actor-Critic 的方法，例如 MADDPG 和 COMA 等。
 
 本章将重点介绍 MADDPG 算法。
 
 ## MADDPG 算法
 
-多智能体 DDPG（muli-agent DDPG，MADDPG）算法从字面意思上来看就是对于每个智能体实现一个 DDPG 的算法。所有智能体共享一个中心化的 Critic 网络，该 Critic 网络在训练的过程中同时对每个智能体的 Actor 网络给出指导，而执行时每个智能体的 Actor 网络则是完全独立做出行动，即去中心化地执行。
+### 不止是，望文生义
 
-CTDE 算法的应用场景通常可以被建模为一个**部分可观测马尔可夫博弈**(partially observable Markov games) : 用 $\mathcal{S}$ 代表 $N$ 个智能体所有可能的状态空间，这是全局的信息。对于每个智能体 $i$ ，其动作空间为 $\mathcal{A}_i$ ，观测空间 为 $\mathcal{O}_i$ ，每个智能体的策略 $\pi_{\theta_i}: \mathcal{O}_i \times \mathcal{A}_i \rightarrow[0,1]$ 是一个概率分布，用来表示智能体在每个观测下采取各个动作的概率。环境的状态转移函数为
+多智能体 DDPG（muli-agent DDPG，MADDPG）算法从字面意思上来看就是对于每个智能体实现一个 DDPG 的算法。
 
-$\mathcal{T}: \mathcal{S} \times \mathcal{A}_1 \times \cdots \times \mathcal{A}_N \rightarrow \Omega(\mathcal{S})$ 。每个智能体的奖励函数为
+- 集中式的Critic：所有智能体共享一个中心化的 Critic 网络，该 Critic 网络集中了环境中的所有信息（从原来的只注重自身的经验到现在的注重全局经验），在训练的过程中同时对每个智能体的 Actor 网络给出指导。
+- 分布式的Actor：执行时每个智能体的 Actor 网络则是完全独立做出行动，即**去中心化地执行**。
 
-$r_i: \mathcal{S} \times \mathcal{A} \rightarrow \mathbb{R}$ ，每个智能体从全局状态得到的部分观测信息为
+![MADDPG](../../img/MADDPG.png)
 
-$\mathbf{o}_i: \mathcal{S} \rightarrow \mathcal{O}_i$ ，初始状态分布为 $\rho: \mathcal{S} \rightarrow[0,1]$ 。每个智能体的目标是最大化 其期望累积奖励 $\mathbb{E}\left[\sum_{t=0}^T \gamma^t r_i^t\right]_{\text {。 }}$
+### CTDE 算法的应用场景
+
+CTDE 算法的应用场景通常可以被建模为一个**部分可观测马尔可夫博弈**(partially observable Markov games) :
+
+- 用 $\mathcal{S}$ 代表 $N$ 个智能体所有可能的状态空间，这是全局的信息。
+- 对于每个智能体 $i$ ，
+  - 其动作空间为 $\mathcal{A}_i$ ，
+  - 观测空间为 $\mathcal{O}_i$ ，
+  - 每个智能体的策略 $\pi_{\theta_i}: \mathcal{O}_i \times \mathcal{A}_i \rightarrow[0,1]$ 是一个概率分布，用来表示智能体在每个观测下采取各个动作的概率。
+
+- 环境的状态转移函数为 $\mathcal{T}: \mathcal{S} \times \mathcal{A}_1 \times \cdots \times \mathcal{A}_N \rightarrow \Omega(\mathcal{S})$ 。
+- 每个智能体的奖励函数为 $r_i: \mathcal{S} \times \mathcal{A} \rightarrow \mathbb{R}$ ，
+- 每个智能体从全局状态得到的部分观测信息为 $\mathbf{o}_i: \mathcal{S} \rightarrow \mathcal{O}_i$ ，
+- 初始状态分布为 $\rho: \mathcal{S} \rightarrow[0,1]$ 。
+- 每个智能体的目标是最大化其期望累积奖励 $\mathbb{E}\left[\sum_{t=0}^T \gamma^t r_i^t\right]$。
+
+### 细节
 
 接下来我们看一下 MADDPG 算法的主要细节吧！如图 21-1 所示，每个智能 体用 Actor-Critic 的方法训练，但不同于传统单智能体的情况，在 MADDPG 中每个智能体的 Critic 部分都能够获得其他智能体的策略信息。具体来说， 考虑一个有 $N$ 个智能体的博恋，每个智能体的策略参数为 $\theta=\left\{\theta_1, \ldots, \theta_N\right\}$ ，记 $\pi=\left\{\pi_1, \ldots, \pi_N\right\}$ 为所有智能体的策略集合，那么我们可以写出在随 机性策略情况下每个智能体的期望收益的策略梯度：
 
@@ -68,6 +91,9 @@ $$
 
 其中， $\mu^{\prime}=\left(\mu_{\theta_1}^{\prime}, \ldots, \mu_{\theta_N}^{\prime}\right)$ 是更新价值函数中使用的目标策略的集合，它们有着延迟更新的参数。
 
+## MADDPG 的伪代码
+
+![MADDPG 的伪代码](../../img/MADDPG_alg.png)
 
 MADDPG 的具体算法流程如下：
 
@@ -137,10 +163,16 @@ $\tau>0$ 被称作分布的温度参数，通过调整它可以控制生成的 G
 
 可以看到，正常智能体`agent_0`和`agent_1`的回报结果完全一致，这是因为它们的奖励函数完全一样。正常智能体最终保持了正向的回报，说明它们通过合作成功地占领了两个不同的地点，进而让对抗智能体无法知道哪个地点是目标地点。另外，我们也可以发现 MADDPG 的收敛速度和稳定性都比较不错。
 
+## MADDPG的优缺点
+
+- 缺点：通过实验发现，当智能体数量增多（大于5个的时候），环境就会出现紊乱情况，智能体不能得到很好的收敛，也就是说MADDPG目前可能并不适用于大规模的多智能体深度强化学习场景下，这个也有人说是因为集中式学习分布式执行导致的。[2]而单智能体可没这问题，因此在一些多智能体的环境下可以先试试单智能体的效果如何，如果不行再尝试多智能体。[3]
+
 ## 小结
 
-本章讲解了多智能体强化学习**CTDE 范式**下的经典算法 MADDPG，MADDPG 后续也衍生了不少多智能体强化学习算法。因此，理解 MADDPG 对深入探究多智能体算法非常关键，有兴趣的读者可阅读 MADDPG 原论文加深理解。
+本章讲解了多智能体强化学习**CTDE 范式**下的经典算法 MADDPG，MADDPG 后续也衍生了不少多智能体强化学习算法。因此，理解 MADDPG 对深入探究多智能体算法非常关键，有兴趣的读者可阅读 MADDPG 原论文和原开源代码[5]加深理解。
 
 [1]: https://hrl.boyuai.com/chapter/3/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E8%BF%9B%E9%98%B6/
-更多代码：
-https://blog.csdn.net/sinat_39620217/category_10940146.html
+[2]: https://blog.csdn.net/qq_44812718/article/details/123472178
+[3]: https://blog.csdn.net/weixin_43145941/article/details/112726116
+[4]: https://blog.csdn.net/sinat_39620217/category_10940146.html
+[5]: https://github.com/openai/maddpg

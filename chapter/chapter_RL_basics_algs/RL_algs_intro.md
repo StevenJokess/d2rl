@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-09-14 04:02:05
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-21 02:22:38
+ * @LastEditTime: 2023-10-23 02:23:34
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -32,24 +32,33 @@
 
 > 在这个项目中选取了能够呈现强化学习近些年发展历程的核心算法。目前，在可靠性 (stability)和 采样效率 (sample efficiency)这两个因素上表现最优的策略学习算法是 PPO 和 SAC。从这些算法的设计和实际应用中，可以看出可靠性和采样效率两者的权衡。[11]
 
+![RL 算法的总览（Youtube）[18]](../../img/RL_algs_overview_u2b.png)
+
 ## 其他分类方法
 
 
+![RL 算法的总览](../../img/RL_algs_overview.png)
 
-
-## 按更新方式分类
+### 按更新方式分类
 
 回合更新 Monte-Carlo update & 单步更新 Temporal-Difference update
 
 - 典型的 Monte-Carlo update 方法： Policy Gradient
 - 典型的Temporal-Difference update 方法：Q-Learning \ Sarsa \ 升级版 Policy Gradient
 
-## 按行为策略与目标策略是否一致分类
+### 按行为策略与目标策略是否一致分类
 
 在线学习 on-policy & 离线学习 off-policy
 
 - 典型的 on-policy 方法：Sarsa \ Policy Gradient
 - 典型的 off-policy 方法：Q-Learning \ Deep Q-learning \ 升级版 Policy Gradient[9]
+
+### 更多前沿算法的分类
+
+- 根据策略更新方法:基于值函数的强化学习,基于直接策略搜索的强化学习,ES方法和GA方法。
+- 根据回报函数是否已知分为:正向强化学习和逆向强化学习
+- 根据任务大小和多少分为:分层强化学习、元强化学习、多智能体强化学习、迁移学习等[17]
+
 
 ## RL算法的两个重要的评价指标
 
@@ -128,7 +137,10 @@
 [14]: https://mdnice.com/writing/44f662bc5fb84a9ca36e160ae89b4194
 [15]: https://blog.csdn.net/Hansry/article/details/80808097
 [16]: https://opendilab.github.io/DI-engine/02_algo/model_based_rl_zh.html
+[17]: https://blog.csdn.net/u012692537/article/details/79405339
+[18]: https://www.youtube.com/watch?v=i7q8bISGwMQ
 [22]: http://www.c-s-a.org.cn/html/2020/12/7701.html#outline_anchor_19
+
 
 
 
