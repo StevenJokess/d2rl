@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-19 23:32:35
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-10 01:29:18
+ * @LastEditTime: 2023-10-26 01:05:50
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -102,6 +102,14 @@ model-based learning:
 - Learn and plan value function (and/or policy)from real andsimulated experience
 
 提出了一种新的架构 [Dyna](Dyna-Q.md)。
+
+## 问题测试
+
+1. 你了解有模型(model-based)和免模型(model-free)吗？两者具体有什么区别呀？
+
+## 附录——问题答案
+
+第1题的答案：区别在开始学习的时候，是否完成了对环境的函数映射建模。有模型方法由于有对环境的建模，从而可以从虚拟经验里计划出价值函数。
 
 [1]: https://www.bilibili.com/video/BV1HT411C78A?p=42&vd_source=bca0a3605754a98491958094024e5fe3
 [2]: https://zhuanlan.zhihu.com/p/37898383
