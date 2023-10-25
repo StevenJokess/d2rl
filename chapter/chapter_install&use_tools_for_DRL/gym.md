@@ -125,6 +125,10 @@ Fig. 2  Experimental environments
 
 4) Qbert-ram-v0: Qbert-ram-v0 (Qbert)是一个雅达利2600像素游戏, 如图2(d)所示, 玩家控制主角在一个由正方体构成的三角立面上来回跳跃, 每一次地面接触都会改变方块表层的颜色, 只要将所有色块踩成规定的颜色即告胜利. 状态观测选用雅达利的随机存储器(Random access memory, RAM)状态.
 
+## gym wrapper
+
+
+
 ## 升级
 
 强化学习环境升级 – 从gym到Gymnasium
@@ -142,6 +146,7 @@ import gymnasium as gym
 env = gym.make("CartPole-v1")
 
 
+
 ## 常见问题
 
 ### 不显示画面
@@ -153,10 +158,6 @@ env = gym.make("CartPole-v1")
 env = gym.make("CartPole-v1", render_mode = "human")
 Python
 显示效果：
-
-
-
-
 
 问题：
 

@@ -13,6 +13,10 @@
 -->
 # 多智能体强化学习
 
+## 物联网支持
+
+物联网：为AI提供发现、连接、通信、协同的支持，将AI从单智能体装置拓展到多智能体系统[8]
+
 ## MAL
 
 多智能体学习（Multi­agent Learning，MAL）将机器学习技术引入多智能体系统领域，研究如何设计算法去创建动态环境下的自适应智能体。
@@ -222,7 +226,7 @@ approximation. IEEE Access 201
 [5]: https://zhuanlan.zhihu.com/p/545265220
 [6]: https://www.jsjkx.com/CN/article/openArticlePDF.jsp?id=20967
 [7]: https://www.zhihu.com/question/604708789/answer/3131170100
-
+[8]: https://zhuanlan.zhihu.com/p/406690054
 TODO:
 
 https://opendilab.github.io/DI-engine/02_algo/multi_agent_cooperation_rl_zh.html

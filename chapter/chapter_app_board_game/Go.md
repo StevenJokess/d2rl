@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-03-29 20:42:36
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-20 21:49:48
+ * @LastEditTime: 2023-10-25 20:58:44
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -67,20 +67,23 @@
 ### 第一结构
 
 - 环境（Environment）：棋盘
-- 智能体（Agent）：我和对手
+- 智能体（Agent）：我
 - 目标（Goal）：赢
+- 注：对手，可把其视为环境的一部分；但也可把其视为智能体，则二者构成MARL。
 
 ### 第二结构
 
-- 状态（State）
-- 行动（Action）
-- 奖励（Reward）
+- 状态（State）：可以使用当前棋盘中每个点的落子情况作为当前状态，如使用数组（Board [19][19]）表示每个点位是否有黑子或白子。整体的落子情况包含了动作决策所需的全部信息，满足马尔可夫性。
+- 行动（Action）：在当前状态下智能体执子落下的点位。[16]
+- 奖励（Reward）：智能体获胜后给予正向奖励1，落败后给予负向奖励-1，和棋为0
+
+例如：
 
 - 起始状态 $S_1$：Empty Board
 - 第一步行动 $A_1$：白棋星位落子
 - 第一步奖励 $R_1$：0
 
-对手：黑子落在对角的小目
+对手，把黑子落在对角的小目
 
 - 下一状态 $S_2$：一颗白棋在一个角的星位、一颗黑子落在对角的小目
 - $A_2$
@@ -91,9 +94,10 @@
 ### 第三结构
 
 - 价值函数
+  - 价值最大，即赢棋概率最大的行动。
   - 状态价值函数
   - 状态行动价值函数：$S_1$有361个可能的行动，可能的行动的价值。价值是赢棋的概率
-- 策略：选择价值最大，即赢棋概率最大的行动。
+- 策略函数：用于选择最优行棋方式，
 
 ### 符合特点
 
@@ -200,3 +204,4 @@ $L(w)=-t_a \log \left(p_a\right)$ 其中，s为当前棋局为，a是在自我�
 [13]: https://zh.wikipedia.org/zh-sg/%E7%AD%96%E6%A2%85%E6%B4%9B%E5%AE%9A%E7%90%86_(%E5%8D%9A%E5%BC%88%E8%AB%96)#:~:text=%E7%AD%96%E6%A2%85%E6%B4%9B%E5%AE%9A%E7%90%86%EF%BC%88%E8%8B%B1%E8%AF%AD,%E5%BF%85%E4%B8%8D%E8%B4%A5%E7%9A%84%E7%AD%96%E7%95%A5%E3%80%82
 [14]: https://www.youtube.com/watch?v=ETes6EJtSkA
 [15]: https://www.bilibili.com/video/BV1mV4y1u7mJ/
+[16]: https://www.ctyun.cn/developer/article/463848842154053

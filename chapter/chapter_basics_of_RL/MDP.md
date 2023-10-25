@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-15 00:50:16
+ * @LastEditTime: 2023-10-25 21:41:12
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -24,7 +24,7 @@
 
 **随机过程**（stochastic process）是概率论的“动力学”部分。概率论的研究对象是静态的随机现象，而随机过程的研究对象是随时间演变的随机现象（例如天气随时间的变化、城市交通随时间的变化）。在随机过程中，随机现象在某时刻 $t$ 的取值是一个向量随机变量 ，用 $S_t$ 表示，所有可能的状态组成状态集合。随机现象便是状态的变化过程。在某时刻的状态通常取决于时刻之前的状态。我们将已知历史信息 $(S_1, \dots ,S_t)$ 时，下一个时刻状态的概率表示成 $P\left[S_{t+1} \mid S_1, \dots ,S_t \right]$。
 
-### 马尔可夫性质
+### 马尔可夫性质（Markov property）
 
 当且仅当某时刻的状态只取决于上一时刻的状态时，一个随机过程被称为具有**马尔可夫性质**（Markov property），用公式表示为 $P\left[S_{t+1} \mid S_{t}\right]=P\left[S_{t+1} \mid S_{1}, \ldots, S_{t}\right]$ 。也就是说，当前状态是未来的充分统计量，即下一个状态只取决于当前状态，而不会受到过去状态的影响。需要明确的是，具有马尔可夫性并不代表这个随机过程就和历史完全没有关系。因为虽然时刻的状态只与时刻的状态有关，但是时刻的状态其实包含了 $t-1$ 时刻的状态的信息，通过这种链式的关系，历史的信息被传递到了现在。马尔可夫性可以大大简化运算，因为只要当前状态可知，所有的历史信息都不再需要了，利用当前状态信息就可以决定未来。
 
@@ -71,13 +71,14 @@ $$
 \end{array}\right]
 $$
 
-其中第 $i$ 行 $j$ 列的值 $\mathcal{P}_{i, j}$ 则代表从状态 $s_i$ 转移到 $s_j$ 的概率。
+其中第 $i$ 行 $j$ 列的值 $\mathcal{P}_{i, j}$ 则代表从状态 $s_i$ 转移到 $s_j$ 的概率，即，条件概率（conditional probability）[17] $P(S_{t+1}=s_j|S_t=s_i)$ 。
 
 给定一个马尔可夫过程，我们就可以从某个状态出发，根据它的状态转移矩阵生成一个状态**序列** (episode)，这个步骤也被叫做**采样**（sampling）。例如，从 $s_1$ 出发，可以生成序列 $s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_6$ 或序列 $s_1 \rightarrow s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_4 \rightarrow s_5 \rightarrow s_3 \rightarrow s_6$ 等。生成这些序列的概率和状态转移矩阵有关。
 
 > 马尔科夫链与回合（Episode）的关系：
 >
 > 在回合制任务（有结束）中，将状态，动作，奖励直到状态结束的序列（sequence）命名为回合（Episode），即$(s_0, a_0. r_1, s_1, a_1, r_2, ..., s_T)$
+>
 > 在常见的强化学习问题中，一个Episode就是一条马尔科夫链。根据状态转移矩阵可以得到许多不同的Episode，也就是多条马尔科夫链。
 
 ### 马尔可夫奖励过程（MRP）
@@ -132,7 +133,7 @@ $$
 V(s)=r(s)+\gamma \sum_{s^{\prime} \in S} p\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)
 $$
 
-上式就是马尔可夫奖励过程中非常有名的贝尔曼方程 (Bellman equation)，对每一个离散状态都成立。
+上式就是马尔可夫奖励过程中非常有名的贝尔曼方程 (Bellman equation)，它由美国应用数学家理查德·贝尔曼（Richard Bellman）提出[16]，对每一个离散状态都成立。
 
 ### 状态价值函数的贝尔曼方程的具体推导（选学）
 
@@ -200,7 +201,7 @@ V\left(s_n\right)
 \end{gathered}
 $$
 
-解法一：直接根据矩阵运算求解，得到以下解析解:
+**解法一**：直接根据矩阵运算求解，得到以下解析解:
 
 $$
 \begin{aligned}
@@ -212,11 +213,7 @@ $$
 
 以上解析解的计算复杂度是 $O(n^{3})$ ，其中 $n$ 是状态个数，因此这种方法只适用很小的马尔可夫奖励过程。
 
-解法二：通过迭代的形式求出数值值，即
-
-
-
-求解较大规模的马尔可夫奖励过程中的价值函数时，可以使用**动态规划**（dynamic programming）算法、**蒙特卡洛方法**（Monte-Carlo method）和**时序差分**（temporal difference），这些方法将在之后的章节介绍。
+**解法二**：通过迭代的形式求出数值值，这通常适用于求解较大规模的马尔可夫奖励过程中的价值函数时。可以使用**动态规划**（dynamic programming）算法、**蒙特卡洛方法**（Monte-Carlo method）和**时序差分**（temporal difference），这些方法将在之后的章节介绍。
 
 ## 求解价值函数的解析解的代码
 
@@ -324,6 +321,8 @@ $$
 $$
 Q_\pi(s, a)=\sum_{s^{\prime} \in S} \operatorname{P}\left(s^{\prime} \mid s, a\right)\left[R\left(s, a, s^{\prime}\right)+\gamma V_\pi\left(s^{\prime}\right)\right]$$
 
+其中，$\operatorname{P}\left(s^{\prime} \mid s, a\right)$，是 $P\left(S_{t+1}=s^{\prime} \mid S_t=s, A_t=a\right)$ 的简写法，有的地方，也写作$P_{s s^{\prime}}{ }^a$。[15]
+
 下面以状态$s_1$的计算为例 [8]：
 
 ![价值函数与动作-价值函数的关系](../../img/价值函数与动作-价值函数的关系.png)
@@ -332,14 +331,17 @@ Q_\pi(s, a)=\sum_{s^{\prime} \in S} \operatorname{P}\left(s^{\prime} \mid s, a\r
 
 贝尔曼方程描述了价值函数或动作-价值函数的递推关系，是研究强化学习问题的重要手段。在贝尔曼方程中加上“期望”二字是为了与接下来的贝尔曼最优方程进行区分。我们通过**简单推导**（见最后）就可以分别得到两个价值函数的贝尔曼期望方程（Bellman Expectation Equation）：
 
+> backup diagram(备份图)，图示的关系构成了更新或备份操作的基础，而这些操作是强化学习方法的核心。这些操作将价值信息从一个状态（或状态-动作对）的后继状态（或状态-动作对）转移回来。
 
-- **基于状态价值函数的贝尔曼期望方程**：它描述了当前状态价值函数和其后续状态价值函数之间的关系，即当前状态价值函数等于瞬时奖励的期望加上后续状态的（折扣）价值函数的期望。
+- **基于状态价值函数的贝尔曼期望方程**：它描述了当前状态价值函数和其后续状态价值函数之间的关系，即当前状态价值函数等于瞬时奖励的期望加上后续状态的（折扣）价值函数的期望。![V函数对应的备份图](../../img/V_backup_diagram.png)
+
+
 
 $$
 V_\pi(s)=\mathbb{E}_{a \sim \pi(s, \cdot)} \mathbb{E}_{s^{\prime} \sim P(\cdot \mid s, a)}\left[R\left(s, a, s^{\prime}\right)+\gamma V_\pi\left(s^{\prime}\right)\right]
 $$
 
-- **基于状态-动作价值函数的贝尔曼期望方程**：描述了当前动作-价值函数和其后续动作-价值函数之间的关系，即当前状态下的动作-价值函数等于瞬时奖励的期望加上后续状态的（折扣）动作-价值函数的期望。[8]
+- **基于状态-动作价值函数的贝尔曼期望方程**：描述了当前动作-价值函数和其后续动作-价值函数之间的关系，即当前状态下的动作-价值函数等于瞬时奖励的期望加上后续状态的（折扣）动作-价值函数的期望。[8] ![Q函数对应的备份图](../../img/Q_backup_diagram.png)
 
 $$
 Q_\pi(s, a)=\mathbb{E}_{s^{\prime} \sim P(\cdot \mid s, a)}\left[R\left(s, a, s^{\prime}\right)+\gamma \mathbb{E}_{a^{\prime} \sim \pi\left(s^{\prime}, \cdot \right)}\left[Q_\pi\left(s^{\prime}, a^{\prime}\right)\right]\right]
@@ -380,7 +382,12 @@ code
 知道了状态价值函数 $V^\pi(s)$ 后，我们可以计算动作价值函数 $Q^\pi(s, a)$ 。例如 $\left(s_4\right.$，概率前往) 的动作价值为 2.152 ，根据以下公式可以计算得到：
 
 $$
-Q^\pi(s, a)=r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V_\pi\left(s^{\prime}\right) 2.152=1+0.5 \times[0.2 \times(-1.68)+0.4 \times 0.52+0.4 \times 6.08]
+Q^\pi(s, a)=r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V_\pi\left(s^{\prime}\right
+$$
+
+即
+
+$$2.152=1+0.5 \times[0.2 \times(-1.68)+0.4 \times 0.52+0.4 \times 6.08]
 $$
 
 
@@ -469,3 +476,6 @@ $$
 [12]: https://zhuanlan.zhihu.com/p/361399817
 [13]: https://spinningup.openai.com/en/latest/spinningup/rl_intro.html#policies
 [14]: https://www.tuananhle.co.uk/notes/bellman.html
+[15]: https://www.youtube.com/watch?v=2IB0CUYbF78
+[16]: http://www.c2.org.cn/h-nd-555.html
+[17]: https://xie.infoq.cn/article/2fc9eb9d48f46976a74da24c6

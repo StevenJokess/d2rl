@@ -88,7 +88,7 @@ $M_{v,π}$ 通常用来表示一个包含状态值函数和策略的模型。
 
 model-free learning:
 
-- no model
+- no model（不对环境进行函数映射建模）
 - Learn value function (and/or policy)from real experience
 
 model-based learning:

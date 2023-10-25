@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-02 18:38:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-03 00:05:23
+ * @LastEditTime: 2023-10-25 20:52:28
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,8 +15,13 @@
 
 ## 历史
 
-在如今大数据和深度学习快速发展的时代下，针对传统强化学习无法解决高维数据输入的问题，2013年Mnih V等人首次将深度学习中的卷积神经网络（Convolutional Neural Networks，CNN）引入强化学习中，提出了DQN（Deep Q Learning Network）算法，至此国际上便开始了对深度强化学习（Deep Reinforcement Learning，DRL）的科研工作。除此之外，深度强化学习领域中一个里程牌事件是2016年的AlphaGo 对战李世石的围棋世纪大战，谷歌旗下的人工智能团队DeepMind 基于深度强化学习开发出的围棋程序 AlphaGo击败了世界顶级围棋大师李世石，震惊了世界，也因此拉开了深度强化学习从学术界走向大众认知的帷幕。
+在如今大数据和深度学习快速发展的时代下，针对传统强化学习无法解决高维数据输入的问题。
 
+目前深度强化学习（deep reinforcement learning, DRL）利用深度学习作为函数逼近器，与强化学习的策略优化方法结合，使智能体可以在复杂任务中获得显著成果。
+
+- 2013年Mnih V等人首次将深度学习中的卷积神经网络（Convolutional Neural Networks，CNN）引入强化学习中，提出了DQN（Deep Q Learning Network）算法，至此国际上便开始了对深度强化学习（Deep Reinforcement Learning，DRL）的科研工作。
+- 2015年Mnih等人使用DQN（deep Q-learning）算法，以与人类相同的像素观察条件，在49个街机游戏套件中以与人类相同的像素级别观察条件，经过2亿（200M）帧的交互训练，获得了超越人类得分水平的智能体，至此掀起了深度强化学习的广泛研究热潮。[8]
+- 除此之外，深度强化学习领域中一个里程牌事件是2016年的AlphaGo 对战李世乭的围棋世纪大战，谷歌旗下的人工智能团队DeepMind 基于深度强化学习开发出的围棋程序 AlphaGo击败了世界顶级围棋大师李世石，震惊了世界，也因此拉开了深度强化学习从学术界走向大众认知的帷幕。
 
 
 ## 概念
@@ -83,3 +88,4 @@ Alan Turing ：Instead of trying to produce a program to simulate the adult mind
 [5]: https://zhuanlan.zhihu.com/p/637642589
 [6]: https://blog.csdn.net/weixin_40056577/article/details/104109073
 [7]: https://cardwing.github.io/files/131270027-%E4%BE%AF%E8%B7%83%E5%8D%97-%E9%99%88%E6%98%A5%E6%9E%97.pdf
+[8]: https://www.ctyun.cn/developer/article/463848842154053

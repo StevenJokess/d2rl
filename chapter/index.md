@@ -144,6 +144,7 @@ chapter_appendix_information&thinkings/index
 ```toc
 :maxdepth: 1
 
+proper_noun_index
 how_to_contribute
 ```
 
