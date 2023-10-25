@@ -1,3 +1,7 @@
+# DRN基于深度强化学习的新闻推荐模型
+
+论文pdf下载地址：[《DRN: A Deep Reinforcement Learning Framework for News Recommendation》](http://www.personal.psu.edu/~gjz5038/paper/www2018_reinforceRec/www2018_reinforceRec.pdf)
+
 解读一：我的解读
 摘要
 这篇文章提出了用于新闻推荐的新颖的深度强化学习框架。在线个性化新闻推荐是一个有高度挑战性的问题，这是因为新闻特点和用户偏好是动态变化的。尽管

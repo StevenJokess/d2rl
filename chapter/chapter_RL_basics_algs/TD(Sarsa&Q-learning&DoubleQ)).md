@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-24 01:04:24
+ * @LastEditTime: 2023-10-25 23:11:43
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -376,7 +376,6 @@ Q-learning具有以下优点：
 5. 可以保证收敛到 $Q_\pi$；[26]
 6. 评价策略比较容易，使用数据量相对较少，特别是用 experience replay的时候[27]
 
-
 Q-learning具有以下缺点：
 
 1. 只考虑动作最大估值，导致过大估计（最大化偏差问题）：考虑这样一个MDP过程，![Q-learning的过估计](../../img/Q-learning_over_estimate.png)，B状态可能会得到一个均值为-0.1，方差为1的奖励，而开始阶段Q-learning，一开始可能会从B处得到正向奖励，由于贪婪，导致后面更倾向于选left（很像网络博彩，前期给你点甜头），所以可以看到Q-learning算法一开始更倾向于选择left，后面才能趋于正确的策略。也就是开始阶段Q-learning算法产生了过估计。
@@ -387,7 +386,7 @@ Q-learning具有以下缺点：
 1. 难以应对时序关联的环境[16]：智能体的决策只依赖当前环境的状态，所以如果状态之间存在时序关联那么学习的效果就不佳。[25]后续的改进，如DRQN。
 2. 难以学习随机策略：策略是通过从Q函数最大化回报，确定地计算出来的，所以无法学习随机策略。
 
-### 代码中，对终幕的处理技巧
+### 实际代码中，对终幕的处理技巧
 
 通常在真实的问题中，当智能体到达终幕时，轨迹结束。这样的终幕的动作-状态价值函数为零，因为智能体在该状态不采取任何进一步的动作。我们应该利用指示符变量来消除 $Q\left(S_{t+1}, A_{t+1}\right)$，来处理这样的状态：
 

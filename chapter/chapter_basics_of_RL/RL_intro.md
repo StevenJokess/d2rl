@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 16:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-25 21:17:35
+ * @LastEditTime: 2023-10-25 23:49:32
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -453,7 +453,7 @@ $$
 - 折扣因子通常表示为 $\gamma$ （gamma），其中 $0 \leq \gamma \leq 1$ 。
   - $\gamma =0$ 的情况：表达该智能体的行为都碰巧只影响当前收益，而不是未来的回报，那么目光短浅的智能体可以通过单独最大化每个当前收益来最大化累计回报。
   - 但一般来说，最大化当前收益会减少未来的收益，以至于实际上的收益变少了。
-  - $\gamma \leq 1$ 的原因：它避免了智能体太过于远视。[68常言道“远水解不了近渴”，我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。而且未来也往往是不确定的。
+  - $\gamma \leq 1$ 的原因：它避免了智能体太过于远视。[68]常言道“远水解不了近渴”，我们更加关注立即可获得的奖励，而不怎么关注远期可能获得的奖励。也就顺便解决了过程中有环路而出现无穷奖励的情况。更何况，未来也往往是不确定的。
     - 故 [68]
   - $\gamma$ 越接近1，越接近原累计奖励公式，也就越远视，即未来奖励对当前选择动作的影响越大，一般选择0.99或者0.995[49]，更会去探索，更容易找到最佳的策略；越接近0，越短视。
 - 累计折扣未来奖励（Discounted return ,aka cumulative discounted future reward）：
@@ -591,7 +591,7 @@ $$A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s, a)$$
 
 ##### 预测（Prediction） VS 控制（Control）
 
-预测和控制是强化学习三大问题之二。
+预测和控制是强化学习三大问题之二。也有地方叫，评价和优化。[92]
 
 我们经常需要先解决关于预测（prediction）的问题，而后在此基础上解决关于控制（Control）的问题。
 
@@ -837,6 +837,7 @@ Atari Breakout（横杆接小球）游戏的四大要素：
 [89]: https://blog.csdn.net/u012692537/article/details/79405339
 [90]: https://www.ctyun.cn/developer/article/463848842154053
 [91]: https://xie.infoq.cn/article/2fc9eb9d48f46976a74da24c6
+[92]: https://luweikxy.gitbook.io/machine-learning-notes/reinforcement-learning-introduction#%E6%9C%AC%E7%AB%A0%E5%9C%A8%E5%AD%A6%E4%B9%A0%E5%9C%B0%E5%9B%BE%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 

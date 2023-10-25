@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-10-03 03:07:52
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-09 23:44:41
+ * @LastEditTime: 2023-10-25 22:41:46
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,18 +13,28 @@
 -->
 # Richard S. Sutton
 
-Richard S. Sutton是加拿大的一个计算机科学家，当前任职于iCORE大学计算机科学系。Sutton是强化学习领域巨擘，在temporal difference learning, policy gradient methods, the Dyna architecture等方面都有重大贡献。自2003年起，Sutton就出任iCORE大学计算机科学系的教授，在这里他领导了强化学习和人工智能实验室(RLAI)。
+Richard S. Sutton(萨顿) 是加拿大计算机科学家。阿尔伯塔大学计算机科学教授和iCORE主席。
 
-https://www.ualberta.ca/science/about-us/contact-us/faculty-directory/rich-sutton
+萨顿被认为是现代计算的奠基人之一的强化学习，贡献了包括时间差分学习，策略梯度法，Dyna架构等技术。
 
-## 与Andrew Barto合著Reinforcement Learning An Introduction
+## 简历
 
-1998年，Richard S.Sutton 出版了强化学习导论Reinforcement Learning：An Introduction，系统总结了1998年以前强化学习算法的各种进展，强化学习基本理论框架已经形成。[4]
+- 他于1978年获得斯坦福大学心理学学士学位，硕士学位。
+- 于1984年在马萨诸塞大学阿默斯特分校获得计算机科学博士学位，并在Andrew Barto的监督下。他的博士论文题为“强化学习中的时间信用分配”，他在其中介绍了演员-评论家的架构和“时间信用分配”等问题。
+- 1984年，萨顿在阿默斯特的马萨诸塞大学担任博士后职务。
+- 从1985年到1994年，他是GTE实验室计算机和智能系统实验室的技术人员的主要成员。
+- 1995年，他回到马萨诸塞州阿默斯特大学担任高级研究科学家，
+- 直到1998年，他加入AT＆T Shannon实验室，担任人工智能部门的首席技术人员。
+- 1998年，Richard S.Sutton 与Andrew Barto合著出版了强化学习导论Reinforcement Learning：An Introduction，系统总结了1998年以前强化学习算法的各种进展，强化学习基本理论框架已经形成。[4]
+  - Andrew Barto 是Massachusetts大学Amherst分校的教授, 已于2012年退休.退休前, 他是Massachusetts大学Amherst分校自治学习实验室主任.目前, 他是assachusetts大学神经科学和行为项目的准会员, Neural Computation 副主编, Machine Learning Research杂志顾问,  Adaptive Behavior的编辑[1]
+- 自2003年以来，他一直担任阿尔伯塔大学计算科学系的教授和iCORE主席，领导强化学习和人工智能实验室（RLAI）。
+- 2017年6月，Demis Hassabis宣布Sutton将共同领导一个新的艾伯塔省DeepMind(后文详解)办公室，同时保持他在阿尔伯塔大学的教授职位。
+- Sutton自2001年以来一直是人工智能促进协会AAAI的成员。
+- 2003年，他获得了国际神经网络学会颁发的总统奖，
+- 于2013年获得了马萨诸塞大学阿默斯特分校颁发的杰出成就奖，著有强化学习界的圣经书籍《Reinforcement Learning: An Introduction》。[5]
 
-Andrew Barto 是Massachusetts大学Amherst分校的教授, 已于2012年退休.退休前, 他是Massachusetts大学Amherst分校自治学习实验室主任.目前, 他是assachusetts大学神经科学和行为项目的准会员, Neural Computation 副主编, Machine Learning Research杂志顾问,  Adaptive Behavior的编辑[1]
 
-
-## 苦涩的教训
+## 文章：苦涩的教训
 
 70 年的人工智能研究史告诉我们，利用计算能力的一般方法最终是最有效的方法。这个归摩尔定律解释，或者它对每单位计算成本持续指数级下降的概括。大部分 AI 研究都是在认为智能体可用的计算为恒定的情况下进行的（在这种情况下，利用人类知识是提高性能的唯一方法），但是，在比典型研究项目稍长的时间尺度内，我们不可避免地会需要大量的计算。
 
@@ -63,3 +73,5 @@ AI 研究人员常常试图在自身智能体中构建知识，
 [2]: https://www.linkresearcher.com/information/01af2812-2cbc-4c3b-bec8-2e3701c6ac2f
 [3]: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
 [4]: https://blog.csdn.net/lxs3213196/article/details/109846324
+[5]: https://zhuanlan.zhihu.com/p/56522295
+[6]: https://www.ualberta.ca/science/about-us/contact-us/faculty-directory/rich-sutton

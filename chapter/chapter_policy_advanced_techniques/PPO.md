@@ -1,19 +1,7 @@
 
-
-<!--
- * @version:
- * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-02-25 23:21:39
- * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-13 03:13:58
- * @Description:
- * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
- * @TODO::
- * @Reference:
--->
 # PPO 算法
 
-近端策略优化算法(Proximal Policy Optimization Algorithms,PPO)和信任区域策略优化（trust region policy optimization，TRPO），都是为避免在使用重要性采样时由于在 $\theta$ 下的 $p_\theta\left(a_t \mid s_t\right)$ 与在 $\theta^{\prime}$ 下 的 $p_{\theta^{\prime}}\left(a_t \mid s_t\right)$ 相差太多，导致重要性采样结果偏差较大而采取的算法。TRPO 算法在很多场景上的应用都很成功，但是它的计算过程非常复杂，每一步更新的运算量非常大。于是，TRPO 算法的改进版—— 近端策略优化算法(Proximal Policy Optimization Algorithms,PPO) [3]算法在 2017 年被提出，PPO 基于 TRPO 的思想，但是其算法实现更加简单。并且大量的实验结果表明，与 TRPO 相比，PPO 能学习得一样好（甚至更快），这使得 PPO 成为非常流行的强化学习算法。如果我们想要尝试在一个新的环境中使用强化学习算法，那么 PPO 就属于可以首先尝试的算法。
+近端策略优化算法（Proximal Policy Optimization Algorithms,PPO）和信任区域策略优化（trust region policy optimization，TRPO），都是为避免在使用重要性采样时由于在 $\theta$ 下的 $p_\theta\left(a_t \mid s_t\right)$ 与在 $\theta^{\prime}$ 下 的 $p_{\theta^{\prime}}\left(a_t \mid s_t\right)$ 相差太多，导致重要性采样结果偏差较大而采取的算法。TRPO 算法在很多场景上的应用都很成功，但是它的计算过程非常复杂，每一步更新的运算量非常大。于是，TRPO 算法的改进版—— 近端策略优化算法(Proximal Policy Optimization Algorithms,PPO) [3]算法在 2017 年被提出，PPO 基于 TRPO 的思想，但是其算法实现更加简单。并且大量的实验结果表明，与 TRPO 相比，PPO 能学习得一样好（甚至更快），这使得 PPO 成为非常流行的强化学习算法。如果我们想要尝试在一个新的环境中使用强化学习算法，那么 PPO 就属于可以首先尝试的算法。
 
 ## PPO的概念
 
@@ -85,8 +73,6 @@ $$
 $$
 
 如图 12-1 所示。
-
-
 
 ## 二、PPO-惩罚
 
