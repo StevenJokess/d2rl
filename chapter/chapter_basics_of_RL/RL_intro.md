@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 16:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-26 01:01:07
+ * @LastEditTime: 2023-10-26 21:33:51
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -23,7 +23,9 @@
 
 **强化学习**（Reinforcement Learning，简称RL），也被叫作增强学习、再励学习、评价学习，是指一类**智能体**从与环境交互中不断学习以取得最大回报（Return）的问题以及解决这类问题的方法。可见，其是一门决策学科，而且解决的是序贯决策（Sequential Decision）问题。[81]
 
-强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的不断交互，每次交互包括观察（Observate）当前的环境状态（State）、根据这个状态选择某个动作（Action）、并由此获得奖励（Award）或收益（Reward），我们把惩罚（punishment/penalty）处理成负收益形式，通过多次交互，智能体学习到了如何使得总体收益（Return）最大化。其中，强化是增加行为的意思，即当某个行为在从环境中获得正奖励后就会倾向去增加这种行为。[1]
+强化学习问题可以描述为一个智能体（Agent）从与环境（Environment）的不断交互，每次交互包括观察（Observate）当前的环境状态（State）、根据这个状态选择某个动作（Action），并由此获得奖励（Award）或收益（Reward），我们把惩罚（punishment/penalty）处理成负收益形式，通过多次交互，智能体学习到了如何使得总体收益（Return）最大化。其中，强化是增加行为的意思，即当某个行为在从环境中获得正奖励后就会倾向去增加这种行为。[1]
+
+![强化学习](../../img/Interpreter_reward.png)
 
 可见强化学习主要基于这样的”奖励假设”：所有问题解决的目标都可以被描述成最大化累积奖励。[86]
 

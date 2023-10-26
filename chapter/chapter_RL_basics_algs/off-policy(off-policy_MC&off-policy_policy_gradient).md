@@ -19,10 +19,17 @@
 ![on policy 和off policy分类](../../img/on_policy_VS_off_policy.png)
 
 
-## 同策略的优缺点
+## 同策略和异策略各自的优缺点
 
-- 优点：找不到了。。
-- 缺点：不使用旧的数据，这样就会导致其样本效率(sample efficiency)较低。
+同策略（on-policy）：
+
+- 优点：更加直接，快，但是不一定最优（optimal）。
+- 缺点：不使用旧的数据，这样就会导致其样本效率（sample efficiency）较低。
+
+异策略（off-policy）：
+
+- 优点：更加通用和健壮，因为其数据来源多样随机，可以覆盖的行为范围广。
+- 缺点：收敛慢。[6]
 
 ## 蒙特卡洛控制的假设难满足，需要异策略
 
@@ -238,10 +245,37 @@ $$
 
 那如何避免 “ $p_\theta$ 和 $p_{\theta^{\prime}}$ 差太多”? 后面将利用信任区域策略优化 TRPO 和 近端优化策略 PPO [4]
 
+## 为什么TRPO，PPO是on-policy的呢？
+
+TRPO的objective中包含了重要性采样来补偿training data distribution 和真实的policy state distribution 之间的差距，也就是
+$$
+\begin{gathered}
+J(\theta)=\sum_{s \in S} \rho_{\pi_{\theta_{\text {old }}}}(s) \sum_{a \in A} \pi_{\theta_{\text {old }}}(a \mid s) \frac{\pi_\theta(a \mid s)}{\pi_{\theta_{\text {old }}}(a \mid s)} A_{\pi_{\theta \text { old }}}(s, a) \\
+=\mathbb{E}_{s \sim \rho_{\pi_\theta}, a \sim \pi_{\theta_{\text {old }}}}\left[\frac{\pi_\theta(a \mid s)}{\pi_{\theta_{\text {old }}}(a \mid s)} A_{\pi_{\theta_{\text {old }}}}(s, a)\right]
+\end{gathered}
+$$
+
+TRPO希望maximize这个objective J( $($ theta) 同时满足一个trust region constraint $\mathbb{E}_{s \sim \rho_{\pi_{\theta_{\text {old }}}}}\left[D_{\mathrm{KL}}\left(\pi_{\theta_{\text {old }}}(\cdot \mid s) \| \pi_\theta(\cdot \mid s)\right)\right] \leq \delta$ 来保证old和updated policy不会差太多。
+
+而PPO通过改进objective为surrogate objective
+
+$$
+J(\theta)=\mathbb{E}_{s, a \sim \pi_{\theta_{\text {old }}}}\left[\min \left(r(\theta) A_{\pi_{\theta_{\text {old }}}}(s, a), \operatorname{clip}(r(\theta), 1-\epsilon, 1+\epsilon) A_{\pi_{\theta_{\text {old }}}}(s, a)\right)\right]
+$$
+
+，使得PPO可以使用一阶优化方法求解 (TRPO需要使用二阶优化方法)。
+
+那么，问题来了，TRPO，PPO看起来都是根据old policy的分布来做importance sampling。但是，off-policy的算法可以使用任意的策略的数据来更新当前的策略，TRPO却是使用 $\theta_k$ 采样的数据来更新 $\theta_k$ 到 $\theta_{k+1}$ ，符合on-policy的定义，只不过更新中优化的目标函数 (surrogate objective function) 中有未知的action分布 (与需要优化求解的策略 $\theta$有关)，使用了 $\theta_k$ 采集的数据和importance sampling系数来估计和表示。
+off-policy算法的策略更新是带importance sampling系数的策略梯度上升，而TRPO的每步更新则是一个优化问题，这个优化问题TRPO论文采用的方法是泰勒展开目标函数和约束，然后根据拉格朗日对偶和线性搜索得到。PPO是用的多步的梯度上升来优化clip的目标函数，了解了TRPO就知道PPO也是使用 $\theta_k$ 采样的数据来更新 $\theta_k$ 到 $\theta_{k+1}$ ，属于on-policy的算法，但由于使用了多步的梯度上升进行优化，看起来更像off-policy策略更新了，但其实优化过程中的 $\theta$ 只是优化过程的中间产物，并没有用于采样新的trajectory。
+
+$\mathrm{PPO}$ 是计算 $V(s)$ 的，是 $Q(s, a)$ 关于策略的积分，所以策略一变 $V$ 马上就会改变，因此用旧策略产生的数据来更新 $V$ 是计算不出新策略的 $V$ 的。PPO的解决方案是通过旧策略采样来估算新策略的 $V$ 值，本质还是在计算当前策略的 $V$ 。当新旧策略相差不大时，两者的交集占新策略的很大一部分 (想象两个隔得很近的高斯分布的交集)，可以通过旧策略乘以概率的比例来估计新策略的 $V$ 值。当新旧策略相差很大时，两者的交集只是新策略的一个角落 (想象两个隔得很远的高斯分布的交集)，旧策略的采样的只能有效估计新策略的一个角落，因此无法正常估计新策略的 $V$ 值。虽然采样的策略是旧策略，但是通过概率比值已经等效为新策略在采样，可以理解为采样的策略和更新的策略都是新策略，所以ppo是on-policy 的。
+
+总结来说，PPO是通过旧策略采样来估算新策略的 $V$ 值，本质还是在计算当前策略采样得到的 $V$ ，所以采样的策略和更新的策略是同一个策略，所以它是on-policy。[7]
+
 [1]: https://zhuanlan.zhihu.com/p/360265418
 [2]: https://zhuanlan.zhihu.com/p/594578726
-
-
 [3]: https://zhuanlan.zhihu.com/p/614049308
 [4]: https://windmissing.github.io/DeepLearningNotes/RL/Policy4.html
 [5]: https://my.oschina.net/u/4939618/blog/10097837
+[6]: https://www.zhihu.com/column/c_1319989673767755776
+[7]: https://zhuanlan.zhihu.com/p/420254841

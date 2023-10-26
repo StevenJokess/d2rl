@@ -5,9 +5,9 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 20:58:18
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-20 21:38:35
+ * @LastEditTime: 2023-10-26 22:19:58
  * @Description:
- * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @Help me: 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
@@ -263,7 +263,24 @@ code
 
 可以发现，SAC 在离散动作环境车杆下具有完美的收敛性能，并且其策略回报的曲线十分稳定，这体现出 SAC 可以在离散动作环境下平衡探索与利用的优秀性质。
 
-## 后续改进：SACwA
+## DDPG与SAC的区别：
+
+- DDPG训练得到的是一个deterministic policy确定性策略，也就是说这个策略对于一种状态state只考虑一个最优的动作。Deterministic policy的最终目标找到最优路径。
+- Stochastic policy随机策略在实际应用中往往是更好的做法。比如我们让机器人抓取一个水杯，机器人是有无数条路径去实现这个过程的，而并不是只有唯一的一种做法。因此，我们就需要DRL算法能够给出一个随机策略，在每一个state上都能输出每一种action的概率，比如有3个action都是最优的，概率一样都最大，那么我们就可以从这些action中随机选择一个做出action输出。最大熵maximum entropy的核心思想就是不遗落到任意一个有用的action，有用的trajectory。对比DDPG的deterministic policy的做法，看到一个好的就捡起来，差一点的就不要了，而最大熵是都要捡起来，都要考虑。
+
+## 优缺点及后续改进
+
+优点：
+
+以前用确定性策略（deterministic policy）的算法，我们找到了一条最优路径，学习过程也就结束了。现在，我们还要求熵最大，就意味着神经网络需要去探索（explore）所有可能的最优路径，这可以产生以下多种优势
+
+1. 学到策略（policy）可以作为更复杂具体任务的初始化。因为通过最大熵，策略（policy）不仅仅学到一种解决任务的方法，而是所有all。因此这样的policy就更有利于去学习新的任务。比如我们一开始是学走，然后之后要学朝某一个特定方向走。
+2. 更强的探索（exploration）能力，这是显而易见的，能够更容易的在多模态奖励（multimodal reward）下找到更好的模式。比如既要求机器人走的好，又要求机器人节约能源
+3. 更鲁棒（robust），更强的泛化能力（generalization）。因为要从不同的方式来探索各种最优的可能性，也因此面对干扰的时候能够更容易做出调整。（干扰会是神经网络学习过程中看到的一种状态（state），既然已经探索到了，学到了就可以更好的做出反应，继续获取高奖励（reward））
+
+缺点：TODO
+
+后续改进：SACwA
 
 SACwA算法是对SAC算法的改进版本，主要在于增加了一个自适应的温度参数（alpha），用于动态地调整策略优化中的熵项权重。这使得SACwA可以在不同的环境中自适应地调整探索和利用的权衡，从而在不同任务和环境中表现更加灵活和高效。SACwA还引入了一个新的目标网络更新策略，通过使用经验池中的数据进行目标网络的更新，从而提高了训练的稳定性和收敛速度。[8]
 

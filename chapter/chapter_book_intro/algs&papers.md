@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-06-04 20:48:28
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-06 21:45:37
+ * @LastEditTime: 2023-10-26 21:59:23
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -61,18 +61,21 @@
 ## chapter_policy_advanced_techniques
 
 - TRPO：[Trust Region Policy Optimization (TRPO)](https://arxiv.org/pdf/1502.05477.pdf)
-- PPO: [Proximal Policy Optimization Algorithms](../../papers_PDF/PPO.pdf) https://arxiv.org/abs/1707.06347.pdf
+- PPO continuous: [Proximal Policy Optimization Algorithms (Arxiv)](https://arxiv.org/abs/1707.06347.pdf)  [Proximal Policy Optimization Algorithms (file)](../../papers_PDF/PPO.pdf)
+-
 - GAE: [Generalized Advantage Estimator (GAE)](https://arxiv.org/pdf/1506.02438.pdf)
 
 ## chapter_offline_RL
 
-- SAC：[Soft Actor-Critic (SAC)](https://arxiv.org/pdf/1812.05905.pdf)
-
+- Soft Q Learning：[Reinforcement learning with deep energy-based policies, Haarnoja et al, 2017.](http://proceedings.mlr.press/v70/haarnoja17a/haarnoja17a.pdf)
+- SAC v1：[Off-policy maximum entropy deep reinforcement learning with a stochastic actor, Haarnoja et al, 2018.](https://arxiv.org/abs/1801.01290.pdf)
+- SAC v2：[Soft actor-critic algorithms and applications, Haarnoja et al, 2018.](https://arxiv.org/pdf/1812.05905.pdf)
+- SAC-Discrete：[Discrete Soft Actor-Critic (SAC-Discrete)](https://arxiv.org/pdf/1910.07207.pdf)
 
 ## ？？？
 
 - X[Randomized Ensembled Double Q-Learning (REDQ)](https://arxiv.org/pdf/2101.05982.pdf)
-- X[Discrete Soft Actor-Critic (SAC-Discrete)](https://arxiv.org/pdf/1910.07207.pdf)
+
 
 
 ## chapter_define_reward_difficulty
