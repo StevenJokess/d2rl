@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-14 02:57:10
+ * @LastEditTime: 2023-10-26 21:18:44
  * @Description:
  * @Help me: 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -237,9 +237,11 @@ Actually we have nice theoretical support for (replacing $d($.$) with d_\pi($.$)
 $$
 \mathcal{J}(\theta)=\sum_{s \in \mathcal{S}} d_{\pi \theta}(s) \sum_{a \in \mathcal{A}} \pi(a \mid s ; \theta) Q_\pi(s, a) \propto \sum_{s \in \mathcal{S}} d(s) \sum_{a \in \mathcal{A}} \pi(a \mid s ; \theta) Q_\pi(s, a)
 $$
+
 Check Sec 13.1 in Sutton \& Barto (2017) for why this is the case.
 查看萨顿\& Barto（2017）的第13.1节，了解为什么会出现这种情况。
 Then,
+
 $$
 \begin{aligned}
 \mathcal{J}(\theta) & =\sum_{s \in \mathcal{S}} d(s) \sum_{a \in \mathcal{A}} \pi(a \mid s ; \theta) Q_\pi(s, a) \\
@@ -250,7 +252,161 @@ $$
 \end{aligned}
 $$
 This result is named "Policy Gradient Theorem" which lays the theoretical foundation for various policy gradient algorithms:
+
 这个结果被命名为“策略梯度定理"，为各种策略梯度算法奠定了理论基础:
+
 $$
 \nabla \mathcal{J}(\theta)=\mathbb{E}_{\pi \theta}\left[\nabla \ln \pi(a \mid s, \theta) Q_\pi(s, a)\right]
 $$
+
+---
+
+## 附录：
+
+
+Policy Gradient Theorem有以下两种形式（代码实现常用形式2）：
+
+$$
+\nabla_{\theta} J(\theta)= \underset{\substack{s_{t} \sim \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \\ a_{t} \sim \pi\left(a_{t} \mid s_{t}\right)}}{E}\left[\sum_{t=0}^{\infty}\gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right]\\ \tag{形式1}
+$$
+
+$$
+\nabla_{\theta} J(\theta)\propto\underset{\substack{s \sim D^{\pi} \\ a \sim \pi(a \mid s)}}{E}\left[q_{\pi_{\theta}}(s, a) \nabla_{\theta} \ln \pi_{\theta}(a \mid s)\right]\tag{形式2}
+$$
+
+现对这两种形式进行推导。首先，定义强化学习的优化目标：
+
+$$
+J(\theta) \doteq v_{\pi_{\theta}}\left(s_{0}\right)\\
+$$
+
+其中， v_{\pi_\theta} 是 \pi_\theta 的真实价值函数。注意，后文求梯度都是对 \theta 进行，所涉及的策略都由 \theta 确定，为了推导的简洁性，将 \nabla_{\theta}、v_{\pi_\theta}、q_{\pi_\theta} 分别简写为 \nabla、v_{\pi}、q_{\pi} 。
+
+对目标函数求梯度有：
+
+$$
+\begin{aligned}
+&\nabla_{\theta}J(\theta)=\nabla_{\theta} v_{\pi_{\theta}}\left(s_{0}\right) =\nabla\left[\sum_{a_{0}} \pi\left(a_{0} \mid s_{0}\right) q_{\pi}\left(s_{0}, a_{0}\right)\right] \\
+&=\sum_{a_{0}}\left[\nabla \pi\left(a_{0} \mid s_{0}\right) q_{\pi}\left(s_{0}, a_{0}\right)+\pi\left(a_{0} \mid s_{0}\right) \nabla q_{\pi}\left(s_{0}, a_{0}\right)\right] \\
+&=\sum_{a_{0}}\left[\nabla \pi\left(a_{0} \mid s_{0}\right) q_{\pi}\left(s_{0}, a_{0}\right)+\pi\left(a_{0} \mid s_{0}\right) \nabla \sum_{s_{1}, r_{1}} p\left(s_{1}, r_{1} \mid s_{0}, a_{0}\right)\left(r_{1}+\gamma v\left(s_{1}\right)\right)\right] \\
+&=\sum_{a_{0}} \nabla \pi\left(a_{0} \mid s_{0}\right) q_{\pi}\left(s_{0}, a_{0}\right)+\sum_{a_{0}} \pi\left(a_{0} \mid s_{0}\right) \sum_{s_{1}} p\left(s_{1} \mid s_{0}, a_{0}\right) \cdot \gamma \nabla v\left(s_{1}\right) \\
+& \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#再将\nabla v(s_{1})展开 \\
+&=\sum_{a_{0}} \nabla \pi\left(a_{0} \mid s_{0}\right) q_{\pi}\left(s_{0}, a_{0}\right)\\ & \ \ \ \ \ +\sum_{a_{0}} \pi\left(a_{0} \mid s_{0}\right) \sum_{s_{1}} p\left(s_{1} \mid s_{0}, a_{0}\right) \cdot \gamma \sum_{a_{1}} \nabla \pi\left(a_{1} \mid s_{1}\right) q_{\pi}\left(s_{1}, a_{1}\right) \\
+& \ \ \ \ \ +\sum_{a_{0}} \pi\left(a_{0} \mid s_{0}\right) \sum_{s_{1}} p\left(s_{1} \mid s_{0}, a_{0}\right) \cdot \gamma \sum_{a_{1}} \pi\left(a_{1} \mid s_{1}\right) \sum_{s_{2}} p\left(s_{2} \mid s_{1}, a_{1}\right) \gamma \nabla v\left(s_{2}\right) \\
+&=\sum_{a_{0}} \nabla \pi\left(a_{0} \mid s_{0}\right) q_{\pi}\left(s_{0}, a_{0}\right) \\
+& \ \ \ \ \ +\sum_{a_{0}} \pi\left(a_{0} \mid s_{0}\right) \sum_{s_{1}} p\left(s_{1} \mid s_{0}, a_{0}\right) \cdot \gamma \sum_{a_{1}} \nabla \pi\left(a_{1} \mid s_{1}\right) q_{\pi}\left(s_{1}, a_{1}\right)+\cdots \\
+&=\sum_{s_{0}} \operatorname{Pr}\left(s_{0} \rightarrow s_{0}, 0, \pi\right) \sum_{a_{0}} \nabla \pi\left(a_{0} \mid s_{0}\right) \gamma^{0} q_{\pi}\left(s_{0}, a_{0}\right)\\
+& \ \ \ \ \ +\sum_{s_{1}} \operatorname{Pr}\left(s_{0} \rightarrow s_{1}, 1, \pi\right) \sum_{a_{1}} \nabla \pi\left(a_{1} \mid s_{1}\right) \gamma^{1} q_{\pi}\left(s_{1}, a_{1}\right)+\cdots \\ &=\sum_{s_{0}} \operatorname{Pr}\left(s_{0} \rightarrow s_{0}, 0, \pi\right) \sum_{a_{0}} \pi\left(a_{0} \mid s_{0}\right)\left[\gamma^{0} q_{\pi}\left(s_{0}, a_{0}\right) \nabla \ln \pi\left(a_{0} \mid s_{0}\right)\right]+\\
+&\ \ \ \ \ \sum_{s_{1}} \operatorname{Pr}\left(s_{0} \rightarrow s_{1}, 1, \pi\right) \sum_{a_{1}} \pi\left(a_{1} \mid s_{1}\right)\left[\gamma^{1} q_{\pi}\left(s_{1}, a_{1}\right) \nabla \ln \pi\left(a_{1} \mid s_{1}\right)\right]+\cdots \\
+&=\sum_{t=0}^{\infty} \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \sum_{a_{t}} \pi\left(a_{t} \mid s_{t}\right)\left[\gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right] \\
+\end{aligned}
+$$
+
+上面推导过程中，
+- $p\left(s_{1}, r_{1} \mid s_{0}, a_{0}\right)$ 是环境转移概率；
+- $\operatorname{Pr}\left(s_{0} \rightarrow x, t, \pi\right)$ 表示从状态 s_0 出发，在策略 $\pi$ 的作用下经过 t 步到达状态 x 的概率，如 $$\operatorname{Pr}\left(s_{0} \rightarrow s_{0}, 0, \pi\right)=1, \ \ \ \ \operatorname{Pr}\left(s_{0} \rightarrow s_{1}, 1, \pi\right)=\sum_{a_0}{\pi(a_0|s_0)p(s_1|s_0,a_0)}$$
+- 同时，我们用到了 $\nabla \pi\left(a\mid s\right)=\pi\left(a\mid s\right) \nabla \ln \pi\left(a\mid s\right)$ 这一恒等变换；
+- 在第4行到第5行那里，我们对 \nabla v(s_1) 进行了如同第1行到第4行对 \nabla v(s_0) 的展开；
+- 在第5行到第6行那里，我们对后续的所有 \nabla v(s) 进行了展开，用 ... 表示。
+至此，我们得到了Policy Gradient Theorem的基本形式:
+
+\nabla_{\theta} J(\theta)=\sum_{t=0}^{\infty} \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \sum_{a_{t}} \pi\left(a_{t} \mid s_{t}\right)\left[\gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right] \\
+
+对该基本形式进行不同的处理，会得到Policy Gradient Theorem不同的最终形式，下文将给出两种最终形式的证明。
+
+
+
+形式1的证明：
+显而易见， \sum_{a_{t}} \pi\left(a_{t} \mid s_{t}\right)=1 。此外，我们还发现 \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right)=1 ，由于篇幅原因，我们在这里不做理论证明，但给出图1以帮助大家理解。
+
+
+图1
+由于概率求和等于1，基本形式可以写成期望的形式：
+
+\begin{aligned} \nabla_{\theta} J(\theta)&=\sum_{t=0}^{\infty} \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \sum_{a_{t}} \pi\left(a_{t} \mid s_{t}\right)\left[\gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right] \\ &=\sum_{t=0}^{\infty} \underset{\substack{s_{t} \sim \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \\ a_{t} \sim \pi\left(a_{t} \mid s_{t}\right)}}{E}\left[\gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right]\\ &= \underset{\substack{s_{t} \sim \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \\ a_{t} \sim \pi\left(a_{t} \mid s_{t}\right)}}{E}\left[\sum_{t=0}^{\infty}\gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right]\\ \end{aligned}
+
+以上，Policy Gradient Theorem形式1证毕。
+
+
+
+形式2的证明：
+依然从基本形式出发，不过这次我们先对 t 个时刻求和，再写成期望的形式。
+
+\begin{aligned} \nabla_{\theta} J(\theta)&=\sum_{t=0}^{\infty} \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \sum_{a_{t}} \pi\left(a_{t} \mid s_{t}\right)\left[\gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right] \\ &=\sum_{t=0}^{\infty} \sum_{s_{t}} \gamma^{t} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \sum_{a_{t}} \pi\left(a_{t} \mid s_{t}\right)\left[q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right] \\ &=\sum_{x \in \mathcal{S}} \sum_{t=0}^{\infty} \gamma^{t} \operatorname{Pr}\left(s_{0} \rightarrow x, t, \pi\right) \sum_{a} \pi(a \mid x)\left[q_{\pi}\left(x, a\right) \nabla \ln \pi(a \mid x)\right] \\ &=\sum_{x \in \mathcal{S}} d^{\pi}(x) \sum_{a} \pi(a \mid x)\left[q_{\pi}\left(x, a\right) \nabla \ln \pi(a \mid x)\right] \end{aligned}
+
+其中 \mathcal{S} 是从 s_0 出发通过策略 \pi 能到达的所有状态的集合。 d^{\pi}(x)=\sum_{t=0}^{\infty} \gamma^{t} \operatorname{Pr}\left(s_{0} \rightarrow x, t, \pi\right) 是折扣状态分布(discounted state distribution)。严格意义来讲，它并不是一个“标准分布”，因为对它求和不等于一： \sum_{x \in \mathcal{S}} d^{\pi}(x)=\sum_{x \in \mathcal{S}} \sum_{t=0}^{\infty} \gamma^{t} \operatorname{Pr}\left(s_{0} \rightarrow x, t, \pi\right)=\sum_{t=0}^{\infty} \gamma^{t} \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right)=\sum_{t=0}^{\infty} \gamma^{t} =\frac{1}{1-\gamma}
+
+因此，如果想将上面的形式写成期望的形式，还需将 d^{\pi}(x) 归一化为标准分布 D^{\pi}(x) ，即
+
+\begin{aligned} \nabla_{\theta} J(\theta)&=\sum_{x \in \mathcal{S}} d^{\pi}(x) \sum_{a_{t}} \pi(a_{t} \mid x)\left[q_{\pi}\left(x, a_{t}\right) \nabla \ln \pi(a_{t} \mid x)\right]\\ &=\frac{1}{1-\gamma} \sum_{x \in \mathcal{S}}(1-\gamma) d^{\pi}(x) \sum_{a} \pi(a \mid x)\left[q_{\pi}\left(x, a\right) \nabla \ln \pi(a \mid x)\right]\\ &=\frac{1}{1-\gamma} \sum_{x \in \mathcal{S}} D^{\pi}(x) \sum_{a} \pi(a \mid x)\left[q_{\pi}\left(x, a\right) \nabla \ln \pi(a \mid x)\right]\\ &=\frac{1}{1-\gamma} \underset{\substack{x \sim D^{\pi} \\ a \sim \pi(a \mid x)}}{E}\left[q_{\pi}\left(x, a\right) \nabla \ln \pi(a \mid x)\right]\\ &\propto \underset{\substack{s \sim D^{\pi} \\ a \sim \pi(a \mid s)}}{E}\left[q_{\pi}\left(s, a\right) \nabla \ln \pi(a \mid s)\right] \end{aligned}
+
+以上，Policy Gradient Theorem形式2证毕。
+
+可以看到， \nabla_{\theta} J(\theta) 与 \underset{\substack{s \sim D^{\pi} \\ a \sim \pi(a \mid s)}}{E}\left[q_{\pi}\left(s, a\right) \nabla \ln \pi(a \mid s)\right] 并非严格等式关系，而是成正比关系。实际编程时，我们往往将比例系数忽略，因为我们往往更关心梯度的方向，而非梯度的大小。另一个角度，忽略比例系数的影响实际上可以通过调节学习率抵消。
+
+3.两种形式的讨论
+可以看到，Policy Gradient Theorem出现两种形式的根本原因是得到其基本形式后处理方法不同。形式1是先写成期望的形式，再对 t 个时刻求和；形式2是先对 t 个时刻求和，再写成期望的形式。两种形式的最大区别是状态的概率分布不同。
+
+形式1中，
+状态 s_t 服从从状态 s_0 出发，在策略 \pi 的作用下经过 t 步能到达的所有状态的分布。每个时刻的状态都服从各自的分布，即 s_{t} \sim \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) ，也许图2可以给你更直观的感受。
+
+
+图2：从状态 S0 出发，在策略π的作用下经过 1步能到达的所有状态为{S1A,S1B,S1C}，他们的分布如蓝色柱状图所示
+形式2中，
+若 0<\gamma<1 ，D^{\pi}(s) 好像并没有什么明确的实际物理意义（如果您知道，欢迎留言区讨论）。
+
+但 \gamma=1 时，D^{\pi}(s) 为轨迹中状态 s 在每个时刻出现的平均概率，证明如下：
+
+此时， d^{\pi}(s)=\sum_{t=0}^{\infty} 1^t\cdot\operatorname{Pr}\left(s_{0} \rightarrow s, t, \pi\right)=\sum_{t=0}^{\infty} \operatorname{Pr}\left(s_{0} \rightarrow s, t, \pi\right) ，其意义为状态 s 在从 s_0 出发由 \pi 生成的轨迹中出现次数的期望，结合表1可以更好的理解。
+
+
+表1
+此时，D^{\pi}(s)=\frac{d^{\pi}(s)}{\sum_{s \in \mathcal{S}} d^{\pi}(s)}=\frac{d^{\pi}(s)}{T}=\frac{一条轨迹中状态s的出现次数的期望}{轨迹平均长度}=轨迹中状态 s 在每个时刻出现的平均概率
+
+至此，我们已经完成了两种策略梯度形式的证明，并对两者的区别进行了探讨。下面，我将再给出一个小的例子来帮助大家更直观的感受这两种形式的区别。
+该例中，状态空间 \mathcal{S}=\left\{ S_A,S_B,S_C \right\} ，平均回合长度 T=3 ， \gamma = 1 ，s_0=S_A ，状态分布表如下
+
+
+为了表述简洁，令 \nabla F(s)=\sum_{a}{\pi(a|s)q_\pi(s,a)\nabla \ln \pi(a|s)}
+
+用形式1计算策略梯度：
+
+\begin{aligned} \nabla_{\theta} J(\theta) &=\underset{s_{t}, a_{t} \sim \tau_{\pi}}{E}\left[\sum_{t=0}^{2} \gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right] \\ &=\sum_{t=0}^{2} \underset{s_{t}, a_{t} \sim \tau_{\pi}}{E}\left[\gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right]\\ &=\sum_{t=0}^{2} \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \sum_{a_{t}} \pi\left(a_{t} \mid s_{t}\right) q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right) \\ &=1 \cdot \nabla F\left(S_{A}\right)+0 \cdot \nabla F\left(S_{B}\right)+0 \cdot \nabla F\left(S_{C}\right)+ \\ &\ \ \ \ \ 0.1 \nabla F\left(S_{A}\right)+0.7 \nabla F\left(S_{B}\right)+0.2 \nabla F\left(S_{C}\right)+ \\ &\ \ \ \ \ 0.4 \nabla F\left(S_{A}\right)+0.2 \nabla F\left(S_{B}\right)+0.4 \nabla F\left(S_{C}\right) \\ &=1.5 \nabla F\left(S_{A}\right)+0.9 \nabla F\left(S_{B}\right)+0.6 \nabla F\left(S_{C}\right) \end{aligned}
+
+
+
+用形式2计算策略梯度（ \gamma=1 时，归一化系数为 T 而非 \frac{1}{1-\gamma} ）：
+
+\begin{aligned} \nabla_{\theta} J(\theta) &=T\times \underset{\substack{s \sim D^{\pi} \\ a \sim \pi(a \mid s)}}{E}\left[q_{\pi}\left(s, a\right) \nabla \ln \pi(a \mid s)\right]\\ &=T \cdot \sum_{s \in \mathcal{S}} D^{\pi}(s) \sum_{a} \pi(a \mid s) q_{\pi}(s, a) \nabla \ln \pi(a \mid s) \\ &=3 \cdot\left[D^{\pi}\left(S_{A}\right) \cdot \nabla F\left(S_{A}\right)+D^{\pi}\left(S_{B}\right) \cdot \nabla F\left(S_{B}\right)+D^{\pi}\left(S_{C}\right) \cdot \nabla F\left(S_{C}\right)\right] \\ &=3 \cdot\left[0.5 \nabla F\left(S_{A}\right)+0.3 \nabla F\left(S_{B}\right)+0.2 \nabla F\left(S_{C}\right)\right] \\ &=1.5 \nabla F\left(S_{A}\right)+0.9 \nabla F\left(S_{B}\right)+0.6 \nabla F\left(S_{C}\right) \end{aligned}
+
+可以看到，两种形式虽然在计算过程中有所区别，但都殊途同归地得到了同样的结果！
+
+4.代码实现
+理论归理论，那到底咋编程呢？
+
+实际上，我们一般选择形式2进行代码实现。具体的，每次我们使用策略 \pi 与环境互动，得到n个样本 (S_{i},A_{i}) 。并且，我们定义策略的损失函数为：
+
+Loss(\theta) = -\frac{1}{n}\sum_{i=1}^{n}[ q(S_i,A_i) \ln\pi_\theta(A_i|S_i)]\\
+
+其中， $q(S_i,A_i)$ 可以通过Monte Carlo方法获得，也可以用Critic网络估计。前面的负号是因为在机器学习中我们一般是极小化损失函数。对损失函数求导，并结合大数定理有
+
+$$
+\begin{aligned}
+\nabla Loss(\theta)
+&= -\frac{1}{n}\sum_{i=1}^{n}[ q(S_i,A_i) \nabla\ln\pi_\theta(A_i|S_i)]\\
+&= \sum_{s}D^\pi(s) \sum_{a}\pi(a|s)[q(s,a) \nabla\ln\pi_\theta(a|s) ] \ \ \ \ \ \ \ \ \ \ \ \ (当n足够大时)\\
+&= \underset{\substack{s \sim D^{\pi} \\ a \sim \pi(a \mid s)}}{E}\left[ q\left(s, a\right) \nabla \ln \pi(a \mid s)\right]
+\end{aligned}
+$$
+
+注：前面我们提到，当 \gamma=1 时， D^\pi(s) 为轨迹中状态 s 在每个时刻出现的平均概率，此时用大数定理对其进行估计是没有问题的。但当 0<\gamma<1 时，我们需要的是“归一化后的折扣状态分布”，而大数定理估计的实际上还是“归一化的状态分布”，严格意义上讲此时的loss函数是不够准确的，会对策略梯度的估计引入偏差，这在George【4】的论文中也有提到：
+
+5.总结
+本文对策略梯度定理（Policy Gradient Theorem）的两种形式进行了归纳、推导与证明，并对两者的关系进行了探讨，最后对其代码实现进行了解释，希望能够帮助大家更加清晰地理解该定理。
+
+最后，我们用大白话形象地说明一下策略梯度定理：当轨迹中某个状态-动作对 (S,A) 是令人满意的，即 q(S,A)>0 ，那我们就增加 \pi_\theta(S,A) 的概率，反之亦然。
+
+选自https://zhuanlan.zhihu.com/p/491647161
+
+
+[1]: https://zhuanlan.zhihu.com/p/491647161#5.%E6%80%BB%E7%BB%93
