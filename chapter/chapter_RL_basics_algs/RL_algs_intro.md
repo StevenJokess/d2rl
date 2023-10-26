@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-09-14 04:02:05
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-26 01:28:54
+ * @LastEditTime: 2023-10-26 01:33:39
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,9 +13,9 @@
 -->
 # RL算法
 
-## 强化学习的基础算法的简介
+## 强化学习的基础算法的分类（Categorizing RL agents）
 
-### 据学习目标[1]或优化方法分类（Categorizing RL agents）：
+### 据学习目标[1]或优化方法分类：
 
 ![RL方法分类](../../img/agent_category.png)
 
@@ -114,12 +114,21 @@
 
 ## 问题测验
 
+1. 根据强化学习智能体的不同，我们可以将其分为哪几类？
+1. 基于策略迭代和基于价值迭代的强化学习方法有什么区别？
 1. 你了解有模型和免模型吗？两者具体有什么区别呢？
 
 ## 附录：问题答案
 
+1. 可参考“强化学习的基础算法的分类”一节
+1. 可参考“据学习目标[1]或优化方法分类：”一节
 1. 我认为两者的区别主要在于是否需要对真实的环境进行建模，免模型方法不需要对环境进行建模，直接与真实环境进行交互即可，所以其通常需要较多的数据或者采样工作来优化策略，这也使其对于真实环境具有更好的泛化性能；而有模型方法需要对环境进行建模，同时在真实环境与虚拟环境中进行学习，如果建模的环境与真实环境的差异较大，那么会限制其泛化性能。现在通常使用有模型方法进行模型的构建工作。[14]
 
+## 讨论区（Discussion）
+
+
+
+## 参考（Reference）
 
 [1]: https://imzhanghao.com/2022/02/10/reinforcement-learning/#%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB
 [2]: https://www.cnblogs.com/kailugaji/p/16140474.html

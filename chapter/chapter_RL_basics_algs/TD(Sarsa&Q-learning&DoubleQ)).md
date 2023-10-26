@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-25 23:11:43
+ * @LastEditTime: 2023-10-26 02:30:18
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -157,7 +157,6 @@ $G_t^{(n)} = R_{t}+\gamma R_{t+1}+\cdots+\gamma^{n-1} R_{t+n-1}+\gamma^n V\left(
   - ![时序差分 TD(0)](../../img/TD.png)
 - 蒙特卡洛和时序差分会收敛到不同的结果。蒙特卡洛法总是找出最小化训练集上均方误差的估计，而时序差分法总是找出完全符合马尔科夫过程模型的最大似然估计参数。并且在一些任务上验证了TD比MC收敛更快。
 - ![三者的统一视角](../../img/MC_DP(TD).png)
--
 
 #### 从马尔可夫性质的前提假设角度：
 
@@ -177,8 +176,9 @@ $G_t^{(n)} = R_{t}+\gamma R_{t+1}+\cdots+\gamma^{n-1} R_{t+n-1}+\gamma^n V\left(
 - DP 无偏、无方差
 - MC 无偏、方差大：因为智能体的序列长，奖励比较多，所以当我们把N步的奖励加起来时，对应的方差就会比较大。
 - TD（0）有偏、方差小：TD（0）只对当前一步做值函数的更新，虽然这样估计的值函数**更不准**，但是方差会更小。
-- TD（N）平衡：为了解决估计的值函数的偏差过大与方差大的问题，我们可以通过调整N值，在方差与不精确的Q值之间取得一个平衡。这里介绍的参数N是超参数，需要微调参数 N，例如是要多采样3步、还是多采样5步。
+- TD（N）平衡：为了解决估计的值函数的偏差过大与方差大的问题，我们可以通过调整N值，在方差与不精确的Q值之间取得一个平衡。这里介绍的参数N是超参数，需要微调参数 N，例如是要多采样3步、还是多采样5步。MC相当于TD（+∞）。
 
+code:TODO
 
 ### Policy Evalution&Policy Improvment
 
@@ -400,6 +400,8 @@ Q-Learning: $Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma(1 - \math
 
 
 ### SARSA与Q-learning的关系与比较
+
+![SARSA与Q-learning的更新图](../../img/Sarsa_VS_Q-learning_Diagram.png)
 
 - 我不认可：SARSA可算是Q-learning的*改进* 这句话（出自「神经网络与深度学习」的第 342 页）我不认可 (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，
 - SARSA和Q-learning的区别是SARSA采取的是策略所选择的动作，而Q-learning是取最高Q值的动作。[5]

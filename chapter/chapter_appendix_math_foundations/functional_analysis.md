@@ -152,3 +152,4 @@ Banach不动点定理给出了求完备度量空间中压缩映射不动点的�
 [4]: https://cread.jd.com/read/startRead.action?bookId=30513215&readType=1
 
 TODO: https://www.leiphone.com/category/academic/y5nyxtWsNUrm37a9.html
+证明Bellman算子是收敛的：https://zhuanlan.zhihu.com/p/419208786#%E5%A6%82%E4%BD%95%E6%89%8D%E8%83%BD%E8%AF%81%E6%98%8EBellman%E7%AE%97%E5%AD%90%E6%98%AF%E6%94%B6%E6%95%9B%E7%9A%84%EF%BC%9F
