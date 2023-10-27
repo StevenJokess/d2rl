@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-27 21:59:04
+ * @LastEditTime: 2023-10-28 00:31:12
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -230,15 +230,14 @@ SARSA 的具体算法如下：
 - 初始化Q表，即所有 $Q(s, a)=0$
 - for 序列 $e=1 \rightarrow E$ do:
   - 初始化状态 $S_0$
-  - 用 $\epsilon$-greedy 策略根据 $Q$ 选择当前状态 $S_0$ 下的动作 $A_0$
+  - 用 $\epsilon$-greedy 策略，根据 $Q$ 选择当前状态 $S_0$ 下的动作 $A_0$
 - for 时间步 $t=0 \rightarrow T$ do:
   - 得到环境反馈的 $R_{t+1}, S_{t+1}$
-  - 用 $\epsilon$-greedy 策略根据 $Q$ 选择当前状态 $S_{t+1}$ 下的动作 $A_{t+1}$
+  - 用 $\epsilon$-greedy 策略，根据 $Q$ 选择当前状态 $S_{t+1}$ 下的动作 $A_{t+1}$
   - 用公式去更新动作价值函数 $Q(S_t, A_t)$ ：$Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma Q\left(S_{t+1}, A_{t+1}\right)-Q(S_t, A_t)\right]$
   - $S_{t} \leftarrow S_{t+1}, A_t \leftarrow A_{t+1}$
   - end for
 - end for
-
 
 其更新公式为:
 
@@ -338,7 +337,7 @@ $$
 
 这里动作价值 $\mathrm{Q}$ 函数的目标就是逼近最优的 $q * ，q *=R_{t+1}+\gamma \max _a Q\left(S_{t+1}, a\right)$ ，并且轨迹的行 动策略与最终的 $q *$ 是无关的。后面中括号的加和式表示的是 $q *$ 的贝尔曼最优方程近似形式。
 
-其是off-policy的，由于我们只关心哪个动作使得下一个时刻更新的Q，即$Q\left(S_{t+1}, a\right)$ 取得最大值，而实际到底采取了哪个动作(行为策略)，Q-learning并不关心，故采用的是待评估策略产生的下一个状态动作二元组的Q价值。[7]这表明优化策略并没有用到行为策略的数据，所以说它是off-policy的。[2]与SARSA相比，异策略Q学习需要更短的训练时间，跳出局部最优解的概率更大。然而，如果智能体根据Q值的概率模型而不是贪婪选择对动作进行采样，则采用异策略技术的Q值估计误差将增大。[3]
+其是离策略（off-policy），由于我们只关心哪个动作使得下一个时刻更新的Q，即$Q\left(S_{t+1}, a\right)$ 取得最大值，而实际到底采取了哪个动作(行为策略)，Q-learning并不关心，故采用的是待评估策略产生的下一个状态动作二元组的Q价值。[7]这表明优化策略并没有用到行为策略的数据，所以说它是off-policy的。[2]与SARSA相比，异策略Q学习需要更短的训练时间，跳出局部最优解的概率更大。然而，如果智能体根据Q值的概率模型而不是贪婪选择对动作进行采样，则采用异策略技术的Q值估计误差将增大。[3]
 
 - 训练开始时，随机 Q 表，初始化状态
 - 值得注意的是，只有最后一步得到奖励时（假如我们只有终点一个奖励），这个奖励才真的是现实的奖励，否则还是用 Q 表估计的。
@@ -384,14 +383,12 @@ TODO:
 
 Q-learning具有以下优点：
 
-
 1. 所需的参数少；
 2. 不需要环境的模型，即，无需了解立即回报函数（仍然需要知道最终回报或者目标状态）和状态转换函数；
 3. 不局限于episode task；
 4. 可以采用离线的实现方式；
 5. 可以保证收敛到最优解 $Q_\pi$；[26]（Watkins证明了当系统是确定性的马尔可夫决策过程，并且回报是有限的情况下，强化学习是收敛的，也即一定可以求出最优解。）
-6. 评价策略比较容易，使用数据量相对较少，特别是用 experience replay的时候[27]
-
+6. 评价策略比较容易，使用数据量相对较少，特别是用 experience replay的时候。[27]
 
 Q-learning具有以下缺点：
 
