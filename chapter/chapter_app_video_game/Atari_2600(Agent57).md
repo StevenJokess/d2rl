@@ -1,3 +1,16 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-04-09 11:38:12
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-10-27 20:06:23
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # Atari
 
 基本内容在[Game](Game.md)已经介绍过了，[DQN](../chapter_DQN-algs)也讲过了，
@@ -30,6 +43,9 @@ Agent57 算法采用两种内部的奖励值：一种是在一个学习周期（
 
 作者现在描述用于所有七款 Atari 游戏的具体架构。神经网络的输入是由 $\phi$ 生成的 $84 \times 84 \times 4$ 图像。第一个隐藏层将 16 个步长为 4 的 $8 \times 8$ 滤波器与输入图像进行卷积，并应用激活函数。 第二个隐藏层卷积 32 个 $4 \times 4$ 的滤波器，步长为 2 ，再次跟随激活函数。最后的隐藏层是全连接层，由 256 个神经元组成。输出层是一个全连接层，每个有效动作都有一个输出。在作者考虑的游戏中，有效动作的数量在 4 到 18 之间。作者将使用该方法训练的卷积网络称为 Deep Q Networks (DQN)。
 
+马尔可夫性质： 从环境中观察到的一切都是获取最佳动作所需的，但只使用一张图片不足以反映速度；使用一个小技巧把问题回推到MDP：将 k 个后续帧堆叠在一起作为观察值，一般对 Atari 取 k=4。
+
 [1]: https://zhuanlan.zhihu.com/p/441314394?utm_campaign=&utm_medium=social&utm_oi=772887009306906624&utm_psn=1628228840898924544&utm_source=qq
 [2]: https://pdf-1307664364.cos.ap-chengdu.myqcloud.com/%E6%95%99%E6%9D%90/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E3%80%8A%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%B8%A6%E4%BD%A0%E5%8E%BB%E9%9D%A2%E8%AF%95%E3%80%8B%E4%B8%AD%E6%96%87PDF.pdf
 [3]: http://www.infocomm-journal.com/znkx/article/2020/2096-6652/2096-6652-2-4-00314.shtml
+[4]: https://www.zhihu.com/question/373158173/answer/2398833964

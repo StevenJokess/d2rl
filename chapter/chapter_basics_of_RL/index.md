@@ -26,7 +26,7 @@
 
 Agent_intro
 RL_intro
-MAB
+MAB&MBRL
 more_Bandits
 MDP
 ```

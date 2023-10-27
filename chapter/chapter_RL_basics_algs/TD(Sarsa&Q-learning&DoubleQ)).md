@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-26 02:30:18
+ * @LastEditTime: 2023-10-27 21:32:58
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -64,21 +64,29 @@ $$
 
 #### TD(0)方法
 
-TD(0)方法会利用到时序差分公式，如下：
+由贝尔曼方程，可得如下式：
 
-$V^\pi\left(s_t\right)=r_t+ \gamma * V^\pi\left(s_{t+1}\right)$
+- 状态价值 $V$ 形式：$V^\pi\left(s_t\right)=r_{t+1}+ \gamma * V^\pi\left(s_{t+1}\right)$
+- 动作价值 $Q$ 形式：$Q^\pi\left(s_t,a_t\right)=r_{t+1}+ \gamma * \max Q^\pi\left(s_{t+1}\right)$
 
-可见，TD（0）用当前获得的奖励加上下一个状态的价值估计的折现，具体来说是， $r_t+\gamma V\left(s_{t+1}\right)$，来作为在当前状态获得的回报。因该方法只考虑下一个状态，故又称为单步TD。
+可见，
+- TD（0）的状态价值 $V$ 形式，用当前状态即将获得的奖励再加上下一个状态的价值估计的折现，具体来说是， $r_t+\gamma V\left(s_{t+1}\right)$，来作为在当前状态获得的回报的现实值。
+- TD（0）的动作价值 $Q$ 形式，用当前状态-动作即将获得的奖励再加上下一个状态-动作的价值估计的折现，具体来说是， $r_{t+1}+ \gamma * \max Q^\pi\left(s_{t+1}\right)$，来作为在当前状态-动作获得的回报的现实值。
+- 因为该方法只考虑下一个状态，故称为TD(0)、单步TD。
 
 ![TD（0）：V](../../img/TD_V.png)
 
-TD（0）更新公式为：
+之后，TD(0)方法会利用到时序差分公式更新，具体来说，TD（0）更新公式为：
 
 $$
 V\left(s_t\right) \leftarrow V\left(s_t\right)+\alpha\left[r_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)\right]  其中，α∈[0,1]
 $$
 
-其中 $r_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)$ 通常被称为**时序差分 (temporal difference，TD) 误差 (error)**，用符号$\delta_t$表示。因为TD误差取决于下一个状态和下一个奖励，所以直到一个时间步骤之后它才真正可用，也就是说 $\delta_t$ 在时刻 $t+1$ 才能获取。
+其中 $r_t+\gamma V\left(s_{t+1}\right)-V\left(s_t\right)$ 通常被称为**时序差分 (temporal difference，TD) 误差 (error)**，用符号$\delta_t$表示。
+
+所谓误差，是用来表达的是估计值与现实值的差距，其中 $V\left(s_{t}\right)$ 的目前的估计值就是 $V\left(s_{t}\right)$ ，而  $V\left(s_{t}\right)$ 的现实值是 $r_t+\gamma V\left(s_{t+1}\right)$。[28]
+
+注意：因为TD误差取决于下一个状态和下一个奖励，所以直到一个时间步骤之后它才真正可用，也就是说 $\delta_t$ 在时刻 $t+1$ 才能获取。
 
 时序差分算法将其与步长（学习率） $\alpha$ 的乘积作为状态价值的**更新**量 。其中，用TD目标值 $r_t+\gamma V\left(s_{t+1}\right)$ 来代替 $G_t$ 的过程称为**引导**或**自举**（bootstrapping）[6]，而可以的原因是:
 
@@ -195,7 +203,9 @@ $$
 Q\left(s, a\right) \leftarrow Q\left(s, a\right)+\alpha\left(G_{t}-Q\left(s, a\right)\right) 其中，α∈[0,1]
 $$
 
-然而这个简单的算法存在两个需要进一步考虑的问题。第一，如果要用时序差分算法来准确地估计策略的状态价值函数，我们需要用极大量的样本来进行更新。但实际上我们可以忽略这一点，直接用一些样本来评估策略，然后就可以更新策略了。我们可以这么做的原因是策略提升可以在策略评估未完全进行的情况进行，回顾一下，价值迭代（参见 4.4 节）就是这样，这其实是广义策略迭代（generalized policy iteration）的思想。第二，如果在策略提升中一直根据贪婪算法得到一个确定性策略，可能会导致某些状态动作对以至于无法对其动作价值进行估计，进而无法保证策略提升后的策略比之前的好。我们在第 2 章中对此有详细讨论。简单常用的解决方案是不再一味使用贪婪算法，而是采用一个 $\epsilon$ -贪婪策略：有 $1 - \epsilon$ 的概率采用动作价值最大的那个动作，另外有的概率从动作空间中随机采取一个动作，其公式表示为：
+然而这个简单的算法存在两个需要进一步考虑的问题。
+- 第一，如果要用时序差分算法来准确地估计策略的状态价值函数，我们需要用极大量的样本来进行更新。但实际上我们可以忽略这一点，直接用一些样本来评估策略，然后就可以更新策略了。我们可以这么做的原因是策略提升可以在策略评估未完全进行的情况进行，回顾一下，价值迭代（参见 4.4 节）就是这样，这其实是广义策略迭代（generalized policy iteration）的思想。
+- 第二，如果在策略提升中一直根据贪婪算法得到一个确定性策略，可能会导致某些状态动作对以至于无法对其动作价值进行估计，进而无法保证策略提升后的策略比之前的好。我们在第 2 章中对此有详细讨论。简单常用的解决方案是不再一味使用贪婪算法，而是采用一个 $\epsilon$ -贪婪策略：有 $1 - \epsilon$ 的概率采用动作价值最大的那个动作，另外有的概率从动作空间中随机采取一个动作，其公式表示为：
 
 $$
 \pi(a \mid s)= \begin{cases}\epsilon /|\mathcal{A}|+1-\epsilon & \text { 如果 } a=\arg \max _{a^{\prime}} Q\left(s, a^{\prime}\right) \\ \epsilon /|\mathcal{A}| & \text { 其他动作 }\end{cases}
@@ -203,9 +213,21 @@ $$
 
 现在，我们就可以得到一个实际的基于时序差分方法的强化学习算法。这个算法被称为 SARSA，SARSA 指的是 「S」tate-「A」ction-「R」eward-「S」tate-「A」ction，因为它的动作价值更新用到了当前状态 $S_t$ 、当前动作 $A_t$ 、获得的奖励 $R_t$ 、下一个状态 $S_{t+1}$ 和下一个动作 $A_{t+1}$，将这些首字母拼接后就得到了算法名称。
 
+### 为所有Q构建Q表（Q-Table）
+
+Q表（Q-Table）是一个矩阵，其元素为各个状态-动作的价值函数，即 $Q(s, a)$ 。就是，其中每个元素对应于一个状态-动作二元组。因此，Q-Table将是一个 $mxn$ 的矩阵，其中 $m$ 是可能状态的数量 |S|，$n$ 是可能动作的数量 $|A|$，Q表的Q值必须有一个初始值，一般来说，Q表（Q-Table）所有初始化值都设置为零。
+
+为了简化，假设环境将是一个具有4种可能状态 $(a,b,c,d)$ 的房间，如下图所示。同时，不妨假设代理agent将能够执行4个可能的动作：向上、向下、向左和向右。
+
+考虑到上述智能体和房间环境，Q表（Q-Table）将是一个 $4x4$ 的矩阵，其中4行对应于4种可能的状态（States），4列对应于4个可能的动作（Actions）。如下所示，所有值都已初始化为零。
+
+![四状态房间的Q表Q-table](../../img/Room_Q-table.png)
+
+## SARSA的伪代码
+
 SARSA 的具体算法如下：
 
-- 初始化 $Q(s, a)$
+- 初始化Q表，即所有 $Q(s, a)=0$
 - for 序列 $e=1 \rightarrow E$ do:
   - 初始化状态 $S_0$
   - 用 $\epsilon$-greedy 策略根据 $Q$ 选择当前状态 $S_0$ 下的动作 $A_0$
@@ -216,6 +238,7 @@ SARSA 的具体算法如下：
   - $S_{t} \leftarrow S_{t+1}, A_t \leftarrow A_{t+1}$
   - end for
 - end for
+
 
 其更新公式为:
 
@@ -298,15 +321,7 @@ code
 
 ## Q-learning 算法
 
-### 构建Q表（Q-Table）
 
-Q-Table是一个矩阵，其中每个元素对应于一个状态-动作二元组。因此，Q-Table将是一个mxn的矩阵，其中m是可能状态的数量，n是可能动作的数量。Q表的Q值必须有一个初始值，一般来说，Q-Table所有初始化值都设置为零。
-
-为了简化，假设环境Env将是一个具有4种可能状态(a,b,c,d)的房间，如下图所示。同时，不妨假设代理agent将能够执行4个可能的动作：向上、向下、向左和向右。
-
-考虑到上述代理agent和环境Env，Q-Table将是一个4x4的矩阵，其中4行对应于4种可能的状态States，4列对应于4个可能的动作Actions。如下所示，所有值都已初始化为零。
-
-![四状态房间的Q-table](../../img/Room_Q-table.png)
 
 ### 训练过程
 
@@ -380,7 +395,7 @@ Q-learning具有以下优点：
 
 Q-learning具有以下缺点：
 
-1. 只考虑动作最大估值，导致过大估计（最大化偏差问题）：考虑这样一个MDP过程，![Q-learning的过估计](../../img/Q-learning_over_estimate.png)，B状态可能会得到一个均值为-0.1，方差为1的奖励，而开始阶段Q-learning，一开始可能会从B处得到正向奖励，由于贪婪，导致后面更倾向于选left（很像网络博彩，前期给你点甜头），所以可以看到Q-learning算法一开始更倾向于选择left，后面才能趋于正确的策略。也就是开始阶段Q-learning算法产生了过估计。
+1. 只考虑动作最大估值，导致过大估计（最大化偏差问题），更加激进：考虑这样一个MDP过程，![Q-learning的过估计](../../img/Q-learning_over_estimate.png)，B状态可能会得到一个均值为-0.1，方差为1的奖励，而开始阶段Q-learning，一开始可能会从B处得到正向奖励，由于贪婪，导致后面更倾向于选left（很像网络博彩，前期给你点甜头），所以可以看到Q-learning算法一开始更倾向于选择left，后面才能趋于正确的策略。也就是开始阶段Q-learning算法产生了过估计。
 2. 难以应对复杂性环境：由于需要一个Q table，可以模拟行动空间离散且较小的场景，但情况一旦复杂，Q table会很大，查找和存储都需要消耗大量的时间和空间。更无法处理连续的行动空间和状态空间。之后，改进的DQN能处理连续的状态空间。
   > -  只能解决有限大小的状态和动作，当状态数为n，动作数为m时。（Only for finite-sized problems with $n$ states and $m$ actions（
   > - 状态转移概率 $P\left(s^{\prime} \mid s, a\right)$ 的空间复杂度为 $O(n^2*m)$  而 $R(s, a)$ 和 $Q(s, a)$ 的空间复杂度为 $O(n m)$（Needs $O\left(n^2 m\right)$ entries for $P\left(s^{\prime} \mid s, a\right)$, and $O(n m)$ for $R(s, a)$ and $Q(s, a)$
@@ -403,10 +418,10 @@ Q-Learning: $Q(S_t, A_t) \leftarrow Q(S_t, A_t)+\alpha\left[R_t+\gamma(1 - \math
 
 ![SARSA与Q-learning的更新图](../../img/Sarsa_VS_Q-learning_Diagram.png)
 
-- 我不认可：SARSA可算是Q-learning的*改进* 这句话（出自「神经网络与深度学习」的第 342 页）我不认可 (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，
+- 我不认可：SARSA可算是Q-learning的*改进* ，该句出自邱锡鹏《神经网络与深度学习》的第 342 页。 (可参考SARSA 「on-line q-learning using connectionist systems」的 abstract 部分)，
 - SARSA和Q-learning的区别是SARSA采取的是策略所选择的动作，而Q-learning是取最高Q值的动作。[5]
 
-- Q-learning算法更有可能得到最优策略：SARSA算法与Q-learning算法选择了两种不同的路线，Q-learning的探索更全面，而且向着**贪婪**方向更新，因此找出了最短路径，而SARSA则更保守。![SARSA_VS_Q-learning最终收敛策略对比](../../img/SARSA_VS_Q-learning.png)
+- Q-learning算法更有可能得到最优策略，但更容易犯错，也就是激进，SARSA相比保守：由于取max操作,也就是不考虑最终走到很大负奖励的值，只考虑会不会最终获得最大奖励。由实验结果可得，SARSA算法与Q-learning算法选择了两种不同的路线，Q-learning的探索更全面，而且向着**贪婪**方向更新，因此找出了最短路径，而SARSA是取某具体的一步，只要周围有错（很大的负奖励），那么就有机会获得这个不好的奖励，那么整条路反馈都会评分很差。之后会尽量避开，故显得更加保守。[28] ![SARSA_VS_Q-learning最终收敛策略对比](../../img/SARSA_VS_Q-learning.png)
 - SARSA的回报收敛相对早，Q-learning更难收敛：从两黄框可见，由于Q-learning需要进行随即动作的探索，回报波动很大，偶尔会掉落到悬崖中，因此如果没训练好的Q-learning，其回报可能要相比保守的SARSA差。[17] ![SARSA_VS_Q-learning最终收敛策略对比](../../img/SARSA_VS_Q-learning_return.png)
 
 ### TD、SARSA、Q-learning
@@ -434,7 +449,7 @@ $\alpha \in(0,1)$ 为学习率, $f: \Omega \rightarrow \mathbf{R}$ 为值函数,
 | Q学习 | $Q$ | $\left(s_t, a_t\right)$ | $\left(s_{t+1}, \arg \mathop {\max}\limits_{a' in A } \mathrm{Q}\left(s_{t+1}, a^{\prime}\right)\right)$ |
 
 
-### 解决过估计的Double Q-learning
+### 改进：Double Q-learning解决过估计
 
 Q-learning 使用 $\max_a Q(S_{t+1},a)$ 来更新动作价值，会导致最大化偏差（maximization bias），主要会在一些中间状态出问题，需要大量的数据才能纠正。
 
@@ -501,3 +516,4 @@ Double Q-learning 加倍了内存开销，但是却没有增加额外的计算�
 [25]: https://blog.csdn.net/sinat_39620217/article/details/131004772?utm_source=bbs_include
 [26]: https://www.ofweek.com/ai/2018-06/ART-201717-11001-30241385.html
 [27]: https://www.zhihu.com/question/280077512
+[28]: https://zhuanlan.zhihu.com/p/611810660

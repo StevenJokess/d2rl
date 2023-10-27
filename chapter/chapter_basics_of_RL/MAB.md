@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-27 18:57:09
+ * @LastEditTime: 2023-10-27 20:32:29
  * @Description:
  * @TODO::
  * @Reference:
@@ -184,7 +184,7 @@ $$
 
 则对于拉杆 $k$，
 
-在A Finite-Time Analysis of Multi-armed Bandits Problems with Kullback-Leibler Divergences的中的UCB1中[6]这个$c = \sqrt2$。[7]
+在论文A Finite-Time Analysis of Multi-armed Bandits Problems with Kullback-Leibler Divergences的中的UCB1中[6]这个$c = \sqrt2$。[7]
 
 考虑了价值函数本身的大小和搜索次数, 能够自动实现探索和利用的自动平衡, 并能够有效减少探索次数。[3]
 
@@ -195,7 +195,7 @@ MAB 中还有一种经典算法——**汤普森采样**（Thompson sampling）[
 
 了解了汤普森采样算法的基本思路后，我们需要解决另一个问题：怎样得到当前每个动作 $a$ 的奖励概率分布并且在过程中进行更新？在实际情况中，我们通常用 Beta 分布对当前每个动作的奖励概率分布进行建模。具体来说，若某拉杆被选择了 $k$ 次，其中 $m_1$ 次奖励为 1，$m_2$ 次奖励为 0，则该拉杆的奖励服从参数为$(m_1+1,m_2+1)$ 的 Beta 分布。图 2-2 是汤普森采样的一个示例（另见彩插图 2）。
 
-![汤普森采样示例](img\Thompson_sampling.png)
+![汤普森采样示例](..\..\img\Thompson_sampling.png)
 
 我们编写代码来实现汤普森采样算法，并且仍然使用 2.2.4 节定义的 10 臂老虎机来观察实验结果。
 
