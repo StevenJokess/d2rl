@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-22 16:07:02
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-03 00:13:03
+ * @LastEditTime: 2023-10-27 22:59:16
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -110,6 +110,10 @@ My email: a867907127@gmail.com
 - [To be AI PM 成为AI产品经理](https://stevenjokess.github.io/2bPM/)
 - [d2l notes《动手学深度学习》读书笔记](https://github.com/StevenJokess/d2l-en-read)
 
+## 迷思
+
+
+为啥只有产品和服务才能卖，我们的每句话作为信息和数据，不能卖吗？凭什么免费给腾讯公司？
 ## Citing the repo 引用项目：
 
 
@@ -124,4 +128,5 @@ To cite this repo in publications:, please use this bibtex entry:
     howpublished = {\url{https://github.com/StevenJokess/d2rl}},
     year = {2023}
 }
+
 ```
