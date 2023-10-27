@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 16:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-26 21:33:51
+ * @LastEditTime: 2023-10-27 22:20:54
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -646,11 +646,14 @@ P\left(s_1 \mid s_n\right) & \cdots & P\left(s_n \mid s_n\right)
 \end{array}\right]
 $$
 
-#### 奖励函数
+#### 奖励函数和奖励转移概率
 
-用以描述每一步奖励的一个概念：
+奖励函数，可描述每一步的奖励，具体是指我们在当前状态采取了*某个动作*，可以得到多大的奖励，输入是状态动作对，输出是奖励值。即 $R(s, a)=\mathbb{E}\left[r_{t+1} \mid s_t=s, a_t=a\right]$[27]
 
-- 奖励函数是指我们在当前状态采取了*某个动作*，可以得到多大的奖励，输入是状态动作对，输出是奖励值。即 $R(s, a)=\mathbb{E}\left[r_{t+1} \mid s_t=s, a_t=a\right]$[27]
+奖励转移概率：
+
+- 确定性奖励 $P(r_{t+1} = R_i(s,a) ≡ R_0(s,a) |S_t = s,A_t = a)=1$，后面提到的一般都默认是确定性奖励，即在同样的状态 $s$ 采取同样的动作 $a$ 会一定会取得相同的奖励，即第 $i$ 次该情况的奖励 $R_i(s,a)$ ，恒等于第一次该情况的奖励$R_0(s,a)$。
+- 随机性奖励 $P(r_{t+1} = R_i(s,a) ≡ R_0(s,a) |S_t,A_t)<1 $，表示在同样的状态 $s$ 采取同样的动作 $a$ 会不一定会取得相同的奖励 $R_0(s,a)$，即第 $i$ 次该情况的奖励 $R_i(s,a)$ ，不一定恒等于第一次该情况的奖励$R_0(s,a)$。
 
 所以当我们说模型时，意味着状态转移概率和奖励函数都已知了。
 
@@ -658,8 +661,8 @@ $$
 
 当智能体站在结果发生回后看，是一条确定的路径。但如果智能体在还没发生行动时往前看，就并不是一条路径，而是充满了各种“不确定性”。这种不确定性有两方面：
 
-1. 智能体的行动选择（策略）：智能体需要找到能获得最大奖励的。
-2. 环境的不确定性（状态转移）：智能体无法控制的。
+1. 智能体的行动选择，包括策略 $\pi(a|s)$ （那如果奖励随机，岂不是价值函数也要随机？）：智能体需要找到能获得最大奖励的。
+2. 环境的不确定性，包括状态转移概率 $P(S_{t+1} | S_t, A_t)$ 和 奖励转移概率 $P(r_{t+1} = R_i(s,a) ≡ R_0(s,a) |S_t,A_t)）$：智能体无法控制的。
 
 ![不确定性](../../img/random.png)
 
