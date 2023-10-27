@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-06 21:02:49
+ * @LastEditTime: 2023-10-27 18:57:09
  * @Description:
  * @TODO::
  * @Reference:
@@ -215,7 +215,7 @@ MAB 中还有一种经典算法——**汤普森采样**（Thompson sampling）[
 
 #### 更多无向随机抖动策略
 
-我们重新审视一下 \varepsilon -greedy 策略、玻尔兹曼策略和高斯策略，不难发现，这些策略的探索方法都是在贪婪策略或确定性策略上面加上一个**随机无向的噪声**。它们是通过噪声进行探索的。Iosband 称这种策略为抖动策略（dithering strategy）。[5]
+我们重新审视一下 $epsilon$ -greedy 策略、玻尔兹曼策略和高斯策略，不难发现，这些策略的探索方法都是在贪婪策略或确定性策略上面加上一个**随机无向的噪声**。它们是通过噪声进行探索的。Iosband 称这种策略为抖动策略（dithering strategy）。[5]
 
 利用抖动策略的好处是：
 
