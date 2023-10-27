@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-28 00:45:35
+ * @LastEditTime: 2023-10-28 02:04:33
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -471,7 +471,7 @@ $$
 2. 请问马尔可夫过程是什么？马尔可夫决策过程又是什么？其中马尔可夫最重要的性质是什么呢？
 3. 请问我们一般怎么求解马尔可夫决策过程？
 4. 请问最佳价值函数（$v^*$）和最佳策略（$\pi^*$）为什么等价呢？
-5. 请分别写出基于状态值函数的贝尔曼方程以及基于动作值的贝尔曼方程
+5. 请分别写出基于状态值函数的贝尔曼方程、基于状态-动作值的贝尔曼方程、最优状态值函数的贝尔曼最优方程、最优状态-动作值函数的贝尔曼最优方程
 6.
 
 
@@ -502,6 +502,21 @@ $$
 
 第五题的答案：
 
+- 状态值函数的贝尔曼方程 (Bellman Equation)：$V^\pi(s)=\sum_a \pi(a \mid s)\left(R(s, a)+\gamma \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) V^\pi\left(s^{\prime}\right)\right)$
+- 状态 -行动值函数的贝尔曼方程:$Q^\pi(s, a)=R(s, a)+\gamma \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) \sum_{a^{\prime}} \pi\left(a^{\prime} \mid s^{\prime}\right) Q^\pi\left(s^{\prime}, a^{\prime}\right)$
+- 最优状态值函数的贝尔曼最优方程 (Bellman Optimality Equation)：$V^*(s)=\max _a\left(R(s, a)+\gamma \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right)$
+- 最优状态 -动作值函数的贝尔曼最优方程：$Q^*(s, a)=R(s, a)+\gamma \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) \max _{a^{\prime}} Q^*\left(s^{\prime}, a^{\prime}\right)$
+
+其中：
+- $s$ : 当前状态。
+- $a$ : 当前行动。
+- $s^{\prime}$ : 下一个状态。
+- $a^{\prime}$ : 下一个行动。
+- $\langle\mathrm{pi}(\mathrm{a} \mid \mathrm{s})$ : 在状态 $s$ 下采取行动 $a$ 的概率。
+- $\mathrm{R}(\mathrm{s}, \mathrm{a})$ : 在状态 $s$ 下采取行动 $a$ 获得的即时奖励。
+- $P\left(s^{\prime} \mid s, a\right)$ : 在状态 $s$ 下采取行动 $a$ 转移到状态 $s$ '的概率。
+- $\gamma$：折扣因子，用于控制未来奖励的重要性。[19]
+
 第六题的答案：
 
 ## 参考（Reference）
@@ -524,3 +539,4 @@ $$
 [16]: http://www.c2.org.cn/h-nd-555.html
 [17]: https://xie.infoq.cn/article/2fc9eb9d48f46976a74da24c6
 [18]: https://blog.csdn.net/gls_nuaa/article/details/123833724
+[19]: https://zhuanlan.zhihu.com/p/626636130

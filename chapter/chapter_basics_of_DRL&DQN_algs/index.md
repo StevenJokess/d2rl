@@ -23,7 +23,6 @@ function_approximation
 DQN
 continous_action_DQN
 more-DQNs
-
 PER
 C51
 QR-DQN
