@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-28 02:04:33
+ * @LastEditTime: 2023-10-28 02:38:27
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -29,6 +29,7 @@
 当且仅当某时刻的状态只取决于上一时刻的状态时，一个随机过程被称为具有**马尔可夫性质**（Markov property），用公式表示为 $P\left[S_{t+1} \mid S_{t}\right]=P\left[S_{t+1} \mid S_{1}, \ldots, S_{t}\right]$ 。也就是说，当前状态是未来的充分统计量，即下一个状态只取决于当前状态，而不会受到过去状态的影响。需要明确的是，具有马尔可夫性并不代表这个随机过程就和历史完全没有关系。因为虽然时刻的状态只与时刻的状态有关，但是时刻的状态其实包含了 $t-1$ 时刻的状态的信息，通过这种链式的关系，历史的信息被传递到了现在。马尔可夫性可以大大简化运算，因为只要当前状态可知，所有的历史信息都不再需要了，利用当前状态信息就可以决定未来。
 
 > 问：如果数据流不满足马尔科夫性怎么办？应该如何处理?
+>
 > 答：如果不具备马尔可夫性，即下一个状态与之前的状态也有关，若仅用当前的状态来求解决策过程，势必导致决策的泛化能力变差。为了解决这个问题，可以利用循环神经网络(RNN)对历史信息建模，获得包含历史信息的状态表征，表征过程也可以使用注意力机制等手段，最后在表征状态空间求解马尔可夫决策过程问题。[2]
 >
 > 一些违背马尔可夫性的例子：
@@ -37,33 +38,31 @@
 >1. 股票价格变动问题。股票价格的变动不仅受到当前市场情况的影响，还受到过去的价格变动、公司的业绩等因素的影响，因此股票价格变动问题也是一个非马尔可夫过程。
 >1. 自然语言处理问题。在自然语言处理中，词语的出现通常是依赖于前面的词语的，因此自然语言处理问题也是一个非马尔可夫过程。
 
-
-
 ### 马尔可夫过程
 
 马尔可夫过程 (Markov process) 指具有马尔可夫性质的随机过程，也被称为**马尔可夫链** (Markov chain)，国内将其简称为马氏链 。
 
-我们通常用二元组 $\langle\mathcal{S}, \mathcal{P}\rangle$ 描述一个马尔可夫过程，其中，
+我们通常用二元组 $\langle\mathcal{S}, \mathcal{T}\rangle$ 描述一个马尔可夫过程，其中，
 
-- $\mathcal{S}$ 是有限数量的状态的集合，
-- $\mathcal{P}$ 是**已知的状态转移矩阵** (state transition matrix)。假设一共有 $n$ 个状态， 此时 $\mathcal{S}=\left\{s_1, s_2, \ldots, s_n\right\}$ 。状态转移矩阵 $\mathcal{P}$ 定义了所有状态对之间的转移概率，即
+- $\mathcal{S}$ 是有限数量的状态的集合，假设一共有 $n$ 个状态， 此时 $\mathcal{S}=\left\{s_1, s_2, \ldots, s_n\right\}$ 。
+- $\mathcal{T}$ 是**状态转移矩阵** (state transition matrix)。为了跟国际的CS285接轨[20]，将原《动手学强化学习》的 $\mathcal{P}$ 改回 $\mathcal{T}$。状态转移矩阵 $\mathcal{T}$ 定义了所有状态对之间的转移概率，即
 
 $$
-\mathcal{P}=\left[\begin{array}{ccc}
+\mathcal{T}=\left[\begin{array}{ccc}
 P\left(s_1 \mid s_1\right) & \cdots & P\left(s_n \mid s_1\right) \\
 \vdots & \ddots & \vdots \\
 P\left(s_1 \mid s_n\right) & \cdots & P\left(s_n \mid s_n\right)
 \end{array}\right]
 $$
 
-显然，矩阵维度等于状态，矩阵值为转移概率[18]，具体来说，矩阵 $\mathcal{P}$ 中第 $i$ 行第 $j$ 列元素 $P\left(s_j \mid s_i\right)=P\left(S_{t+1}=s_j \mid S_t=s_i\right)$ 表示从状态 $s_i$ 转移到 状态 $s_j$ 的概率，我们称 $P\left(s^{\prime} \mid s\right)$ 为状态转移函数。从某个状态出发，到达其他状态的概率和必须为 1 ，即状态转移矩阵 $\mathcal{P}$ 的每一行的和为 1 。
+显然，矩阵维度等于状态，矩阵值为转移概率[18]，具体来说，矩阵 $\mathcal{T}$ 中第 $i$ 行第 $j$ 列元素 $P\left(s_j \mid s_i\right)=P\left(S_{t+1}=s_j \mid S_t=s_i\right)$ 表示从状态 $s_i$ 转移到 状态 $s_j$ 的概率，我们称 $P\left(s^{\prime} \mid s\right)$ 为状态转移函数。从某个状态出发，到达其他状态的概率和必须为 1 ，即状态转移矩阵 $\mathcal{T}$ 的每一行的和为 1 。
 
 图 3-1 是一个具有 6 个状态的马尔可夫过程的简单例子。其中每个绿色圆圈表 示一个状态，每个状态都有一定概率（包括概率为 0 ) 转移到其他状态，其中 $s_6$ 通常被称为**终止状态**（terminal state)，因为它不会再转移到其他状态，可以理解为它永远以概率 1 转移到自己。状态之间的虚线箭头表示状态的转移，箭头旁的数字表示该状态转移发生的概率。从每个状态出发转移到其他状态的概率总 和为 1 。例如， $s_1$ 有 $90 \%$ 概率保持不变，有 $10 \%$ 概率转移到 $s_2$ ，而在 $s_2$ 又有 $50 \%$ 概率回到 $s_1$ ，有 $50 \%$ 概率转移到 $s_3$ 。
 
 我们可以写出这个马尔可夫过程的状态转移矩阵:
 
 $$
-\mathcal{P} = \left[\begin{array}{cccccc}
+\mathcal{T} = \left[\begin{array}{cccccc}
 0.9 & 0.1 & 0 & 0 & 0 & 0 \\
 0.5 & 0 & 0.5 & 0 & 0 & 0 \\
 0 & 0 & 0 & 0.6 & 0 & 0.4 \\
@@ -73,7 +72,7 @@ $$
 \end{array}\right]
 $$
 
-其中第 $i$ 行 $j$ 列的值 $\mathcal{P}_{i, j}$ 则代表从状态 $s_i$ 转移到 $s_j$ 的概率，即，条件概率（conditional probability）[17] $P(S_{t+1}=s_j|S_t=s_i)$ ，也有的地方写作 $T(s,s')$。
+其中第 $i$ 行 $j$ 列的值 $\mathcal{T}_{i, j}$ 则代表从状态 $s_i$ 转移到 $s_j$ 的概率，即，条件概率（conditional probability）[17] $P(S_{t+1}=s_j|S_t=s_i)$ ，也有的地方写作 $T(s,s')$。
 
 给定一个马尔可夫过程，我们就可以从某个状态出发，根据它的状态转移矩阵生成一个状态**序列** (episode)，这个步骤也被叫做**采样**（sampling）。例如，从 $s_1$ 出发，可以生成序列 $s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_6$ 或序列 $s_1 \rightarrow s_1 \rightarrow s_2 \rightarrow s_3 \rightarrow s_4 \rightarrow s_5 \rightarrow s_3 \rightarrow s_6$ 等。生成这些序列的概率和状态转移矩阵有关。
 
@@ -85,10 +84,10 @@ $$
 
 ### 马尔可夫奖励过程（MRP）
 
-在马尔可夫过程的基础上加入奖励函数 $r$ 和折扣因子 $\gamma$ ，就可以得到马尔可夫奖励过程 (Markov reward process) 。一个马尔可夫奖励过程由 $\langle\mathcal{S}, \mathcal{P}, r, \gamma\rangle$ 构成，各个组成元素的含义如下所示。
+在马尔可夫过程的基础上加入奖励函数 $r$ 和折扣因子 $\gamma$ ，就可以得到马尔可夫奖励过程 (Markov reward process) 。一个马尔可夫奖励过程由 $\langle\mathcal{S}, \mathcal{T}, r, \gamma\rangle$ 构成，各个组成元素的含义如下所示。
 
 - $\mathcal{S}$ 是有限状态的集合。
-- $\mathcal{P}$ 是状态转移矩阵。
+- $\mathcal{T}$ 是状态转移矩阵。
 - $r$ 是奖励函数，某个状态 $s$ 的奖励 $r(s)$ 指转移到该状态时可以获得奖励的期望。
 - $\gamma$ 是折扣因子 (discount factor)， $\gamma$ 的取值范围为 $[0,1]$ 。引入折扣因子的理由因为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励。
 
@@ -199,7 +198,7 @@ V\left(s_2\right) \\
 \ldots \\
 V\left(s_n\right)
 \end{array}\right]}\\
-\mathcal{V}=\mathcal{R}+\gamma \mathcal{P} \mathcal{V} \\
+\mathcal{V}=\mathcal{R}+\gamma \mathcal{T} \mathcal{V} \\
 \end{gathered}
 $$
 
@@ -207,9 +206,9 @@ $$
 
 $$
 \begin{aligned}
-\mathcal{V} & =\mathcal{R}+\gamma \mathcal{P} \mathcal{V} \\
-(I-\gamma \mathcal{P}) \mathcal{V} & =\mathcal{R} \\
-\mathcal{V} & =(I-\gamma \mathcal{P})^{-1} \mathcal{R}
+\mathcal{V} & =\mathcal{R}+\gamma \mathcal{T} \mathcal{V} \\
+(I-\gamma \mathcal{T}) \mathcal{V} & =\mathcal{R} \\
+\mathcal{V} & =(I-\gamma \mathcal{T})^{-1} \mathcal{R}
 \end{aligned}
 $$
 
@@ -254,15 +253,17 @@ $$
 
 可以发现左右两边的值几乎是相等的，说明我们求解得到的价值函数是满足状态为时的贝尔曼方程。读者可以自行验证在其他状态时贝尔曼方程是否也成立。若贝尔曼方程对于所有状态都成立，就可以说明我们求解得到的价值函数是正确的。除了使用动态规划算法，马尔可夫奖励过程中的价值函数也可以通过蒙特卡洛方法估计得到，我们将在 3.5 节中介绍该方法。
 
-## 马尔可夫决策过程
+## 马尔可夫决策过程（MDP）
 
 3.2 节和 3.3 节讨论到的马尔可夫过程和马尔可夫奖励过程都是自发改变的随机过程；而如果有一个外界（对于该随机过程来说，智能体才是外界）的“刺激”来共同改变这个随机过程，就有了**马尔可夫决策过程**（Markov decision process，MDP）。我们将这个来自外界的刺激称为智能体（agent）的动作，在马尔可夫奖励过程（MRP）的基础上加入动作，就得到了马尔可夫决策过程（MDP）。
 
-马尔可夫决策过程由 $\langle\mathcal{S}, \mathcal{P}, \mathcal{A}, r, \gamma\rangle$ 构成，其中
+马尔可夫决策过程由 $\langle\mathcal{S}, \mathcal{T} \text{或} \mathcal{T}, \mathcal{A}, r, \gamma\rangle$ 构成，符号写作 $\mathcal{M}=\{\mathcal{S}, \mathcal{A}, \mathcal{T}  \text{（or }  \mathcal{T}）, r, \gamma\}$
 
-- $\mathcal{S}$ 是有限状态的集合。
-- $\mathcal{P}$ 是状态转移矩阵。
-- $\mathcal{A}$ 是所有动作的集合。
+其中
+
+- $\mathcal{S}$ 是有限状态s（离散或连续）的集合。
+- $\mathcal{T}$ 或 $\mathcal{T}$是状态转移矩阵，软件里是张量（tensor）[20]。
+- $\mathcal{A}$ 是所有动作a（离散或连续）的集合。
 - $r$ 是奖励函数，某个状态 $s$ 的奖励 $r(s)$ 指转移到该状态时可以获得奖励的期望。
 - $\gamma$ 是折扣因子 (discount factor)， $\gamma$ 的取值范围为 $[0,1)$ 。引入折扣因子的理由因为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励。
 > 有的没有$\gamma$，而是$\rho_0$，它是开始状态的分布。[6]
@@ -270,7 +271,6 @@ $$
 ### MRP VS MDP
 
 ![MRP VS MDP](../../img/MRP_MDP.png)
-
 
 
 ### MDP的几个例子
@@ -540,3 +540,4 @@ $$
 [17]: https://xie.infoq.cn/article/2fc9eb9d48f46976a74da24c6
 [18]: https://blog.csdn.net/gls_nuaa/article/details/123833724
 [19]: https://zhuanlan.zhihu.com/p/626636130
+[20]: https://zhuanlan.zhihu.com/p/576779527
