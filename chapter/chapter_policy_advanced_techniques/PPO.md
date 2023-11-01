@@ -38,11 +38,52 @@ $$
 其中 $\beta$ 可以看作惩罚因子，是一个超参数。实际上这种代理目标函数背后的理论是优化策略 $\pi$ 的下界，让每次策略更新后的新策略都能得到提升。但是 $\beta$ 的取值非常难以确定，即使在很简单的问题上，都没办法简单地找到 $\beta$ 值，甚至在同一个问题中， $\beta$ 的取值随着学习过程而改变。这就导致 TRPO 采用了**硬约束**的方式，而不是惩罚项。
 
 - 所以现在的问题就是，如果我们想在学习过程中找到性能单调递增的策略，光靠简单地选择一个唖罚项系数和 SGD 是不够的，但是使用 TRPO 又太复杂，需要涉及二阶近似，*计算量太大*。这个时候 PPO 就出现了。
-- PPO 用了一些相对简单的方法来求解。PPO是限制两者比率的变化范围，来降低策略更新前后的分布差异性。具体来说，PPO 有两种形式，一是 PPO-截断，二是 PPO-惩罚，，我们接下来对这两种形式进行介绍。[2]
+- PPO 用了一些相对简单的方法来求解。PPO是限制两者比率的变化范围，来降低策略更新前后的分布差异性。具体来说，PPO 有两种形式，一是 PPO-惩罚，二是 PPO-截断（这里用的是李宏毅课上的顺序，而不是《动手学强化学习》上的顺序）
+- 需先回顾：Policy Gradient知识、On-Policy VS Off-PolicyPolicy Gradient。
+- 我们接下来对这两种形式进行介绍。[2]
+-
 
-## 一、PPO-截断
+## PP01：PPO-惩罚（PPO-Penalty）
 
-PPO 的第一种形式 PPO-截断（PPO-Clip）更加直接，它在目标函数中进行限制，以保证新策略的参数和旧策略的参数的差距不会太大。
+PPO-惩罚（PPO-Penalty）用拉格朗日乘数法直接将 KL 散度的限制放进了目标函数中，这就变成了一个“有”约束的优化问题，在迭代的过程中不断更新 KL 散度前的系数。即：
+
+$$
+\underset{\theta}{\arg \max} \mathbb{E}_{s \sim \nu}{ }^{\pi_{\theta_\text {old}}} \mathbb{E}_{a \sim \pi_{\theta_\text {old}}(\cdot \mid s)}\left[\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)} A^{\pi_{\theta_\text {old}}}(s, a)-\beta D_{K L}\left[\pi_{\theta_\text {old}}(\cdot \mid s), \pi_\theta(\cdot \mid s)\right]\right]
+$$
+
+除了第 3 节所说的截断代理目标函数的方法，本文还提出利用一个对 $KL$ 的自适应惩罚项系数来构建代理目标（surrogate objective），将新旧策略的 KL 散度值限定在一个目标 KL 散度值 $d_{\text {targ}}$ 附近。
+
+文中说这种方法的效果不如截断代理目标函数的方法好，不过可以作为补充和 baseline。
+
+
+
+实现过程如下:
+
+- 首先利用 SGD 对带有惩罚项的代理目标函数 （等式 (2.5)） 进行几个 epochs 的优化:
+$$
+L^{K L P E N}=\hat{\mathbb{E}}_t\left[\frac{\pi_\theta\left(a_t \mid s_t\right)}{\pi_{\theta_{\text {old }}}\left(a_t \mid s_t\right)} \hat{A}_t-\beta K L\left[\pi_{\theta_{\text {old}}}\left(\cdot \mid s_t\right), \pi_\theta\left(\cdot \mid s_t\right)\right]\right]
+$$
+- 计算当前新旧策略的 $\mathrm{KL}$ 散度值: $\left.d=\hat{\mathbb{E}}_t K L\left[\pi_{\theta_{o l d}}\left(\cdot \mid s_t\right), \pi_\theta\left(\cdot \mid s_t\right)\right]\right]$
+
+令 $d_\text {old}=D_{K L}^{\nu^{\pi_\text {old}}}\left(\pi_{\theta_\text {old}}, \pi_\theta\right) ， \beta$ 的更新规则如下:
+
+1. 如果 $d_\text {old}<d_{\text {targ }} / 1.5$ ，那么 $\beta_{k+1} = \beta_\text {old} / 2$ (If $K L\left(\theta, \theta^k\right)<K L_{\min }$, decrease $\beta$；分布差异很小时，降低罚项防止，对学习过程造成不好的影响；含义就是现在两个agent差别太大，奖励值不具有参考性，由此带来的update幅度就会降低。)
+2. 如果 $d_\text {old}>d_{\text {targ }} \times 1.5$ ，那么 $\beta_{k+1} = \beta_\text {old} \times 2$ (If $K L\left(\theta, \theta^k\right)>K L_{\max }$, increase $\beta$；当差异太大时，加大罚项以削弱旧数据的影响。)
+3. 否则 $\beta_{k+1} = \beta_\text {old}$
+
+
+其中：
+
+- $d_{\text {targ }}$ 是一个超参数，用于限制学习策略和之前一轮策略的差距。
+- 1.5 和 2 都是一个启发值，可以自己设定。文中说算法对这两个启发值不是很敏感。初始的 $\beta$ 也是一个超参数，但是不敏感，会随着算法持续自适应更新。
+
+### PPO-惩罚 的伪代码
+
+![PPO-惩罚 的伪代码[9]](../../img/PPO-Penalty.png)
+
+## PP02：PPO-截断（PPO-Clip）
+
+PPO 的第二种形式 PPO-截断（PPO-Clip）更加直接，它在目标函数中进行限制，以保证新策略的参数和旧策略的参数的差距不会太大。
 
 其目标函数[5]：
 
@@ -74,39 +115,12 @@ $$
 
 如图 12-1 所示。
 
-## 二、PPO-惩罚
+### PPO-Clip的伪代码
 
-PPO-惩罚（PPO-Penalty）用拉格朗日乘数法直接将 KL 散度的限制放进了目标函数中，这就变成了一个“有”约束的优化问题，在迭代的过程中不断更新 KL 散度前的系数。即：
-
-$$
-\underset{\theta}{\arg \max} \mathbb{E}_{s \sim \nu}{ }^{\pi_{\theta_\text {old}}} \mathbb{E}_{a \sim \pi_{\theta_\text {old}}(\cdot \mid s)}\left[\frac{\pi_\theta(a \mid s)}{\pi_{\theta_\text {old}}(a \mid s)} A^{\pi_{\theta_\text {old}}}(s, a)-\beta D_{K L}\left[\pi_{\theta_\text {old}}(\cdot \mid s), \pi_\theta(\cdot \mid s)\right]\right]
-$$
-
-除了第 3 节所说的截断代理目标函数的方法，本文还提出利用一个对 $KL$ 的自适应惩罚项系数来构建代理目标（surrogate objective），将新旧策略的 KL 散度值限定在一个目标 KL 散度值 $d_{\text {targ}}$ 附近。
-
-文中说这种方法的效果不如截断代理目标函数的方法好，不过可以作为补充和 baseline。
-
-![PPO伪代码[9]](../../img/PPO_algs.png)
-
-实现过程如下:
-
-- 首先利用 SGD 对带有惩罚项的代理目标函数 （等式 (2.5)） 进行几个 epochs 的优化:
-$$
-L^{K L P E N}=\hat{\mathbb{E}}_t\left[\frac{\pi_\theta\left(a_t \mid s_t\right)}{\pi_{\theta_{\text {old }}}\left(a_t \mid s_t\right)} \hat{A}_t-\beta K L\left[\pi_{\theta_{\text {old}}}\left(\cdot \mid s_t\right), \pi_\theta\left(\cdot \mid s_t\right)\right]\right]
-$$
-- 计算当前新旧策略的 $\mathrm{KL}$ 散度值: $\left.d=\hat{\mathbb{E}}_t K L\left[\pi_{\theta_{o l d}}\left(\cdot \mid s_t\right), \pi_\theta\left(\cdot \mid s_t\right)\right]\right]$
-
-令 $d_\text {old}=D_{K L}^{\nu^{\pi_\text {old}}}\left(\pi_{\theta_\text {old}}, \pi_\theta\right) ， \beta$ 的更新规则如下:
-
-1. 如果 $d_\text {old}<d_{\text {targ }} / 1.5$ ，那么 $\beta_{k+1} = \beta_\text {old} / 2$ (If $K L\left(\theta, \theta^k\right)<K L_{\min }$, decrease $\beta$；分布差异很小时，降低罚项防止，对学习过程造成不好的影响；含义就是现在两个agent差别太大，奖励值不具有参考性，由此带来的update幅度就会降低。)
-2. 如果 $d_\text {old}>d_{\text {targ }} \times 1.5$ ，那么 $\beta_{k+1} = \beta_\text {old} \times 2$ (If $K L\left(\theta, \theta^k\right)>K L_{\max }$, increase $\beta$；当差异太大时，加大罚项以削弱旧数据的影响。)
-3. 否则 $\beta_{k+1} = \beta_\text {old}$
+![PPO-Clip的伪代码](../../img/PPO-Clip.png)
 
 
-其中：
 
-- $d_{\text {targ }}$ 是一个超参数，用于限制学习策略和之前一轮策略的差距。
-- 1.5 和 2 都是一个启发值，可以自己设定。文中说算法对这两个启发值不是很敏感。初始的 $\beta$ 也是一个超参数，但是不敏感，会随着算法持续自适应更新。
 
 ## PPO 伪代码
 
@@ -135,7 +149,9 @@ $$
 
 创建环境`Pendulum-v0`，并设定随机数种子以便重复实现。接下来我们在倒立摆环境中训练 PPO 算法。
 
+![]
 大量实验表明，PPO-截断总是比 PPO-惩罚表现得更好。
+
 
 ## PPO的评价：优缺点
 
@@ -159,6 +175,27 @@ PPO 是 TRPO 的一种改进算法，它在实现上简化了 TRPO 中的**复�
 
 PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士毕业后在 OpenAI 公司研究出来的。通过对 TRPO 计算方式的改进，PPO 成为了最受关注的深度强化学习算法之一，并且其论文的引用量也超越了 TRPO。
 
+## 问题测验
+
+1. PPO算法和DQN算法的区别是什么？ [11]
+2. 有哪些PPO算法的调参经验？
+
+## 附录：问题答案
+
+第一问的答案：PPO（Proximal Policy Optimization）算法和DQN（Deep Q-Network）算法都是用于强化学习的方法，但它们之间有一些重要的区别。以下是它们的主要区别：
+  1. 算法类型【Policy-based VS Value-based】 ：
+    - PPO是一个基于策略优化算法（Policy-based），关注于优化策略，它直接优化代理的策略，如何选择最佳动作以最大化回报。
+    - DQN是一个基于值函数优化算法（Value-based），它试图学习一个值函数，用于评估每个状态-动作对的价值，并从这些估值中选择选择估值最高的动作。
+  2. 适用动作空间【连续 VS 离散】
+    - PPO适用于连续和离散动作空间，可以处理各种类型的任务。
+    - DQN最初设计用于离散动作空间，尽管有一些扩展可以处理连续动作空间，但它的主要应用仍然是在离散动作环境中。
+  3. 算法稳定性【稳定 VS 发散：
+    - PPO通常更稳定，因为它使用限制来限制策略更新幅度的方法，如KL散度做penalty（KL penalty） 或 剪裁（Clip）函数，可以防止策略更新过于剧烈，使其稳扎稳打、步步为营[13]，从而其更容易收敛并更稳定。
+    - DQN在训练时可能更容易出现发散或不稳定的情况，需要采取一些技巧和改进来增加稳定性，如经验回放和目标网络。
+  总的来说，PPO更适用于连续和离散动作空间，通常更稳定，但DQN在某些情况下仍然有其用武之地，特别是在离散动作空间的问题中。选择哪种算法取决于具体的任务和需求。
+
+第二问的答案：TODO
+
 
 [1]: https://hrl.boyuai.com/chapter/2/ppo%E7%AE%97%E6%B3%95
 [2]: https://www.cnblogs.com/kailugaji/p/15401383.html#_lab2_0_1
@@ -170,6 +207,9 @@ PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士�
 [8]: https://blog.csdn.net/weixin_43522964/article/details/104239921
 [9]: https://mofanpy.com/tutorials/machine-learning/reinforcement-learning/DPPO
 [10]: https://zhuanlan.zhihu.com/p/587129005
+[11]: https://zhuanlan.zhihu.com/p/659551066
+[12]: https://blog.csdn.net/ningmengzhihe/article/details/131459848
+[13]: https://blog.csdn.net/ningmengzhihe/article/details/131457536
 TODO:https://www.huaxiaozhuan.com/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/chapters/19_Deep_RL.html
 
 ---

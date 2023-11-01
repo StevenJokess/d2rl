@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-05-23 23:55:42
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-01 17:04:57
+ * @LastEditTime: 2023-11-01 21:08:14
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -19,13 +19,17 @@ REINFORCE算法使用了MC方法，因而具有了一个明显的缺点，那就
 
 baseline则是一种可以减小其方差的办法。具体做法就是为动作价值函数找到一个基线与之对比。
 
+$$
 \nabla J(\theta)\propto\sum_s \mu(s)\sum_a (q_\pi(s,a)-b(s))\nabla\pi(a|s,\theta)
+$$
 
 只要基线与动作无关(即与 \theta 无关)，便可以保证上式成立,因为减的项为零。
 
+$$
 \sum_a b(s)\nabla\pi(a|s,\theta)=b(s)\nabla\sum_a \pi(a|s,\theta)=b(s)\nabla1 = 0
+$$
 
-合理的 b(s) 可以有效的减小使用MC方法估计的梯度的方差。
+合理的 $b(s)$ 可以有效的减小使用MC方法估计的梯度的方差。
 
 到这里，相信大家都可以看出 q_\pi(s,a)-b(s) 这一项实际上就是advantage的雏形了。
 

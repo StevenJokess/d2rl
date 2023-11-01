@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-26 21:18:44
+ * @LastEditTime: 2023-11-01 21:15:17
  * @Description:
  * @Help me: 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -102,24 +102,45 @@ REINFORCE 算法的具体算法流程如下：
 
 可以用DP部分观测的MDP[3]
 
-## PG的技巧
+## PG的改进技巧
 
-### PG的实现技巧1：
+### PG的实现技巧1：添加基线（baseline）
+
+REINFORCE算法使用了MC方法，因而具有了一个明显的缺点，那就是**方差太大**（后面的 R_{k} 从t时刻到n时刻都是随机变量，随机变量维度高，导致的方差大[12]）。
+
+基线（baseline）则是一种可以减小其方差的办法。具体做法就是为动作价值函数找到一个基线与之对比。
+
+$$
+\nabla J(\theta)\propto\sum_s \mu(s)\sum_a (q_\pi(s,a)-b(s))\nabla\pi(a|s,\theta)
+$$
+
+只要基线与动作无关(即与 $\theta$ 无关)，便可以保证上式成立,因为减的项为零。
+
+$$
+\sum_a b(s)\nabla\pi(a|s,\theta)=b(s)\nabla\sum_a \pi(a|s,\theta)=b(s)\nabla1 = 0
+$$
+
+合理的 $b(s)$ 可以有效的减小使用MC方法估计的梯度的方差。
+
+到这里，相信大家都可以看出 $q_\pi(s,a)-b(s)$ 这一项实际上就是优势（advantage）的雏形了。
+
+Advantage怎么计算：
 
 添加基线， $R_{\theta}^{target} = \sum_{i=1}^N\sum_{t=1}^T (R(\tau^i)-b) log p_{\theta}(a_t^i|s_t^i)$
 
-### PG的实现技巧2：
+
+
+### PG的实现技巧2：用折扣因子$\gamma$，来异质化奖励
 
 异质化奖励， $R_{\theta}^{target} = \sum_{i=1}^N\sum_{t=1}^T (G_t^i -b) log p_{\theta}(a_t^i|s_t^i) $，其中 $G_t-b$ 可以设置为 $G_t-b = Q(s_t,a_t)-V(s_t) = A(s_t,a_t)$ ，并用评论员网络拟合 $A(s_t,a_t)$ 。
 
+
+
 ## 优缺点：
-
-
-
 
 缺点：
 
-- 只有在能够对序列采样的 episodic 环境下使用。[8]
+- 只有在能够对序列采样的回合制（episodic）环境下使用。[8]
 - 对步长大小的选择非常敏感：
   - 当迭代步长太小，则收敛缓慢，学习效率慢。因为样本利用率低，由于每次更新需要根据一个策略采集一条完整的轨迹（即,由于蒙特卡洛的特性，只有到终止状态的序列，才能被采样），并计算这条轨迹上的回报，而且每次更新后就要将这些样本扔掉，重新采样，再实现更新。[7] 后面会介绍用重要性采样来改良。
   - 当迭代步长太小，则难以收敛，性能差。由于利用策略梯度法计算的结果方差会很大。学习困难，由于 agent 在一个序列中会采取很多动作，我们很难说哪个动作对最后结果是有用的。
@@ -130,7 +151,16 @@ REINFORCE 算法的具体算法流程如下：
 
 REINFORCE 算法是策略梯度乃至强化学习的典型代表，智能体根据当前策略直接和环境交互，通过采样得到的轨迹数据直接计算出策略参数的梯度，进而更新当前策略，使其向最大化策略期望回报的目标靠近。这种学习方式是典型的从交互中学习，并且其优化的目标（即策略期望回报）正是最终所使用策略的性能，这比基于价值的强化学习算法的优化目标（一般是时序差分误差的最小化）要更加直接。 REINFORCE 算法理论上是能保证局部最优的，它实际上是借助蒙特卡洛方法采样轨迹来估计动作价值，这种做法的一大优点是可以得到无偏的梯度。但是，正是因为使用了蒙特卡洛方法，REINFORCE 算法的梯度估计的方差很大，可能会造成一定程度上的不稳定，这也是第 10 章将介绍的 Actor-Critic 算法要解决的问题。
 
-## 扩展阅读：策略梯度定理的证明
+## 问题测验
+
+
+
+
+## 附录：问题答案
+
+
+
+## 附录：策略梯度定理的证明
 
 TODO: 强化学习中“策略梯度定理”的规范表达、推导与讨论 - Beaman的文章 - 知乎
 https://zhuanlan.zhihu.com/p/490373525
@@ -223,6 +253,8 @@ https://hrl.boyuai.com/chapter/2/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E
 
 TODO: 看不懂证明。。
 [10]: https://lilianweng.github.io/posts/2018-02-19-rl-overview/#policy-gradient-theorem
+[11]: https://zhuanlan.zhihu.com/p/343943792
+[12]: https://zhuanlan.zhihu.com/p/437626120
 
 ---
 
@@ -327,9 +359,8 @@ $$
 
 以上，Policy Gradient Theorem形式1证毕。
 
-
-
 形式2的证明：
+
 依然从基本形式出发，不过这次我们先对 t 个时刻求和，再写成期望的形式。
 
 \begin{aligned} \nabla_{\theta} J(\theta)&=\sum_{t=0}^{\infty} \sum_{s_{t}} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \sum_{a_{t}} \pi\left(a_{t} \mid s_{t}\right)\left[\gamma^{t} q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right] \\ &=\sum_{t=0}^{\infty} \sum_{s_{t}} \gamma^{t} \operatorname{Pr}\left(s_{0} \rightarrow s_{t}, t, \pi\right) \sum_{a_{t}} \pi\left(a_{t} \mid s_{t}\right)\left[q_{\pi}\left(s_{t}, a_{t}\right) \nabla \ln \pi\left(a_{t} \mid s_{t}\right)\right] \\ &=\sum_{x \in \mathcal{S}} \sum_{t=0}^{\infty} \gamma^{t} \operatorname{Pr}\left(s_{0} \rightarrow x, t, \pi\right) \sum_{a} \pi(a \mid x)\left[q_{\pi}\left(x, a\right) \nabla \ln \pi(a \mid x)\right] \\ &=\sum_{x \in \mathcal{S}} d^{\pi}(x) \sum_{a} \pi(a \mid x)\left[q_{\pi}\left(x, a\right) \nabla \ln \pi(a \mid x)\right] \end{aligned}

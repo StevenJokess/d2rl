@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-27 20:32:29
+ * @LastEditTime: 2023-11-01 20:46:48
  * @Description:
  * @TODO::
  * @Reference:
@@ -73,7 +73,7 @@ $$
 
 其中，$Q_k$ 是新估计，$Q_{k-1}$ 是旧估计，$r_k-Q_n$ 是奖励估计误差（Reward Pridiction Error）， $1/n$ 是学习率[10]
 
-如果将所有 $r_i$ 求和再除以次数，其缺点是每次更新的时间复杂度和空间复杂度均为 $O(n)$ 。而采用增量式更新，时间复杂度和空间复杂度均为 $O(1)$ 。
+如果将所有 $r_i$ 求和再除以次数，其缺点是每次更新的时间复杂度和空间复杂度均为 $O(n)$ 。而采用增量式更新（Incremental update[19]），时间复杂度和空间复杂度均为 $O(1)$ 。
 
 > 用常数 $\alpha$ 作为学习率会怎样？[10]
 >
@@ -330,7 +330,7 @@ $\pi_{\theta}=\mu_{\theta}+\varepsilon ,\varepsilon \sim N\left(0,\sigma^2\right
 [16]: https://weread.qq.com/web/reader/57d321c0813ab6bf8g016fe1ke2e329c0261e2ef524fbf75
 [17]: https://zhuanlan.zhihu.com/p/655421127
 [18]: https://zhuanlan.zhihu.com/p/594161566
-
+[19]: https://blog.csdn.net/ningmengzhihe/article/details/113749443
 
 更多资料：
 
