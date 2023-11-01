@@ -1,4 +1,17 @@
 
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-02-25 23:21:39
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-11-01 22:13:58
+ * @Description:
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
+
 # PPO 算法
 
 近端策略优化算法（Proximal Policy Optimization Algorithms,PPO）和信任区域策略优化（trust region policy optimization，TRPO），都是为避免在使用重要性采样时由于在 $\theta$ 下的 $p_\theta\left(a_t \mid s_t\right)$ 与在 $\theta^{\prime}$ 下 的 $p_{\theta^{\prime}}\left(a_t \mid s_t\right)$ 相差太多，导致重要性采样结果偏差较大而采取的算法。TRPO 算法在很多场景上的应用都很成功，但是它的计算过程非常复杂，每一步更新的运算量非常大。于是，TRPO 算法的改进版—— 近端策略优化算法(Proximal Policy Optimization Algorithms,PPO) [3]算法在 2017 年被提出，PPO 基于 TRPO 的思想，但是其算法实现更加简单。并且大量的实验结果表明，与 TRPO 相比，PPO 能学习得一样好（甚至更快），这使得 PPO 成为非常流行的强化学习算法。如果我们想要尝试在一个新的环境中使用强化学习算法，那么 PPO 就属于可以首先尝试的算法。
@@ -43,7 +56,7 @@ $$
 - 我们接下来对这两种形式进行介绍。[2]
 -
 
-## PP01：PPO-惩罚（PPO-Penalty）
+## PPO 1：PPO-惩罚（PPO-Penalty）
 
 PPO-惩罚（PPO-Penalty）用拉格朗日乘数法直接将 KL 散度的限制放进了目标函数中，这就变成了一个“有”约束的优化问题，在迭代的过程中不断更新 KL 散度前的系数。即：
 
@@ -81,7 +94,7 @@ $$
 
 ![PPO-惩罚 的伪代码[9]](../../img/PPO-Penalty.png)
 
-## PP02：PPO-截断（PPO-Clip）
+## PP0 2：PPO-截断（PPO-Clip）
 
 PPO 的第二种形式 PPO-截断（PPO-Clip）更加直接，它在目标函数中进行限制，以保证新策略的参数和旧策略的参数的差距不会太大。
 
@@ -165,9 +178,8 @@ $$
 
 缺点：
 
-1. model-free的代价就是莽撞、缺乏想象力；
+1. 不基于模型（model-free）的代价就是莽撞、缺乏想象力；
 1. 单步更新：行动一次就更新参数，勇敢、效率高；缺乏长期记忆，无妨；；挺好，没啥缺点；[10]
-
 
 ## 总结
 
@@ -194,7 +206,7 @@ PPO 是 TRPO 的第一作者 John Schulman 从加州大学伯克利分校博士�
     - DQN在训练时可能更容易出现发散或不稳定的情况，需要采取一些技巧和改进来增加稳定性，如经验回放和目标网络。
   总的来说，PPO更适用于连续和离散动作空间，通常更稳定，但DQN在某些情况下仍然有其用武之地，特别是在离散动作空间的问题中。选择哪种算法取决于具体的任务和需求。
 
-第二问的答案：TODO
+第二问的答案：TODO：
 
 
 [1]: https://hrl.boyuai.com/chapter/2/ppo%E7%AE%97%E6%B3%95

@@ -3,23 +3,23 @@
 <!--
  * @version:
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-10-25 23:24:57
+ * @Date: 2023-11-01 22:19:47
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-01 22:37:29
+ * @LastEditTime: 2023-11-01 22:21:55
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# 大语言模型（LLM）
+# Transformer
+
+TODO:
 
 ## 问题测验
 
-1. 强化学习和大模型之间的关联是什么
-1. 如何评估大模型中数据集的质量
-1. 除了数据之外，还有哪些方向的工作可以进一步优化大模型的效果
-1. 大语言模型是怎么输出的，观察过输出的概率值吗
+1. 介绍下对Transformer的了解，网络结构相比于LSTM有什么不同
+1. Transformer里用到的正则化方法有哪些
 
-##
+## 附录：问题答案
 
-[1]: https://zhuanlan.zhihu.com/p/659551066
+

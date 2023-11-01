@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 00:06:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-01 21:15:17
+ * @LastEditTime: 2023-11-01 21:48:59
  * @Description:
  * @Help me: 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -126,8 +126,12 @@ $$
 
 Advantage怎么计算：
 
-添加基线， $R_{\theta}^{target} = \sum_{i=1}^N\sum_{t=1}^T (R(\tau^i)-b) log p_{\theta}(a_t^i|s_t^i)$
 
+早先的时候，有人把样本中的平均收益作为baseline使用，这样也能起到一定的效果。然而对于马尔可夫过程来说，baseline应该根据状态变化的，对于所有动作价值都大的状态baseline应该较大，反之亦然。
+
+一个自然能想到baseline便是状态价值函数 v(s) ，实际上在A2C,A3C等算法中，正是使用了q_\pi(s,a)-v(s)作为advantage，也取得了很好的效果。（顺带一提Dueling DQN中的也是专门有一个网络输出来估计这个advantage）。
+
+然而，伯克利的大神们结合了 TD(\lambda) 的思想，提出了估计更加平滑，方差更为可控的advantage:GAE(General Advantage Estimation) .
 
 
 ### PG的实现技巧2：用折扣因子$\gamma$，来异质化奖励
