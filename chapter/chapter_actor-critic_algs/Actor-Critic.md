@@ -23,9 +23,6 @@
 
 Actor-Critic 是Q-learning 和 Policy Gradient 的结合。[9]
 
-###
-
-
 
 ## REINFORCE的优点
 

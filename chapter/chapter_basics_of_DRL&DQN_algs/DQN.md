@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 23:43:10
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-27 20:20:33
+ * @LastEditTime: 2023-11-04 08:38:03
  * @Description:
  * @Help me: 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO:: 伪代码和Code,
@@ -109,7 +109,6 @@ A：没关系。这并不是因为过去的策略与现在的策略很像，就�
 
 ## 伪代码（Pseudocode）
 
-
 综上所述，DQN 算法的具体流程如下：
 
 - 用随机的网络参数 $\omega$ 初始化网络 $Q_\omega(s, a)$
@@ -125,12 +124,13 @@ A：没关系。这并不是因为过去的策略与现在的策略很像，就�
     - 对每个数据，用目标网络计算目标值 $$ y_i=r_i+\gamma \max _a \hat{Q}_{\omega^{-}}\left(s_{i+1}, a_{i}\right)$$
     - 最小化目标损失 $L=\frac{1}{N} \sum_i\left(y_i-Q_\omega\left(s_i, a_i\right)\right)^2$ ，
     - 根据梯度 $∂L(\omega)/∂(\omega)$ 来更新参数更新当前网络 $Q_\omega$ [12]
-    - 每C次更新，重置目标网络，即把当前网络的参数 $Q_\omega$ 复制到目标网络[18]，达到二者同步，$\hat{Q}=Q_\omega$。
+    - 每C次更新，重置目标网络，即把当前网络的参数 $Q_\omega$ 复制到目标网络[18]，达到二者同步，即$\hat{Q}_{\omega^{-}}=Q_\omega$。
   - **end for**
 - **end for**
 
 ![DQN的流程图](../../img/DQN_flow.png)
-![DQN的详细流程图](../../img/DQN_flow2.png)
+![DQN的流程图（智能体、智能体）：Q预测即Policy Net，Q目标即Target，learn()即Optimize过程，$\theta$ 即上文提到的 $\omega$](../../img/DQN_flow(env_agent).png)
+![DQN的参数流程图](../../img/DQN_flow2.png)
 ![DQN与改进的DQN对比](../../img/DQN_improve.png)
 ![注意对终止状态的处理](../../img/DQN_with_Experience_Replay.png)
 
@@ -152,13 +152,21 @@ A：没关系。这并不是因为过去的策略与现在的策略很像，就�
 
 在本书前面章节所述的强化学习环境中，我们都使用非图像的状态作为输入（例如车杆环境中车的坐标、速度），但是在一些视频游戏中，智能体并不能直接获取这些状态信息，而只能直接获取屏幕中的图像。要让智能体和人一样玩游戏，我们需要让智能体学会以图像作为状态时的决策。我们可以利用 7.4 节的 DQN 算法，将卷积层加入其网络结构以提取图像特征，最终实现以图像为输入的强化学习。以图像为输入的 DQN 算法的代码与 7.4 节的代码的不同之处主要在于 Q 网络的结构和数据输入。DQN 网络通常会将最近的几帧图像一起作为输入，从而感知环境的动态性。接下来我们实现以图像为输入的 DQN 算法，但由于代码需要运行较长的时间，我们在此便不展示训练结果。
 
-## 问题
+## 优缺点以及后续的改进
+
+优点：
+
+缺点：
 
 - 由于神经需要大量的数据才能进行训练，且强化学习中通常需要对状态空间进行抽样以便代表性地学习到状态空间中的信息[9]，深度强化学习可能是采样非常低效的(sample inefficient)
 - 如果你仅仅关心最终的性能，那么很多问题都能够通过其他方法更好地解决
 - 奖励函数的设计是困难的
 - 即使给定了较好的奖励函数，也很难跳出局部最优
 - 最终的结果也可能是不稳定的和难以复现的
+- 在估计值函数的时候一个任意小的变化可能导致对应动作被选择或者不被选择，这种不连续的变化是致使基于值函数的方法无法得到收敛保证的重要因素。
+- 选择最大的Q值这样一个搜索过程在高纬度或者连续空间是非常困难的；
+- 无法学习到随机策略，有些情况下随机策略往往是最优策略。[19]
+
 
 ## 习题与测验
 
@@ -266,3 +274,4 @@ $$
 [16]: https://www.zhihu.com/people/17611010520/posts
 [17]: https://yiyan.baidu.com/
 [18]: https://www.zhihu.com/question/373158173/answer/2398833964
+[19]: https://imzhanghao.com/2022/02/10/reinforcement-learning/#actor-critic
