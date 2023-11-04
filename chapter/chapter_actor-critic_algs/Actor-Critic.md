@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-24 01:38:27
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-13 05:16:07
+ * @LastEditTime: 2023-11-04 07:51:25
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -98,6 +98,8 @@ $$
 
 ### Actor-Critic 伪代码
 
+![Actor_Critic](../../img/Actor_Critic_alg.png)
+
 - 输入：迭代轮数 $T$ ，状态特征维度 $n$ ，动作集 $A$ ，步长 $\alpha ， \beta$ ，衰减因子 $\gamma$ ，探索率 $\epsilon ，$ Critic网络结构和Actor网络结构。
 - 输出: Actor网络参数 $\theta$ ， Critic网络参数 $w$
 
@@ -138,24 +140,24 @@ code
 
 根据实验结果我们可以发现，Actor-Critic 算法很快便能收敛到最优策略，并且训练过程非常稳定，抖动情况相比 REINFORCE 算法有了明显的改进，这说明价值函数的**引入减小了方差**。
 
-## 优缺点：
+## 优缺点以及其之后的改进方案：
 
 - **优点**：
   - 相比传统PG，Actor-Critic 应用了Q-learning 或其他策略评估的做法，使得其可以进行单步更新，不需要跑完一个episode再更新网络参数，相较于传统的PG更新更快。传统PG对价值的估计虽然是无偏的，但方差较大，AC方法牺牲了一点偏差，但能够有效降低方差；
   - 相比以值函数为中心的算法，Actor-Critic 应用了策略梯度的做法，这能让它在连续动作或者高维动作空间中选取合适的动作，而Q-learning做这件事会很困难甚至瘫痪。[9]
-- **缺点**：Actor的行为取决于 Critic 的Value，但是因为 Critic本身就很难收敛和actor一起更新的话就更难收敛了。（为了解决收敛问题， Deepmind 提出了 Actor Critic 升级版 Deep Deterministic Policy Gradient，后者融合了 DQN 的一些 trick，使用了双Actor神经网络和双Critic神经网络的方法[6]， 解决了收敛难的问题）。
+- **缺点**：Actor的行为取决于 Critic 的Value，但是因为 Critic本身就很难收敛和actor一起更新的话就更难收敛了。
+-  之后的改进方案：
+  1. DDPG算法，由Deepmind提出，使用了双Actor神经网络和双Critic神经网络的方法，来改善收敛性。
+  1. A3C算法，使用了多线程的方式，一个主线程负责更新Actor和Critic的参数，多个辅线程负责分别和环境交互，得到梯度更新值，汇总更新主线程的参数。而所有的辅线程会定期从主线程更新网络参数。这些辅线程起到了类似DQN中经验回放的作用，但是效果更好。[9]
+  1. SAC算法[7]，输出larger entropy，即更不确定的action，更鼓励探索。
+  1. ？算法，两个网络的前半部分可以共享
 
 ## 与基于价值的模型(Critic only)的对比
 
 - 只基于价值的模型(Critic only)，只会对整个序列完成后才给reward和更新，对中间好的action损失较多，
 - 基于价值和策略的模型就不会(例如Actor-critic)，从Loss函数就能看出来。策略损失通常基于动作概率和优势函数的梯度，而价值损失通常基于TD误差（时间差分误差）。
 
-## 改进方案
-
-1. DDPG算法，使用了双Actor神经网络和双Critic神经网络的方法来改善收敛性。
-1. A3C算法，使用了多线程的方式，一个主线程负责更新Actor和Critic的参数，多个辅线程负责分别和环境交互，得到梯度更新值，汇总更新主线程的参数。而所有的辅线程会定期从主线程更新网络参数。这些辅线程起到了类似DQN中经验回放的作用，但是效果更好。[9]
-1. SAC算法[7]，输出larger entropy，即更不确定的action，更鼓励探索。即，
-1. ？算法，两个网络的前半部分可以共享
+## 问题测验
 
 ## 总结
 

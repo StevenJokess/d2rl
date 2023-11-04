@@ -19,4 +19,7 @@
 
 Actor-Critic
 A2C&A3C
+Pathwise_derivative_policy_gradient
+PER
+ACKTR
 ```
