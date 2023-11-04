@@ -23,7 +23,7 @@
 - BERT_VS_GPT：基于经典大语言模型 Transformer 的另外两个经典大语言模型，BERT 和GPT
 - GPT1_2：早期GPT的发展历程，以及预训练过程（Pretrain）、思维链（COT）、提示词（Prompt）
 - GPT3(RLHF)：从人类反馈强化学习（RLHF），并将其应用到GPT。
-- GPT3.5_4：之后GPT的发展历程
+- GPT3.5(Chat)_4：之后GPT的发展历程
 - ChatGPT_Plugins：介绍 ChatGPT Plugins原理
 - AutoGPT：介绍AutoGPT
 - MetaGPT：介绍MetaGPT
