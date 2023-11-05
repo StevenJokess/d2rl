@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-09-10 21:04:20
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-10 23:51:03
+ * @LastEditTime: 2023-11-05 07:04:24
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -20,7 +20,9 @@
 
 我们定义 $V^\ast(s)$ 为 s 到终点 g 的最短路， V^\ast(f) 为 f 到终点 g 的最短路，以此类推，为了求出这个最短路，我们从终点开始算起：
 
+$$
 \begin{aligned} V^\ast(g)&=0 \\ V^\ast(f)&=1+V^\ast(g)=1\\ V^\ast(d)&=min\{3+V^\ast(g),1+V^\ast(f)\} \end{aligned} \\
+$$
 
 对终点 g 来说，自己到自己的最短路为0。
 对顶点 f 来说，只有它自己和终点 g 有路径，故顶点 f 到 g 的最短路由这条路径的权重和 V^\ast(g) 相加

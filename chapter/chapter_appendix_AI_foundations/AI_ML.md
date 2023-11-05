@@ -88,3 +88,4 @@ Online learning和batch learning这两者存在于对机器学习算法的训练
 [2]: https://zhuanlan.zhihu.com/p/641978936
 [3]: https://datawhalechina.github.io/thorough-pytorch/%E7%AC%AC%E9%9B%B6%E7%AB%A0/0.1%20%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AE%80%E5%8F%B2.html
 [4]: https://blog.csdn.net/qq_45832958/article/details/123188899
+TODO: https://imzhanghao.com/2021/11/15/ptms-pre-trained-models/#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF
