@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-09-12 14:13:03
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-07 01:28:36
+ * @LastEditTime: 2023-11-05 09:11:50
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -27,6 +27,8 @@ https://chengzhaoxi.xyz/98c9615f.html
 - Python中range和xrange的区别？
 - Python中列表和元组的区别？
 - Python中dict（字典）的底层结构？
+- [算法与数据结构1](https://blog.csdn.net/qq_29681777/category_7206174.html)
+- [排序算法](https://developer.aliyun.com/profile/lmu5kq2lgve42)
 - 常用的深度学习框架有哪些，都是哪家公司开发的？
 
 CS231n课程笔记翻译：Python Numpy教程 - 杜客的文章 - 知乎
