@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-10-25 23:19:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-06 09:33:04
+ * @LastEditTime: 2023-11-06 10:04:12
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -27,12 +27,13 @@
 - ELMo：
 - GPT1：早期GPT的发展历程，以及预训练过程（Pretrain）
 - BERT：
-- GPT2：、思维链（COT）、提示词（Prompt）
+- GPT2：思维链（COT）、提示词（Prompt）
 - Prompt_Learning(Prompt_Tuning)：预训练语言模型加持下的Prompt Learning成为了NLP的第四范式
-- GPT3(InstructGPT)：GPT3
+- GPT3：GPT3
 - RL_in_NLP：回顾强化学习在自然语言处理中的应用
-- GPT3.5(+RLHF=Chat)：从人类反馈强化学习（RLHF），并将其应用到GPT。
+- GPT3.5(+RLHF=InstructGPT)：从人类反馈强化学习（RLHF），并将其应用到GPT。
 - Codex&Github_CoPilot：
+- ChatGPT：
 - GPT4：之后GPT的发展历程，应用于聊天。
 - ChatGPT_Plugins：介绍 ChatGPT Plugins原理
 - moreGPT：介绍AutoGPT、MetaGPT、ChatGPT for Robotics

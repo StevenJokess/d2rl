@@ -5,7 +5,7 @@
  * @Author:  StevenJokes https://github.com/StevenJokes
  * @Date: 2023-02-21 21:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-01 20:46:48
+ * @LastEditTime: 2023-11-06 10:33:47
  * @Description:
  * @TODO::
  * @Reference:
@@ -265,6 +265,8 @@ $P(A_t = a)$ or $\pi(a \mid S_t = s)$ or $\pi_t(a)$ $ = \frac{e^{H_t(a)}}{\sum_{
 
 其中，$a$ 表示第 $t$ 步选择的动作，$H_t(a)$ 表示在 $t$ 步时动作 $a$ 的权重参数，$e^{H_t(b)}$ 是所有动作的权重参数之和。等式右侧形式是softmax。或者说 $A_t$服从[玻尔兹曼分布](../math/Boltzmmann_distribution.md)
 
+
+
 举例，可得一开始每个动作都有完全相同的概率被选择，即$\pi_0 = 1/K$
 
 再然后，我们选择当前状态的相对偏好值最大的动作，并根据动作的反馈来更新$H$的值，具体来说我们对每个动作的相对偏好值执行如下更新操作：
@@ -279,7 +281,9 @@ $P(A_t = a)$ or $\pi(a \mid S_t = s)$ or $\pi_t(a)$ $ = \frac{e^{H_t(a)}}{\sum_{
 - 如果动作 $A_t$ 能够获得高奖励，则它的相对偏好值将会增加；
 - 没选 $A_t$ 而选择其他动作，都能获得高奖励，则证明 $A_t$ 动作不好，则相对偏好值则会减少。
 
-**伪算法**：
+##### **伪算法**：
+
+
 
 - 初始化 $H_0 = 0$
 - **For** 时间步 t = 0, 1, 2, ..., T **do**:
@@ -292,8 +296,8 @@ $P(A_t = a)$ or $\pi(a \mid S_t = s)$ or $\pi_t(a)$ $ = \frac{e^{H_t(a)}}{\sum_{
       - $H_{t+1}(a_i) = H_t(a_i) + α(R_t - \bar{R}_t)(1 - \pi_t(a_i)) \quad \textrm{for } a_i = A_t$
       - $H_{t+1}(a_i) \doteq H_t(a_i) - \alpha (R_t - \bar{R}_t) \pi_t(a_i) \quad \textrm{for } a_i \neq A_t$
       - 其中， $α$ 是步长参数，$R_t$ 是选择动作 $a_i$ 后得到的奖励， $\bar{R}_t$ 是前 $t$ 步的平均奖励
-
 - **end for**
+
 
 #### 高斯策略
 
