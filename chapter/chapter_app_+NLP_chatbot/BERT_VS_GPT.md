@@ -56,6 +56,7 @@ i
 ## BERT与GPT的相同点与不同点：
 
 
+
 相同点：
 
 - 都是大规模预训练语言模型。
@@ -89,6 +90,15 @@ i
 
 https://transformers.run/back/transformer/#%E6%B3%A8%E6%84%8F%E5%8A%9B%E5%B1%82
 
+## 问题测验
+
+1. BERT分为哪两种任务，各自的作用是什么；
+2. 在计算MLM预训练任务的损失函数的时候，参与计算的Tokens有哪些？是全部的15%的词汇还是15%词汇中真正被Mask的那些tokens？
+3. 在实现损失函数的时候，怎么确保没有被 Mask 的函数不参与到损失计算中去；
+4. BERT的三个Embedding为什么直接相加
+5. BERT的优缺点分别是什么？
+6. 你知道有哪些针对BERT的缺点做优化的模型？
+7. BERT怎么用在生成模型中？
 
 [1]: https://www.youtube.com/watch?v=ewjlmLQI9kc
 [2]: https://juejin.cn/post/7218048201982787645
