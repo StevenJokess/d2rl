@@ -412,6 +412,23 @@ $$
 当两个分布的方差为 0 时，$2^{nd}-Wasserstein$ 距离等价于欧氏距离。
 
 
+## 困惑度
+
+在设计语言模型的时候，我们通常并不使用交叉熵而是使用困惑度(perplexity)来表示。给定语言L的样本 $l_1^n=l_1 \ldots l_n$ ，L的困惑度PP_q为: $p p_q=2^{H(L, q)} \approx 2^{-\frac{1}{n} \log \left(q\left(l_1^n\right)\right.}=\left[q\left(l_1^n\right)\right]^{-\frac{1}{n}}$ 于是语言模型设计的任务就是寻找困惑度最小的模型，使其最接近真实语言的情况。
+
+从perplexity的计算式可以看出来，它是对于样本句子出现的概率，在句子长度上Normalize一下的结果。它越小，说明出现概率越大，所得模型就越好。
+
+## 模拟信道模型
+
+在学通信原理的时候学习过信道的概念，一个信号经过一个信道，会由于压缩编码，噪声引入，然后在解码的时候就会多少有一点失真。
+
+在自然语言处理中，很多问题也都可以归结为这样的模型。给定输出 $\mathrm{O}$ (可能含有误传信息)的情况下，如何从所有可能的输入|中选出最可能的那个:
+$\hat{I}=\operatorname{argmax}_I p(I \mid O)=\operatorname{argmax}_I \frac{P(I) p(O \mid I)}{p(O)}=\operatorname{argmax}_I p(I) p(O \mid I)$ 其中 $p(I)$ 成为语言模型，是指在输入语言中“词”序列的概率分布; 另一个 $p(O \mid I)$ 成为信道概率。
+
+对应到实际的NLP问题，比如说机器翻译在进行汉译英的时候，汉语句子看作是信道输出O，求出最可能的信道输入英语句子I。
+
+噪声信道模型在NLP中有非常多的用途，除了机器翻译以外，还用于词性标注、语音识别、文字识别等很多问题的研究。[12]
+
 ## 总结
 
 - 信息论是研究信息编码、解码、传递和操纵的一门学科。
@@ -430,3 +447,4 @@ $$
 [9]: https://zhuanlan.zhihu.com/p/339613080
 [10]: http://mapdic.com/archives/%E4%BF%A1%E6%81%AF%E7%86%B5#%E4%B8%BE%E4%B8%AA%E6%A0%97%E5%AD%90
 [11]: https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#information
+[12]: https://shangzhi-huang.gitbook.io/workspace/ji-qi-xue-xi/xin-xi-lun-ji-ben-gai-nian#liu-.-kun-huo-du

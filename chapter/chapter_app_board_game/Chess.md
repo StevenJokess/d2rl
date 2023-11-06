@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-05-12 02:24:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-31 02:51:36
+ * @LastEditTime: 2023-11-06 08:35:41
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,7 +13,9 @@
 -->
 # 国际象棋
 
-长时间以来，国际象棋被公认为AI领域的实验用“果蝇”，大量的AI新方法被测试于此。直到1997年，IBM的深蓝击败世界级国际象棋大师加里·卡斯帕罗夫（Garry Kasparov）,，展现出超人般的国际象棋水平，这只“果蝇”终于退休了[56]。当时深蓝运行在一个超级计算机上，现在一台普通的笔记本就能运行深蓝程序。[1]
+棋类游戏一直是人工智能所要攻克的领域。1947年，图灵（A. L. Turing）编写了一个国际象棋的程序，但是由于计算机在当时是稀缺资源，使得这个程序没有机会在计算机上运行。与此同时，信息理论的创始人香农（C. E. Shannon）等提出了双人对弈的最小最大算法（Minimax），并于1950年发表了理论研究论文《Programming a computer for playing chess》（《计算机下棋程序》）[1]，首开理论研究机器下棋的先河。在文中，棋盘被定义为一个二维数组，每个棋子都被赋予一个子程序，用于对棋子可能走法的计算，当子程序计算出所有可能的走法后，就会得到一个评估函数，用每个棋子的可能走法就可以形成一个博弈树。对于一个完全信息的博弈系统，如果能穷举完整的博弈树，那Minimax算法就可以计算出最优的策略[2]。由于复杂游戏的博弈树增长是指数形式的，因此要穷举完整的博弈树非常困难。约翰·麦卡锡（J. McCarth）提出了著名的α-β剪枝技术，对有效控制博弈树的规模提供了依据。随后，卡内基梅隆大学的纽厄尔（A. Newell）、司马贺（H. Simon）等很快在实战中实现了这一技术。Minimax算法必须在完成完整的博弈树之后才能计算评估函数，而α-β剪枝技术则是一边画博弈树，一边进行计算，一旦在计算过程中评估函数出现“溢出”，则自动停止对树的进一步搜索，从而极大地减小了博弈树的规模和实际的搜索空间。这一创新被看作是攻克棋类游戏的重要法宝，并且首先在国际象棋领域大获成功。[4]
+
+长时间以来，国际象棋被公认为AI领域的实验用“果蝇”，大量的AI新方法被测试于此。直到1997年，IBM的深蓝击败世界级国际象棋大师加里·卡斯帕罗夫（Garry Kasparov），展现出超人般的国际象棋水平，这只“果蝇”终于退休了[56]。当时深蓝运行在一个超级计算机上，现在一台普通的笔记本就能运行深蓝程序。[1]
 
 1997年5月，国际象棋冠军卡斯帕罗夫和IBM公司的“深蓝”(Deep Blue)计算机在美国纽约展开了一次令全球瞩目的人机大战，如图4.3.1所示。
 
@@ -38,3 +40,4 @@
 [1]: https://pdf-1307664364.cos.ap-chengdu.myqcloud.com/%E6%95%99%E6%9D%90/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E3%80%8A%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%B8%A6%E4%BD%A0%E5%8E%BB%E9%9D%A2%E8%AF%95%E3%80%8B%E4%B8%AD%E6%96%87PDF.pdf
 [2]: http://www.dzkbw.com/books/zjb/xinxijishu/gzxzxbx4/020.htm
 [3]: https://zhuanlan.zhihu.com/p/617072941
+[4]: http://html.rhhz.net/kjdb/20191913.htm#outline_anchor_16

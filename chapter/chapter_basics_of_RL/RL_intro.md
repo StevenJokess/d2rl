@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-22 01:18:59
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-05 08:51:49
+ * @LastEditTime: 2023-11-06 07:31:17
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -90,7 +90,7 @@
 | ---- | ---------------- | ------------- | ------ |
 | 朴素理解 |老师教一部分例子，包括正确答案，学生通过例子这些预备知识[92]，归纳出原理，再通过原理去举一反三，泛化推广以解决之前没有遇到的问题，即模仿学习 | 没有老师，学生通过自学摸索出原理，再通过原理解决问题 | 老师在学生做出某个动作之后，只反馈结果怎样，如打分，而不是去教学生该如何去做[47]的|
 | 对应图片 | ![SL](../../img/SL.png) | ![USL](../../img/USL.png) | ![RL](../../img/RL(vs_others).png) |
-| 输入数据 | 一次性给定（即数据一旦给定，则一般不变，除了预处理时的数据增强（augmentation）[77]）的有导师（supervisor）提供正确且严格的带**标签** 的数据 | 一次性给定的有已获得的数据，但没有标签  | 属于半监督学习（semi-supervised learning）的原因：部分无监督，由于没有导师（supervisor），也就没有标签，而且也没有初始数据；但由于在智能体与环境交互的过程中会产生（interactive）反馈信号，再基于人去评估（evaluative），量化为合理的奖励。奖励作为数据，其起到一点的指导作用，但是又不同于标签，因为它又不是最终的目的。这些反馈是时间序列数据（sequential data），这些序列性的数据，是跟其他机器学习最大的不同它们不断被收集，用来去自校正。[62]（即在线学习[66]）。如果智能体不采取某个决策动作，那么该动作对应的数据就永远无法被观测到，所以当前智能体的训练数据来自之前智能体的决策结果。|
+| 输入数据 | 一次性给定（即数据一旦给定，则一般不变，除了预处理时的数据增强（augmentation）[77]）的有导师（supervisor）提供正确且严格的带**标签** 的数据 | 一次性给定的有已获得的数据，但没有标签  | 属于半监督学习（semi-supervised learning）的原因：部分无监督，由于没有导师（supervisor），也就没有标签，而且也没有初始数据；但由于在智能体与环境交互的过程中会产生（interactive）反馈信号，再基于人去评估（evaluative），量化为合理的奖励。奖励作为数据，其起到一点的指导作用，但是又不同于标签，因为它又不是最终的目的。这些反馈是时间序列数据（sequential data），这些序列性的数据，是跟其他机器学习最大的不同它们不断被收集，用来去自校正。[62]（这点同在线学习（Active Learning）[66]）。如果智能体不采取某个决策动作，那么该动作对应的数据就永远无法被观测到，所以当前智能体的训练数据来自之前智能体的决策结果。|
 | 输入数据的要求 | 独立同分布(i.i.d.), 为了消除数据之间的相关性。    | 独立同分布(i.i.d.)   | 归一化的占用度量（occupancy measure）用于衡量在一个智能体决策与一个动态环境的交互过程中，采样到一个具体的状态动作对（state-action pair）的概率分布。|
 | 动作 | 利用（exploitation） | 利用（exploitation）  | 试错（Trial-and-error），即存在探索（exploration）和利用（exploitation）的平衡 (不一定按照已知的最优做法去做)|
 | 驱动 | 任务驱动，模型是单纯被动地获得样本并被教育(instruct)[34] | 数据驱动  | Active learning，自驱的，有目标，从错误中学习[4]，这个错误是模型与目标的距离，通过奖励函数定量判断[5] |
@@ -107,6 +107,22 @@
 | 上限（upper bound） | 传统的机器学习算法依赖人工标注好的数据，从中训练好的模型的性能上限是产生数据的模型（人类）的上限 | 可超人类 | 不受人类先验知识所限，表现可超人类 |
 | 难点 | 标注数据的准备和标注、数据的分布和泛化能力、算法的复杂度和解释性 | 模型选择、初始化和假设、评估指标和标准 | 贡献分配（credit assignment）、稳定性（stability）、探索（exploration）|
 | Ben Recht类比[46]： 商业分析 | 预测分析（SL）：基于历史数据对当前数据进行预测；环境都是静态的、不变的。 | 描述分析（UL）：对已有的数据进行总结，从而获得更鲁棒和清晰的表示；环境都是静态的、不变的。 | 指导分析（RL）：天然目标就是价值最大化指导分析则被用来处理环境动态变化的问题，甚至还要考虑到与其他对手的合作或竞争，与人类面临的大多数实际问题更相似。 |
+
+#### 强化学习、监督学习、DP、MAB、Active Learning的区别与联系：
+
+通过三轴图，来看强化学习与之联系和区别[97]：![三轴图](../../img/RL_3_axis.png)
+
+- 竖坐标轴，环境的随机性（deterministic or stochastic）：描述转移概率，决策过程和奖励值分布的随机性。
+- 横坐标轴，学习数据来源（fixed dataset or interactive data）：表示的是学习数据的来源，是一次性给的还是交互类型（动态的）
+- 斜坐标轴，奖励是否即时（instant reward or delayed reward）：表示奖励值是立即的还是有延迟的。
+
+各个算法比较：
+
+- 有监督学习（Supervised Learning, SL），能处理一定随机性，但是静态的学习数据，以及近似可以看作无延迟的奖励。
+- 动态规划（Dynamic Programming, DP），能处理延迟奖励，但是确定性的环境，以及静态的数据。
+- 主动学习（Active Learning），能处理交互类型的数据，但是无延迟奖励，以及确定性的数据。
+- 多臂老虎机（multi-armed bandits, MAB），能同时处理随机性和交互类型的数据，但仍不能处理无延迟的奖励问题。
+- 强化学习（Reinforcement Learning, RL），能同时处理动态的学习数据、随机性、交互类型的数据。
 
 #### 机器学习、深度学习、强化学习、深度强化学习之间的区别与关联
 
@@ -899,6 +915,7 @@ Atari Breakout（横杆接小球）游戏的四大要素：
 [94]: https://blog.csdn.net/gls_nuaa/article/details/123832217
 [95]: https://zhuanlan.zhihu.com/p/626636304
 [96]: https://www.bilibili.com/video/BV1tG4112746/
+[97]: https://www.6aiq.com/article/1550074205898
 
 其上很多涉及到的网站已被Markdown渲染，这些网站也被参考到了，但在文章的哪个具体位置忘了：
 

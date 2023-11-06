@@ -43,3 +43,4 @@ Encoder和Decoder部分可以是任意的文字、语音、图像和视频数据
 Seq2Seq使用的具体方法基本都属于Encoder-Decoder模型的范畴。
 Seq2Seq不特指具体方法，只要满足输入序列到输出序列的目的，都可以统称为Seq2Seq模型，即Seq2Seq强调目的，Encoder-Decoder强调方法。
 
+https://charon.me/posts/pytorch/pytorch_seq2seq_1/
