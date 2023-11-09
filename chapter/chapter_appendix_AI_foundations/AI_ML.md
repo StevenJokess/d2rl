@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-09-22 22:08:01
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-07 01:52:23
+ * @LastEditTime: 2023-11-09 06:56:40
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -83,6 +83,11 @@ Online learning：其实就是跑一个样本更新一次参数
 
 Online learning和batch learning这两者存在于对机器学习算法的训练中，是训练方法。以训练神经网络为例，训练神经网络时需要计算损失函数，根据损失函数计算参数的梯度，从而去更新参数。这就涉及到神经网络学习多少样本后去计算损失函数，更新参数了。如果每学习一个样本，就去更新参数的话，这就是online learning。如果学习所有样本后，再去更新参数，这就是batch learning。显然，batch learning的优点是容易找到全局最优解，但样本较大时训练过程很慢。而online learning则相反。为了折中，出现了小批量学习，即学习小批量样本后更新参数，这个小批量的样本数量自己制定。[4]
 
+### 机器学习和统计、统计学习的区别和联系？
+
+传统统计学往往醉心于理论的优美而忽略实际效用，统计学的研究成果通常需要经由机器学习的研究来形成有效的学习算法。机器学习是人工智能中的一个领域，统计学习只是只是利用机器学习解决人工智能问题的一种手段。另一方面，统计学习中一部分研究者是统计学家，他们关注的是如何把统计学中的理论和方法变成可以在计算机上有效实现的算法。而并不关心这样的算法对人工智能中的什么问题有用。
+
+> 数据挖掘（data mining）旨在从海量数据中发现知识。数据库为数据挖掘提供数据管理技术，而机器学习为数据挖掘提供数据分析技术。
 
 [1]: https://weread.qq.com/web/reader/5dc32d00723973a95dcfacckc45328f0274c45147dee704
 [2]: https://zhuanlan.zhihu.com/p/641978936
