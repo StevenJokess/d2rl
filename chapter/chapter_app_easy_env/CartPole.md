@@ -1,8 +1,29 @@
+
+
+<!--
+ * @version:
+ * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @Date: 2023-11-01 11:36:30
+ * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
+ * @LastEditTime: 2023-11-09 07:52:02
+ * @Description:
+ *
+ * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
+ * @TODO::
+ * @Reference:
+-->
 # CartPole
 
 ## 环境简介
 
-CartPole：CartPole 环境由平衡在推车上的杆组成。 智能体必须学习如何在立柱下方的推车移动时垂直平衡立柱。 给智能体指定了推车的位置，推车的速度，杆的角度和杆的旋转速度作为输入。 智能体可以在推车的任一侧施加力。 如果杆与垂直线的夹角下降超过 15 度，智能体就此失败。
+CartPole 环境，由平衡在可以左右移动的推车上的杆组成。 智能体必须学习如何在立柱下方的推车移动时垂直平衡立柱。
+
+给智能体指定了推车的位置，推车的速度，杆的角度和杆的旋转速度作为输入，用向量表示即 [Horizontal Position,Horizontal Velocity, Angle of Pole, Angular Velocity]。[2]
+
+![CartPole 环境](../../img/cartpole.png)
+
+智能体可以在推车的任一侧施加力。 如果杆与垂直线的夹角下降超过 15 度，智能体就此失败。
+
 
 
 CartPole
@@ -79,3 +100,4 @@ dqn.test(env, nb_episodes=5, visualize=True)
 我们走了，那是一根平衡杆！ 好吧，我知道，我承认平衡手推车上的电线杆并不是那么酷，所以让我们再做一个轻量级的例子。 在此示例中，我们将把月球着陆器降落在月球上，希望它将给您留下深刻的印象。
 
 [1]: https://www.kancloud.cn/apachecn/apachecn-dl-zh/1956137
+[2]: https://steemit.com/ai/@hongtao/ai-reinforcement-learning-rl
