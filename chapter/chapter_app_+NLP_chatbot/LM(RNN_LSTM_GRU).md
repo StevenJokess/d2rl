@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-11-03 07:51:05
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-06 06:04:11
+ * @LastEditTime: 2023-11-09 06:33:12
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -119,11 +119,12 @@ LSTM的关键是单元状态，它从单元的输入传递到输出。单元状�
 
 总的来说，状态通过遗忘门和输入门更新。
 
+TODO:https://developer.aliyun.com/article/174256
+
+### 优缺点
 
 - 优点：类似于RNN，主要优点是它们可以捕获序列的长期和短期模式。因此，它们是最常用的RNN。
-- 缺点：由于结构更复杂，LSTM的计算成本更高，从而导致训练时间更长。
-
-由于LSTM还使用时间反向传播算法来更新权重，因此LSTM存在反向传播的缺点，如死亡ReLu单元、梯度爆炸等。
+- 缺点：由于结构更复杂，LSTM的计算成本更高，从而导致训练时间更长。由于LSTM还使用时间反向传播算法来更新权重，因此LSTM存在反向传播的缺点，如死亡ReLu单元、梯度爆炸等。
 
 ## 门控循环单元(GRU)
 

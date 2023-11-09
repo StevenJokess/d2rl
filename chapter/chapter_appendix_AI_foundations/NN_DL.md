@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-09-11 21:41:57
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-05 09:13:32
+ * @LastEditTime: 2023-11-09 06:13:16
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -21,7 +21,26 @@
 
 ## 神经网络
 
-神经网络是机器学习的一个分支，其中数据表示的转换是由一个系统完成的，该系统的结构松散型是受到人和动物大脑中神经元连接方式的启发。大脑中的神经元是如何相互连接的？不同物种的大脑区域都不尽相同，但神经元连接的部分通常是层组织。哺乳动物大脑的许多部分是以分层的方式组织的。例如视网膜、大脑皮层和小脑皮层。视网膜是一层薄薄的神经组织，位于眼睛后部，负责视觉处理的早期阶段。它由多层组成，在每一层中，神经元基本上是同一类型的。层与层之间，有不同类型的神经元。现代神经解剖学先驱圣地亚哥·拉蒙·卡哈尔（Santiago Ramón y Cajal）的精美显微镜图完美地说明了这些模式（图 1.5）。不同层的神经元以一种基本有序的方式连接到其他层。例如，一个层可以直接连接到它之前和之后的层，但不能连接到更远的层。也有例外，有些层确实连接到与它们不直接相邻的层。但视网膜的一般解剖结构表明，信息从一层到下一层基本上是直接流动的。[2]
+神经网络是机器学习的一个分支，其中数据表示的转换是由一个系统完成的，该系统的结构松散型是受到人和动物大脑中神经元连接方式的启发。
+
+### 人脑神经网络
+
+大脑中的神经元是如何相互连接的？不同物种的大脑区域都不尽相同，但神经元连接的部分通常是层组织。哺乳动物大脑的许多部分是以分层的方式组织的。例如视网膜、大脑皮层和小脑皮层。视网膜是一层薄薄的神经组织，位于眼睛后部，负责视觉处理的早期阶段。它由多层组成，在每一层中，神经元基本上是同一类型的。层与层之间，有不同类型的神经元。
+
+![神经元](../../img/brain_NN.png)
+
+- 「接收区」（receptive zone）： 树突接收到输入信息
+- 「触发区」（trigger zone）：位于轴突和细胞体交接的地方，决定是否产生神经冲动
+- 「传导区」（conducting zone）：由轴突进行神经冲动的传递
+- 「输出区」（output zone）：神经冲动的目的就是要让神经末梢，突触的神经递质或电力释出，才能影响下
+
+
+一个接受的细胞（神经元、肌肉细胞或是腺体细胞），此称为突触传递。
+
+神经元的主要功能是神经元受到刺激后能产生兴奋，并能把兴奋传导到其它的神经元．神经冲动在生物体内的传递途径是：「上一个神经元的突触→树突→细胞体→轴突→突触。」
+
+现代神经解剖学先驱圣地亚哥·拉蒙·卡哈尔（Santiago Ramón y Cajal）的精美显微镜图完美地说明了这些模式（图 1.5）。不同层的神经元以一种基本有序的方式连接到其他层。例如，一个层可以直接连接到它之前和之后的层，但不能连接到更远的层。也有例外，有些层确实连接到与它们不直接相邻的层。但视网膜的一般解剖结构表明，信息从一层到下一层基本上是直接流动的。[2]
+
 
 #图 1.5 生物神经系统的层次结构。这些是圣地亚哥·拉蒙·卡哈尔（1852-1934）的绘画，他是现代神经解剖学的先驱。A 组：小脑皮质的层组织。B 组：视网膜神经元层。来源：https://www.sciencedirect.com/science/article/abs/pii/S0361923006002334https://nei.nih.gov/intramural/lrcmb/LRCMB_image
 
@@ -100,3 +119,4 @@ Fig. 1  A convolutional neural network learns a mapping from game screens to gam
 [2]: https://cardwing.github.io/files/131270027-%E4%BE%AF%E8%B7%83%E5%8D%97-%E9%99%88%E6%98%A5%E6%9E%97.pdf
 [3]: http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.2016.y000002?viewType=HTML
 TODO:http://staff.ustc.edu.cn/~lgliu/Resources/DL/What_is_DeepLearning.html
+https://www.acwing.com/problem/

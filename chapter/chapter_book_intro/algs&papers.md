@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-06-04 20:48:28
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-26 21:59:23
+ * @LastEditTime: 2023-11-09 06:20:00
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -67,7 +67,7 @@
 
 ## chapter_offline_RL
 
-- Soft Q Learning：[Reinforcement learning with deep energy-based policies, Haarnoja et al, 2017.](http://proceedings.mlr.press/v70/haarnoja17a/haarnoja17a.pdf)
+- SAC(Soft Q Learning)：[Reinforcement learning with deep energy-based policies, Haarnoja et al, 2017.](http://proceedings.mlr.press/v70/haarnoja17a/haarnoja17a.pdf)
 - SAC v1：[Off-policy maximum entropy deep reinforcement learning with a stochastic actor, Haarnoja et al, 2018.](https://arxiv.org/abs/1801.01290.pdf)
 - SAC v2：[Soft actor-critic algorithms and applications, Haarnoja et al, 2018.](https://arxiv.org/pdf/1812.05905.pdf)
 - SAC-Discrete：[Discrete Soft Actor-Critic (SAC-Discrete)](https://arxiv.org/pdf/1910.07207.pdf)

@@ -13,6 +13,12 @@
 -->
 # ChatGPT以及技术RLHF
 
+## ChatGPT简介
+
+ChatGPT基于OpenAI的GPT-3.5创造，是InstructGPT的衍生产品，它引入了一种新的方法，将人类反馈纳入训练过程中，使模型的输出与用户的意图更好地结合。
+
+##
+
 斯坦福大学CS224N——深度学习自然语言处理（NLP with DL）——的Prompting、Instruction Finetuning和RLHF这一讲[8]的课件，读完之后顿觉醍醐灌顶，再加上课件本身逻辑清晰、内容层层推进且覆盖了NLP领域最新进展（2023年冬季课程[7]）。
 
 先总结下最近最火的ChatGPT背后的技术及相关技术的演变过程。
