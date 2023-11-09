@@ -74,7 +74,7 @@ $$
 
 ## 竞争深度Q网络（Dueling DQN）
 
-Dueling DQN 是 DQN 另一种的改进算法，它在传统 DQN 的基础上只进行了微小的改动，但却能大幅提升 DQN 的表现。
+Dueling DQN 是 DQN 另一种的改进算法，出自ICML 2016 Best Paper：DUELING NETWORK ARCHITECTURES FOR DEEP REINFORCEMENT LEARNING ，它在传统 DQN 的基础上只进行了微小的改动，但却能大幅提升 DQN 的表现。
 
 在强化学习简介一节中，我们将状态动作价值函数 $Q$ 减去状态价值函数 $V$ 的结果定义为优势函数 $A$ ，即 $A(s, a)=Q(s, a)-V(s)$ 。
 

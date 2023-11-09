@@ -30,6 +30,14 @@
 - [Latex数学符号与公式的对照表](https://su-lemon.gitee.io/post/73a19565.html)
 - [Latex矩阵相关语法](https://blog.csdn.net/luohuiwu/article/details/80722026)
 
+## 公式
+
+
+- 分享一个在线latex公式编辑器：https://latex.91maths.com
+- https://mathpix.com
+- 识别公式（包括手写）、表格：Image2LaTeX；可以设置使用mathpix的api，每个月1000次，这下够用了
+
+
 ## VScode
 
 Visual Studio Code 如何编写运行 C、C++ 程序？ - 谭九鼎的回答 - 知乎
