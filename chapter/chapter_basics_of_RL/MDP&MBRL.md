@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-23 18:51:31
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-05 08:34:52
+ * @LastEditTime: 2023-11-14 02:39:56
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -32,7 +32,7 @@
 
 ### 马尔可夫性质（Markov property）
 
-对于任意 $t$ 时刻，当且仅当某时刻的状态只取决于上一时刻的状态时，一个随机过程被称为具有**马尔可夫性质**（Markov property），用概率公式表示为 $P\left[S_{t+1} \mid S_{1}, \ldots, S_{t}\right]=P\left[S_{t+1} \mid S_{t}\right]$ 。
+对于任意 $t$ 时刻，当且仅当某时刻的状态只取决于上一时刻的状态时，则称该随机过程是具有**马尔可夫性质**（Markov property），用概率公式表示为 $P\left[S_{t+1} \mid S_{1}, \ldots, S_{t}\right]=P\left[S_{t+1} \mid S_{t}\right]$ ，这样的随机过程叫做离散时间马尔科夫链（Discrete-Time Markov Chain，DTMC）。[21]
 
 也就是说，当前状态是未来的充分统计量，即下一个状态只取决于当前状态，而不会受到过去状态的影响，如同“逢山开路，遇水搭桥”。
 
@@ -68,6 +68,23 @@ P\left(s_1 \mid s_n\right) & \cdots & P\left(s_n \mid s_n\right)
 $$
 
 显然，矩阵维度等于状态，矩阵值为转移概率[18]，具体来说，矩阵 $\mathcal{T}$ 中第 $i$ 行第 $j$ 列元素 $P\left(s_j \mid s_i\right)=P\left(S_{t+1}=s_j \mid S_t=s_i\right)$ 表示从状态 $s_i$ 转移到 状态 $s_j$ 的概率，我们称 $P\left(s^{\prime} \mid s\right)$ 为状态转移函数。从某个状态出发，到达其他状态的概率和必须为 1 ，即状态转移矩阵 $\mathcal{T}$ 的每一行的和为 1 。
+
+#### 定义与求解
+
+我们需要判断某个过程是否满足基本MDP的定义，才能进一步将其定义成MDP，
+
+而定义一个MDP，有一套流程：
+
+1. 首先准确的找到状态空间（State Spaces）
+1. 其次准确的找到行为空间（Action Spaces）
+1. 找到边界条件（Boundary Conditions）
+1. 列最优方程（Optimal equation），并求解
+
+准确定义状态空间和行为空间是解决问题的前提条件。
+
+而对于最优方程的求解则是主要问题。最优方程面对的主要是 $V(s)$ ，状态价值函数 $Q$ ，指在状态 $s$ 下智能体能获得的最大价值，这个过程也可以称作贝尔曼方程的求解过程。[21]
+
+#### 具体例子
 
 图 3-1 是一个具有 6 个状态的马尔可夫过程的简单例子。其中每个绿色圆圈表 示一个状态，每个状态都有一定概率（包括概率为 0 ) 转移到其他状态，其中 $s_6$ 通常被称为**终止状态**（terminal state)，因为它不会再转移到其他状态，可以理解为它永远以概率 1 转移到自己。状态之间的虚线箭头表示状态的转移，箭头旁的数字表示该状态转移发生的概率。从每个状态出发转移到其他状态的概率总 和为 1 。例如， $s_1$ 有 $90 \%$ 概率保持不变，有 $10 \%$ 概率转移到 $s_2$ ，而在 $s_2$ 又有 $50 \%$ 概率回到 $s_1$ ，有 $50 \%$ 概率转移到 $s_3$ 。
 
@@ -347,7 +364,7 @@ Q_\pi(s, a)=\sum_{s^{\prime} \in S} \operatorname{P}\left(s^{\prime} \mid s, a\r
 
 > backup diagram(备份图)，图示的关系构成了更新或备份操作的基础，而这些操作是强化学习方法的核心。这些操作将价值信息从一个状态（或状态-动作对）的后继状态（或状态-动作对）转移回来。
 
-- **基于状态价值函数的贝尔曼期望方程**：它描述了当前状态价值函数和其后续状态价值函数之间的关系，即当前状态价值函数等于瞬时奖励的期望加上后续状态的（折扣）价值函数的期望。![V函数对应的备份图](../../img/V_backup_diagram.png)
+- **基于状态价值函数的贝尔曼期望方程**：它描述了当前状态价值函数和其后续状态价值函数之间的关系，即当前状态价值函数等于瞬时奖励的期望，加上后续状态的价值函数的期望乘以折扣率。![V函数对应的备份图](../../img/V_backup_diagram.png)
 
 
 
@@ -355,7 +372,7 @@ $$
 V_\pi(s)=\mathbb{E}_{a \sim \pi(s, \cdot)} \mathbb{E}_{s^{\prime} \sim P(\cdot \mid s, a)}\left[R\left(s, a, s^{\prime}\right)+\gamma V_\pi\left(s^{\prime}\right)\right]
 $$
 
-- **基于状态-动作价值函数的贝尔曼期望方程**：描述了当前动作-价值函数和其后续动作-价值函数之间的关系，即当前状态下的动作-价值函数等于瞬时奖励的期望加上后续状态的（折扣）动作-价值函数的期望。[8] ![Q函数对应的备份图](../../img/Q_backup_diagram.png)
+- **基于状态-动作价值函数的贝尔曼期望方程**：描述了当前动作-价值函数和其后续动作-价值函数之间的关系，即当前状态下的动作-价值函数等于瞬时奖励的期望，加上后续状态的动作-价值函数的期望乘以折扣率。[8] ![Q函数对应的备份图](../../img/Q_backup_diagram.png)
 
 $$
 Q_\pi(s, a)=\mathbb{E}_{s^{\prime} \sim P(\cdot \mid s, a)}\left[R\left(s, a, s^{\prime}\right)+\gamma \mathbb{E}_{a^{\prime} \sim \pi\left(s^{\prime}, \cdot \right)}\left[Q_\pi\left(s^{\prime}, a^{\prime}\right)\right]\right]
@@ -395,13 +412,12 @@ code
 
 知道了状态价值函数 $V^\pi(s)$ 后，我们可以计算动作价值函数 $Q^\pi(s, a)$ 。例如 $\left(s_4\right.$，概率前往) 的动作价值为 2.152 ，根据以下公式可以计算得到：
 
-$$
-Q^\pi(s, a)=r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V_\pi\left(s^{\prime}\right
-$$
+$Q^\pi(s, a)=r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V_\pi\left(s^{\prime}\right)$
 
 即
 
-$$2.152=1+0.5 \times[0.2 \times(-1.68)+0.4 \times 0.52+0.4 \times 6.08]
+$$
+2.152=1+0.5 \times[0.2 \times(-1.68)+0.4 \times 0.52+0.4 \times 6.08]
 $$
 
 
@@ -566,3 +582,4 @@ $$
 [18]: https://blog.csdn.net/gls_nuaa/article/details/123833724
 [19]: https://zhuanlan.zhihu.com/p/626636130
 [20]: https://zhuanlan.zhihu.com/p/576779527
+[21]: https://zhuanlan.zhihu.com/p/391399214

@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-14 02:08:42
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-04-14 02:09:13
+ * @LastEditTime: 2023-11-09 08:51:49
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -26,4 +26,14 @@
 ## 控制论与RL的对比
 
 ![控制论与RL](../../img/control_VS_RL.png)
+
+
+| 传统控制（Traditional Control） | 强化学习（RL） |
+| --- | --- |
+| 控制器（Controller） | 代理（Agent） |
+| 被控系统（Plant） + 环境（Environment） | 环境（Env） |
+| 反馈（Error Signals）、错误信号(error signals)） | 奖励（Reward） |
+| 优化函数（Optimize Function） | 值（Value） |[2]
+
 [1]: https://developer.aliyun.com/article/1201435
+[2]: https://cloud.tencent.com/developer/article/1689615

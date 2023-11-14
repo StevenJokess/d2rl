@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-02-26 03:32:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-09 07:36:11
+ * @LastEditTime: 2023-11-14 04:17:23
  * @Description:
  * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -204,6 +204,7 @@ Q\left(s, a\right) \leftarrow Q\left(s, a\right)+\alpha\left(G_{t}-Q\left(s, a\r
 $$
 
 然而这个简单的算法存在两个需要进一步考虑的问题。
+
 - 第一，如果要用时序差分算法来准确地估计策略的状态价值函数，我们需要用极大量的样本来进行更新。但实际上我们可以忽略这一点，直接用一些样本来评估策略，然后就可以更新策略了。我们可以这么做的原因是策略提升可以在策略评估未完全进行的情况进行，回顾一下，价值迭代（参见 4.4 节）就是这样，这其实是广义策略迭代（generalized policy iteration）的思想。
 - 第二，如果在策略提升中一直根据贪婪算法得到一个确定性策略，可能会导致某些状态动作对以至于无法对其动作价值进行估计，进而无法保证策略提升后的策略比之前的好。我们在第 2 章中对此有详细讨论。简单常用的解决方案是不再一味使用贪婪算法，而是采用一个 $\epsilon$ -贪婪策略：有 $1 - \epsilon$ 的概率采用动作价值最大的那个动作，另外有的概率从动作空间中随机采取一个动作，其公式表示为：
 
@@ -214,6 +215,8 @@ $$
 现在，我们就可以得到一个实际的基于时序差分方法的强化学习算法。这个算法被称为 SARSA，SARSA 指的是 「S」tate-「A」ction-「R」eward-「S」tate-「A」ction，因为它的动作价值更新用到了当前状态 $S_t$ 、当前动作 $A_t$ 、获得的奖励 $R_t$ 、下一个状态 $S_{t+1}$ 和下一个动作 $A_{t+1}$，将这些首字母拼接后就得到了算法名称。
 
 ### 为所有Q构建Q表（Q-Table）
+
+![关注状态-动作对](../../img/state-action_pair.png)
 
 Q表（Q-Table）是一个矩阵，其元素为各个状态-动作的价值函数，即 $Q(s, a)$ 。就是，其中每个元素对应于一个状态-动作二元组。因此，Q-Table将是一个 $mxn$ 的矩阵，其中 $m$ 是可能状态的数量 |S|，$n$ 是可能动作的数量 $|A|$，Q表的Q值必须有一个初始值，一般来说，Q表（Q-Table）所有初始化值都设置为零。
 

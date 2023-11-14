@@ -5,25 +5,13 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-10-03 02:41:49
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-28 01:33:12
+ * @LastEditTime: 2023-11-09 09:18:07
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
 
-
-<!--
- * @version:
- * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @Date: 2023-03-22 02:19:30
- * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-27 19:46:44
- * @Description:
- * @Help me: 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
- * @TODO::
- * @Reference:
--->
 
 # 深度强化学习的工具
 
@@ -43,6 +31,7 @@
 - 了解和掌握seaborn库
 - 了解和掌握mujoco库
 - 了解和掌握Docker
+- 了解和掌握一些RL算法库如Tianshou、PARL
 - 了解和掌握多智能体强化学习算法库MARL
 - 了解和掌握金融强化学习开源库FinRL
 
@@ -64,5 +53,8 @@ argparse
 seaborn
 mujoco
 docker
+rl_algs_repo
+MARL
+FinRL
 summary
 ```
