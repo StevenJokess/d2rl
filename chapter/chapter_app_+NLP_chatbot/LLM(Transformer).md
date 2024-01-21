@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-11-01 22:19:47
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-14 05:01:25
+ * @LastEditTime: 2023-11-14 05:18:06
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -126,7 +126,7 @@ $$
 注意到，$i \rightarrow j$ 来自 W^Q 和 W^K 对 X 的线性变换， $v_i$ 来自 W^V 对 X 的线性变换，因此最终输出可以表示为 A = f(X; W^Q, W^K, W^V) ，Transformer学习的过程将会对这个函数进行极大似然估计。文中默认读者理解了点积注意力机制，使用 Q,K,V 表示最终结果，即 $A = \text{softmax}(\frac{QK^T}{\sqrt{d_k}})V$ ，其中 $\frac{1}{\sqrt{d_k}}$ 是scale操作，这里省略了mask操作。
 
 
-Multi-Head注意力
+#### 多头（Multi-Head）注意力
 
 Multi-Head可以理解为是一种ensemble机制。普通的ensemble简单地将多个同构网络的训练结果取平均，而Multi-Head机制则是对这些结果取加权平均，并且这个权重也是由神经网络学得的。
 
@@ -148,6 +148,8 @@ Encoder-Decoder注意力
 
 ### Transformer算法复杂度分析
 
+![模型复杂度对比](../../img/RNN_CNN_Self-attention.png)
+
 假设输入序列的长度为 n ，词汇表的大小（语义向量的长度）为 d ，下面比较RNN, CNN, Transformer模型的复杂度[1]。
 
 #### 结构复杂度
@@ -164,8 +166,7 @@ Encoder-Decoder注意力
 #### 传播路径复杂度
 
 - RNN：RNN中最长的传播路径是源序列的第一个token和目标序列的最后一个token，这条路径需要经过整个RNN的递归链才能进行反向传播，因此其复杂度为 O(n)
-- CNN：下图可以大致表示CNN的seq2seq模型的结构，凭直觉可以看出它是一种 k 叉树，其传播路径的长度取决于树的深度，而树的深度为 O(\log n) .[5]
-
+- CNN：下图可以大致表示CNN的seq2seq模型的结构，凭直觉可以看出它是一种 k 叉树，其传播路径的长度取决于树的深度，而树的深度为 $O(\log n)$ .[5]
 
 
 
@@ -195,8 +196,7 @@ Transformer 作为一个重要的里程碑，促进了预训练系统的发展�
 
 ## 附录：问题答案
 
-
-Transformer和RNN的相同点与不同点：
+### Transformer和RNN有什么相同点与不同点？
 
 与RNN相比：都处理顺序数据，但不要求一定按顺序
 

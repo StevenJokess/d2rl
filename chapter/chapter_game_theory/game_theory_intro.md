@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-23 22:55:04
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-09-11 22:04:52
+ * @LastEditTime: 2024-01-21 14:48:19
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -37,7 +37,7 @@
 PAPI（by Eric Rasmusen）：
 
 - 博弈的玩家 player
-每个玩家在每个决定点可以获得的信息 information
+- 每个玩家在每个决定点可以获得的信息 information
 - 每个玩家在每个决定点的行动 action
 - 每个结果的收益 payoffs[19]
 
@@ -80,6 +80,7 @@ PAPI（by Eric Rasmusen）：
 > - 非对称博弈是每方玩家都有不同的策略、目标和奖励。[15]
 
 共同知识（common knowledge）：它是指“所有的参与人知道，所有的参与人知道所有的参与人知道，所有的参与人知道所有的参与人知道所有的参与人知道·····”的知识。
+
   - “共同知识”是博弈论中一个非常强的假定，它与“共享知识”（knowledge sharing）不是同一个概念。
   - 共同享有是说你知道，我也知道，但是我并不一定知道你也知道。也就是说，共同享有的知识，并不一定是共同知识。
 

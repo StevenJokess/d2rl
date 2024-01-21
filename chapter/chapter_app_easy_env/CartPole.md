@@ -5,24 +5,31 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-11-01 11:36:30
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-09 07:52:02
+ * @LastEditTime: 2023-11-14 05:56:10
  * @Description:
  *
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
  * @Reference:
 -->
-# CartPole
+# 倒立摆（CartPole）
 
-## 环境简介
+## 倒立摆（Inverted Pendulum）
 
-CartPole 环境，由平衡在可以左右移动的推车上的杆组成。 智能体必须学习如何在立柱下方的推车移动时垂直平衡立柱。
+倒立摆（Inverted Pendulum）是指一个具有质量的杆，其上端固定在一个可以围绕其垂直轴旋转的支座上。当杆处于平衡位置时，它保持直立状态。但是，当受到外部扰动时，它可能会偏离平衡位置，从而产生摆动。倒立摆的目标是通过控制支座旋转的力矩，使杆保持平衡状态，避免其倒下。
 
-给智能体指定了推车的位置，推车的速度，杆的角度和杆的旋转速度作为输入，用向量表示即 [Horizontal Position,Horizontal Velocity, Angle of Pole, Angular Velocity]。[2]
+它是典型的多变量、高阶次 ，非线性、强耦合、自然不稳定系统。倒立摆系统的稳定控制是控制理论中的典型问题，在倒立摆的控制过程中能有效反映控制理论中的许多关键问题，如非线性问题、鲁棒性问题、随动问题、镇定、跟踪问题等。因此倒立摆系统作为控制理论教学与科研中典型的物理模型 ，常被用来检验新的控制理论和算法的正确性及其在实际应用中的有效性。[3]
+
+## CartPole 环境简介
+
+CartPole 环境是一个类似于倒立摆的问题，但它具有更复杂的动态行为。
+
+1. 它由平衡在可以左右直线移动的推车上的杆组成。
+2. 随着小车的移动，杆会产生倾斜。而当倾斜到一定程度时，由于重力作用，杆会倒下。
+3. 智能体可以在推车的任一侧施加力。其目标是学会用合适大小和方向的力，去控制在立柱下方的推车的速度，来使得杆尽量垂直向上；果杆与垂直线的夹角下降超过 15 度，智能体就此失败。
+4. 给智能体指定了推车的位置，推车的速度，杆的角度和杆的旋转速度作为输入，用向量表示即 [Horizontal Position,Horizontal Velocity, Angle of Pole, Angular Velocity]。[2]
 
 ![CartPole 环境](../../img/cartpole.png)
-
-智能体可以在推车的任一侧施加力。 如果杆与垂直线的夹角下降超过 15 度，智能体就此失败。
 
 
 
@@ -101,3 +108,4 @@ dqn.test(env, nb_episodes=5, visualize=True)
 
 [1]: https://www.kancloud.cn/apachecn/apachecn-dl-zh/1956137
 [2]: https://steemit.com/ai/@hongtao/ai-reinforcement-learning-rl
+[3]: https://baike.baidu.com/item/%E5%80%92%E7%AB%8B%E6%91%86/7765096
