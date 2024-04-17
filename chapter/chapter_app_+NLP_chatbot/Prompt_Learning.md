@@ -1,6 +1,5 @@
 # Prompt Learning
 
-
 ## NLP发展的四个范式
 
 我们将近代NLP技术的发展总结为四种范式，分别为：
