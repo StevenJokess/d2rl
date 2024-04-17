@@ -50,3 +50,6 @@ $\pi_r(y | x) = \frac{1}{Z(x)}\pi_{ref}(y|x)exp(\frac{1}{\beta}r(x, y))$
 
 [1]: https://my.oschina.net/u/4209276/blog/10088196
 [2]: https://zhuanlan.zhihu.com/p/685948009
+
+TODO: 【手撕RLHF-DPO】step-by-step公式推导及实验分析 - 小冬瓜AIGC的文章 - 知乎
+https://zhuanlan.zhihu.com/p/692991235
