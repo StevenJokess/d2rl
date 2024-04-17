@@ -11,7 +11,9 @@
  * @TODO::
  * @Reference:
 -->
-# DPO(not RL)
+# DPO(not RLHF)
+
+## 不同于RLHF
 
 大语言模型目前的调优策略一般是在大规模的无监督训练之后，通过人类偏好的策略将期望的行为融入到语言模型中。虽然最直接的偏好学习方法是基于高质量的示范进行监督微调，但最成功的方法类别是通过人类（或 AI）反馈进行强化学习，即 RLHF。
 
@@ -29,4 +31,22 @@ DPO 针对人类偏好进行了优化，同时避免了强化学习。在大语�
 
 论文地址：[Direct Preference Optimization: Your Language Model is Secretly a Reward Model](https://arxiv.org/pdf/2305.18290.pdf)
 
+##
+
+提问：DPO公式是由PPO的objective公式推导过来的，为什么DPO是off-policy算法，而PPO是on-policy算法，到底哪一步推导出了问题？
+
+回答：在DPO公式推导中，由目标公式：
+
+$max_{\pi_\theta}E_{x \sim D, y \sim \pi_{theta}}[r(x, y)] - \beta D_{KL}[\pi_\theta(y|x) || \pi_{ref}(y|x)]$
+
+推导出optimal policy
+
+$\pi_r(y | x) = \frac{1}{Z(x)}\pi_{ref}(y|x)exp(\frac{1}{\beta}r(x, y))$
+
+在公式中其实 $\pi_{ref}$ 应该是随着模型更新而一直改变的，但是真正实现的时候一般使用 $\pi_{sft}$ 代替。那么就导致了DPO从on-policy变成了off-policy的方法。DPO面临着RL领域经典的state distribution shift的问题，从而效果会不如PPO。除此之外由于DPO中 $\pi_{ref}$ 和 $\pi_{sft}$ 有KL散度的限制，所以state distribution shift的问题不会像传统RL中那么大，所以整体上还是work的。
+
+补：经修正，相比于不加KL散度或者传统bandit算法算是分布差异小，但整体分布差异仍然很大（约25左右），如图：[2]
+
+
 [1]: https://my.oschina.net/u/4209276/blog/10088196
+[2]: https://zhuanlan.zhihu.com/p/685948009

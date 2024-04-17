@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-04-23 22:55:04
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2024-01-21 14:48:19
+ * @LastEditTime: 2024-04-17 21:18:13
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请赞助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -181,6 +181,8 @@ TODO: 差分博弈 Differential games：
   - 商业的广告战【增加广告（背叛）、或是达成削减广告协议（合作）】
   - 商业的价格战【更多降价（背叛）、或是达成价格协议（合作）】[11]
   - 交通的堵车【加塞（背叛）、或等待（合作）】解决方案：法律，来加大背叛的惩罚。
+  - 互联网精神【融资收费商业化垄断上市（背叛）、或是免费开源共享化自由交流（合作）】[42]
+
 
 #### 纳什均衡
 
