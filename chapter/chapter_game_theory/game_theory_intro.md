@@ -181,7 +181,7 @@ TODO: 差分博弈 Differential games：
   - 商业的广告战【增加广告（背叛）、或是达成削减广告协议（合作）】
   - 商业的价格战【更多降价（背叛）、或是达成价格协议（合作）】[11]
   - 交通的堵车【加塞（背叛）、或等待（合作）】解决方案：法律，来加大背叛的惩罚。
-  - 互联网精神【融资收费商业化垄断上市（背叛）、或是免费开源共享化自由交流（合作）】[42]
+  - 互联网精神【融资收费商业化垄断上市（背叛）、或是免费开源共享化自由交流（合作）】[41]
 
 
 #### 纳什均衡
@@ -415,4 +415,4 @@ DeepStack for Texas Hold’em poker
 [38]: https://www.zgbk.com/ecph/words?SiteID=1&ID=189332&Type=bkzyb&SubID=119245
 [39]: https://www.bilibili.com/video/BV1ak4y1n76j
 [40]: https://bbs.pinggu.org/thread-1065495-1-1.html
-[41]: https://bbs.pinggu.org/thread-1065495-1-1.html
+[41]: https://www.zhihu.com/question/19598457/answer/3468756924
