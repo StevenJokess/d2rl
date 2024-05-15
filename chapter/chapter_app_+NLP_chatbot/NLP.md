@@ -314,7 +314,7 @@ class LSTMModel(nn.Module):
 - 2006年至今的深度学习时代：深度神经网络，特别是循环神经网络和Transformer架构，带来了前所未有的模型性能。
 - 2018年至今的大模型时代：超大规模的预训练语言模型，如GPT和BERT，开始在各种NLP任务中展现出色的性能。
 
-## 洞见与展望
+### 洞见与展望
 
 1. 融合多种范式：尽管每个时代都有其主导的方法论和技术，但未来的NLP发展可能需要融合不同范式，以达到更好的效果。
 1. 可解释性与健壮性：随着模型复杂度的提高，如何确保模型的可解释性和健壮性将是一个重要的研究方向。
@@ -332,6 +332,8 @@ class LSTMModel(nn.Module):
 - NAACL
 - CoNLL
 - 其他(尚未完善)
+
+
 
 [1]: https://www.cntofu.com/book/85/resources/nlp/list.md
 [2]: https://cloud.tencent.com/developer/article/2348458
