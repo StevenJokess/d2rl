@@ -24,16 +24,16 @@
 - Pretrain_LM(NNLM_Word2Vec_Glove)：预训练
 - Pretrain_LLM(Transformer)：大语言模型、经典大语言模型 Transformer（其后续影响了ELMo、GPT、BERT）
 - ELMo：
-- GPT1：早期GPT的发展历程，以及预训练过程（Pretrain）
+- GPT-1：早期GPT的发展历程，以及预训练过程（Pretrain）
 - BERT：
-- GPT2：思维链（COT）、提示词（Prompt）
+- GPT-2：思维链（COT）、提示词（Prompt）
 - Prompt_Learning(Prompt_Tuning)：预训练语言模型加持下的Prompt Learning成为了NLP的第四范式
-- GPT3：GPT3
+- GPT-3：GPT-3论文、API、[2]
+- Codex&Github_CoPilot：GPT应用于代码生成。1月，GPT-3.5 API (text-davinci-002)发布，该模型经过Github代码的训练加持，推理能力显著提升（该假设的因果关系待学术界论证），经过Alignment技术的加持，Follow人类指令的能力显著提升，输出结果有用性和无害性显著提升。3月，GPT-3.5论文发布，公开Alignment算法。5月，OpenAI Codex已经被70个应用使用，包括微软收购的Github的Copilot.
 - RL_in_NLP：回顾强化学习在自然语言处理中的应用
-- GPT3.5(+RLHF=InstructGPT)：从人类反馈强化学习（RLHF），并将其应用到GPT。
-- Codex&Github_CoPilot：GPT应用于代码生成。
-- ChatGPT&Newbing：GPT应用于聊天机器人、搜索。
-- GPT4：介绍 ChatGPT Plugins、GPT4V、GPTstore、GPT4-Turbo
+- GPT-  3.5(+RLHF=InstructGPT)：从人类反馈强化学习（RLHF），并将其应用到GPT。
+- ChatGPT&Newbing：12月1日，ChatGPT发布。Musk等名流开始谈论ChatGPT，引爆英文互联网。12月初，中国互联网的自媒体逐渐开始讨论ChatGPT，主要以翻译twitter的方式。知乎上有学者开始反思。一周后，关注指数下降，两个月来只剩下AI自媒体把ChatGPT作为自己的主要关注内容。2023年1月，微软宣布投资OpenAI数十亿美元，并将GPT加入全家桶。2月，中国春节结束，微软和Google你方唱罢我登场，纳斯达克财报季，AI被反复提起。中国互联网是认识微软的，ChatGPT引爆中国互联网，关注指数飙升。GPT应用于聊天机器人、搜索。
+- GPT-4：介绍 ChatGPT Plugins、GPT4V、GPTstore、GPT4-Turbo
 - more_about_ChatGPT：介绍AutoGPT、MetaGPT、ChatGPT for Robotics
 - Safety_AGI:
 - other_LLM：介绍外国的大语言模型，开源有LLaMA、Alpaca；不开源的有Claude、Gemini等；介绍中国的大语言模型，开源ChatRWKV等；不开源的
@@ -55,4 +55,5 @@ LLM(Transformer)
 
 ```
 
-TOOD: https://blog.csdn.net/qq_56591814/article/details/130542583
+TODO: https://blog.csdn.net/qq_56591814/article/details/130542583
+[2]: https://chinadigitaltimes.net/chinese/692793.html
