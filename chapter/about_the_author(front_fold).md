@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-06-02 22:02:24
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-10-14 23:21:26
+ * @LastEditTime: 2024-07-22 00:44:38
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -13,6 +13,12 @@
 -->
 
 # 前折页
+
+## 相关人员：
+
+- 责任编辑：蔡舒起
+- 封面设计：蔡舒起
+
 
 ## 作者介绍：
 
@@ -43,8 +49,8 @@
 
 
 
-
 > 参考网页
 > [1]: <https://gohom.win/2015/06/07/EmbedHtmlPDF/>
 > [2]: <https://www.itcoder.tech/posts/display-pdf-image-in-markdown/>
 > [3]: <https://www.zhihu.com/question/621059979/answer/3215914909>
+> [4]: <https://zhuanlan.zhihu.com/p/159746082#1.MDP%E6%98%AF%E5%90%A6%E5%8F%91%E7%94%9F%E9%80%80%E5%8C%96%EF%BC%9F>
