@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-10-25 23:19:44
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2024-06-22 10:21:04
+ * @LastEditTime: 2024-07-22 01:26:47
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -18,10 +18,11 @@
 ![基于神经网络的语言模型演进历程](../../../img/NN_based_language_model_developing.png)
 
 - NLP：自然语言处理的历史发展
-- LM(RNN_LSTM_GRU)：语言模型、RNN、LSTM、GRU
+- LM(N-gram)：语言模型、N-gram
+- LM(RNN、LSTM、GRU)
 - Attention_Mechanism：注意力机制。自注意力机制，是之后Transformer 模型强大的秘诀
 - Encoder-Decoder&Seq2Seq：Encoder-Decoder 模型
-- Pretrain_LM(NNLM_Word2Vec_Glove)：预训练
+- Pretrain_LM(NPLM_Word2Vec_Glove)：预训练
 - Pretrain_LLM(Transformer)：大语言模型、经典大语言模型 Transformer（其后续影响了ELMo、GPT、BERT）
 - ELMo：
 - GPT-1：2018年6月提出的模型，在9个NLP任务上取得了 SOTA 的效果。[3]

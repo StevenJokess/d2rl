@@ -5,7 +5,7 @@
  * @Author:  StevenJokess（蔡舒起） https://github.com/StevenJokess
  * @Date: 2023-11-03 07:51:05
  * @LastEditors:  StevenJokess（蔡舒起） https://github.com/StevenJokess
- * @LastEditTime: 2023-11-09 06:33:12
+ * @LastEditTime: 2024-07-22 01:22:22
  * @Description:
  * @Help me: make friends by a867907127@gmail.com and help me get some “foreign” things or service I need in life; 如有帮助，请资助，失业3年了。![支付宝收款码](https://github.com/StevenJokess/d2rl/blob/master/img/%E6%94%B6.jpg)
  * @TODO::
@@ -15,7 +15,9 @@
 
 ## 语言模型
 
-### 定义
+语言模型是一个用来估计文本概率分布的数学模型，它可以帮助我们了解某个词语序列在自然语言中出现的概率。一个句子是否合理，取决于其出现在自然语言中的可能性的大小。概率越大，那么这个句子越合理，那么如何表示一个句子在整个自然语言空间中出现的概率大小呢？
+
+### 任务
 
 一、语言模型（LM）的任务就是预测一段文字接下来会出现什么词。[1]
 
@@ -52,11 +54,16 @@ $$
 
 - 输入法联想。比如我在搜狗输入法里写一个“我”，输入法会给我推荐几个词：“女朋友”、“刚刚”、“的”等等。这会暴露我们个人的一些习惯。
 - 搜索联想。基于神经网络的语言模型演进历程
--
 
 ### 如何学习语言模型：n-gram模型
 
-所谓的N-gram，就是指一堆连续的词。根据这一堆词的个数，我们可以分为unigram,bigram,trigram等等。
+所谓的N-gram，就是指一堆连续的词。
+
+根据这一堆词的个数，我们可以分为
+1. unigram(1-gram),
+2. bigram(2-gram),
+3. trigram(3-gram),
+4. n-gram 等等。
 
 如果我们需要得到一个N-gram的LM，它的意思就是希望我们可以通过N-1个词预测第N个词的概率。
 
@@ -66,6 +73,93 @@ $$
 
 比如我们想得到一个3-gram的LM，那么就是说想预测一段文本的下一个词是什么的话，只用看这个词前面2个词即可。
 
+
+假设 S 表示一个有意义的句子，由一连串按特定顺序排列的词 $W_1,W_2...W_N$ 组成，那么我们要求S在整个自然语言的空间内出现的可能性，即P(S)，由于 $W_1....W_n$ 同时在这个句子中出现，因此整个句子出现的概率就是这些词的联合概率，即：
+$P(S)=P(W_1,W_2,...,M_3) \\$利用条件概率公式展开，得，
+
+$ \begin{aligned} P(S)&=P(W_1,W_2,...,M_3) \\ &=P(W_1)\cdot P(W_2|W_1)\cdot P(W_3|W_2,W_1)\cdot\cdot\cdot P(W_N|W_{N-1},W_N,...,W_1) \end{aligned}\\$ 利用马尔科夫假设，假设当前的词仅仅与他前面出现的一个词相关，那么上式可以转化为：
+
+$ \begin{aligned} P(S)&=P(W_1,W_2,...,M_3) \\ &=P(W_1)\cdot P(W_2|W_1)\cdot P(W_3|W_2)\cdot\cdot\cdot P(W_N|W_{N-1}) \end{aligned}\\$这就是一个N-gram模型，并且由于每一次算条件概率时，词组的滑窗长度为2，所以这是一个2-gram模型 ，N-gram是一个基于统计的语言模型，我们需要不断地在语料空间中计算每个滑窗出现的概率大小，这样在我们生成时候，我们才能找出出现概率最大的词当做下一个词，不断地迭代这个过程，直到达到终止条件。下面是一个流程：
+
+
+代码实现：
+接下来我们基于这个流程进行bigram（2-gram）整体代码的编写：
+
+①构建语料库
+我们随意构建一个用于模型训练的语料库，然后将基于该语料库训练得到的模型用于文字生成，语料库越大，质量越高，越接近自然语言空间，生成的效果肯定越好，由于我们的重点是捋清其实现思路，所以构建一个简单的语料库，如下：
+
+corpus = [ "我喜欢吃苹果",
+        "我喜欢吃香蕉",
+        "她喜欢吃葡萄",
+        "他不喜欢吃香蕉",
+        "他喜欢吃苹果",
+        "她喜欢吃草莓"]
+②分词
+需要把每句话拆成一个个单词（token），这样我们才能进行条件概率的计算，这里我们简单以每个字作为一个token，
+
+def tokenize(text):
+    return [char for char in text]  # 将文本拆分为单字列表
+
+# 对每个文本进行分词，并打印出对应的单字列表
+print("单字列表:")
+for text in corpus:
+    tokens = tokenize(text)
+    print(tokens)
+③计算bigram的词频
+# 定义计算N-Gram词频的函数
+from collections import efaultdict, Counter
+def count_ngrams(corpus, n):
+    ngrams_count = defaultdict(Counter)  # 创建一个字典存储N-Gram计数
+    for text in corpus:  # 遍历语料库中的每个文本
+        tokens = tokenize(text)  # 对文本进行分词
+        for i in range(len(tokens) - n + 1):  # 遍历分词结果生成N-Gram
+            ngram = tuple(tokens[i:i+n])  # 创建一个N-Gram元组
+            prefix = ngram[:-1]  # 获取N-Gram的前缀
+            token = ngram[-1]  # 获取N-Gram的目标单字
+            ngrams_count[prefix][token] += 1  # 更新N-Gram计数
+    return ngrams_count
+bigram_counts = count_ngrams(corpus, 2) # 计算Bigram词频
+print("Bigram词频:") # 打印Bigram词频
+for prefix, counts in bigram_counts.items():
+    print("{}: {}".format("".join(prefix), dict(counts)))
+④计算bigram概率
+# 定义计算N-Gram概率的函数
+def ngram_probabilities(ngram_counts):
+    ngram_probs = defaultdict(Counter)
+    for prefix, tokens_count in ngram_counts.items():  # 遍历N-Gram前缀
+        total_count = sum(tokens_count.values())  # 计算当前前缀的N-Gram计数
+        for token, count in tokens_count.items():  # 遍历每个前缀的N-Gram
+            ngram_probs[prefix][token] = count / total_count  # 计算每个N-Gram概率
+    return ngram_probs
+bigram_probs = ngram_probabilities(bigram_counts) # 计算bigram概率
+print("\nbigram概率:", bigram_probs) # 打印bigram概
+⑤定义生成下一个词的函数
+# 定义生成下一个词的函数
+def generate_next_token(prefix, ngram_probs):
+    if not prefix in ngram_probs:  # 如果前缀不在N-Gram中，返回None
+        return None
+    next_token_probs = ngram_probs[prefix]  # 获取当前前缀对应的下一个词的概率
+    next_token = max(next_token_probs,
+                     key=next_token_probs.get)  # 选择概率最大的词作为下一个词
+    return next_token
+⑥生成文本
+# 定义生成连续文本的函数
+def generate_text(prefix, ngram_probs, n, length=6):
+    tokens = list(prefix)  # 将前缀转换为字符列表
+    for _ in range(length - len(prefix)):  # 根据指定长度生成文本
+        # 获取当前前缀对应的下一个词
+        next_token = generate_next_token(tuple(tokens[-(n-1):]), ngram_probs)
+        if not next_token: # 如果下一个词为None，跳出循环
+            break
+        tokens.append(next_token) # 将下一个词添加到生成的文本中
+    return "".join(tokens) # 将字符列表连接成字符串
+最终以“我”开头让模型写出一段话：
+
+# 输入一个前缀，生成文本
+generated_text = generate_text("我", bigram_probs, 2)
+print("\n生成的文本:", generated_text)
+
+模型生成的语句是：我喜欢吃苹果
 
 
 ## RNN的必要性
