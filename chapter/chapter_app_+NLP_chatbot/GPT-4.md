@@ -500,3 +500,6 @@ Bits per word可以简单地理解为loss的大小>
   我们期待GPT-4通过为许多应用程序提供动力，成为改善人们生活的宝贵工具。我们期待着通过community building的集体努力来改进这一模式，并进一步地探索和贡献。
 [1]: https://www.mikecaptain.com/2023/03/15/mike-captain-gpt-4/
 [2]: https://blog.csdn.net/qq_56591814/article/details/130542583
+
+更多可参考：
+https://yunyaniu.blog.csdn.net/article/details/129572687?spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogOpenSearchComplete%7ERate-7-129572687-blog-131336086.235%5Ev43%5Epc_blog_bottom_relevance_base5&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogOpenSearchComplete%7ERate-7-129572687-blog-131336086.235%5Ev43%5Epc_blog_bottom_relevance_base5&utm_relevant_index=12
